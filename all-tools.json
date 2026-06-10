@@ -1,0 +1,124 @@
+﻿[
+    {
+        "slug":  "text-case-converter",
+        "icon":  "CaseSensitive",
+        "keywords":  [
+                         "text case converter",
+                         "uppercase converter",
+                         "lowercase converter",
+                         "title case",
+                         "case converter",
+                         "change case"
+                     ],
+        "cat":  "Text",
+        "desc":  "Convert text between uppercase, lowercase, title case, camelCase, and more.",
+        "title":  "Text Case Converter",
+        "fn":  "convertCase"
+    },
+    {
+        "slug":  "text-sorter",
+        "icon":  "ArrowUpDown",
+        "keywords":  [
+                         "text sorter",
+                         "sort text",
+                         "alphabetize",
+                         "sort lines",
+                         "line sorter",
+                         "text sort"
+                     ],
+        "cat":  "Text",
+        "desc":  "Sort lines of text alphabetically, numerically, or by length.",
+        "title":  "Text Sorter",
+        "fn":  "sortLines"
+    },
+    {
+        "slug":  "text-reverse",
+        "icon":  "ArrowLeft",
+        "keywords":  [
+                         "text reverse",
+                         "reverse text",
+                         "backwards text",
+                         "text reverser",
+                         "reverse string"
+                     ],
+        "cat":  "Text",
+        "desc":  "Reverse text character by character or word by word.",
+        "title":  "Text Reverser",
+        "fn":  "reverseText"
+    },
+    {
+        "slug":  "duplicate-line-remover",
+        "icon":  "CopyMinus",
+        "keywords":  [
+                         "duplicate line remover",
+                         "remove duplicates",
+                         "deduplicate text",
+                         "unique lines",
+                         "duplicate remover"
+                     ],
+        "cat":  "Text",
+        "desc":  "Remove duplicate lines from text. Keep first or last occurrence.",
+        "title":  "Duplicate Line Remover",
+        "fn":  "removeDuplicates"
+    },
+    {
+        "slug":  "line-number-adder",
+        "icon":  "ListOrdered",
+        "keywords":  [
+                         "line number adder",
+                         "add line numbers",
+                         "number lines",
+                         "line numbering",
+                         "text line numbers"
+                     ],
+        "cat":  "Text",
+        "desc":  "Add line numbers to each line of text with customizable format.",
+        "title":  "Line Number Adder",
+        "fn":  "addLineNumbers"
+    },
+    {
+        "slug":  "random-string",
+        "icon":  "Shuffle",
+        "keywords":  [
+                         "random string generator",
+                         "random text",
+                         "string generator",
+                         "generate random string",
+                         "random characters"
+                     ],
+        "cat":  "Text",
+        "desc":  "Generate random strings with customizable length and character sets.",
+        "title":  "Random String Generator",
+        "fn":  "generateRandomString"
+    },
+    {
+        "slug":  "list-randomizer",
+        "icon":  "Shuffle",
+        "keywords":  [
+                         "list randomizer",
+                         "randomize list",
+                         "shuffle list",
+                         "random order",
+                         "list shuffler"
+                     ],
+        "cat":  "Text",
+        "desc":  "Randomize the order of items in a list. Shuffle lines randomly.",
+        "title":  "List Randomizer",
+        "fn":  "shuffleList"
+    },
+    {
+        "slug":  "text-trimmer",
+        "icon":  "Scissors",
+        "keywords":  [
+                         "text trimmer",
+                         "trim text",
+                         "remove spaces",
+                         "whitespace remover",
+                         "text cleaner"
+                     ],
+        "cat":  "Text",
+        "desc":  "Trim leading/trailing whitespace, remove extra spaces, and clean up text.",
+        "title":  "Text Trimmer",
+        "fn":  "trimText"
+    }
+]
