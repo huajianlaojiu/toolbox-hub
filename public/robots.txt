@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-
-Sitemap: https://toolbox-hub.vercel.app/sitemap.xml
+Sitemap: https://toolbox-hub.io/sitemap.xml
