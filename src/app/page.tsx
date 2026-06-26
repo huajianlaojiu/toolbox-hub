@@ -28,6 +28,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      <div className="mx-auto max-w-6xl mb-8"><ins className="adsbygoogle" style={{"display":"block"}} data-ad-client="ca-pub-7525547688409082" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
       <section id="all" className="mb-16">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {tools.map((tool) => (

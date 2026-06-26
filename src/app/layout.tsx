@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   },
   description: "Free online tools for developers, designers, and everyone. JSON formatter, Base64 encoder, QR code generator, password generator, and more. No sign-up required.",
   keywords: ["online tools", "free tools", "developer tools", "json formatter", "base64", "qr code", "password generator", "image compressor"],
-  metadataBase: new URL("https://toolbox-hub.vercel.app"),
+  metadataBase: new URL("https://toolbox-hub.io"),
   alternates: { canonical: "/" },
   openGraph: {
     title: "Toolbox Hub - Free Online Tools",
@@ -26,6 +26,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full antialiased" suppressHydrationWarning>
       <head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7525547688409082" crossOrigin="anonymous"></script>
+        <meta name="google-site-verification" content="vhcBKkdgy_iNKPTxrlsX5X8p55Ubrk7kZIBccq8k-HY" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
