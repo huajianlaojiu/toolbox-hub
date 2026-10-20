@@ -45,3 +45,6 @@ next-env.d.ts
 /out_prev_tmp/
 /.next_old_tmp/
 /docs/
+
+# local workbuddy memory
+/.workbuddy/

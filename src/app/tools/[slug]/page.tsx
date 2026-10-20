@@ -2,11 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getTool, tools } from "@/lib/tools-data";
 import { getToolContent } from "@/lib/tool-content";
-import TiktokDownloader from "@/components/tools/tiktok-downloader";
-import InstagramDownloader from "@/components/tools/instagram-downloader";
-import YoutubeShortsDownloader from "@/components/tools/youtube-shorts-downloader";
 import ImageWatermarkRemover from "@/components/tools/image-watermark-remover";
-import VideoWatermarkRemover from "@/components/tools/video-watermark-remover";
 import { ChevronLeft } from "lucide-react";
 
 import ToolCard from "@/components/tool-card";
@@ -94,7 +90,6 @@ import UserAgentParser from "@/components/tools/user-agent-parser";
 import HttpStatus from "@/components/tools/http-status";
 import YoutubeThumbnail from "@/components/tools/youtube-thumbnail";
 import OpenGraphGenerator from "@/components/tools/open-graph-generator";
-import IpLookup from "@/components/tools/ip-lookup";
 import Stopwatch from "@/components/tools/stopwatch";
 import WorldClock from "@/components/tools/world-clock";
 import CoinFlip from "@/components/tools/coin-flip";
@@ -248,7 +243,6 @@ export default async function ToolPage({ params }: ToolPageProps) {
         {slug === "http-status" && <HttpStatus />}
         {slug === "youtube-thumbnail" && <YoutubeThumbnail />}
         {slug === "open-graph-generator" && <OpenGraphGenerator />}
-        {slug === "ip-lookup" && <IpLookup />}
         {slug === "stopwatch" && <Stopwatch />}
         {slug === "world-clock" && <WorldClock />}
         {slug === "coin-flip" && <CoinFlip />}
@@ -264,11 +258,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
         {slug === "decimal-fraction" && <DecimalFraction />}
         {slug === "gcf-calculator" && <GcfCalculator />}
         {slug === "image-to-base64" && <ImageToBase64 />}
-              {slug === "tiktok-downloader" && <TiktokDownloader />}
-              {slug === "instagram-downloader" && <InstagramDownloader />}
-              {slug === "youtube-shorts-downloader" && <YoutubeShortsDownloader />}
               {slug === "image-watermark-remover" && <ImageWatermarkRemover />}
-              {slug === "video-watermark-remover" && <VideoWatermarkRemover />}
       </div>
       <div className="mt-6 p-4 rounded-lg bg-muted/50 border"><p className="text-sm text-muted-foreground">{tool.description} All processing happens in your browser.</p></div>
 

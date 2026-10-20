@@ -80,7 +80,6 @@ export const tools: ToolMeta[] = [
   { slug: "http-status", title: "HTTP Status Reference", description: "HTTP status codes", category: "Web", icon: Wrench, keywords: ["http status codes", "status code"], isPureFrontend: true },
   { slug: "youtube-thumbnail", title: "YouTube Thumbnail Downloader", description: "Download YT thumbnails", category: "Web", icon: Wrench, keywords: ["youtube thumbnail", "yt thumbnail"], isPureFrontend: true },
   { slug: "open-graph-generator", title: "Open Graph Generator", description: "Generate OG tags", category: "Web", icon: Wrench, keywords: ["open graph generator", "og tags"], isPureFrontend: true },
-  { slug: "ip-lookup", title: "IP Address Lookup", description: "Look up IP info", category: "Web", icon: Wrench, keywords: ["ip lookup", "what is my ip"], isPureFrontend: true },
   { slug: "stopwatch", title: "Online Stopwatch", description: "Stopwatch timer", category: "Utility", icon: Wrench, keywords: ["stopwatch", "online stopwatch", "timer"], isPureFrontend: true },
   { slug: "world-clock", title: "World Clock", description: "Check world times", category: "Utility", icon: Wrench, keywords: ["world clock", "time zones", "world time"], isPureFrontend: true },
   { slug: "coin-flip", title: "Coin Flip Simulator", description: "Flip a coin", category: "Utility", icon: Wrench, keywords: ["coin flip", "flip a coin", "heads tails"], isPureFrontend: true },
@@ -104,11 +103,7 @@ export const tools: ToolMeta[] = [
   { slug: "url-extractor", title: "URL Extractor", description: "Extract URLs from text", category: "Web", icon: Wrench, keywords: ["url extractor", "extract urls", "find urls"], isPureFrontend: true },
   { slug: "phone-formatter", title: "Phone Number Formatter", description: "Format phone numbers", category: "Utility", icon: Wrench, keywords: ["phone formatter", "phone number format", "format phone"], isPureFrontend: true },
   { slug: "text-stats", title: "Advanced Text Statistics", description: "Text analysis", category: "Text", icon: Wrench, keywords: ["text stats", "text analysis", "text statistics"], isPureFrontend: true },
-  { slug: "tiktok-downloader", title: "TikTok Video Downloader", description: "Download TikTok videos without watermark. Extract video URL and get download links.", category: "Video", icon: Wrench, keywords: ["tiktok downloader", "tiktok no watermark", "tiktok video download", "tiktok saver", "download tiktok without watermark"], isPureFrontend: true },
-  { slug: "instagram-downloader", title: "Instagram Reels Downloader", description: "Download Instagram Reels and videos. Get share links and download methods.", category: "Video", icon: Wrench, keywords: ["instagram downloader", "instagram reels download", "reels downloader", "instagram video download", "save instagram"], isPureFrontend: true },
-  { slug: "youtube-shorts-downloader", title: "YouTube Shorts Downloader", description: "Extract YouTube Shorts video IDs and get download links with thumbnails.", category: "Video", icon: Wrench, keywords: ["youtube shorts downloader", "youtube shorts download", "shorts downloader", "download youtube shorts", "youtube shorts saver"], isPureFrontend: true },
   { slug: "image-watermark-remover", title: "Image Watermark Remover", description: "Remove watermarks from images by cropping or blurring the mark area.", category: "Image", icon: Wrench, keywords: ["image watermark remover", "remove watermark", "watermark remover", "remove watermark from image", "delete watermark"], isPureFrontend: true },
-  { slug: "video-watermark-remover", title: "Video Watermark Remover", description: "Guide to removing watermarks from videos. Tips and free tools recommended.", category: "Video", icon: Wrench, keywords: ["video watermark remover", "remove video watermark", "video watermark removal", "remove watermark from video", "video editor watermark"], isPureFrontend: true },
 ];
 export const categories = Array.from(new Set(tools.map((t) => t.category)));
 

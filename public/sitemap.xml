@@ -82,7 +82,6 @@
   <url><loc>https://toolbox-hub.io/tools/http-status/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://toolbox-hub.io/tools/youtube-thumbnail/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://toolbox-hub.io/tools/open-graph-generator/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://toolbox-hub.io/tools/ip-lookup/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://toolbox-hub.io/tools/stopwatch/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://toolbox-hub.io/tools/world-clock/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://toolbox-hub.io/tools/coin-flip/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
@@ -106,9 +105,5 @@
   <url><loc>https://toolbox-hub.io/tools/url-extractor/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://toolbox-hub.io/tools/phone-formatter/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://toolbox-hub.io/tools/text-stats/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://toolbox-hub.io/tools/tiktok-downloader/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://toolbox-hub.io/tools/instagram-downloader/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://toolbox-hub.io/tools/youtube-shorts-downloader/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://toolbox-hub.io/tools/image-watermark-remover/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://toolbox-hub.io/tools/video-watermark-remover/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>
