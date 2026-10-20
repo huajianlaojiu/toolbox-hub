@@ -44,7 +44,13 @@ next-env.d.ts
 # build artifacts
 /out_prev_tmp/
 /.next_old_tmp/
-/docs/
 
 # local workbuddy memory
 /.workbuddy/
+
+# stale build dirs
+/docs_stale_*/
+/out_bak*/
+/.next_bak*/
+/out_prev*/
+/.next_old*/
