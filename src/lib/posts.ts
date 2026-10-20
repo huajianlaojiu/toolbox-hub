@@ -488,6 +488,380 @@ export const posts: Post[] = [
       },
     ],
   },
+
+  {
+    slug: "image-and-design-tools",
+    metaTitle: "14 Free Image and Design Tools That Run in Your Browser",
+    title: "14 Free Image and Design Tools That Run in Your Browser",
+    description:
+      "Compress, resize and prepare images, and generate CSS effects, palettes, contrast checks and favicons without installing Photoshop or a design suite.",
+    date: "2026-10-20",
+    updated: "2026-10-20",
+    readingTime: "11 min read",
+    category: "Design Tools",
+    blocks: [
+      {
+        p:
+          "Image work has a specific problem: the job is usually small, and the tools on offer are enormous. You need to shave 400 KB off a hero image, or get a hex value your designer mentioned, or generate a favicon nobody has made yet. That does not require a subscription.\n\nThe fourteen tools below cover preparing images, working with colour, generating CSS effects, and the small production assets that fall through the cracks. Every one runs locally, which matters more for images than for text: the photo you just compressed is often a photo you have not published yet.",
+      },
+
+      { h: "Preparing images for the web" },
+      {
+        p:
+          "Most image problems are really weight problems. A page that feels slow is usually carrying images that are larger than their display size, in the wrong format, at a quality setting nobody ever questioned.",
+      },
+      {
+        l: [
+          "[[image-compressor|Image Compressor]] — reduce file size while keeping the image visually intact. Run it before you upload anything to a form with a size limit.",
+          "[[image-resizer|Image Resizer]] — set the actual pixel dimensions you need. This is the bigger win: a 4000px image displayed at 800px is carrying five times the data it needs.",
+          "[[image-to-base64|Image to Base64]] — convert a small image into a data URI for inlining in CSS, HTML or an email template.",
+        ],
+      },
+      {
+        b:
+          "The order matters. Resize first, compress second. Compressing a 4000px image produces a much heavier file than resizing to 800px and then compressing at the same quality, because compressors spend their effort on pixels that were going to be thrown away anyway.",
+      },
+      {
+        p:
+          "How much should you compress? The honest answer is: until it looks wrong, then back off one step. For a photographic hero image, 70 to 80 percent quality is usually indistinguishable from the original at normal viewing size. For a logo, a screenshot or anything with flat colour and hard edges, use PNG and compress harder — these gain more and lose less.",
+      },
+      {
+        p:
+          "A practical rule of thumb: anything under 200 KB is fine for a hero image, under 80 KB for a thumbnail, and if you cannot get under 300 KB you probably have a dimension problem rather than a quality problem.",
+      },
+
+      { h: "Base64: when inlining is the right call" },
+      {
+        p:
+          "Converting an image to a Base64 data URI removes an HTTP request, which sounds like a pure win. It usually is not. The encoded string is roughly a third larger than the binary file, it cannot be cached separately, and it bloats your CSS or HTML.\n\nInline only when the image is small — under a few kilobytes — used once, and critical. A tiny icon in a single email template is the classic case. For anything repeated across pages or larger than a few kilobytes, serve it as a file and let the browser cache it.",
+      },
+
+      { h: "Watermarks: what is honestly removable" },
+      {
+        l: [
+          "[[image-watermark-remover|Image Watermark Remover]] — crop or blur a mark area, which handles a corner logo or a repeated diagonal overlay.",
+        ],
+      },
+      {
+        p:
+          "Be clear about what this does. It removes or obscures the visible mark. It cannot reconstruct the underlying pixels — information that was painted over is gone, and no filter invents it back. Results range from invisible, when the mark sits over a plain background, to an obvious smear when it sits over detail.\n\nOne more thing worth saying plainly: removing somebody else's watermark and publishing the result is a copyright problem in most jurisdictions, and a licensing violation regardless of whether you would get caught. Removing marks from your own images, or from stock you have licensed, is the case this tool is for.",
+      },
+
+      { h: "Colour: converting, checking, choosing" },
+      {
+        p:
+          "Colour is where small mistakes become very visible. A contrast ratio that fails accessibility, a hex value that is actually an HSL triple, a palette that looks coherent on your monitor and muddy on a projector.",
+      },
+      {
+        l: [
+          "[[color-converter|Color Converter]] — move between HEX, RGB and HSL. HSL is worth learning to read, because hue 210, saturation 40 percent, lightness 50 percent is far easier to adjust by hand than a hex value.",
+          "[[contrast-checker|Contrast Checker]] — test text against its background against WCAG thresholds. This is the single most useful tool in this article, because it catches a real compliance problem rather than a taste problem.",
+          "[[color-palette|Color Palette Generator]] — generate a coherent set when you are starting from a brand colour and need the rest of the scale.",
+        ],
+      },
+      {
+        b:
+          "On contrast: WCAG AA asks for 4.5 to 1 for normal body text and 3 to 1 for large text. If you are choosing between two brand colours for a button, the accessible one is usually not the one the designer likes. Check first, then have the argument with data.",
+      },
+      {
+        p:
+          "One caveat on colour tools: they all assume your monitor is calibrated and that the person viewing your page has working eyes. Neither assumption is safe. That is a reason to prefer contrast-checked combinations over subjective ones.",
+      },
+
+      { h: "CSS effects without opening a design tool" },
+      {
+        p:
+          "Writing a gradient or a layered shadow by hand is a genuinely unpleasant task. The syntax is fiddly, you cannot see what you are producing, and the difference between a good shadow and a bad one is a few pixels of blur.",
+      },
+      {
+        l: [
+          "[[gradient-generator|CSS Gradient Generator]] — build linear and radial gradients and copy the CSS directly.",
+          "[[box-shadow-generator|Box Shadow Generator]] — layer multiple shadows, which is what separates a subtle elevation from a heavy drop.",
+          "[[border-radius-generator|Border Radius Generator]] — get the asymmetric radii that make a shape look intentional.",
+          "[[text-shadow-generator|Text Shadow Generator]] — useful sparingly. Most text shadows are too strong; this lets you tune the offset and blur until it disappears.",
+        ],
+      },
+      {
+        p:
+          "The trick to all four is restraint. Two shadows — a tight dark one and a wide soft one — read as physical elevation. One shadow reads as a website from fifteen years ago. Generate, copy, then delete until you cannot tell it is there.",
+      },
+
+      { h: "The production assets everyone forgets" },
+      {
+        l: [
+          "[[placeholder-image|Placeholder Image Generator]] — generate a sized placeholder with a colour or text, for wireframes and templates where a real image is not ready.",
+          "[[favicon-generator|Favicon Generator]] — produce the small icon set a site actually needs. This is on the list because favicons are the asset most likely to be missing entirely, and a missing one shows a generic browser page icon that makes a finished site look unfinished.",
+          "[[emoji-picker|Emoji Picker]] — browse, search and copy emoji without hunting through an operating system picker. Genuinely useful when you are writing copy that needs one specific symbol.",
+        ],
+      },
+
+      { h: "A worked example: shipping a hero section" },
+      {
+        p:
+          "Here is the whole cluster doing one real job. A page needs a hero with a background image, a heading and a button, and none of it has been built yet.",
+      },
+      {
+        l: [
+          "**1. Placeholder.** Drop a sized placeholder in from the [[placeholder-image|Placeholder Image Generator]] so the layout has the right height from the first render.",
+          "**2. Resize and compress.** When the real photo arrives, run it through the [[image-resizer|Image Resizer]] at 1600px wide, then the [[image-compressor|Image Compressor]] at 75 percent. That is a file you can ship.",
+          "**3. Contrast-check the text.** A heading over a photo is the classic contrast failure. Use the [[contrast-checker|Contrast Checker]] to pick either a dark overlay strength or a light text colour that passes AA.",
+          "**4. Build the button.** The [[box-shadow-generator|Box Shadow Generator]] gives the elevation, and the [[color-converter|Color Converter]] gets the brand colour into the format the CSS needs.",
+          "**5. Ship.** Add a favicon from the [[favicon-generator|Favicon Generator]] so the tab does not look abandoned, and the section is done.",
+        ],
+      },
+      {
+        p:
+          "Five tools, no design suite, and every output is a value you can paste straight into code.",
+      },
+
+      { h: "Frequently asked questions" },
+      {
+        p:
+          "**Are my images uploaded anywhere?** No. Compression, resizing and Base64 conversion all happen in your browser, which is the reason there is no file-size limit and no upload queue.\n\n**Will compressing an image lose quality?** Always, by definition. The question is whether it is visible. At 70 to 80 percent quality and correct dimensions, it usually is not.\n\n**Why does my resized image still look large?** Nine times out of ten you compressed before resizing, or you are saving as PNG when a photo is better as JPEG.\n\n**Can I use these for client work?** Yes, with no attribution and no commercial restriction.\n\n**Do they work on a phone?** Yes, though resizing and compressing large photos on a phone depends on your device's memory rather than a server.",
+      },
+
+      { h: "The one-line version" },
+      {
+        p:
+          "Resize before you compress, check contrast before you argue about colour, keep shadows subtle, and never forget the favicon. That is most of what a design suite was doing for you anyway.",
+      },
+    ],
+  },
+
+  {
+    slug: "math-tools-for-real-numbers",
+    metaTitle: "6 Free Math Tools for Numbers That Will Not Behave",
+    title: "6 Free Math Tools for Numbers That Will Not Behave",
+    description:
+      "Scientific notation, decimals to fractions, prime checking, factorials and GCF/LCM — free browser tools for the number work that is easy to get wrong.",
+    date: "2026-10-20",
+    updated: "2026-10-20",
+    readingTime: "10 min read",
+    category: "Math Tools",
+    blocks: [
+      {
+        p:
+          "The maths you actually need at a computer is not the maths you were examined on. It is: is this number in the format the system expects, is this fraction simplified, how fast does this grow, and why does the calculator and the spreadsheet disagree.\n\nThese six tools cover that territory. They run locally, which for arithmetic means one specific benefit worth naming: the number you typed is not sent anywhere, so you can check a calculation involving a salary, a balance or a customer figure without a second thought.",
+      },
+
+      { h: "Getting numbers into a form a machine accepts" },
+      {
+        p:
+          "Computers store decimal fractions as binary fractions. 0.1 is not exactly representable in binary — the closest double-precision value is 0.1000000000000000055511151231257827. Add 0.1 + 0.2 and you get 0.30000000000000004, which prints as 0.3 by default and quietly breaks an equality check.",
+      },
+      {
+        l: [
+          "[[scientific-notation|Scientific Notation Converter]] — move between standard and scientific form, which is how most logs, spreadsheets and APIs actually store large and small numbers.",
+          "[[decimal-fraction|Decimal to Fraction]] — convert a decimal into an exact fraction. This is the fix for the problem above: 0.1 + 0.2 in exact fraction arithmetic is 3/10, not an approximation.",
+        ],
+      },
+      {
+        b:
+          "If you have ever seen a total that is wrong by 0.0000000000000004, this is why. In financial code the standard answer is to work in integer cents, or in a decimal library, and never in floating point. If you have ever seen a spreadsheet disagree with a script by a fraction of a penny, it is the same bug wearing a different hat.",
+      },
+      {
+        p:
+          "Scientific notation is worth being fluent in, because it is the difference between reading a log line and squinting at it. 6.022e23, 1.6e-19 and 3e8 are Avogadro's number, the elementary charge and the speed of light. If those look like noise rather than numbers, converting a few through the tool fixes it permanently.",
+      },
+
+      { h: "Primes, and why anyone cares" },
+      {
+        l: [
+          "[[prime-checker|Prime Number Checker]] — test whether a number is prime, and see its factorisation when it is not.",
+          "[[gcf-calculator|GCF LCM Calculator]] — greatest common factor and least common multiple.",
+        ],
+      },
+      {
+        p:
+          "Prime numbers are not a school exercise. The security of every HTTPS connection you make depends on the fact that multiplying two large primes is easy and factoring the result back is hard. That asymmetry is the entire basis of RSA.\n\nFor everyday purposes, prime checking is mostly about fractions. Simplifying a fraction means dividing top and bottom by their greatest common factor, and you cannot find that without factoring. Which is why these two tools belong together: check the factors, then get the GCF and LCM in one step.",
+      },
+      {
+        p:
+          "The LCM half is the one people forget, and it is the one that solves scheduling problems: two events that repeat every 18 days and every 12 days coincide every 36 days. Same arithmetic, different application.",
+      },
+
+      { h: "Factorials, and the speed at which they explode" },
+      {
+        l: ["[[factorial-calculator|Factorial Calculator]] — n! for values where the answer is still meaningful."],
+      },
+      {
+        p:
+          "Factorials grow faster than almost anything you meet at a desk. 10! is about 3.6 million. 20! is about 2.4 quintillion — larger than the number of grains of sand on Earth by a wide margin. 52!, the number of ways to shuffle a deck of cards, is roughly 8 followed by 67 digits.\n\nThe practical consequence is that a program that enumerates all permutations is fine at 5 items, tolerable at 8, and permanently stuck at 12. If a task feels like it will never finish and you are looping over permutations, this is almost certainly why. It is also the argument against most brute-force approaches, stated as arithmetic rather than opinion.",
+      },
+
+      { h: "Roman numerals, and the odd thing about them" },
+      {
+        l: ["[[roman-numerals|Roman Numeral Converter]] — convert to and from Roman numerals."],
+      },
+      {
+        p:
+          "Roman numerals are worth understanding rather than just converting, because the system reveals something about positional notation. There is no zero, and no place value: XI means eleven whether it represents eleven sticks or eleven thousand. That is why arithmetic in Roman numerals is genuinely difficult, and why the system survived for centuries mostly for counting and dating rather than calculation.\n\nThe subtractive rule is the part people get wrong. IV is four, not VI; IX is nine. Clocks are a famous exception — Big Ben uses IIII rather than IV, for reasons historians still argue about. Converting rather than deriving is the right call in every case.",
+      },
+
+      { h: "A worked example: checking a fraction by hand" },
+      {
+        p:
+          "A recipe needs 0.375 cups and a scale that reads in grams, a report quotes a ratio as 0.625, and both look like numbers somebody typed in a hurry.",
+      },
+      {
+        l: [
+          "**1. Find the exact fraction.** Run 0.375 through the [[decimal-fraction|Decimal to Fraction]] tool: 3/8. Run 0.625: 5/8. Neither needed a calculator habit you do not have.",
+          "**2. Simplify the ratio.** To express 3/8 against 5/8, you need the GCF of 3 and 5. The [[gcf-calculator|GCF LCM Calculator]] gives 1, so the ratio is 3:5 and already simplest.",
+          "**3. Check the factorials claim.** If someone tells you a queue of 9 orders has 362,880 arrangements, the [[factorial-calculator|Factorial Calculator]] confirms 9! is exactly that. Now you know whether the build-time estimate was plausible.",
+          "**4. Normalise anything large.** A server reporting 1.5e9 nanoseconds is 1.5 seconds, per the [[scientific-notation|Scientific Notation Converter]] — which is the difference between a latency problem and a rounding artefact.",
+        ],
+      },
+
+      { h: "What these tools deliberately do not do" },
+      {
+        p:
+          "They do not show working, and they do not teach. If you need to understand why a formula is true, a calculator is the wrong instrument — it gives the answer without the reason, which is how people end up able to compute and unable to reason.\n\nThey also do not do arbitrary precision. Factorials and large factorisations will lose accuracy past the point where the answer is still useful, and a browser tab is not a computer algebra system. For anything where correctness genuinely matters — engineering, finance, cryptography — use a proper library with exact arithmetic, not a web page.",
+      },
+
+      { h: "Checking your own arithmetic" },
+      {
+        p:
+          "The most valuable mathematical habit is not speed, it is estimation. Before believing any result, ask whether it is the right order of magnitude: bigger or smaller than the input, and by roughly how much. Most arithmetic mistakes survive every other check except this one.\n\nRounding first makes estimation free. Round 0.375 to 0.4, round 5/8 to 0.6, and the ratio is obviously about 2:3 — close enough to 3:5 to confirm the fraction you computed exactly. If the exact answer and the estimate disagree, you have found an input error rather than a rounding problem, and you found it in seconds.\n\nThis is also why a calculator is not a substitute for thinking about what you asked it. A tool will compute the wrong quantity perfectly, and the only defence is knowing what the answer should feel like.",
+      },
+
+      { h: "Frequently asked questions" },
+      {
+        p:
+          "**Is my input sent anywhere?** No. All of these run locally in your browser.\n\n**Why does 0.1 plus 0.2 not equal 0.3?** Because neither 0.1 nor 0.2 is exactly representable in binary floating point. The sum is 0.30000000000000004, which is the closest double to 0.3.\n\n**How large a factorial can these handle?** Up to 170 before exceeding the range of a double. Past that the answer is displayed in scientific notation and then stops being meaningful.\n\n**Can I use the output in code?** Yes. For the decimal-to-fraction results in particular, use integer arithmetic on the numerator and denominator rather than converting back to a decimal.",
+      },
+
+      { h: "The one-line version" },
+      {
+        p:
+          "Use exact fractions when money is involved, remember that factorials explode faster than you expect, and prime factorisation is both a security foundation and a fraction-simplifying trick.",
+      },
+    ],
+  },
+
+  {
+    slug: "everyday-utility-tools",
+    metaTitle: "13 Free Everyday Utilities: Passwords, QR Codes, Timers, Encoding",
+    title: "13 Free Everyday Utilities: Passwords, QR Codes, Timers and Text Encoding",
+    description:
+      "Generate passwords, build QR codes, run timers and clocks, and decode binary, hex and cipher text — all with free browser tools that upload nothing.",
+    date: "2026-10-20",
+    updated: "2026-10-20",
+    readingTime: "11 min read",
+    category: "Utility Tools",
+    blocks: [
+      {
+        p:
+          "This last group is the junk drawer. Passwords, QR codes, a stopwatch, a world clock, a coin flip, and four tools that convert text into other representations of itself. Individually trivial, collectively the stuff you need at awkward moments.\n\nThe through-line is that all thirteen run locally. For a password generator that is not a nicety — it is the entire reason the tool can be trusted at all.",
+      },
+
+      { h: "Passwords: the part that actually matters" },
+      {
+        l: [
+          "[[password-generator|Password Generator]] — generate strong random passwords of any length and character set.",
+          "[[password-strength|Password Strength Checker]] — estimate how resistant a password is to being guessed, locally.",
+        ],
+      },
+      {
+        b:
+          "The single most important fact about password strength: **length beats complexity, and reuse beats both as a danger.** A 16-character password made of unrelated words is stronger and far more typeable than a 10-character mess of symbols. Meanwhile one reused password turning up in a breach takes out every account it touches at once. Generating a distinct long password per site is the entire job.",
+      },
+      {
+        p:
+          "How strength is estimated matters too. Most checkers approximate the size of the search space, which is a reasonable proxy but not the truth: `CorrectHorseBatteryStaple` scores well on entropy, while `P@ssw0rd1!` scores well on character variety and badly in practice because it appears in every cracking wordlist on earth.\n\nUse the generator for anything you care about, and if you have to remember a password, use a passphrase of four or five unrelated words. That is the specific case where memorability and strength actually overlap.",
+      },
+
+      { h: "QR codes: what to put in them" },
+      {
+        l: ["[[qr-code-generator|QR Code Generator]] — generate a QR code for a URL, text, Wi-Fi details or contact information."],
+      },
+      {
+        p:
+          "QR codes are one of those tools where the output quality is entirely determined by one decision: how much data you put in. A short URL encodes into a small, easily-scannable code. A paragraph of text with punctuation encodes into something dense and unreliable at small sizes.\n\nTwo practical rules. First, always test-scan the code at the size it will actually be printed before you print two hundred of them. Second, Wi-Fi and plain URL codes behave differently on different phones — if a code is going to a mixed audience, prefer a plain URL to a landing page that then links onward, because it works everywhere and you can change where it points.",
+      },
+
+      { h: "Time: timers, clocks and the trap in timezones" },
+      {
+        l: [
+          "[[stopwatch|Online Stopwatch]] — a plain stopwatch, useful when your phone is in the other room.",
+          "[[pomodoro-timer|Pomodoro Timer]] — 25-minute focus blocks with breaks, for people who find that structure works.",
+          "[[world-clock|World Clock]] — current time in several cities at once.",
+        ],
+      },
+      {
+        p:
+          "The world clock earns its place for one specific reason: daylight saving. Half the world's scheduling mistakes are not arithmetic errors, they are a moment where two cities were four hours apart last week and five hours apart this week, and nobody checked.\n\nBefore scheduling anything across a timezone, put both cities in the world clock and look — do not compute the offset from memory. This is also why meeting invitations should carry a timezone rather than a bare hour.",
+      },
+      {
+        p:
+          "On the Pomodoro timer: the technique works for a specific kind of task — bounded, focused, uninterrupted. It does not work for debugging, where the correct move when stuck is to walk away, not to start another 25-minute block. Use it when it helps.",
+      },
+
+      { h: "Randomness, honestly" },
+      {
+        l: ["[[coin-flip|Coin Flip Simulator]] — a fair virtual coin flip."],
+      },
+      {
+        p:
+          "Worth a sentence on fairness. A virtual coin flip is produced by a pseudo-random generator seeded unpredictably, which for the purposes of deciding who pays for lunch is indistinguishable from a real coin. For anything consequential — a draw with prizes, an allocation with money attached — you want a source you can audit, and a browser tab is not that. The value here is removing the human, who flips badly when motivated.",
+      },
+
+      { h: "The encoding junk drawer" },
+      {
+        p:
+          "Four tools that move text between representations. None of them are encryption, and the distinction is worth stating because it is constantly confused: an encoding is reversible by anyone and has no key. Encryption requires a key.",
+      },
+      {
+        l: [
+          "[[binary-text|Binary to Text]] — convert between text and its binary representation.",
+          "[[hex-text|Hex to Text]] — convert between text and hex, the representation you see most often in network tools and debuggers.",
+          "[[caesar-cipher|Caesar Cipher]] — shift letters by a fixed amount, the classic classroom cipher.",
+          "[[rot13-encoder|ROT13 Encoder]] — rotate letters by 13, a special case that is its own inverse.",
+        ],
+      },
+      {
+        p:
+          "These are useful for exactly two things. First, understanding how text becomes bytes, which is the mental model you need whenever anything looks garbled. Second, actually debugging: when a payload shows up as hex, the [[hex-text|Hex to Text]] converter is how you find out what it says.\n\nThey are not useful for hiding anything. ROT13 has no key — the shift is public — so it hides nothing from anyone who knows what ROT13 is. The Caesar cipher has 25 possible shifts, which a human breaks in minute one.",
+      },
+
+      { h: "The two that format things" },
+      {
+        l: [
+          "[[phone-formatter|Phone Number Formatter]] — normalise phone numbers into a consistent format.",
+          "[[file-size-converter|File Size Converter]] — convert between KB, MB, GB and TB, with the decimal and binary distinction explained.",
+        ],
+      },
+      {
+        p:
+          "The file size converter has one genuinely valuable output: it tells you why a drive advertises a bigger number than your computer reports. Vendors sell in powers of ten, operating systems report powers of two, and the gap is about 7 percent at every scale. That is not a fault, it is two conventions.",
+      },
+
+      { h: "A worked example: the garbled API response" },
+      {
+        p:
+          "A webhook is failing validation and the payload in the log looks like `\\x48\\x65\\x6c\\x6c\\x6f`. This is a ninety-second diagnosis.",
+      },
+      {
+        l: [
+          "**1. Convert.** Paste `48656c6c6f` into the [[hex-text|Hex to Text]] converter — the result is `Hello`. It was never garbled, just encoded.",
+          "**2. Check the shape.** Something upstream is hex-encoding the payload before signing. The signature was computed over the original text and validated against the hex, so the comparison fails.",
+          "**3. Rule out the other direction.** If the log had shown readable text, the problem would have been the reverse: signing the encoded form.",
+          "**4. Confirm the size claim.** If the same log reports a 1.2 MB payload, the [[file-size-converter|File Size Converter]] settles whether that is decimal or binary before anyone argues about a quota.",
+        ],
+      },
+
+      { h: "Frequently asked questions" },
+      {
+        p:
+          "**Is the password generator safe if everything runs in the browser?** Yes, and more so than a server-based one: the password is generated on your machine and never transmitted, so there is nothing to intercept, log or breach. The trade-off is that you cannot recover a password you did not save.\n\n**Can I trust the virtual coin flip?** For casual decisions, yes. For anything with money or prizes attached, use a source you can audit.\n\n**Are the ciphers secure?** No. None of them. ROT13 and Caesar ciphers have no secret key and exist to teach encoding, not to protect anything.\n\n**Do these work offline?** Once a page has loaded, yes — everything is local.\n\n**Is there a limit on text length for the converters?** Only your device's memory, since nothing is sent anywhere.",
+      },
+
+      { h: "The one-line version" },
+      {
+        p:
+          "Long unique passwords beat short clever ones, a QR code is only as good as the data inside it, check timezone offsets rather than computing them, and encoding is not encryption.",
+      },
+    ],
+  },
 ];
 
 export function getPost(slug: string): Post | undefined {
