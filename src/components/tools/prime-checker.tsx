@@ -6,5 +6,5 @@ export default function PrimeChecker() {
   const process = (input: string) => {
     const n=parseInt(input,10); if(!n||n<2) return "Enter a number >= 2"; for(let i=2;i<=Math.sqrt(n);i++){if(n%i===0) return n+" is NOT prime (divisible by "+i+")";} return n+" IS prime!";
   };
-  return <SimpleTool label="Input" placeholder="Enter text..." process={process} />;
+  return <SimpleTool label="Input" placeholder="97" hint="Enter a whole number of 2 or more." process={process} />;
 }

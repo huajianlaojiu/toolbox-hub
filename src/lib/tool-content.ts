@@ -671,10 +671,10 @@ const overrides: Record<string, ToolContent> = {
     intro:
       "The BMI Calculator takes a weight in kilograms and a height in metres and returns the Body Mass Index along with the standard category. BMI is weight divided by height squared, so it is a screening number rather than a diagnosis: it says nothing about muscle, bone density or fat distribution, which is why a heavily muscled person can land in the overweight band while carrying very little fat. It remains useful as a population-level indicator and as a quick personal reference, and it is the number most health forms ask for.",
     howTo: [
-      { step: "Enter weight and height", detail: "Type them as weight in kilograms, then a comma, then height in metres. For example 70,1.75 means 70 kilograms at 1.75 metres." },
-      { step: "Calculate", detail: "The BMI appears rounded to one decimal place, together with its category." },
-      { step: "Read the category", detail: "Under 18.5 is underweight, 18.5 to 24.9 is normal, 25 to 29.9 is overweight, and 30 or above is obese." },
-      { step: "Convert first if you use other units", detail: "Pounds to kilograms is divide by 2.205. Inches to metres is multiply by 0.0254. Feet and inches to metres is (feet times 12 plus inches) times 0.0254." },
+      { step: "Choose your units", detail: "Switch between metric, kilograms and centimetres, and imperial, pounds, feet and inches. The result is the same either way." },
+      { step: "Enter weight and height", detail: "Fill in the two or three fields. The result updates as you type, so there is no calculate button to press." },
+      { step: "Read the category", detail: "Under 18.5 is underweight, 18.5 to 24.9 is normal, 25 to 29.9 is overweight, and 30 or above is obese. The thresholds are shown under the result." },
+      { step: "Copy the summary", detail: "The result block contains the weight and height in metric along with the BMI and its category, ready to paste into a form or a note." },
     ],
     faq: [
       { q: "What is the formula?", a: "BMI equals weight in kilograms divided by height in metres squared. At 70 kilograms and 1.75 metres that is 70 divided by 3.0625, which is 22.9." },
@@ -700,10 +700,11 @@ const overrides: Record<string, ToolContent> = {
     intro:
       "The World Clock shows the current time in your own timezone alongside UTC, New York, London and Tokyo, computed from your device clock and rendered in the target timezone. The point of having UTC in the list is that it is the unambiguous reference: when you arrange a meeting across three cities, agreeing on a UTC time and converting from there avoids the confusion of everyone naming their own local time. Daylight saving shifts are applied automatically, because the conversion uses the browser's timezone database rather than a fixed offset.",
     howTo: [
-      { step: "Open the tool", detail: "It reads your device clock, so make sure your own system time is correct first." },
-      { step: "Run it", detail: "Local time, UTC, New York, London and Tokyo are all shown at once." },
+      { step: "Open the tool", detail: "It reads your device clock and updates every second, so make sure your own system time is correct first." },
+      { step: "Read the cities you need", detail: "Your local time, UTC, New York, London, Paris, Berlin, Dubai, Beijing, Tokyo, Singapore, Sydney, Los Angeles and Sao Paulo are shown at once, each with its date and UTC offset." },
+      { step: "Show or hide cities", detail: "Click any city button to hide it, and click again to bring it back. Useful when you only care about three of them." },
       { step: "Use UTC as the reference", detail: "When agreeing a time with people in several timezones, write down the UTC value and let everyone convert from that." },
-      { step: "Re-read it when planning ahead", detail: "The tool shows the current time. For a future date, work out the offset from today and check it again closer to the day, because daylight saving may have shifted in between." },
+      { step: "Re-read it when planning ahead", detail: "The clock shows the current time. For a future date, work out the offset from today and check it again closer to the day, because daylight saving may have shifted in between." },
     ],
     faq: [
       { q: "How is the time calculated?", a: "From your device clock, converted using the browser's built-in timezone database. That database includes historical and scheduled daylight saving rules, so the offsets are correct for the date in question." },
@@ -785,10 +786,11 @@ const overrides: Record<string, ToolContent> = {
     intro:
       "The Caesar Cipher shifts every letter in a message by a fixed number of places through the alphabet, wrapping around at Z back to A. It is the oldest documented cipher and still the clearest way to understand what substitution means, because the whole system is one number. Here you supply both the text and the shift: type your message, then a vertical bar, then the shift, for example hello|3. If you omit the shift, 3 is used, which is the value Caesar himself is said to have used. Treat it as a teaching tool and a puzzle device only; it is trivially breakable.",
     howTo: [
-      { step: "Type your message and the shift", detail: "Use the form text|shift, for example hello|3. Anything after the bar is read as the shift, and if it is missing or unreadable the default of 3 is applied." },
-      { step: "Run it", detail: "The output shows the shift that was used and the transformed text." },
-      { step: "Decode by using the reverse shift", detail: "To undo a shift of 3, apply a shift of 23, because 3 plus 23 is 26 and the alphabet wraps. Equivalently, apply the same shift another 25 times." },
-      { step: "Try every shift if you do not know it", detail: "There are only 25 meaningful shifts. Running all of them and reading the one that looks like language is the whole of breaking this cipher." },
+      { step: "Paste your text", detail: "Use the text area. There is no special input format to remember." },
+      { step: "Choose encode or decode", detail: "Encoding shifts letters forwards. Decoding shifts them backwards by the same amount, so you do not have to work out the reverse shift yourself." },
+      { step: "Set the shift", detail: "Drag the slider from 0 to 25, or click one of the shortcut buttons for ROT1, ROT3, ROT13 and ROT25." },
+      { step: "Read the result", detail: "The output appears as you change anything, along with a note telling you which shift would undo it." },
+      { step: "Try every shift if you do not know it", detail: "There are only 25 meaningful shifts, so sweeping the slider until the text looks like language is the whole of breaking this cipher." },
     ],
     faq: [
       { q: "Why is 3 the default?", a: "Because a shift of 3 is the one attributed to Julius Caesar in surviving accounts. It is a convention, not a mathematical requirement; any value from 1 to 25 works." },

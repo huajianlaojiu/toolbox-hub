@@ -6,5 +6,5 @@ export default function ScientificNotation() {
   const process = (input: string) => {
     const n=parseFloat(input); return isNaN(n)?"Invalid number":n.toExponential(6)+"\n\nStandard: "+n.toLocaleString("fullwide",{useGrouping:false});
   };
-  return <SimpleTool label="Input" placeholder="Enter text..." process={process} />;
+  return <SimpleTool label="Input" placeholder="123000" hint="Enter a number." process={process} />;
 }

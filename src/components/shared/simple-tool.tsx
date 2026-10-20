@@ -5,13 +5,14 @@ import CopyButton from "@/components/copy-button";
 interface SimpleToolProps {
   label?: string;
   placeholder?: string;
+  hint?: string;
   process: (input: string) => string;
   multiline?: boolean;
   showInput?: boolean;
   btnLabel?: string;
 }
 
-export default function SimpleTool({ label = "Input", placeholder = "", process, multiline = true, showInput = true, btnLabel = "Process" }: SimpleToolProps) {
+export default function SimpleTool({ label = "Input", placeholder = "", hint = "", process, multiline = true, showInput = true, btnLabel = "Process" }: SimpleToolProps) {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
 
@@ -30,6 +31,7 @@ export default function SimpleTool({ label = "Input", placeholder = "", process,
           ) : (
             <input className="tool-input tool-input-sm font-sans" value={input} onChange={(e) => setInput(e.target.value)} placeholder={placeholder} />
           )}
+          {hint && <p className="mt-2 text-xs text-muted-foreground">{hint}</p>}
         </div>
       )}
       <div className="flex gap-2">

@@ -6,5 +6,5 @@ export default function PlaceholderImage() {
   const process = (input: string) => {
     return "https://placehold.co/"+(input||"600x400")+"/EEE/999?text=Placeholder";
   };
-  return <SimpleTool label="Input" placeholder="Enter text..." process={process} />;
+  return <SimpleTool label="Input" placeholder="600x400" hint="Width and height in pixels, separated by an x." process={process} />;
 }
