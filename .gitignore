@@ -54,3 +54,5 @@ next-env.d.ts
 /.next_bak*/
 /out_prev*/
 /.next_old*/
+/.next_[0-9a-f]*/
+/out_[0-9a-f]*/
