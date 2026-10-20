@@ -41,9 +41,12 @@ jobs:
 
       - name: Strip internal Next artifacts
         run: |
-          # __next*.txt 是 Next 内部路由产物，不应发布（会被搜索引擎收录）
-          find out -name '__next*.txt' -delete
-          echo "remaining txt: $(find out -name '*.txt' | wc -l)"
+          # __next* 是 Next 内部 RSC 缓存（含 __next.<route>/__PAGE__.txt、__next.*.txt），
+          # 不应发布：会被搜索引擎收录，且 build 间哈希不稳定。
+          # 注意 _next/（单下划线）是真实静态资源，绝不能删。
+          find out -name '__next*' -delete
+          echo "remaining __next*: $(find out -name '__next*' | wc -l)"
+          echo "html pages: $(find out -name index.html | wc -l) | tools: $(ls -1 out/tools | wc -l)"
 
       - name: Verify build output
         run: |
