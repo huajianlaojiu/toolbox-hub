@@ -40,3 +40,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .npm-cache 
+
+# build artifacts
+/out_prev_tmp/
+/.next_old_tmp/
+/docs/

@@ -1,13 +1,14 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getTool, tools } from "@/lib/tools-data";
+import { getToolContent } from "@/lib/tool-content";
 import TiktokDownloader from "@/components/tools/tiktok-downloader";
 import InstagramDownloader from "@/components/tools/instagram-downloader";
 import YoutubeShortsDownloader from "@/components/tools/youtube-shorts-downloader";
 import ImageWatermarkRemover from "@/components/tools/image-watermark-remover";
 import VideoWatermarkRemover from "@/components/tools/video-watermark-remover";
 import { ChevronLeft } from "lucide-react";
-import Link from "next/link";
+
 import ToolCard from "@/components/tool-card";
 import PasswordStrength from "@/components/tools/password-strength";
 import HtmlPreview from "@/components/tools/html-preview";
@@ -114,13 +115,55 @@ interface ToolPageProps { params: Promise<{ slug: string }> }
 export function generateStaticParams() { return tools.map((tool) => ({ slug: tool.slug })) }
 export async function generateMetadata({ params }: ToolPageProps): Promise<Metadata> {
   const { slug } = await params; const tool = getTool(slug); if (!tool) return {};
-  return { title: tool.title, description: tool.description, keywords: tool.keywords }
+  const c = getToolContent(slug, tool.title, tool.description);
+  const desc = c.intro.slice(0, 158);
+  return {
+    title: `${tool.title} - Free Online Tool`,
+    description: desc,
+    keywords: tool.keywords,
+    alternates: { canonical: `/tools/${slug}/` },
+    openGraph: {
+      title: `${tool.title} - Free Online Tool | Toolbox Hub`,
+      description: desc,
+      url: `/tools/${slug}/`,
+      type: "article",
+    },
+  }
 }
 export default async function ToolPage({ params }: ToolPageProps) {
   const { slug } = await params; const tool = getTool(slug); if (!tool) notFound();
   const relatedTools = tools.filter((t) => t.category === tool.category && t.slug !== tool.slug).slice(0, 3);
+  const c = getToolContent(slug, tool.title, tool.description);
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        name: tool.title,
+        description: c.intro.slice(0, 300),
+        url: `https://toolbox-hub.io/tools/${slug}/`,
+        applicationCategory: "UtilitiesApplication",
+        operatingSystem: "Any",
+        browserRequirements: "Requires JavaScript",
+        offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+      },
+      {
+        "@type": "HowTo",
+        name: `How to use the ${tool.title}`,
+        description: c.intro.slice(0, 200),
+        totalTime: "PT1M",
+        step: c.howTo.map((h, i) => ({ "@type": "HowToStep", position: i + 1, name: h.step, text: h.detail })),
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: c.faq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+      },
+    ],
+  };
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8"><Link href="/" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"><ChevronLeft className="h-4 w-4" />All Tools</Link><div className="mb-8"><h1 className="text-2xl font-bold">{tool.title}</h1><p className="mt-2 text-sm text-muted-foreground">{tool.description}</p></div><div className="rounded-xl border bg-card p-6">
+    <div className="mx-auto max-w-6xl px-4 py-8">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <a href="/" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"><ChevronLeft className="h-4 w-4" />All Tools</a><div className="mb-8"><h1 className="text-2xl font-bold">{tool.title}</h1><p className="mt-2 text-sm text-muted-foreground">{tool.description}</p></div><div className="rounded-xl border bg-card p-6">
         {slug === "password-strength" && <PasswordStrength />}
         {slug === "html-preview" && <HtmlPreview />}
         {slug === "json-validator" && <JsonValidator />}
@@ -220,13 +263,74 @@ export default async function ToolPage({ params }: ToolPageProps) {
         {slug === "scientific-notation" && <ScientificNotation />}
         {slug === "decimal-fraction" && <DecimalFraction />}
         {slug === "gcf-calculator" && <GcfCalculator />}
-        {slug === "image-to-base64" && <ImageToBase64 />}        {slug === "password-strength" && <PasswordStrength />}        {slug === "html-preview" && <HtmlPreview />}        {slug === "json-validator" && <JsonValidator />}        {slug === "image-resizer" && <ImageResizer />}        {slug === "unicode-converter" && <UnicodeConverter />}        {slug === "url-extractor" && <UrlExtractor />}        {slug === "phone-formatter" && <PhoneFormatter />}        {slug === "text-stats" && <TextStats />}
+        {slug === "image-to-base64" && <ImageToBase64 />}
               {slug === "tiktok-downloader" && <TiktokDownloader />}
               {slug === "instagram-downloader" && <InstagramDownloader />}
               {slug === "youtube-shorts-downloader" && <YoutubeShortsDownloader />}
               {slug === "image-watermark-remover" && <ImageWatermarkRemover />}
               {slug === "video-watermark-remover" && <VideoWatermarkRemover />}
       </div>
-      <div className="mt-6 p-4 rounded-lg bg-muted/50 border"><p className="text-sm text-muted-foreground">{tool.description} All processing happens in your browser.</p></div>{relatedTools.length > 0 && (<section className="mt-12"><h2 className="text-lg font-semibold mb-4">Related Tools</h2><div className="grid grid-cols-1 gap-4 sm:grid-cols-3">{relatedTools.map((t) => (<ToolCard key={t.slug} tool={t} />))}</div></section>)}</div>
+      <div className="mt-6 p-4 rounded-lg bg-muted/50 border"><p className="text-sm text-muted-foreground">{tool.description} All processing happens in your browser.</p></div>
+
+      <section className="mt-10 max-w-3xl">
+        <h2 className="text-xl font-semibold mb-3">About the {tool.title}</h2>
+        <div className="space-y-4">
+          {c.intro.split("\n\n").map((para, i) => (
+            <p key={i} className="text-sm leading-7 text-muted-foreground">{para}</p>
+          ))}
+        </div>
+      </section>
+
+      {c.useCases && c.useCases.length > 0 && (
+        <section className="mt-8 max-w-3xl">
+          <h2 className="text-xl font-semibold mb-3">Where people use the {tool.title}</h2>
+          <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground leading-6">
+            {c.useCases.map((u, i) => (<li key={i}>{u}</li>))}
+          </ul>
+        </section>
+      )}
+
+      <section className="mt-8 max-w-3xl">
+        <h2 className="text-xl font-semibold mb-3">How to use the {tool.title}</h2>
+        <ol className="space-y-4">
+          {c.howTo.map((h, i) => (
+            <li key={i} className="flex gap-3">
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-sm font-semibold">{i + 1}</span>
+              <div>
+                <p className="font-medium text-sm">{h.step}</p>
+                <p className="text-sm text-muted-foreground leading-6 mt-1">{h.detail}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      {c.tips && c.tips.length > 0 && (
+        <section className="mt-8 max-w-3xl">
+          <h2 className="text-xl font-semibold mb-3">Tips and best practices</h2>
+          <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground leading-6">
+            {c.tips.map((t, i) => (<li key={i}>{t}</li>))}
+          </ul>
+        </section>
+      )}
+
+      <section className="mt-8 max-w-3xl">
+        <h2 className="text-xl font-semibold mb-3">Frequently asked questions</h2>
+        <div className="space-y-5">
+          {c.faq.map((f, i) => (
+            <div key={i}>
+              <h3 className="font-semibold text-sm">{f.q}</h3>
+              <p className="text-sm text-muted-foreground leading-6 mt-1.5">{f.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <div className="mt-10 max-w-3xl">
+        <ins className="adsbygoogle" style={{ display: "block" }} data-ad-client="ca-pub-7525547688409082" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true" />
+      </div>
+
+      {relatedTools.length > 0 && (<section className="mt-12"><h2 className="text-lg font-semibold mb-4">Related Tools</h2><div className="grid grid-cols-1 gap-4 sm:grid-cols-3">{relatedTools.map((t) => (<ToolCard key={t.slug} tool={t} />))}</div></section>)}
+    </div>
   )
 }
