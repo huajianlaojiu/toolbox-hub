@@ -1,0 +1,64 @@
+name: Deploy to GitHub Pages
+
+# 说明：
+# 本项目 Pages 使用 legacy 模式（发布源 = gh-pages 分支）。
+# 本工作流在 master 推送后执行 build，并把 out/ 内容提交到 gh-pages 分支，
+# GitHub Pages 会自动从 gh-pages 重新发布。无需把 Pages 切成 "GitHub Actions" 模式。
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate sitemap
+        run: node scripts/generate-sitemap.mjs
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Strip internal Next artifacts
+        run: |
+          # __next*.txt 是 Next 内部路由产物，不应发布（会被搜索引擎收录）
+          find out -name '__next*.txt' -delete
+          echo "remaining txt: $(find out -name '*.txt' | wc -l)"
+
+      - name: Verify build output
+        run: |
+          test -f out/index.html || (echo "out/index.html missing" && exit 1)
+          test -f out/CNAME || (echo "out/CNAME missing" && exit 1)
+          test -f out/ads.txt || (echo "out/ads.txt missing" && exit 1)
+          echo "pages: $(find out -name index.html | wc -l) | tools: $(ls -1 out/tools | wc -l)"
+
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out
+          publish_branch: gh-pages
+          user_name: github-actions[bot]
+          user_email: github-actions[bot]@users.noreply.github.com
+          commit_message: "deploy: ${{ github.sha }}"
+          force_orphan: false
