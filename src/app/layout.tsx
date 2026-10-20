@@ -7,6 +7,7 @@ const SITE_URL = "https://toolbox-hub.io";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  alternates: { canonical: "/" },
   title: {
     default: "Toolbox Hub - Free Online Tools",
     template: "%s - Toolbox Hub",
