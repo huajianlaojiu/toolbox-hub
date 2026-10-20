@@ -135,6 +135,9 @@ export default function RootLayout({
               <a href="/about/" className="hover:text-foreground">
                 About
               </a>
+              <a href="/blog/" className="hover:text-foreground">
+                Blog
+              </a>
               <a href="/contact/" className="hover:text-foreground">
                 Contact
               </a>

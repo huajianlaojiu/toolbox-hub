@@ -52,6 +52,7 @@ export default function Header() {
 
         <nav className="hidden sm:flex items-center gap-1 text-sm text-muted-foreground">
           <a href="/" className="rounded-md bg-muted text-foreground px-3 py-1.5">Home</a>
+          <a href="/blog/" className="rounded-md px-3 py-1.5 hover:text-foreground transition-colors">Blog</a>
         </nav>
       </div>
     </header>
