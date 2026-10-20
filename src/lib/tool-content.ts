@@ -554,6 +554,404 @@ const overrides: Record<string, ToolContent> = {
       "Even a small regular overpayment early in the term has a disproportionate effect, because it removes interest from every subsequent month.",
     ],
   },
+  "text-case-converter": {
+    intro:
+      "The Text Case Converter rewrites text as UPPERCASE, lowercase and Title Case in one pass, so you can compare the three and pick the one a style guide actually wants. The tricky one is Title Case: every style guide capitalises it differently. This tool applies the common rule, capitalising each word and lowercasing the rest, which means it will also capitalise short words such as and, of and the. If your house style keeps those lowercase, run the result through your own list of exceptions afterwards.",
+    howTo: [
+      { step: "Paste your text", detail: "Whole headings, a list of names, or a paragraph all work. Line breaks are preserved in each version." },
+      { step: "Convert", detail: "All three variants are produced at once rather than making you choose in advance." },
+      { step: "Pick the variant you need", detail: "Copy just the block you want, or take the whole output and delete what you do not need." },
+      { step: "Fix title-case exceptions", detail: "If your style keeps articles, short prepositions and conjunctions lowercase, correct those words by hand. It is usually a handful per heading." },
+    ],
+    faq: [
+      { q: "Which Title Case rule is used?", a: "The simple rule: capitalise the first letter of every word and lowercase the rest. That matches neither AP nor Chicago exactly, because both keep short function words lowercase. Use SENTENCE CASE or correct the small words afterwards if you are publishing to a strict style guide." },
+      { q: "Why did the word iPhone come out as Iphone?", a: "Because capitalisation rules operate on letters, not brands. Any word with deliberate internal capitalisation, such as iPhone, eBay or monday.com, needs restoring by hand." },
+      { q: "Does it handle accents and non-Latin scripts?", a: "Latin letters with diacritics are handled by the browser's own case mapping. Scripts without case, such as Chinese, Japanese and Arabic, pass through unchanged, which is correct." },
+      { q: "Can I convert only part of the text?", a: "Paste only that part. The tool has no selection mode, so the input is treated as one block." },
+      { q: "Is the text uploaded anywhere?", a: "No. Case conversion uses the browser's own toUpperCase and toLowerCase, so the text never leaves your device." },
+    ],
+    useCases: [
+      "Converting a list of headings into the casing a style guide requires.",
+      "Turning SHOUTING text from a legacy system into something readable.",
+      "Normalising a batch of database values before importing them.",
+      "Preparing alt text or labels that need consistent capitalisation.",
+    ],
+    tips: [
+      "For SEO titles, sentence case reads better and avoids the exception list entirely.",
+      "Avoid ALL CAPS for anything longer than a few words; it measurably slows reading.",
+      "Convert before you insert text into a design tool, so you do not have to redo it per frame.",
+    ],
+  },
+  "duplicate-line-remover": {
+    intro:
+      "The Duplicate Line Remover deletes repeated lines from a block of text, keeping the first occurrence of each line and dropping every later copy. Order is preserved, so the remaining list keeps the sequence you originally had, which matters when the list is a set of steps or a timeline. Comparison is exact: two lines that differ by a single trailing space are two different lines, so trimming whitespace first is the usual fix when the result looks wrong.",
+    howTo: [
+      { step: "Paste your list", detail: "One item per line. Anything separated by commas or spaces needs splitting into lines first." },
+      { step: "Trim whitespace if needed", detail: "Run the text through Text Trimmer before deduplicating. A trailing space is enough to make two identical-looking lines count as different." },
+      { step: "Remove duplicates", detail: "The output contains each distinct line exactly once, in the order it first appeared." },
+      { step: "Compare the counts", detail: "Counting the lines before and after tells you how many duplicates there were, which is often the actual answer you wanted." },
+    ],
+    faq: [
+      { q: "Which copy is kept?", a: "The first occurrence. Every later identical line is removed. If you need the last occurrence instead, reverse the list first, deduplicate, then reverse it back." },
+      { q: "Why are two identical-looking lines still both there?", a: "Because they are not actually identical. Invisible differences such as a trailing space, a tab, or a Windows carriage return on one line only will keep them distinct. Trim first." },
+      { q: "Is the comparison case-sensitive?", a: "Yes. Apple and apple are treated as two different lines. Convert the case first if you want them merged." },
+      { q: "Can it remove duplicates within a single line?", a: "No. This works line by line. For repeated words inside one paragraph you need a different approach." },
+      { q: "How large a list can it handle?", a: "It is bounded by the memory of your browser tab. Lists of tens of thousands of lines are fine; millions are not." },
+    ],
+    useCases: [
+      "Cleaning a list of email addresses or IDs before a bulk import.",
+      "Finding how many unique values a column actually contains.",
+      "Removing repeated log lines before pasting them into a ticket.",
+      "Deduplicating a list of URLs collected from several sources.",
+    ],
+    tips: [
+      "Always trim whitespace before deduplicating, not after.",
+      "Sort first if you want to see the duplicates grouped together; sort after if you want the original order preserved.",
+      "Keep the original list until you have checked the line counts, because the operation cannot be undone.",
+    ],
+  },
+  "url-encoder": {
+    intro:
+      "The URL Encoder converts text into percent-encoded form so it survives being put in a URL, and decodes it again when you are staring at something like %E4%BD%A0%E5%A5%BD and want to know what it says. Characters such as spaces, ampersands, question marks and non-ASCII letters all have special meaning inside a URL, so passing them through raw breaks the link or, worse, silently changes what the server receives. Encoding replaces each unsafe character with a percent sign followed by two hex digits.",
+    howTo: [
+      { step: "Choose a direction", detail: "Encode turns readable text into percent-encoded form; decode turns it back." },
+      { step: "Paste the text", detail: "For encoding, paste the value you want to put in a query string. For decoding, paste the whole percent-encoded fragment." },
+      { step: "Convert", detail: "The result appears immediately. If decoding fails, the input was not valid percent-encoded data." },
+      { step: "Copy it into your URL", detail: "Encoded values go after the question mark as name=value pairs, joined with ampersands." },
+    ],
+    faq: [
+      { q: "Why did a space become %20 instead of a plus sign?", a: "Because this uses encodeURIComponent, which follows the modern standard and produces %20. The plus sign meaning space is a form-submission convention that only applies to application/x-www-form-urlencoded bodies, not to path or query segments in general." },
+      { q: "Why does decoding fail on my string?", a: "Usually because a percent sign is followed by something that is not two hex digits. That happens when a string was encoded twice, or when it was cut off mid-character. Decode one layer at a time." },
+      { q: "Does it encode an entire URL at once?", a: "It encodes a component, not a whole URL. If you pass a complete URL through it, the slashes, colons and question marks will also be encoded, producing something the browser can no longer use. Encode individual parameter values instead." },
+      { q: "What about UTF-8 characters such as Chinese or emoji?", a: "They are encoded as their UTF-8 bytes, so one character becomes several percent-escaped triplets. That is correct and every server that expects UTF-8 will read it back properly." },
+      { q: "Is the slash encoded?", a: "Yes, encodeURIComponent encodes the slash. That is deliberate: a slash inside a parameter value must not be mistaken for a path separator." },
+    ],
+    useCases: [
+      "Building a search or filter URL with a value containing spaces.",
+      "Reading a percent-encoded string copied from an address bar or a log.",
+      "Preparing a value for an API call that requires query encoding.",
+      "Checking why a link with an ampersand in a parameter broke.",
+    ],
+    tips: [
+      "Encode each parameter value separately, never the whole URL.",
+      "If a value looks wrong on the server, check whether it was encoded twice.",
+      "Remember the difference: %20 for URLs, plus for form bodies.",
+    ],
+  },
+  "md5-generator": {
+    intro:
+      "The Hash Generator computes MD5, SHA-1, SHA-256 and SHA-512 digests of any text, in your browser, and shows all four at once so you can compare them. A hash is a fixed-length fingerprint: the same input always gives the same output, and changing one character produces a completely different digest. That makes it useful for verifying downloads and for reproducing a value a system expects. It is emphatically not encryption, because a hash cannot be reversed, and MD5 and SHA-1 are no longer considered safe against deliberate collision attacks.",
+    howTo: [
+      { step: "Enter the text", detail: "Paste anything from a single word to a whole document. Whitespace and capitalisation are part of the input, so an extra space changes the result." },
+      { step: "Generate", detail: "All four digests are computed at once. MD5 runs locally in JavaScript; the SHA family uses the browser's own crypto.subtle implementation." },
+      { step: "Compare against the published value", detail: "A checksum matches exactly or it does not. There is no partial match and no tolerance." },
+      { step: "Copy the digest you need", detail: "Each row has its own copy button, so you get the right algorithm without re-reading the list." },
+    ],
+    faq: [
+      { q: "Can a hash be reversed?", a: "No. A digest throws away information: SHA-256 compresses arbitrarily long input into 256 bits. The only way back is to guess inputs and compare, which is why hashing is not encryption and must not be used to store recoverable secrets." },
+      { q: "Is MD5 safe to use?", a: "Not for security. Practical collision attacks against MD5 have existed for years, and SHA-1 collisions have been demonstrated publicly. Use MD5 only for non-adversarial checksums, legacy compatibility, or matching a value an old system already produced. For anything security related use SHA-256 or SHA-512, and for passwords use bcrypt, scrypt or Argon2 with a salt." },
+      { q: "Why does my hash not match the one on the download page?", a: "Almost always because the input differs. A trailing newline, a different line ending, or a BOM at the start of the file all change the digest. Hash the exact bytes, not a retyped copy." },
+      { q: "How is a file checksum different from this?", a: "This tool hashes text you paste. A file checksum hashes the raw bytes on disk. For a large file, use a command-line tool such as sha256sum rather than pasting the contents." },
+      { q: "Is the text sent to a server?", a: "No. MD5 is computed in JavaScript here and the SHA family uses the browser's Web Crypto API, so the input never leaves your device. That is why you can safely hash credentials you are testing with." },
+      { q: "What does the hash length mean?", a: "It is fixed per algorithm: 32 hex characters for MD5, 40 for SHA-1, 64 for SHA-256 and 128 for SHA-512. A longer digest means a larger output space, not a stronger guarantee by itself." },
+    ],
+    useCases: [
+      "Verifying a downloaded file against a published checksum.",
+      "Reproducing a hash value that an API signature requires.",
+      "Checking that two copies of a string are byte-identical.",
+      "Learning how a single character change alters an entire digest.",
+    ],
+    tips: [
+      "Never use a plain hash for passwords; use a salted, slow key-derivation function.",
+      "Match the algorithm to what the other system expects; a correct SHA-256 is still wrong if MD5 was requested.",
+      "Watch for trailing newlines when a checksum does not match.",
+    ],
+  },
+  "bmi-calculator": {
+    intro:
+      "The BMI Calculator takes a weight in kilograms and a height in metres and returns the Body Mass Index along with the standard category. BMI is weight divided by height squared, so it is a screening number rather than a diagnosis: it says nothing about muscle, bone density or fat distribution, which is why a heavily muscled person can land in the overweight band while carrying very little fat. It remains useful as a population-level indicator and as a quick personal reference, and it is the number most health forms ask for.",
+    howTo: [
+      { step: "Enter weight and height", detail: "Type them as weight in kilograms, then a comma, then height in metres. For example 70,1.75 means 70 kilograms at 1.75 metres." },
+      { step: "Calculate", detail: "The BMI appears rounded to one decimal place, together with its category." },
+      { step: "Read the category", detail: "Under 18.5 is underweight, 18.5 to 24.9 is normal, 25 to 29.9 is overweight, and 30 or above is obese." },
+      { step: "Convert first if you use other units", detail: "Pounds to kilograms is divide by 2.205. Inches to metres is multiply by 0.0254. Feet and inches to metres is (feet times 12 plus inches) times 0.0254." },
+    ],
+    faq: [
+      { q: "What is the formula?", a: "BMI equals weight in kilograms divided by height in metres squared. At 70 kilograms and 1.75 metres that is 70 divided by 3.0625, which is 22.9." },
+      { q: "Why does BMI say I am overweight when I am fit?", a: "Because BMI cannot distinguish muscle from fat. Muscle is denser than fat, so people with high lean mass, particularly athletes, regularly score in the overweight band. Waist measurement or body-fat percentage is more informative for them." },
+      { q: "Is the same scale used everywhere?", a: "The formula is the same worldwide, but some countries adjust the category thresholds for their population. Several Asian countries use lower cut-offs because health risks appear at lower BMI in those populations." },
+      { q: "Does it work for children?", a: "No. Children need age and sex adjusted percentiles, because body composition changes through growth. Use a paediatric growth chart instead of an adult BMI number." },
+      { q: "How precise is the result?", a: "To one decimal place, which is more precision than the input usually justifies. Body weight fluctuates by a kilogram or more over a day, so treat the number as a rough indicator rather than a measurement." },
+      { q: "Is my data recorded?", a: "No. The arithmetic happens in your browser and nothing is transmitted or stored." },
+    ],
+    useCases: [
+      "Checking a figure for a health or insurance form.",
+      "Converting imperial measurements into a metric BMI.",
+      "Tracking a general trend over months rather than days.",
+      "Sanity-checking a number produced by another app.",
+    ],
+    tips: [
+      "Measure in the morning under consistent conditions if you are tracking a trend.",
+      "Treat BMI as one signal, not a verdict; waist-to-height ratio adds useful information.",
+      "For clinical decisions, speak to a professional rather than relying on a screening number.",
+    ],
+  },
+  "world-clock": {
+    intro:
+      "The World Clock shows the current time in your own timezone alongside UTC, New York, London and Tokyo, computed from your device clock and rendered in the target timezone. The point of having UTC in the list is that it is the unambiguous reference: when you arrange a meeting across three cities, agreeing on a UTC time and converting from there avoids the confusion of everyone naming their own local time. Daylight saving shifts are applied automatically, because the conversion uses the browser's timezone database rather than a fixed offset.",
+    howTo: [
+      { step: "Open the tool", detail: "It reads your device clock, so make sure your own system time is correct first." },
+      { step: "Run it", detail: "Local time, UTC, New York, London and Tokyo are all shown at once." },
+      { step: "Use UTC as the reference", detail: "When agreeing a time with people in several timezones, write down the UTC value and let everyone convert from that." },
+      { step: "Re-read it when planning ahead", detail: "The tool shows the current time. For a future date, work out the offset from today and check it again closer to the day, because daylight saving may have shifted in between." },
+    ],
+    faq: [
+      { q: "How is the time calculated?", a: "From your device clock, converted using the browser's built-in timezone database. That database includes historical and scheduled daylight saving rules, so the offsets are correct for the date in question." },
+      { q: "Why is the time wrong?", a: "Because your own device clock is wrong. The tool has no independent time source; if your laptop is five minutes fast, every city shown will be five minutes fast." },
+      { q: "Does it handle daylight saving automatically?", a: "Yes. New York and London move between standard and daylight time on their own schedules, and the conversion reflects that. This is exactly why a fixed offset such as UTC-5 is unreliable for future dates." },
+      { q: "Why is Tokyo sometimes a day ahead?", a: "Because when it is Monday evening in London it is already Tuesday morning in Tokyo. Compare the date as well as the hour when scheduling across the Pacific." },
+      { q: "Can I see a city that is not listed?", a: "Not here. The five shown cover the most commonly needed reference points; anything else needs a converter that accepts an arbitrary timezone." },
+    ],
+    useCases: [
+      "Scheduling a call across Europe, North America and Asia.",
+      "Checking whether it is already the next day somewhere before sending a message.",
+      "Converting a UTC timestamp from a log into your local time.",
+      "Working out whether a market or office abroad is open right now.",
+    ],
+    tips: [
+      "Always state times as UTC in writing; it removes every ambiguity.",
+      "Re-check a few days before a scheduled event if it crosses a daylight saving change.",
+      "Compare dates, not just hours, when the cities are far apart.",
+    ],
+  },
+  "pomodoro-timer": {
+    intro:
+      "The Pomodoro Timer runs the classic 25-minute focus block followed by a 5-minute break, and switches between the two automatically when one ends. The technique works because the fixed, short interval removes the decision of when to stop: you commit to 25 minutes, and the break is a scheduled reward rather than a lapse. The timer keeps counting in the tab it runs in, so leaving the page open while you work is what makes it useful.",
+    howTo: [
+      { step: "Start with the work block", detail: "The timer opens at 25 minutes in work mode. Press Start when you are ready to begin." },
+      { step: "Work until it ends", detail: "Do not pause for anything that is not urgent. The point of the block is that it is uninterruptible." },
+      { step: "Take the break", detail: "When the work block reaches zero, the timer switches itself to a 5-minute break. Actually stand up during it." },
+      { step: "Switch manually if you prefer longer blocks", detail: "The Work and Break buttons jump straight to either mode. Many people settle on 50 and 10 once 25 feels too short." },
+      { step: "Reset between sessions", detail: "Reset returns the current mode to its full length without switching modes." },
+    ],
+    faq: [
+      { q: "Why 25 and 5?", a: "Those are the numbers from the original method, and they are short enough to feel non-threatening. They are not sacred; if your work has a longer natural rhythm, 50 and 10 or 90 and 20 work just as well." },
+      { q: "Does it keep running if I switch tabs?", a: "Yes, as long as the tab stays open. Browsers throttle timers in background tabs, so do not close the tab or minimise the browser for a long period and expect it to stay accurate." },
+      { q: "Is there a sound at the end?", a: "No. It changes state and stops at zero, so keep the tab visible if you rely on noticing the switch." },
+      { q: "Does it count completed sessions?", a: "No. It is a timer, not a tracker. If you want a record of how many blocks you did, keep a tally separately." },
+      { q: "Can I pause?", a: "Yes. Pause stops the countdown, and Start resumes from where it stopped rather than restarting." },
+    ],
+    useCases: [
+      "Breaking a task you have been avoiding into one manageable block.",
+      "Forcing regular breaks during a long coding or writing session.",
+      "Timeboxing email or admin so it does not consume the morning.",
+      "Working with a team that all starts and stops at the same moment.",
+    ],
+    tips: [
+      "Write down the single task for the block before you start it.",
+      "Take the break even when you are in flow; that is what makes the next block possible.",
+      "If 25 minutes consistently feels too short, change the length rather than abandoning the method.",
+    ],
+  },
+  "morse-code": {
+    intro:
+      "The Morse Code Translator converts text to Morse code and Morse code back to text, choosing the direction automatically by looking at what you typed: input containing dots or dashes is decoded, anything else is encoded. Letters are separated by spaces and words by a forward slash, which is the conventional written form. Characters outside the standard alphabet and digits are marked with a question mark in brackets rather than silently dropped, so you can see what did not translate.",
+    howTo: [
+      { step: "Paste text or Morse", detail: "Plain text is encoded. Anything containing a dot or a dash is treated as Morse and decoded." },
+      { step: "Understand the separators", detail: "A space between letters, and a slash between words. When decoding, each space-separated group is read as one character." },
+      { step: "Translate", detail: "The result appears immediately. Unknown characters appear as [?] rather than being removed." },
+      { step: "Check the separators if decoding looks wrong", detail: "The most common failure is missing spaces between letters, which makes the whole string unreadable as a sequence of characters." },
+    ],
+    faq: [
+      { q: "How does it decide which way to translate?", a: "It looks for a dot or a dash in your input. If either is present the input is treated as Morse; otherwise it is treated as text. That means ordinary text containing a hyphen may be misread, so remove punctuation if you get a strange result." },
+      { q: "Why do some characters come out as [?]", a: "Because they are outside the supported set. Standard Morse covers A to Z, 0 to 9 and a handful of punctuation marks. Accented letters and most symbols are not part of the code, so they cannot be represented." },
+      { q: "What does the slash mean?", a: "A word separator. In Morse, the pause between words is longer than the pause between letters, and the slash is the written equivalent of that longer pause." },
+      { q: "Is Morse still used?", a: "Yes, in aviation and maritime navigation, in amateur radio, and as an accessibility input method. It remains in the international distress signal SOS, which is three dots, three dashes, three dots with no letter gaps." },
+      { q: "Does it handle lowercase input?", a: "Yes. Input is lowercased before encoding, and decoded output is produced as lowercase letters, which you can then capitalise yourself." },
+    ],
+    useCases: [
+      "Encoding a message for a radio or a themed design.",
+      "Decoding a Morse sequence from a puzzle or a capture-the-flag challenge.",
+      "Learning the alphabet by comparing letters with their patterns.",
+      "Checking whether a Morse sequence you transcribed is well formed.",
+    ],
+    tips: [
+      "Keep exactly one space between letters and a space-slash-space between words.",
+      "Remove hyphens and punctuation from plain text before encoding, so the direction is detected correctly.",
+      "Learn E (dot) and T (dash) first; they are the building blocks of everything else.",
+    ],
+  },
+  "caesar-cipher": {
+    intro:
+      "The Caesar Cipher shifts every letter in a message by a fixed number of places through the alphabet, wrapping around at Z back to A. It is the oldest documented cipher and still the clearest way to understand what substitution means, because the whole system is one number. Here you supply both the text and the shift: type your message, then a vertical bar, then the shift, for example hello|3. If you omit the shift, 3 is used, which is the value Caesar himself is said to have used. Treat it as a teaching tool and a puzzle device only; it is trivially breakable.",
+    howTo: [
+      { step: "Type your message and the shift", detail: "Use the form text|shift, for example hello|3. Anything after the bar is read as the shift, and if it is missing or unreadable the default of 3 is applied." },
+      { step: "Run it", detail: "The output shows the shift that was used and the transformed text." },
+      { step: "Decode by using the reverse shift", detail: "To undo a shift of 3, apply a shift of 23, because 3 plus 23 is 26 and the alphabet wraps. Equivalently, apply the same shift another 25 times." },
+      { step: "Try every shift if you do not know it", detail: "There are only 25 meaningful shifts. Running all of them and reading the one that looks like language is the whole of breaking this cipher." },
+    ],
+    faq: [
+      { q: "Why is 3 the default?", a: "Because a shift of 3 is the one attributed to Julius Caesar in surviving accounts. It is a convention, not a mathematical requirement; any value from 1 to 25 works." },
+      { q: "How do I decrypt without knowing the shift?", a: "Try all 25 shifts and read the results. That takes seconds by hand and is why this cipher offers no real security. Frequency analysis, looking at which letters appear most often, is the systematic version of the same idea." },
+      { q: "Are spaces and punctuation encrypted?", a: "No. Only letters are shifted; digits, spaces and punctuation pass through unchanged. That is one reason the result is so easy to read once you know the method." },
+      { q: "Does case survive?", a: "Yes. Uppercase letters are shifted within the uppercase alphabet and lowercase within the lowercase one, so capitalisation is preserved." },
+      { q: "Is this secure enough to send a real secret?", a: "No, not remotely. It has 25 possible keys and no protection against frequency analysis. It is fine for puzzles, teaching and hiding spoilers from a casual glance." },
+    ],
+    useCases: [
+      "Explaining how substitution ciphers work to someone learning.",
+      "Solving or setting a puzzle or a geocache clue.",
+      "Hiding a spoiler in plain sight from someone not paying attention.",
+      "Checking a manual ROT13 or ROT-n result.",
+    ],
+    tips: [
+      "Remember that a shift of 13 is its own inverse, which is why ROT13 is used for spoilers.",
+      "To reverse any shift n, apply 26 minus n.",
+      "Leave spaces and punctuation in place; they are what makes the result readable as a puzzle.",
+    ],
+  },
+  "binary-text": {
+    intro:
+      "The Binary to Text converter translates text into binary and binary back into text, choosing the direction from what you paste: input made only of ones, zeros and spaces is decoded, anything else is encoded. Each character becomes one byte, shown as eight binary digits, and groups are separated by spaces so you can see where one character ends and the next begins. The eight-bit form is the one that matches how text is actually stored, and it is why you will see a leading zero at the start of every ordinary letter.",
+    howTo: [
+      { step: "Paste text or binary", detail: "Anything containing only 1, 0 and spaces is decoded; everything else is encoded." },
+      { step: "Convert", detail: "Encoded output is one eight-digit group per character, separated by spaces." },
+      { step: "Decode by pasting the groups", detail: "Keep the spaces between groups. Without them the string cannot be split into bytes and the conversion will fail." },
+      { step: "Check for characters outside the range", detail: "Values above 127 depend on how the text was encoded in the first place, so accented characters and emoji may not survive a round trip." },
+    ],
+    faq: [
+      { q: "Why eight digits per character?", a: "Because one byte is eight bits, and a single byte is the unit most text encodings are built on. That is why the letter A, which is 65, is written 01000001." },
+      { q: "Why does every letter start with 0?", a: "Because standard ASCII values run from 0 to 127, and 127 in binary is 01111111. The top bit stays zero, so every ASCII character has a leading 0 in its eight-bit form." },
+      { q: "Does it handle UTF-8 characters?", a: "Partly. Encoding goes character by character using the Unicode code point, so characters above 255 produce groups longer than eight bits. Decoding expects byte-sized groups. For accented text and emoji the conversion may not round-trip cleanly." },
+      { q: "How do I read a byte by hand?", a: "Add the place values of the positions holding a 1, from left to right: 128, 64, 32, 16, 8, 4, 2, 1. So 01000001 is 64 plus 1, which is 65, the code for A." },
+      { q: "Is this the same as hexadecimal?", a: "No, but they represent the same underlying numbers. Hexadecimal is a more compact way to write the same bytes, which is why long binary strings are usually shown as hex instead." },
+    ],
+    useCases: [
+      "Learning how characters are represented as bytes.",
+      "Decoding a binary string from a puzzle or an exercise.",
+      "Checking what a byte value means without opening a calculator.",
+      "Demonstrating why text encodings need a defined character set.",
+    ],
+    tips: [
+      "Keep one space between each eight-bit group when decoding.",
+      "For long data, use hexadecimal; it is four times shorter and far easier to read.",
+      "If a decode produces nonsense, check that no group has more than eight digits.",
+    ],
+  },
+  "url-parser": {
+    intro:
+      "The URL Parser breaks a web address into its parts and labels each one: protocol, host, port, path, query string and fragment. Reading a URL as a single string is what makes query parameters so easy to get wrong, because the question mark, the ampersand and the hash each have a specific meaning and the order matters. Splitting it out shows you exactly what the server will receive and what the browser will keep to itself, which is usually the answer when a link behaves unexpectedly.",
+    howTo: [
+      { step: "Paste a complete URL", detail: "Include the scheme. A bare domain such as example.com is not a valid URL and will be rejected; use https://example.com." },
+      { step: "Parse it", detail: "Each component appears on its own line with its name." },
+      { step: "Read the query string separately", detail: "Everything after the question mark is the query. Parameters are separated by ampersands and each is a name=value pair." },
+      { step: "Note what is missing from the output", detail: "An empty port or fragment simply means the URL did not specify one. The default port is implied by the scheme: 443 for https, 80 for http." },
+    ],
+    faq: [
+      { q: "Why does it reject my URL?", a: "Because it has no scheme. Parsing needs http:// or https:// at the front; without it there is no way to tell a host from a path. Add the scheme and try again." },
+      { q: "What is the difference between the query and the fragment?", a: "The query, after the question mark, is sent to the server. The fragment, after the hash, is not: the browser keeps it locally and uses it to scroll to an element. That is why parameters placed after a hash never reach your server." },
+      { q: "Why is the port empty?", a: "Because the URL did not state one. Browsers use the default for the scheme, 443 for https and 80 for http, so an empty port is normal rather than an error." },
+      { q: "Does it decode percent-encoded values?", a: "No. It reports the query string exactly as it appears. Decode individual values with the URL Encoder if you need to read them." },
+      { q: "Why did my ampersand disappear from a parameter value?", a: "Because an ampersand separates parameters. A literal ampersand inside a value has to be percent-encoded as %26, otherwise the parser is correct to treat it as a boundary." },
+    ],
+    useCases: [
+      "Working out why a parameter is not reaching the server.",
+      "Checking which host a shortened or redirected URL actually points at.",
+      "Splitting a query string before rewriting it.",
+      "Confirming a fragment was mistakenly used where a query was needed.",
+    ],
+    tips: [
+      "Anything after the hash never reaches the server; put parameters before it.",
+      "Percent-encode ampersands and equals signs that belong inside a value.",
+      "Always include the scheme when testing, even though browsers hide it.",
+    ],
+  },
+  "phone-formatter": {
+    intro:
+      "The Phone Number Formatter strips everything that is not a digit from a number and rewrites it in a standard display form. It recognises the three lengths that cover most North American numbers: ten digits become the familiar (123) 456-7890, eleven digits starting with a country code become 1 (234) 567-8901, and seven digits become a local 123-4567. Anything longer or shorter is reported as an international number with its raw digit count, which is the honest answer when the format is not one this tool can safely assume.",
+    howTo: [
+      { step: "Paste the number", detail: "Any existing formatting is fine. Parentheses, dashes, spaces, dots and a leading plus are all ignored." },
+      { step: "Run it", detail: "The output depends on how many digits were found, as described below." },
+      { step: "Check the digit count", detail: "If the result says International, count the digits yourself. A number that is one digit short or long is the usual cause of a formatting surprise." },
+      { step: "Store numbers as digits", detail: "Formatting belongs at display time. Keeping only digits in your database avoids every dialect of separator." },
+    ],
+    faq: [
+      { q: "Why do I get an international result instead of a formatted number?", a: "Because the digit count is not 7, 10 or 11. That usually means a missing or extra digit, or a non-North-American number. The tool reports the raw digits and their count rather than guessing at a national format." },
+      { q: "Does it validate that the number exists?", a: "No. It only rewrites the shape of the number. It cannot tell whether a number is assigned, whether it is a landline or a mobile, or whether it can receive SMS. That needs a carrier lookup service." },
+      { q: "What about extensions?", a: "An extension is not a digit pattern this tool recognises. Remove it before formatting and append it afterwards, usually as ext. followed by the number." },
+      { q: "Why is my plus sign dropped?", a: "Because the plus is not a digit, and it is part of the international notation rather than the number itself. The tool reports the digits so you can re-add the prefix in whatever notation your system expects, such as 00 or +." },
+      { q: "Should I store formatted numbers?", a: "No. Store the digits, ideally in E.164 form with the country code, and format at the point of display. That keeps search and deduplication reliable." },
+    ],
+    useCases: [
+      "Normalising a spreadsheet column of numbers typed in several formats.",
+      "Producing consistent display text from raw digits in a database.",
+      "Checking how many digits a number actually has before importing.",
+      "Cleaning numbers pasted out of an email signature or a document.",
+    ],
+    tips: [
+      "Strip extensions before formatting and re-attach them afterwards.",
+      "Store digits only; format for humans at the last moment.",
+      "For anything outside North America, keep the E.164 form with the country code.",
+    ],
+  },
+  "contrast-checker": {
+    intro:
+      "The Contrast Checker measures the contrast ratio between a text colour and a background colour using the WCAG luminance formula, and tells you which accessibility levels that pair passes. This is the check that decides whether body text is actually readable: a ratio of 4.5 to 1 is the minimum for normal text, 3 to 1 for large text and for interface boundaries, and 7 to 1 for enhanced compliance. Judging contrast by eye is unreliable, because the eye is far more sensitive to green than to blue, which is why a yellow that looks bright and a blue that looks dark can score almost identically.",
+    howTo: [
+      { step: "Set the text colour", detail: "Type a hex value such as 1a1a1a, or use the colour picker. Three-digit shorthand such as f0a is accepted." },
+      { step: "Set the background colour", detail: "Same for the background. The preview updates as you change either one." },
+      { step: "Read the ratio", detail: "The number runs from 1:1, identical colours, to 21:1, black on white. Higher means more readable." },
+      { step: "Check the level you need", detail: "Normal body text needs 4.5 to 1 for AA and 7 to 1 for AAA. Headings at 18pt or 14pt bold, and UI borders, need 3 to 1." },
+      { step: "Look at the preview as well as the number", detail: "A pair can pass on paper and still look poor at a small size or on a low-quality screen. If it looks hard to read, it is hard to read." },
+    ],
+    faq: [
+      { q: "What is the contrast ratio formula?", a: "Each colour is converted to relative luminance using the standard weights, 0.2126 for red, 0.7152 for green and 0.0722 for blue, after gamma correction. The ratio is then the lighter luminance plus 0.05 divided by the darker plus 0.05. The result ranges from 1:1 to 21:1." },
+      { q: "Why does my brand colour fail?", a: "Because most saturated mid-tone colours cannot reach 4.5 to 1 against white. The usual fix is to darken the colour for text use while keeping the brighter version for large fills, which is exactly what most design systems do with their primary colour." },
+      { q: "Is passing the ratio enough to be accessible?", a: "It is necessary but not sufficient. Very large or very small text, thin font weights, text over images, and certain forms of colour vision deficiency all affect readability beyond the ratio. Test with real users where you can." },
+      { q: "Does the direction matter, light on dark or dark on light?", a: "No. The ratio is symmetrical, so black on white and white on black both score 21:1. What differs in practice is glare and perceived weight, which is a design judgement rather than a compliance one." },
+      { q: "What counts as large text?", a: "In WCAG terms, 18pt or larger, or 14pt or larger when bold. In CSS pixels that is roughly 24px, or about 18.66px when bold." },
+      { q: "Where does the calculation happen?", a: "Entirely in your browser. Nothing is uploaded, so you can check colours from a brand guideline that is not public yet." },
+    ],
+    useCases: [
+      "Checking whether body text on a coloured background meets AA.",
+      "Choosing between black and white text for a button colour.",
+      "Auditing an existing palette before a redesign.",
+      "Documenting an accessibility decision in a ticket.",
+    ],
+    tips: [
+      "Darken a colour for text, keep the brighter version for fills.",
+      "Check the smallest size the text will actually be used at.",
+      "Borders and icons need 3 to 1 too, not just text.",
+    ],
+  },
+  "color-palette": {
+    intro:
+      "The Color Palette Generator takes one base colour and derives the standard harmony schemes from it: complementary, analogous, triadic, split complementary and tetradic, plus a ramp of tints towards white and shades towards black. Harmonies are computed in HSL by rotating the hue while keeping saturation and lightness, which is why the results stay related to your base instead of drifting. The ramp is the part most palettes actually need, because a working interface needs several values of the same hue for hover, active and disabled states, not just one accent colour.",
+    howTo: [
+      { step: "Pick a base colour", detail: "Enter a hex value such as 4ECDC4, or use the picker. Everything else is derived from this one colour." },
+      { step: "Read the harmony schemes", detail: "Each scheme is a different hue rotation. Complementary is 180 degrees, triadic is 120 and 240, and so on." },
+      { step: "Take the tint and shade ramp", detail: "Five tints towards white and five shades towards black give you the states and elevations you will need in a real interface." },
+      { step: "Copy the values", detail: "The full list of generated hex values is in one block, ready to paste into a stylesheet or a design token file." },
+      { step: "Check contrast before shipping", detail: "Run any text and background pair from the palette through the Contrast Checker. Harmonious is not the same as readable." },
+    ],
+    faq: [
+      { q: "What is the difference between the schemes?", a: "Complementary uses the opposite hue, which gives the strongest contrast and suits a call to action. Analogous uses neighbours 30 degrees either side, which is calm and safe. Triadic spreads three hues evenly, which is lively and harder to control. Split complementary softens the complementary clash by using the two hues either side of the opposite. Tetradic uses four hues at right angles, which suits complex dashboards." },
+      { q: "Why do the generated colours share the same saturation and lightness?", a: "Because rotating only the hue is what keeps them recognisably related. Varying lightness at the same time produces colours that look unrelated, which defeats the point of a palette." },
+      { q: "Are tints just the colour mixed with white?", a: "Effectively yes, but computed in HSL by raising lightness while holding hue and saturation. That keeps the hue stable, whereas naive mixing in RGB drifts towards grey." },
+      { q: "How many colours should a palette have?", a: "For most interfaces, two or three hues plus a neutral ramp is plenty. A scheme with five saturated hues is difficult to use consistently and usually ends up looking accidental." },
+      { q: "Does it check accessibility?", a: "No, it only generates colours. Use the Contrast Checker on any pairing you intend to use for text." },
+    ],
+    useCases: [
+      "Building a palette around a single brand colour.",
+      "Producing hover, active and disabled variants from one accent.",
+      "Exploring alternatives to a colour that failed a contrast check.",
+      "Generating a neutral ramp for surfaces and borders.",
+    ],
+    tips: [
+      "Pick the base colour from the brand, then only adjust lightness for states.",
+      "Reserve the complementary colour for the one action you want noticed.",
+      "Always run the final pairing through a contrast check before shipping.",
+    ],
+  },
 };
 
 export function getToolContent(slug: string, title: string, description: string): ToolContent {
