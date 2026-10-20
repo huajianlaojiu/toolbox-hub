@@ -954,6 +954,375 @@ const overrides: Record<string, ToolContent> = {
       "Always run the final pairing through a contrast check before shipping.",
     ],
   },
+  "gradient-generator": {
+    intro:
+      "The CSS Gradient Generator builds a real linear or radial gradient from two colours and an angle, shows it full size, and hands you the CSS. The angle is the part people misread: in CSS, 0deg points upwards and the direction rotates clockwise, so 90deg runs left to right and 180deg runs top to bottom. Getting that wrong is why a gradient often looks upside down the first time. Both colours can carry an eight-digit alpha value, which is how you fade a gradient out over a hero image.",
+    howTo: [
+      { step: "Pick the start and end colours", detail: "Use the colour picker or type a hex value. The preview and the CSS update as you change them." },
+      { step: "Choose linear or radial", detail: "Linear runs across the box at a chosen angle. Radial spreads outwards from the centre as a circle." },
+      { step: "Set the angle", detail: "Drag the slider from 0 to 360 degrees. Remember 0deg points up, 90deg points right, 180deg points down, 270deg points left." },
+      { step: "Copy the CSS", detail: "The rule is a background declaration you can paste straight into a stylesheet, or into a background-image property if you prefer." },
+    ],
+    faq: [
+      { q: "Which way does the angle point?", a: "Zero degrees points towards the top of the element and the angle increases clockwise. So 90deg goes to the right and 180deg goes downwards. This is counter-intuitive if you are used to maths angles measured anticlockwise from the right." },
+      { q: "Why does my gradient look banded?", a: "Because two colours that are close in luminance produce visible steps on an 8-bit display, especially across a large area. Adding a subtle third stop, or using a slightly wider luminance range, usually hides it." },
+      { q: "Can I use transparency?", a: "Yes. Use an eight-digit hex value such as 667eea00 for fully transparent or 667eea80 for half, and the gradient will fade over whatever sits behind it." },
+      { q: "Is the gradient supported everywhere?", a: "Linear and radial gradients are supported in every current browser without a prefix. Vendor prefixes are only needed for very old versions of Safari and Android, which in practice means nothing built after about 2015." },
+      { q: "Why does my gradient not show up?", a: "Because the element has no height. A gradient is painted into the element's box, so an empty div collapses to zero height and shows nothing. Set a height or add content." },
+      { q: "Does it generate more than two colour stops?", a: "No, this tool handles two. For a multi-stop gradient, take the CSS it produces and add stops by hand; the syntax is simply more colour and percentage pairs separated by commas." },
+    ],
+    useCases: [
+      "Building a hero background that fades between two brand colours.",
+      "Testing which angle looks right before committing to it in code.",
+      "Producing a subtle vertical gradient for a card or a button.",
+      "Creating a semi-transparent overlay that darkens a photograph.",
+    ],
+    tips: [
+      "Prefer a small luminance difference for backgrounds that carry text; it reads as texture rather than distraction.",
+      "For text over a gradient, check contrast at the lightest and darkest points, not just the average.",
+      "Keep gradients to two or three stops; more tends to look muddy.",
+    ],
+  },
+  "border-radius-generator": {
+    intro:
+      "The Border Radius Generator sets the four corners of a box independently, with a live preview, and gives you the CSS. The order of the shorthand is the thing everyone forgets: it is top left, top right, bottom right, bottom left, going clockwise from the top left. One value applies to all four corners, two values apply to the diagonal pairs, and four values address each corner in turn. When all four match, the tool emits the single-value form, which is the one you actually want most of the time.",
+    howTo: [
+      { step: "Drag a corner slider", detail: "Each corner has its own slider from 0 to 150 pixels. The preview box rounds as you move it." },
+      { step: "Keep the corners linked or unlink them", detail: "With Link on, moving any slider moves all four together. Turn it off to shape individual corners, which is how you make a speech-bubble tail or a leaf shape." },
+      { step: "Read the CSS", detail: "If all four match you get the single-value shorthand. If they differ you get the full four-value form in clockwise order." },
+      { step: "Consider a percentage instead", detail: "A radius of 50 percent on a square element gives a circle. Swap the px unit for a percentage in your stylesheet if that is what you need." },
+    ],
+    faq: [
+      { q: "What order are the four values in?", a: "Clockwise from the top left: top left, top right, bottom right, bottom left. A useful mnemonic is that it starts where you start reading and goes around like a clock face." },
+      { q: "What do two or three values mean?", a: "Two values set the diagonals: the first is top left and bottom right, the second is top right and bottom left. Three values set top left, then top right and bottom left together, then bottom right." },
+      { q: "How do I make a circle?", a: "Use 50 percent on an element that is already square. Using pixels only gives a circle if the radius happens to equal half the width, which breaks the moment the element resizes." },
+      { q: "Can I round corners differently horizontally and vertically?", a: "The full syntax allows an elliptical radius written as horizontal values, a slash, then vertical values. This tool emits the simpler uniform form, so add the slash version by hand if you need that shape." },
+      { q: "Why is my rounded corner clipped?", a: "Because the child content is not clipped to the rounded box. Add overflow hidden to the element, or the image or background inside it will still show square corners." },
+    ],
+    useCases: [
+      "Matching a radius to a design spec without guessing at pixel values.",
+      "Rounding only the top corners of a card or a modal.",
+      "Shaping a pill button, which is a radius of half the element height.",
+      "Finding the radius that turns a square avatar into a circle.",
+    ],
+    tips: [
+      "Use percentages when the element resizes, pixels when it does not.",
+      "A pill button is not a fixed radius; it is half the height, so 9999px is the lazy but robust answer.",
+      "Keep the radius consistent across a component set; mixing 4px, 6px and 8px looks accidental.",
+    ],
+  },
+  "box-shadow-generator": {
+    intro:
+      "The Box Shadow Generator builds a shadow from offset, blur, spread, colour and opacity, with a live preview and the CSS. The two settings people confuse are blur and spread: blur softens the edge outwards and inwards from the shadow's shape, while spread grows or shrinks the shadow's own size before any blurring happens. Negative spread is what keeps a soft shadow from looking like a halo, which is why the defaults here use a small negative value.",
+    howTo: [
+      { step: "Set the offsets", detail: "Offset X moves the shadow right, offset Y moves it down. Negative values move it the other way." },
+      { step: "Set blur and spread", detail: "Blur softens the edge. Spread expands the shadow before blurring; use a small negative spread for a shadow that sits under the element rather than around it." },
+      { step: "Choose colour and opacity", detail: "Pure black at full opacity looks harsh. A low opacity, somewhere between 8 and 20 percent, reads as depth rather than dirt." },
+      { step: "Tick inset if you want an inner shadow", detail: "Inset draws the shadow inside the element instead of behind it, which suits pressed states and wells." },
+      { step: "Copy the CSS", detail: "The rule includes the rgba colour, so it can be pasted straight into a stylesheet." },
+    ],
+    faq: [
+      { q: "What is the difference between blur and spread?", a: "Spread changes the size of the shadow's shape before any softening, positive to grow and negative to shrink. Blur then softens the edge by the given radius. To get a tight shadow under a card you want a small blur and a slightly negative spread." },
+      { q: "Why does my shadow look grey and dirty?", a: "Because it is pure black at a high opacity. Use a low alpha, around 0.08 to 0.2, and consider tinting the shadow towards the background hue, which reads much more naturally." },
+      { q: "Can I have more than one shadow?", a: "Yes. Separate several shadows with commas in the same declaration; they stack front to back, so the first is on top. Layered shadows are how soft, realistic elevation is built." },
+      { q: "Does a box shadow affect layout?", a: "No. Shadows are painted outside the element's box and take up no space, so they can be clipped by a parent with overflow hidden or by a tight container." },
+      { q: "Is animating a box shadow expensive?", a: "Yes, relatively. Changing blur or spread forces the browser to repaint the shadow every frame. For smooth motion, animate opacity or transform instead, or cross-fade between two pre-rendered shadows." },
+    ],
+    useCases: [
+      "Building an elevation scale for cards, modals and menus.",
+      "Making a pressed or focused state with an inset shadow.",
+      "Softening a border without adding a real border.",
+      "Checking what a design spec's shadow values actually look like.",
+    ],
+    tips: [
+      "Two layered shadows look far better than one heavy one.",
+      "Keep the light source consistent: if one card casts down-right, all of them should.",
+      "Watch for shadows being clipped by a parent with overflow hidden.",
+    ],
+  },
+  "text-shadow-generator": {
+    intro:
+      "The Text Shadow Generator sets the offset, blur, colour and opacity of a shadow behind text, with a live preview and the CSS. Unlike box-shadow it has no spread value, which catches people out: the only way to make a text shadow heavier is to stack several shadows in one declaration. It is most useful for legibility, putting a subtle dark shadow behind light text on a photograph, and it should never be the thing that makes text readable, because it disappears the moment the background changes.",
+    howTo: [
+      { step: "Set the offsets", detail: "Offset X moves right, offset Y moves down. A one or two pixel offset reads as depth; anything larger starts to look like a drop shadow." },
+      { step: "Set the blur", detail: "Blur softens the edge. Zero gives a hard duplicate of the text, which is how outline and retro effects are made." },
+      { step: "Choose colour and opacity", detail: "Dark text on light backgrounds wants a light shadow and vice versa. Keep opacity low unless you want an obvious effect." },
+      { step: "Copy the CSS", detail: "The rule includes the rgba colour, ready to paste." },
+      { step: "Stack shadows if you need more weight", detail: "Add a second shadow separated by a comma in your stylesheet. That is the only way to thicken a text shadow, since there is no spread." },
+    ],
+    faq: [
+      { q: "Why is there no spread value?", a: "Because text-shadow does not support one. Its syntax is offset X, offset Y, blur and colour only. To simulate spread you stack several identical shadows with slightly different offsets." },
+      { q: "Can I use it to make text readable over an image?", a: "Only as a supplement. A shadow helps at the margins but fails on busy areas, and it does not count towards the WCAG contrast ratio, which is measured against the background colour. Add a scrim or a solid panel if legibility genuinely matters." },
+      { q: "How do I outline text?", a: "Stack four shadows at plus and minus one pixel in each direction with zero blur. That produces an outline effect without needing -webkit-text-stroke, which is not supported everywhere." },
+      { q: "Does it slow the page down?", a: "A single static shadow costs almost nothing. Animating a text shadow, or applying a large blurred one to a lot of text, is where repaint cost appears." },
+      { q: "Is it inherited by child elements?", a: "Yes. Text shadow is inherited, so setting it on a container applies it to every descendant with text, which is occasionally surprising." },
+    ],
+    useCases: [
+      "Adding a subtle shadow so a caption reads over a photograph.",
+      "Making a pressed or engraved heading effect.",
+      "Producing a retro or neon text treatment.",
+      "Testing how heavy a shadow needs to be before it looks cheap.",
+    ],
+    tips: [
+      "Less is more: one or two pixels at low opacity beats a heavy blur.",
+      "Never rely on a shadow alone for accessibility; fix the contrast underneath.",
+      "Remember the property is inherited, so scope it to the element you mean.",
+    ],
+  },
+  "emoji-picker": {
+    intro:
+      "The Emoji Picker holds a searchable set of emoji with keyword names, so you can type a word such as love, fire, coffee or warning and get the matches rather than scrolling. Clicking any emoji copies it to your clipboard, and the ones you have used stay in a recently copied row. Each emoji also carries a title, so hovering shows its official name, which is handy when you need the right word for alt text or a commit message.",
+    howTo: [
+      { step: "Type a keyword", detail: "Search matches the name rather than the character, so love finds hearts, weather finds sun and rain, and food finds pizza and cake." },
+      { step: "Click to copy", detail: "Clicking an emoji copies it immediately and adds it to the recently copied row. No need to select the character by hand." },
+      { step: "Copy the whole recent row at once", detail: "The copy button above the recent row copies them all as one string, which is useful when you are building a reaction bar." },
+      { step: "Clear the search to browse", detail: "Empty the search box and the full set comes back, grouped by the order it is stored in." },
+    ],
+    faq: [
+      { q: "How does the search work?", a: "It matches against a keyword list attached to each emoji, not against the character itself. So searching face returns every face, and searching tick returns the check mark rather than a literal tick character." },
+      { q: "Does clicking copy it?", a: "Yes, to your clipboard using the browser's clipboard API. If your browser blocks clipboard access, the emoji still appears in the recent row so you can select it manually." },
+      { q: "Why does an emoji look different on another device?", a: "Because each platform ships its own emoji font. Apple, Google, Microsoft and Samsung all draw them differently, and an emoji added recently may not exist on older systems at all, where it shows as an empty box." },
+      { q: "Is there a search for skin tone or gender variants?", a: "No. This set uses the base characters. Skin tone modifiers and other variation sequences are separate code points that you would append yourself." },
+      { q: "Can I use these commercially?", a: "The emoji characters themselves are Unicode and free to use. The specific artwork belongs to each platform's font, so do not lift a vendor's images; use the characters and let the reader's own font render them." },
+      { q: "Is anything uploaded?", a: "No. The set is bundled in the page and the search runs locally, so it works offline once loaded." },
+    ],
+    useCases: [
+      "Finding the right emoji for a commit message or a changelog entry.",
+      "Building a reaction bar or a survey scale.",
+      "Looking up an emoji's real name for alt text.",
+      "Checking which emoji exists before designing around it.",
+    ],
+    tips: [
+      "Search by concept rather than by appearance; the names are the searchable part.",
+      "Remember that rendering differs per platform, so never rely on one vendor's artwork.",
+      "Use sparingly in professional copy; one emoji carries more weight than five.",
+    ],
+  },
+  "temperature-converter": {
+    intro:
+      "The Temperature Converter translates between Celsius, Fahrenheit and Kelvin, and unlike most unit conversions these three do not share a zero point, which is why you cannot simply multiply. Celsius and Fahrenheit differ by both a scale factor and an offset, and Kelvin is an absolute scale starting at absolute zero, so it has no negative values and no degree sign. The one number worth remembering is minus 40, the point at which the Celsius and Fahrenheit scales cross and give the same reading.",
+    howTo: [
+      { step: "Enter a value", detail: "Type any temperature, including decimals and negative numbers." },
+      { step: "Choose the unit you are converting from", detail: "Celsius, Fahrenheit or Kelvin." },
+      { step: "Choose the unit you want", detail: "The result updates immediately, so you can flip the direction without retyping." },
+      { step: "Sanity check the result", detail: "Water freezes at 0 Celsius, 32 Fahrenheit and 273.15 Kelvin, and boils at 100 Celsius and 212 Fahrenheit. Those anchors catch a swapped unit instantly." },
+    ],
+    faq: [
+      { q: "What are the formulas?", a: "Fahrenheit equals Celsius times 9/5 plus 32. Celsius equals Fahrenheit minus 32, times 5/9. Kelvin equals Celsius plus 273.15. Everything else is a combination of those three." },
+      { q: "At what temperature are Celsius and Fahrenheit equal?", a: "Minus 40. Below that the Fahrenheit number is larger, above it the Celsius number is larger. It is the only point where the two scales agree." },
+      { q: "Why does Kelvin have no degree symbol?", a: "Because it is an absolute scale, not a degree of something. You write 273.15 K, not 273.15 degrees Kelvin. Absolute zero, 0 K, is the theoretical point at which molecular motion stops, roughly minus 273.15 Celsius." },
+      { q: "Why is my conversion slightly off from another site?", a: "Usually rounding. The conversion factor between Celsius and Fahrenheit is exact, 9/5, so any difference comes from how many decimal places were kept, not from the formula." },
+      { q: "Can I convert a temperature difference rather than a reading?", a: "Not with this tool, and the distinction matters. A change of 10 Celsius is a change of 18 Fahrenheit, with no 32 added, because the offset applies to readings, not to intervals." },
+    ],
+    useCases: [
+      "Converting an oven temperature between a US and a European recipe.",
+      "Reading a weather forecast in the scale you think in.",
+      "Checking a scientific figure given in Kelvin.",
+      "Working out whether a fever reading is concerning.",
+    ],
+    tips: [
+      "Remember minus 40 as the crossover; it catches most unit mistakes.",
+      "Use the freezing and boiling points of water as your sanity check.",
+      "Do not add 32 when converting a temperature difference, only a reading.",
+    ],
+  },
+  "password-strength": {
+    intro:
+      "The Password Strength Checker scores a password out of seven using plain, explainable rules: length thresholds, and the presence of lowercase, uppercase, digits and symbols. It reports which of those you satisfied, so you can see exactly what moved the score rather than getting a bare verdict. The point of showing the criteria is that length dominates everything else: a long passphrase without symbols beats a short password that ticks every character class. The check runs entirely in your browser and nothing is transmitted.",
+    howTo: [
+      { step: "Type a password", detail: "Use the single-line field. The score updates when you run it." },
+      { step: "Read the score and the breakdown", detail: "You get a figure out of seven plus a list showing whether lowercase, uppercase, digits and symbols are present, and how long the password is." },
+      { step: "Add length before anything else", detail: "Going from 8 to 16 characters is worth more to the score than adding a symbol. A four-word passphrase is both stronger and easier to remember." },
+      { step: "Do not paste a password you actually use", detail: "Type a representative example of the same shape instead. The habit of pasting real credentials into websites is worth not practising." },
+    ],
+    faq: [
+      { q: "How is the score calculated?", a: "One point each for at least 8 characters, at least 12, lowercase, uppercase, a digit, a symbol, and at least 16 characters. Seven points is Excellent. It is deliberately simple and transparent, not a statistical estimate." },
+      { q: "Is a high score the same as a strong password?", a: "No. This checks character composition, not unpredictability. Password1! scores well here and is among the first things an attacker tries. Real strength means length plus randomness, and ideally uniqueness per site." },
+      { q: "What matters more, length or symbols?", a: "Length, by a wide margin. Each extra character multiplies the search space, while a symbol adds a fixed amount. Twenty characters of lowercase letters beats ten characters of mixed classes, and is easier to type." },
+      { q: "Do you store or send the password?", a: "No. Everything happens in your browser tab and nothing is logged or transmitted. Even so, the sensible habit is to test a representative example rather than the real thing." },
+      { q: "Why is my long passphrase marked only Fair?", a: "Because it is missing character classes. If it is long and made of genuinely uncommon words, it is stronger than the score suggests; the scoring is a rough guide, not an entropy calculation." },
+      { q: "Should I also use a password manager?", a: "Yes. A manager lets every password be long, random and unique, which does more for your security than any composition rule. This tool is a teaching aid, not a substitute." },
+    ],
+    useCases: [
+      "Checking whether a password meets a minimum policy before submitting it.",
+      "Showing someone why a short complex password is weaker than a long simple one.",
+      "Testing a generated passphrase before adopting it.",
+      "Auditing which character classes a legacy password is missing.",
+    ],
+    tips: [
+      "Length first, symbols second; a four-word passphrase beats P@ssw0rd.",
+      "Never reuse a password across sites, however strong it is.",
+      "Turn on two-factor authentication; it matters more than password complexity.",
+    ],
+  },
+  "length-converter": {
+    intro:
+      "The Length Converter translates between nine units: metres, kilometres, centimetres, millimetres, miles, yards, feet, inches and nautical miles. Every metric unit is a clean power of ten, while the imperial units are defined by exact modern values: an inch is exactly 2.54 centimetres and a mile is exactly 1609.344 metres, so there is no ambiguity or rounding in the factors themselves. Nautical miles are a separate system again, fixed at 1852 metres and derived from one minute of latitude.",
+    howTo: [
+      { step: "Enter a value", detail: "Type any number, including decimals." },
+      { step: "Choose the unit you have", detail: "Pick from the nine available units." },
+      { step: "Choose the unit you want", detail: "The result appears immediately and you can swap the direction without retyping." },
+      { step: "Check the order of magnitude", detail: "Converting metres to feet should roughly triple the number, and feet to metres should roughly divide it by three. A result that is out by a factor of ten means the wrong unit was selected." },
+    ],
+    faq: [
+      { q: "How many feet are in a metre?", a: "About 3.2808. Exactly, one foot is 0.3048 metres, so one metre is 1 divided by 0.3048 feet." },
+      { q: "Are these conversions exact?", a: "The imperial units have exact modern definitions in metric terms: an inch is exactly 25.4 millimetres, a yard exactly 0.9144 metres and a mile exactly 1609.344 metres. Any difference between tools is rounding in the display, not in the factor." },
+      { q: "What is a nautical mile for?", a: "Navigation. It is defined as 1852 metres and corresponds to one minute of latitude, which makes chart and chart-plotter arithmetic work in degrees. It is about 1.15 statute miles." },
+      { q: "Why do US survey distances differ slightly?", a: "The US survey foot is marginally longer than the international foot, by about two parts per million. It matters only in surveying and geodesy; for everyday conversion use the international foot, which is what this tool uses." },
+      { q: "Can I convert area or volume with this?", a: "No. Converting square or cubic units is not the same as converting lengths: one square metre is about 10.76 square feet, not 3.28. Use the area and volume converters for those." },
+    ],
+    useCases: [
+      "Converting a height given in feet and inches into centimetres.",
+      "Working out a running distance in miles from a figure in kilometres.",
+      "Checking a dimension on a drawing supplied in imperial units.",
+      "Converting depth soundings or chart distances in nautical miles.",
+    ],
+    tips: [
+      "Metres to feet is roughly times three; use that as your quick sanity check.",
+      "Do not use a length conversion for area or volume; the factor is squared or cubed.",
+      "Convert feet and inches into inches first, then into metric, to avoid two-step errors.",
+    ],
+  },
+  "weight-converter": {
+    intro:
+      "The Weight Converter translates between kilograms, grams, milligrams, metric tons, pounds, ounces and stone. The metric side is decimal, so those four are simple powers of a thousand, while the imperial side uses a pound defined as exactly 0.45359237 kilograms and an ounce as one sixteenth of a pound. Stone is the one that surprises people outside the UK and Ireland: it is 14 pounds, about 6.35 kilograms, and it is still how body weight is usually stated there.",
+    howTo: [
+      { step: "Enter a value", detail: "Type any number, including decimals." },
+      { step: "Choose the unit you have", detail: "Pick from kilograms, grams, milligrams, metric tons, pounds, ounces or stone." },
+      { step: "Choose the unit you want", detail: "The result updates immediately and the direction can be swapped without retyping." },
+      { step: "Sanity check the result", detail: "Kilograms to pounds is roughly times 2.2, and pounds to kilograms is roughly divide by 2.2. A result in the wrong ballpark means the wrong unit was chosen." },
+    ],
+    faq: [
+      { q: "How many pounds are in a kilogram?", a: "About 2.2046. Exactly, one pound is 0.45359237 kilograms, so one kilogram is 1 divided by 0.45359237 pounds." },
+      { q: "Is a metric ton the same as a US ton?", a: "No. A metric ton, or tonne, is 1000 kilograms. A US short ton is 2000 pounds, about 907 kilograms, and a British long ton is 2240 pounds, about 1016 kilograms. This tool uses the metric ton." },
+      { q: "What is a stone?", a: "Fourteen pounds, about 6.35 kilograms. It is still the conventional unit for body weight in the UK and Ireland, where someone might say eleven stone four rather than 72 kilograms." },
+      { q: "Are ounces here the same as fluid ounces?", a: "No. This converts mass ounces, one sixteenth of a pound. A fluid ounce measures volume and its mass depends on what liquid you are measuring." },
+      { q: "Should I use weight or mass?", a: "In everyday language weight is fine. Technically this converts mass: the same object has the same mass everywhere, while its weight changes with gravity. Scales that read in kilograms are measuring mass." },
+    ],
+    useCases: [
+      "Converting body weight between kilograms and stone or pounds.",
+      "Checking a shipping weight for a carrier limit.",
+      "Converting a recipe quantity given in ounces into grams.",
+      "Working out how many kilograms a pallet rated in pounds can hold.",
+    ],
+    tips: [
+      "Kilograms to pounds is roughly times 2.2; use it as your quick check.",
+      "Check which ton is meant before converting anything commercial.",
+      "Mass ounces and fluid ounces are different things: do not mix them.",
+    ],
+  },
+  "discount-calculator": {
+    intro:
+      "The Discount Calculator takes a price and a discount percentage and returns what you save and what you pay. It also quietly settles the question that comes up at every sale: whether two successive discounts are the same as one larger one. They are not. Twenty percent off followed by a further ten percent is a total of 28 percent, not 30, because the second discount applies to the already reduced price. The reverse direction is the other trap, where subtracting the percentage back off the sale price does not return you to the original.",
+    howTo: [
+      { step: "Enter the price and the discount", detail: "Type them as price, then a comma, then the percentage. For example 200, 20 means 200 with 20 percent off." },
+      { step: "Read the breakdown", detail: "You get the original price, the discount rate, the amount saved and the final price." },
+      { step: "Check a stacked discount separately", detail: "Run the tool once, then run it again on the new final price with the second percentage. Do not add the two percentages together." },
+      { step: "Reverse a price if you need the original", detail: "Divide rather than subtract. If something costs 80 after 20 percent off, the original is 80 divided by 0.8, which is 100." },
+    ],
+    faq: [
+      { q: "Is 20 percent off plus 10 percent off the same as 30 percent off?", a: "No, it is 28 percent. The first discount gives 80 percent of the price, and the second takes 90 percent of that, so 0.8 times 0.9 is 0.72, meaning you pay 72 percent. Percentages only add when they apply to the same base." },
+      { q: "How do I find the original price from the sale price?", a: "Divide by the remaining fraction. A sale price of 80 after 20 percent off means 80 divided by 0.8, which is 100. Subtracting 20 percent from 80 gives 64, which is the common mistake." },
+      { q: "Does this include tax?", a: "No. It converts a pre-tax price into a discounted pre-tax price. If tax is applied afterwards, calculate it on the discounted figure, not the original." },
+      { q: "What does a discount over 100 percent mean?", a: "It is not a real discount. Anything at or above 100 percent means the item is free or the seller is paying you, which in practice means one of the numbers was entered wrong." },
+      { q: "Why is my result a few cents different from the shop's?", a: "Rounding. The tool keeps two decimal places throughout, while a till may round each line, round only at the total, or round to the nearest five cents." },
+    ],
+    useCases: [
+      "Checking whether a sale price is actually the discount advertised.",
+      "Working out the real total of a stacked promotion.",
+      "Comparing two offers, such as 25 percent off against 20 pounds off.",
+      "Finding the pre-discount price when only the sale price is shown.",
+    ],
+    tips: [
+      "Multiply successive discounts, never add them.",
+      "Divide to reverse a discount; do not subtract.",
+      "Compare the final price, not the headline percentage.",
+    ],
+  },
+  "lorem-ipsum": {
+    intro:
+      "The Lorem Ipsum Generator produces placeholder text in the traditional scrambled Latin, so you can see how a layout behaves with real-looking paragraphs before any copy exists. It is worth knowing why designers use it rather than English: readable text draws the eye to the words, so people end up commenting on the content instead of the layout. Filler that cannot be read keeps the review focused on spacing, measure and hierarchy. The text traces back to a passage by Cicero, deliberately scrambled since the sixteenth century.",
+    howTo: [
+      { step: "Enter how many paragraphs you need", detail: "Type a number, for example 3. Up to 50 paragraphs are produced." },
+      { step: "Generate", detail: "The paragraphs appear separated by blank lines, ready to paste." },
+      { step: "Paste into your layout", detail: "Insert it where the real copy will eventually go, and keep the character count roughly similar to the real thing." },
+      { step: "Replace it before you ship", detail: "Placeholder text that reaches production is an embarrassing and surprisingly common mistake. Search the project for lorem before release." },
+    ],
+    faq: [
+      { q: "What does the text actually say?", a: "It is scrambled Latin derived from Cicero's De Finibus Bonorum et Malorum, written in 45 BC, with words removed and rearranged over centuries so that it looks like text without reading as text. It is not meant to mean anything." },
+      { q: "Why not just use English filler?", a: "Because readable words pull attention away from the design. Reviewers start editing copy instead of judging spacing and hierarchy, which is the opposite of what a placeholder is for." },
+      { q: "Does the length match real copy?", a: "Only approximately. Treat the output as a shape, not a volume. If you need to test a specific measure or a truncation rule, use text of a realistic length instead." },
+      { q: "Can I use it in a real product?", a: "No. It is a placeholder. Searching a codebase for lorem before every release is a cheap habit that prevents a very public mistake." },
+      { q: "Is anything uploaded?", a: "No. The passage is stored in the page and generated in your browser, so it works offline once loaded." },
+    ],
+    useCases: [
+      "Filling a mockup before the copy is written.",
+      "Testing how a column of text wraps at different widths.",
+      "Checking line height and paragraph spacing in a real layout.",
+      "Producing filler for a print or email template.",
+    ],
+    tips: [
+      "Match the rough length of the real copy, not just the paragraph count.",
+      "Always search for lorem before shipping.",
+      "For testing truncation or character limits, use realistic text instead.",
+    ],
+  },
+  "random-number": {
+    intro:
+      "The Random Number Generator returns one whole number within a range you choose, inclusive of both ends, using the JavaScript random function behind Math.random. That makes it fine for picking a winner, rolling a virtual die or choosing a sample, and not suitable for anything where predictability would cost you money, such as a raffle with a prize or a security token. For those you want a cryptographically secure generator, which the UUID tool uses instead.",
+    howTo: [
+      { step: "Enter the range", detail: "Type the minimum, then a comma, then the maximum. For example 1, 100 gives a number from 1 to 100 inclusive." },
+      { step: "Generate", detail: "One number is produced each time you run it." },
+      { step: "Run it again for another value", detail: "There is no memory between runs, so repeats are possible and expected." },
+      { step: "Use a secure source for anything that matters", detail: "For prizes, tokens or anything adversarial, do not use this. Use a cryptographically secure generator instead." },
+    ],
+    faq: [
+      { q: "Are both ends included?", a: "Yes. A range of 1 to 100 can produce 1 and it can produce 100. That is the behaviour most people expect, and it is why 1 to 6 works as a die." },
+      { q: "Is it truly random?", a: "It is pseudo-random, produced by an algorithm from a seed. The distribution is even enough for games and sampling, but the sequence is in principle reproducible, which is why it must not be used where someone could profit from predicting it." },
+      { q: "Can the same number come up twice in a row?", a: "Yes. Each run is independent, so repeats are normal. If you need distinct values, generate them one at a time and discard duplicates yourself." },
+      { q: "How large can the range be?", a: "Very large in principle, but the result is a JavaScript number, so keep it within a safe integer range. Anything past about nine quadrillion loses precision." },
+      { q: "Can I generate several numbers at once?", a: "No, one per run. Run it repeatedly, or use a script if you need a large batch." },
+    ],
+    useCases: [
+      "Picking a winner from a numbered list of entries.",
+      "Rolling a virtual die for a game.",
+      "Choosing a random sample or a random start point.",
+      "Generating a throwaway value for testing.",
+    ],
+    tips: [
+      "Remember both ends are included when you set the range.",
+      "Never use this for a prize draw or a token; use a secure generator.",
+      "Expect repeats; independence means duplicates happen.",
+    ],
+  },
+  "url-extractor": {
+    intro:
+      "The URL Extractor pulls every http and https link out of a block of text and lists them one per line. It is the fast way to collect links from a long email, a pasted document, a changelog or a chunk of HTML without clicking through them one at a time. Extraction stops at characters that cannot legally appear in a URL, such as whitespace, quotes and angle brackets, which is what keeps the results clean on messy input.",
+    howTo: [
+      { step: "Paste the text", detail: "Any block of text works: an email body, a document, a log, or even raw HTML." },
+      { step: "Extract", detail: "Every link is listed on its own line, in the order it appeared." },
+      { step: "Copy the list", detail: "The result is plain text, one URL per line, ready to paste into a spreadsheet or a download manager." },
+      { step: "Watch for trailing punctuation", detail: "A URL at the end of a sentence can pick up the full stop. Glance over the list before using it." },
+    ],
+    faq: [
+      { q: "Why are some links missing?", a: "Because they have no scheme. The extraction looks for http:// or https://, so a bare address such as example.com or www.example.com is not matched. Add the scheme, or search for the domain separately." },
+      { q: "Why does a link end with a full stop or a bracket?", a: "Because the extractor stops only at characters that are illegal in a URL, and a full stop is legal. Trailing punctuation at the end of a sentence is therefore captured. Trim it, or wrap URLs in angle brackets when you write them." },
+      { q: "Does it follow redirects or check whether links work?", a: "No. It only finds the text of the links. Checking whether they resolve needs a separate request to each one." },
+      { q: "Does it remove duplicates?", a: "No, every occurrence is listed. If you want the unique set, run the list through the Duplicate Line Remover." },
+      { q: "Is the text uploaded?", a: "No. The search happens in your browser, so pasted emails and internal documents never leave your device." },
+    ],
+    useCases: [
+      "Collecting all the links from a long email or briefing document.",
+      "Extracting URLs from a block of HTML or a sitemap fragment.",
+      "Gathering download links listed in a changelog.",
+      "Checking which links appear in a page before migrating it.",
+    ],
+    tips: [
+      "Run the result through Duplicate Line Remover if you want the unique set.",
+      "Watch for a trailing full stop when a URL ends a sentence.",
+      "Bare domains without http:// will not be found; add the scheme first.",
+    ],
+  },
 };
 
 export function getToolContent(slug: string, title: string, description: string): ToolContent {
