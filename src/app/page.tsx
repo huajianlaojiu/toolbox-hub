@@ -1,3 +1,4 @@
+import AdUnit from "@/components/shared/ad-unit";
 import { tools, categories } from "@/lib/tools-data";
 import ToolCard from "@/components/tool-card";
 
@@ -24,7 +25,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <div className="mx-auto max-w-6xl mb-8"><ins className="adsbygoogle" style={{"display":"block"}} data-ad-client="ca-pub-7525547688409082" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+      <div className="mx-auto max-w-6xl mb-8"><AdUnit /></div>
 
       <section className="rounded-2xl border bg-card p-8 text-center">
         <h2 className="text-2xl font-bold text-foreground">Why Toolbox Hub?</h2>

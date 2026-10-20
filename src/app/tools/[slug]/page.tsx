@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import AdUnit from "@/components/shared/ad-unit";
 import { getTool, tools } from "@/lib/tools-data";
 import { getToolContent } from "@/lib/tool-content";
 import ImageWatermarkRemover from "@/components/tools/image-watermark-remover";
@@ -317,7 +318,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
       </section>
 
       <div className="mt-10 max-w-3xl">
-        <ins className="adsbygoogle" style={{ display: "block" }} data-ad-client="ca-pub-7525547688409082" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true" />
+        <AdUnit />
       </div>
 
       {relatedTools.length > 0 && (<section className="mt-12"><h2 className="text-lg font-semibold mb-4">Related Tools</h2><div className="grid grid-cols-1 gap-4 sm:grid-cols-3">{relatedTools.map((t) => (<ToolCard key={t.slug} tool={t} />))}</div></section>)}

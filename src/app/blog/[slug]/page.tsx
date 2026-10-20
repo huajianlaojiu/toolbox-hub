@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronLeft, Clock, Calendar } from "lucide-react";
 import type { ReactNode } from "react";
+import AdUnit from "@/components/shared/ad-unit";
 import { getPost, posts, parseLinks } from "@/lib/posts";
 
 export const dynamicParams = false;
@@ -263,14 +264,7 @@ export default async function BlogPost({
       </article>
 
       <div className="mt-10 max-w-3xl">
-        <ins
-          className="adsbygoogle"
-          style={{ display: "block" }}
-          data-ad-client="ca-pub-7525547688409082"
-          data-ad-slot="auto"
-          data-ad-format="auto"
-          data-full-width-responsive="true"
-        />
+      <AdUnit />
       </div>
 
       {related.length > 0 && (
