@@ -10,5 +10,5 @@ export default function UnicodeConverter() {
       return input.split("").map(c => "\\u" + c.charCodeAt(0).toString(16).padStart(4,"0")).join("");
     } catch { return "Conversion error"; }
   };
-  return <SimpleTool label="Text or Unicode" placeholder="Hello or \\u0048\\u0065\\u006c\\u006c\\u006f" process={process} />;
+  return <SimpleTool label="Text or Unicode" placeholder="Hello or \\u0048\\u0065\\u006c\\u006c\\u006f" hint="Input containing \\u escapes is decoded to text. Anything else is encoded into escapes." process={process} />;
 }

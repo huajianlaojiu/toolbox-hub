@@ -12,5 +12,5 @@ export default function JsonValidator() {
       return "Invalid JSON: " + e.message;
     }
   };
-  return <SimpleTool label="JSON" placeholder='{"key": "value"}' process={process} />;
+  return <SimpleTool label="JSON" placeholder='{"key": "value"}' hint="Paste a document to check. Valid input reports its type, item or key count and byte size; invalid input reports the parse error." process={process} />;
 }

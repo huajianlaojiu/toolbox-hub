@@ -6,5 +6,5 @@ export default function LetterCounter() {
   const process = (input: string) => {
     const m={}; const total=input.length; for(const c of input.toLowerCase()){if(/[a-z]/.test(c)){ m[c]=(m[c]||0)+1; }} return Object.entries(m).sort((a,b)=>b[1]-a[1]).map(([k,v])=>k+": "+v+" ("+((v/total*100).toFixed(1))+"%)").join("\n");
   };
-  return <SimpleTool label="Input" placeholder="Enter text..." process={process} />;
+  return <SimpleTool label="Text" placeholder="Paste or type the text you want to analyse..." hint="Counts a-z only, case-insensitive, and reports each letter as a share of total characters." process={process} />;
 }

@@ -15,5 +15,5 @@ export default function XmlFormatter() {
     }
     return out.trim();
   };
-  return <SimpleTool label="Input" placeholder="Paste XML..." process={process} />;
+  return <SimpleTool label="XML" placeholder='<root><item id="1">One</item></root>' hint="Re-indents tags with two spaces per level. It does not validate against a schema." process={process} />;
 }

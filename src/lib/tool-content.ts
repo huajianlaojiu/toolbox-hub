@@ -1152,6 +1152,1094 @@ const overrides: Record<string, ToolContent> = {
       "Bare domains without http:// will not be found; add the scheme first.",
     ],
   },
+  "tip-calculator": {
+    intro:
+      "The Tip Calculator works out the tip, the total and each person's share from a bill amount, and it updates as you type, so you can see what a different percentage costs before you commit to it. The split field divides the final total rather than the pre-tip bill, which is the part most people get wrong when they divide a receipt by hand. Nothing is uploaded, so a bill you photograph and type in stays on your device.",
+    howTo: [
+      { step: "Enter the bill amount", detail: "Type the pre-tip total into the first field. Decimals are accepted, so 47.80 is fine." },
+      { step: "Set the tip percentage", detail: "Type any percentage, or use the 10, 15, 18, 20 and 25 buttons. The result recalculates immediately." },
+      { step: "Set how many ways to split", detail: "Leave it at 1 for a single payment, or enter the number of people to see an equal share for each." },
+      { step: "Optionally round up", detail: "Tick the round-up box to take the total to the next whole dollar, which is a common way to leave a little extra without doing the arithmetic." },
+    ],
+    faq: [
+      { q: "Is the tip calculated before or after tax?", a: "On whatever number you enter as the bill. If you want to tip on the pre-tax amount, enter the pre-tax subtotal rather than the receipt total." },
+      { q: "How is the split calculated?", a: "The final total, tip included, is divided by the number of people. That means nobody is left covering the tip on their own." },
+      { q: "What if the split does not divide evenly?", a: "Each share is shown to the cent, so the shares may add up to a cent more or less than the total. Whoever pays the bill usually absorbs the difference." },
+      { q: "What is a normal tip?", a: "It depends on where you are and the type of service. The preset buttons cover the common range, and the percentage field accepts anything, including values like 12.5." },
+      { q: "Does it work with other currencies?", a: "Yes. The symbol shown is a dollar sign, but the arithmetic is the same for any currency. Enter the amount in your own currency and read the result as that currency." },
+    ],
+    useCases: [
+      "Splitting a restaurant bill between several people without doing the division by hand.",
+      "Checking what a 20 percent tip adds before you decide.",
+      "Working out a fair share when one person ordered more than the others.",
+      "Rounding a total up so the change becomes the tip.",
+    ],
+    tips: [
+      "Enter the pre-tax subtotal if you only want to tip on the food, not the tax.",
+      "Use the split field rather than dividing the bill yourself; it divides the total including tip.",
+      "A rounded-up total is the simplest way to leave slightly more without calculating it.",
+    ],
+  },
+  "days-until": {
+    intro:
+      "The Days Until Calculator counts how many days separate today from a date you care about, and it also counts backwards, so the same field tells you how long since a past date. It uses your device clock as the reference, which means the answer is correct for wherever you are rather than for a server in another time zone. Use it for deadlines, launches, trips, renewals and anything else you need to see as a countdown.",
+    howTo: [
+      { step: "Enter the target date", detail: "Use the YYYY-MM-DD format, for example 2027-01-01." },
+      { step: "Run it", detail: "The tool compares the target against the current moment on your device." },
+      { step: "Read the result", detail: "A future date gives days until plus the equivalent in weeks. A past date gives days since. Today gives a same-day message." },
+      { step: "Change the date and run again", detail: "There is no state between runs, so you can check several dates in a row." },
+    ],
+    faq: [
+      { q: "Does it count today?", a: "No. It reports whole days remaining, so a date tomorrow gives 1 and today gives 0. If you need to include today, add one to the result." },
+      { q: "Why is the count off by one from my calendar?", a: "Almost always because of the count-today question, or because your device clock is set to a different time zone. The tool reads your local date, not UTC." },
+      { q: "What about the time of day?", a: "The difference is rounded up to the next whole day, so a date later today still counts as one day rather than zero." },
+      { q: "Can I use it for a date in the past?", a: "Yes. A past date is reported as days since that date, with the same week equivalent." },
+      { q: "Does it account for leap years?", a: "Yes. The calculation works on real timestamps, so February in a leap year is handled correctly." },
+    ],
+    useCases: [
+      "Counting down to a deadline, a launch or an event.",
+      "Checking how many days are left on a subscription or a trial.",
+      "Working out how long ago something happened.",
+      "Seeing how many weeks remain before a trip so you know what to prepare.",
+    ],
+    tips: [
+      "Add one to the result if you want to count today as well.",
+      "Check your device date if the number looks a day off.",
+      "The week figure is more useful than the day figure for planning anything more than a month out.",
+    ],
+  },
+  "youtube-thumbnail": {
+    intro:
+      "The YouTube Thumbnail Downloader takes any YouTube link and returns the direct image URLs for that video's thumbnails, including the full-resolution version. It works by extracting the eleven-character video ID from the URL, so watch pages, youtu.be short links and embed links are all accepted. The images themselves are served from YouTube's own image host, which means you get the same file the video page uses.",
+    howTo: [
+      { step: "Paste the YouTube link", detail: "A watch URL, a youtu.be short link or an embed URL all work. The video ID is pulled out automatically." },
+      { step: "Run it", detail: "Three URLs are produced: the maximum resolution image, the high quality image and the medium quality one." },
+      { step: "Open or copy a URL", detail: "Paste the address into a browser tab to view it, or right-click the opened image to save it." },
+      { step: "Pick the size you need", detail: "Use maxresdefault when it exists for the sharpest image, and fall back to hqdefault if the video was uploaded at a lower resolution." },
+    ],
+    faq: [
+      { q: "Why is maxresdefault.jpg missing or small?", a: "Not every video has a full-resolution thumbnail. Older uploads and videos below a certain resolution only have the smaller sizes, in which case hqdefault is the best available." },
+      { q: "Can I download a video with this?", a: "No. This tool only gives you the thumbnail image addresses. It does not touch video or audio." },
+      { q: "Do I need the whole URL?", a: "No, but it helps. The tool looks for the pattern of a YouTube link. If you only have the eleven-character video ID, paste a full URL built from it instead." },
+      { q: "Is anything uploaded to a server?", a: "No. The ID is extracted in your browser and the URLs are constructed locally. Nothing is fetched on your behalf." },
+      { q: "Can I use the thumbnail on my own site?", a: "Thumbnails belong to the video's owner. Quoting one alongside a link or a review is normal practice, but reusing someone else's artwork as your own is not." },
+    ],
+    useCases: [
+      "Grabbing artwork to reference when you design your own thumbnail.",
+      "Pulling a still image for a blog post that embeds the video.",
+      "Checking which thumbnail a competitor is using on a video.",
+      "Building a link list where each entry needs a preview image.",
+    ],
+    tips: [
+      "Prefer maxresdefault, but keep hqdefault as the fallback for older videos.",
+      "Paste the plain URL rather than a playlist or channel link; only single videos have thumbnails.",
+      "Credit the channel if you republish a thumbnail you did not make.",
+    ],
+  },
+  "dice-roller": {
+    intro:
+      "The Dice Roller throws virtual dice of any common size, from a four-sided die up to a hundred-sided one, and shows the individual results alongside the total. Pick the die type and how many to roll, then roll as many times as you like, with the last few rolls kept on screen. It is meant for tabletop games, classroom probability exercises and any situation where you need a fair number and no dice to hand.",
+    howTo: [
+      { step: "Choose the die type", detail: "Pick d4, d6, d8, d10, d12, d20 or d100. Six-sided dice are drawn with pips like a real die." },
+      { step: "Set how many dice", detail: "Enter any number from 1 to 20. The button label updates to match, so 3d6 means three six-sided dice." },
+      { step: "Roll", detail: "Each die is rolled independently and the results appear as separate faces, with the total shown underneath." },
+      { step: "Roll again and compare", detail: "Recent rolls stay listed below, which is useful when you are checking how often a result comes up." },
+    ],
+    faq: [
+      { q: "Are the rolls fair?", a: "Each die uses the browser random function, which gives an even spread across the possible values. It is fine for games and demonstrations, and not suitable for gambling or anything where money depends on unpredictability." },
+      { q: "Can the same result come up twice?", a: "Yes. Every roll is independent, so repeats are expected rather than a sign of a problem." },
+      { q: "What does 3d6 mean?", a: "Three six-sided dice, which is the standard tabletop notation. The first number is how many dice, the second is how many sides each die has." },
+      { q: "Why is there a maximum of 20 dice?", a: "To keep the results readable on one screen. If you need a larger pool, roll in batches and add the totals." },
+      { q: "Can I roll different dice sizes at once?", a: "No. Roll each size separately and add the totals yourself, which is how mixed pools are usually handled at the table anyway." },
+    ],
+    useCases: [
+      "Rolling for a tabletop game when the dice are in another room.",
+      "Demonstrating probability in a classroom by rolling many times and comparing.",
+      "Generating a fair number quickly for a decision.",
+      "Checking whether a die you own is balanced by comparing its spread to this one.",
+    ],
+    tips: [
+      "Leave the history on screen to compare several rolls instead of one.",
+      "Roll each die size separately when your pool mixes sizes.",
+      "Remember repeats are normal; independence means they happen.",
+    ],
+  },
+  "date-difference": {
+    intro:
+      "The Date Difference Calculator measures the gap between two dates and reports it as days, weeks, weekdays, hours and a calendar breakdown in years, months and days. The distinction matters: 60 days is two months in day terms, but the calendar breakdown counts real months of differing length, so it can say one month and twenty-nine days instead. It is the tool to reach for when you need to know how long a contract runs, how much leave you have accrued, or how many working days are left before a deadline.",
+    howTo: [
+      { step: "Pick the start date", detail: "Use the date field, or type the date directly. Both dates use the YYYY-MM-DD format internally." },
+      { step: "Pick the end date", detail: "Use the End date = today button when one end is the present, or the swap button to reverse the two." },
+      { step: "Choose whether to include the end date", detail: "Tick the inclusive box when both days count, which is what you want for hotel nights or a period of leave." },
+      { step: "Read the breakdown", detail: "Days is the headline figure. The calendar row gives years, months and days, and the weekday count excludes Saturdays and Sundays." },
+    ],
+    faq: [
+      { q: "Why do days and the calendar breakdown disagree?", a: "They measure different things. Days counts fixed 24-hour periods. The calendar breakdown counts real calendar months, which are 28 to 31 days long, so the two only line up by coincidence." },
+      { q: "Does it include the end date?", a: "Only if you tick the inclusive box. By default the gap between two consecutive days is one day, not two." },
+      { q: "Are weekends excluded from the weekday count?", a: "Yes. The weekday figure counts Monday to Friday only. Public holidays are not excluded, because they differ by country and year." },
+      { q: "Which date comes first?", a: "It does not matter. The tool orders the two dates itself, and the swap button reverses them if you prefer the other order." },
+      { q: "Does it handle leap years?", a: "Yes. Both dates are treated as real calendar dates, so a February in a leap year contributes 29 days." },
+    ],
+    useCases: [
+      "Working out how many working days remain before a deadline.",
+      "Checking the exact length of a contract or a notice period.",
+      "Counting inclusive nights for a hotel or a rental booking.",
+      "Turning an age or a tenure into years, months and days.",
+    ],
+    tips: [
+      "Tick inclusive when both the first and last day count, such as for a stay.",
+      "Use the weekday figure for planning work, and the day figure for elapsed time.",
+      "Subtract public holidays yourself; they vary too much to be built in.",
+    ],
+  },
+  "speed-converter": {
+    intro:
+      "The Speed Converter converts between metres per second, kilometres per hour, miles per hour, knots and Mach. All five are converted through metres per second, so any pair is one step rather than a chain of approximations, and the value updates as you type in either field. It is the quickest way to read a foreign speed limit, compare a boat's speed to a car's, or sanity-check a figure in a spec sheet.",
+    howTo: [
+      { step: "Enter a value", detail: "Type into either field. Both directions are live, so you can type in the unit you have and read the one you want." },
+      { step: "Choose the units", detail: "Pick a from unit and a to unit. Kilometres per hour to miles per hour is the default because it is the most common pair." },
+      { step: "Read the result", detail: "The converted value appears in the other field, at full precision rather than rounded to a whole number." },
+      { step: "Swap if needed", detail: "Switch the two units to convert back the other way without retyping." },
+    ],
+    faq: [
+      { q: "What is a knot?", a: "One nautical mile per hour, which is 1.852 km/h. It is the standard unit at sea and in aviation, which is why boat and aircraft speeds are quoted in knots while road speeds are not." },
+      { q: "What is Mach 1?", a: "The speed of sound, roughly 343 metres per second in dry air at sea level and 20 degrees Celsius. The real value changes with temperature and altitude, so Mach is a ratio rather than a fixed speed." },
+      { q: "Why is my mph to kmh figure slightly different from a road sign?", a: "Because signs are rounded. 60 mph is 96.56 km/h exactly, and a sign will usually say 100 or 95." },
+      { q: "How precise is the result?", a: "The conversion factors are exact definitions except for Mach, which uses the standard sea-level speed of sound. Rounding happens only for display." },
+    ],
+    useCases: [
+      "Reading a speed limit posted in a unit you do not use.",
+      "Converting a boat or aircraft speed in knots into something comparable to a car.",
+      "Checking a figure in a technical datasheet before quoting it.",
+      "Comparing running or cycling speeds between metric and imperial records.",
+    ],
+    tips: [
+      "Remember knots are nautical miles per hour, not statute miles.",
+      "Mach depends on air temperature; treat it as an approximation unless you know the conditions.",
+      "Type into either field; both directions convert live.",
+    ],
+  },
+  "json-validator": {
+    intro:
+      "The JSON Validator tells you whether a document parses, and when it does not, it reports the parse error rather than a vague failure. For valid input it also reports the top-level type, the number of items or keys, and the byte size, which is more useful than a yes or no when you are checking a payload before it goes into a request. Parsing happens in your browser, so there is no upload and no size limit imposed by a server.",
+    howTo: [
+      { step: "Paste the JSON", detail: "Drop the document into the field straight from an editor, a log line or a network response." },
+      { step: "Validate", detail: "The tool parses it. Valid input reports the type, the count and the size; invalid input reports the exact parse error." },
+      { step: "Fix the reported position", detail: "The error names the first character that broke parsing, which is usually one character before the actual mistake: a missing comma, a trailing comma, or an unescaped quote." },
+      { step: "Format it once it passes", detail: "Once the document is valid, run it through the JSON Formatter if you also want it re-indented for reading." },
+    ],
+    faq: [
+      { q: "What makes JSON invalid?", a: "The usual causes are a trailing comma after the last entry, single quotes instead of double quotes, unescaped double quotes inside a string, a missing comma between entries, and comments, which JSON does not support." },
+      { q: "Does it check against a schema?", a: "No. It checks syntax only. If you need to enforce that certain fields exist and have certain types, you want schema validation instead." },
+      { q: "How large a file can it handle?", a: "Large ones, because parsing happens in your browser with no upload. Very large documents may still take a moment to render, but there is no server-imposed limit." },
+      { q: "Is my data sent anywhere?", a: "No. The document never leaves your device, which is why it is safe to paste internal payloads and responses containing tokens." },
+      { q: "Why does it say valid when my API rejects it?", a: "Because the syntax is fine but the shape is wrong. Validation confirms the document is well-formed JSON, not that it matches what the endpoint expects." },
+    ],
+    useCases: [
+      "Checking a payload before you send it to an endpoint.",
+      "Finding the exact character that broke a config file.",
+      "Confirming a generated document is well-formed before it ships.",
+      "Measuring the size of a payload against a rate or size limit.",
+    ],
+    tips: [
+      "Read the error position and look one character before it; that is usually where the mistake is.",
+      "Validating is not schema checking; a valid document can still have the wrong fields.",
+      "Use the JSON Formatter afterwards if you also need it readable.",
+    ],
+  },
+  "hex-text": {
+    intro:
+      "The Hex to Text converter turns a string of hexadecimal byte values into the characters they represent, and it detects the direction for you: input made only of hex digits and spaces is decoded, anything else is encoded. That makes it one field you can paste into either way, which is what you want when you are reading a packet capture, debugging an encoding bug or checking what a binary field actually contains. Each byte is handled separately, so the conversion is exact rather than approximate.",
+    howTo: [
+      { step: "Paste a value", detail: "Either hex bytes separated by spaces, such as 48 65 6c 6c 6f, or plain text you want encoded." },
+      { step: "Run it", detail: "Input that is only hex digits and spaces is decoded to text. Anything else is encoded into hex." },
+      { step: "Check the direction", detail: "If the output looks wrong, the input probably matched the other pattern. Remove the spaces to force encoding, or add them to force decoding." },
+      { step: "Copy the result", detail: "The output is plain text, ready to paste back into your editor or terminal." },
+    ],
+    faq: [
+      { q: "How does it decide which way to convert?", a: "It tests whether the input is made up only of hexadecimal digits and whitespace. If it is, the input is decoded. If not, it is encoded." },
+      { q: "Why did my text come out as gibberish?", a: "Because the bytes are not text in the encoding you expect. Values above 127 are interpreted as Unicode code points, which only match UTF-8 output by coincidence." },
+      { q: "Do I need spaces between the bytes?", a: "For decoding, yes. Spaces mark where one byte ends and the next begins. Without them the whole string is read as one number." },
+      { q: "Is this the same as a hex to decimal converter?", a: "No. This converts between hex and the characters those bytes represent. Use the Number Base Converter for hex to decimal." },
+      { q: "Is the data uploaded?", a: "No. The conversion happens in your browser, so packet captures and payloads stay on your device." },
+    ],
+    useCases: [
+      "Reading the text inside a packet capture or a hex dump.",
+      "Checking what a binary field in a database actually contains.",
+      "Debugging a mojibake bug by looking at the raw bytes.",
+      "Building a byte sequence to paste into a test fixture.",
+    ],
+    tips: [
+      "Separate bytes with spaces when decoding; without them the value is read as one number.",
+      "Values above 127 are not ASCII; expect non-text results.",
+      "Use the Number Base Converter if you want hex as a number rather than as text.",
+    ],
+  },
+  "number-base-converter": {
+    intro:
+      "The Number Base Converter converts a value between binary, octal, decimal and hexadecimal, and shows all four at once so you can read whichever you need. Leave the base on Auto and it reads the 0x, 0b and 0o prefixes for you, which means you can paste 0xFF straight from source code and get 255, 1111 1111 and 377 without setting anything. Values are handled as arbitrary-precision integers, so a 64-bit value converts exactly instead of losing its top bits.",
+    howTo: [
+      { step: "Enter a value", detail: "Type a number in any base: 255, 0xFF, 0b11111111 or 0o377. Spaces and underscores are ignored." },
+      { step: "Leave the base on Auto, or force one", detail: "Auto reads the prefix and falls back to matching the digits. Pick Binary, Octal, Decimal or Hex to force an interpretation." },
+      { step: "Read all four", detail: "Decimal, hexadecimal, binary and octal are shown together. Binary is grouped in fours to make it readable." },
+      { step: "Copy what you need", detail: "Each row has its own copy button, and the combined result can be copied in one go." },
+    ],
+    faq: [
+      { q: "What do the 0x, 0b and 0o prefixes mean?", a: "They mark the base: 0x for hexadecimal, 0b for binary and 0o for octal. They are the conventions used by C, JavaScript, Python and most other languages, so code can be pasted in directly." },
+      { q: "Why is my binary value rejected when I force base 2?", a: "Because it contains characters other than 0 and 1. A value with spaces is fine, but a value with a 0b prefix is not, since the prefix is not a binary digit." },
+      { q: "Can it handle very large numbers?", a: "Yes. Values are handled as arbitrary-precision integers, so a 64-bit or larger value converts exactly. Only whole numbers are supported." },
+      { q: "Does it handle negative numbers?", a: "Yes. A leading minus is kept and shown on every base." },
+      { q: "Can it convert fractional values?", a: "No. The converter works on integers only, which covers the cases that matter for bit flags, addresses and colour values." },
+    ],
+    useCases: [
+      "Reading a hexadecimal value from source code as decimal and binary.",
+      "Checking which bits are set in a flag or a mask.",
+      "Converting a colour value between hex and decimal channels.",
+      "Verifying a binary literal in a config file before you commit it.",
+    ],
+    tips: [
+      "Paste 0x values straight from code; the prefix is read automatically.",
+      "Binary output is grouped in fours to match how nibbles map to hex digits.",
+      "Force a base when a bare number could be read two ways, such as 10.",
+    ],
+  },
+  "roman-numerals": {
+    intro:
+      "The Roman Numeral Converter converts in both directions between ordinary numbers and Roman numerals, detecting which way you mean from what you type. It covers 1 to 3999, which is the range the classical system can express without extra notation, and it handles subtractive pairs such as IV and CM correctly in both directions. Use it for dates in film credits, chapter numbering, clock faces, outlines and anywhere else the old form is still expected.",
+    howTo: [
+      { step: "Type a value", detail: "Enter a number to convert to Roman numerals, or Roman numerals to convert back to a number." },
+      { step: "Run it", detail: "Input made only of the letters M, D, C, L, X, V and I is treated as a numeral and converted to a number. Anything numeric is converted to numerals." },
+      { step: "Check the range", detail: "Values must be between 1 and 3999. Outside that range the classical system has no standard form." },
+      { step: "Copy the result", detail: "The result is plain text, ready to paste into a document or a design." },
+    ],
+    faq: [
+      { q: "Why does it stop at 3999?", a: "Because the standard system has no symbol for five thousand. Larger values were written with an overline or other extended notation, which is not universally agreed on, so the tool stays within the classical range." },
+      { q: "Is the input case sensitive?", a: "No. Lowercase letters are accepted and treated the same as uppercase." },
+      { q: "Does it accept non-standard forms like IIII?", a: "It will convert the value, since the letters are summed or subtracted pairwise, but IIII is not the standard form of 4. IV is." },
+      { q: "Why is there no Roman numeral for zero?", a: "The system has no symbol for zero. It was developed for counting and recording, not for arithmetic with a zero place value." },
+      { q: "How are subtractive pairs handled?", a: "A smaller symbol before a larger one is subtracted, so IV is 4 and CM is 900. The conversion applies that rule in both directions." },
+    ],
+    useCases: [
+      "Writing a release year in Roman numerals for a film or TV credit.",
+      "Numbering front matter or appendix pages in a document.",
+      "Checking a Roman numeral you have been given rather than parsing it by eye.",
+      "Designing a clock face or a monument inscription.",
+    ],
+    tips: [
+      "Use the standard subtractive forms; IIII and VIIII are readable but non-standard.",
+      "Stay within 1 to 3999; anything larger needs extended notation.",
+      "Lowercase input works, so you do not need to shift-case before pasting.",
+    ],
+  },
+  "image-to-base64": {
+    intro:
+      "The Image to Base64 converter turns any image file into a Base64 data URI you can paste straight into HTML, CSS or JSON. The file is read with the browser's own file reader and encoded locally, so it is never uploaded, which makes it safe for logos and assets you would rather not send to a third party. The character count is shown alongside the result because Base64 inflates size by about a third, and that matters when the string ends up inline in a page.",
+    howTo: [
+      { step: "Choose an image", detail: "Use the upload control to pick any image file. Common formats such as PNG, JPEG, GIF and SVG are all accepted." },
+      { step: "Wait for the encoding", detail: "The data URI appears in a text area once the file has been read. Larger files take a moment longer." },
+      { step: "Copy the string", detail: "Use the copy button to take the whole data URI, including the data: prefix and the media type." },
+      { step: "Paste it where you need it", detail: "Use it as the src of an image tag, inside a CSS url() value, or as a field in a JSON payload." },
+    ],
+    faq: [
+      { q: "Is the image uploaded anywhere?", a: "No. The file is read and encoded in your browser, so it never leaves your device. That is the main reason to use this rather than an online converter that takes an upload." },
+      { q: "Why is the string so much longer than the file?", a: "Base64 represents three bytes with four characters, so the result is about a third larger than the original file before any other overhead." },
+      { q: "Should I inline images in a page?", a: "Only small ones. Inlining saves a request but blocks the file from being cached separately and makes the HTML bigger, so it suits icons and tiny logos, not photographs." },
+      { q: "Can I go the other way?", a: "Not here. This tool encodes an image file to text. Decoding needs a Base64 decoder plus the original media type." },
+      { q: "Is there a file size limit?", a: "There is no server limit, because nothing is uploaded. Very large images will still take time to encode and produce an unwieldy string." },
+    ],
+    useCases: [
+      "Inlining a small logo so an email template renders without external assets.",
+      "Embedding an icon in a single-file HTML document.",
+      "Putting an image into a JSON payload that only accepts text.",
+      "Avoiding a mixed-content warning on a page served over HTTPS.",
+    ],
+    tips: [
+      "Keep inlined images small; the string is about a third larger than the file.",
+      "Copy the whole data URI including the data: prefix, or the browser will not render it.",
+      "For photographs, host the file and link to it instead of inlining it.",
+    ],
+  },
+  "favicon-generator": {
+    intro:
+      "The Favicon Generator takes an image, crops it to a square from the centre and produces a 64 by 64 icon file you can drop into a site root. The crop matters more than it sounds: browsers render favicons square, so a wide logo squeezed into a square looks wrong, while a centre crop usually keeps the recognisable part. The image is processed on a canvas in your browser, so nothing is uploaded.",
+    howTo: [
+      { step: "Upload an image", detail: "Pick the logo or image you want to use. A square source image gives the best result because nothing is cut off." },
+      { step: "Let it crop and resize", detail: "The shortest side is used as the crop square, taken from the centre, and the result is drawn at 64 by 64." },
+      { step: "Compare the two previews", detail: "The original and the icon are shown side by side so you can see what the crop removed." },
+      { step: "Download the icon", detail: "Save the file as favicon.ico and place it in your site root, or upload it wherever your framework expects static assets." },
+    ],
+    faq: [
+      { q: "Why is my logo cropped?", a: "Because favicons are square. The tool takes the largest square that fits, from the centre. A square source image avoids cropping altogether." },
+      { q: "What size should I upload?", a: "At least 64 by 64, and square if you can. Larger images are simply scaled down; smaller ones will look soft." },
+      { q: "Do I need more than one size?", a: "For most sites one icon is enough, because browsers scale a 64 pixel icon down for tabs. If you want crisp results everywhere, generate 16, 32 and 180 pixel versions separately." },
+      { q: "Where does the file go?", a: "In the site root as favicon.ico, which browsers request by convention. If your framework serves static files from a directory such as public, put it there instead." },
+      { q: "Why does the tab still show the old icon?", a: "Because it is cached. Hard reload the page, or open it in a private window, and the new icon appears." },
+    ],
+    useCases: [
+      "Generating a favicon from a logo before a site launch.",
+      "Producing a quick icon for a prototype or an internal tool.",
+      "Replacing a placeholder icon left over from a template.",
+      "Making a square version of a wide logo for use in a tab.",
+    ],
+    tips: [
+      "Upload a square image to avoid losing the edges of a wide logo.",
+      "Give the icon a plain background if it will be shown on both light and dark tabs.",
+      "Hard reload after uploading; browsers cache favicons aggressively.",
+    ],
+  },
+  "xml-formatter": {
+    intro:
+      "The XML Formatter re-indents an XML document so its structure is visible, adding a line break and two spaces per level around every tag. It is the quickest way to read an XML response from a SOAP endpoint, an Android manifest or a config file that arrives as one long line. The formatter rearranges whitespace only; it does not validate the document or check it against a schema, so a malformed document will still come out indented.",
+    howTo: [
+      { step: "Paste the XML", detail: "Drop the document in straight from a response, a log or an editor. Whitespace between tags is discarded before formatting." },
+      { step: "Format it", detail: "Each tag is placed on its own line and indented by two spaces per nesting level." },
+      { step: "Read the structure", detail: "Closing tags line up with their opening tags, which is what makes a deep document readable." },
+      { step: "Copy it back", detail: "The result is plain text, ready to paste into your editor or a diff tool." },
+    ],
+    faq: [
+      { q: "Does it validate the XML?", a: "No. It only re-indents. A document with a mismatched tag will still be formatted, so run it through a validator if correctness matters." },
+      { q: "Does it change my content?", a: "No. Only whitespace between tags is altered. Element names, attributes and text content are left exactly as they were." },
+      { q: "What about self-closing tags and comments?", a: "Self-closing tags are placed on one line and do not increase the indent. Comments and processing instructions are treated as ordinary tokens." },
+      { q: "Can it minify instead?", a: "No. This tool only expands a document. To collapse it, remove the line breaks yourself or use a dedicated minifier." },
+      { q: "Is the document uploaded?", a: "No. Formatting happens in your browser, so internal config and response payloads stay on your device." },
+    ],
+    useCases: [
+      "Reading a single-line XML response from a SOAP or legacy endpoint.",
+      "Cleaning up an Android manifest or a Maven config before a review.",
+      "Comparing two XML documents in a diff after re-indenting both.",
+      "Checking the nesting of a document you generated.",
+    ],
+    tips: [
+      "Format before you diff; two documents with different whitespace look different otherwise.",
+      "Formatting is not validation; check the document separately if it must be correct.",
+      "Attributes are left untouched, so long attribute lists stay on one line.",
+    ],
+  },
+  "stopwatch": {
+    intro:
+      "The Online Stopwatch times an interval to a hundredth of a second, with start, pause, reset and lap controls. The lap button records a split without stopping the clock and shows both the cumulative time and the gap since the previous lap, which is what makes it useful for timing repeated efforts rather than one long interval. It runs in the page, so closing the tab stops it; keep the tab open while you time.",
+    howTo: [
+      { step: "Start", detail: "Press Start to begin. The display shows minutes, seconds and hundredths." },
+      { step: "Pause when you need to", detail: "Pause freezes the display and the counter. Start resumes from where it stopped rather than resetting." },
+      { step: "Record a lap", detail: "Press Lap while running to record a split. Each lap shows its cumulative time and the difference from the previous one." },
+      { step: "Reset for a new run", detail: "Reset returns the clock to zero and clears the lap list." },
+    ],
+    faq: [
+      { q: "How precise is it?", a: "It displays hundredths of a second. The underlying timer ticks every ten milliseconds, which is finer than a person can react, so the practical limit is your own reflex rather than the clock." },
+      { q: "Does it keep running if I switch tabs?", a: "Yes, but browsers throttle timers in background tabs, so a background stopwatch can drift. Keep the tab in the foreground for anything you care about." },
+      { q: "What is the difference between lap and split?", a: "Nothing here. Each lap shows when it was taken and how long since the previous one, which covers both readings." },
+      { q: "Can it count down instead?", a: "No. This is a stopwatch, not a timer. Use the Pomodoro Timer if you want a countdown." },
+      { q: "Is anything recorded or uploaded?", a: "No. The timing and the lap list live in the page only, and clearing them removes them." },
+    ],
+    useCases: [
+      "Timing laps or intervals during a training session.",
+      "Measuring how long a repeated manual task actually takes.",
+      "Timing a presentation or a demo run-through.",
+      "Checking page or process timings during a manual test.",
+    ],
+    tips: [
+      "Keep the tab in the foreground; background tabs are throttled and can drift.",
+      "Use Lap rather than pausing when you want a running total to continue.",
+      "Reset before each new run so the lap list starts clean.",
+    ],
+  },
+  "html-preview": {
+    intro:
+      "The HTML Preview renders a fragment of HTML live so you can see what it produces without saving a file and opening it. It is meant for short snippets: an email template, a component's markup, a snippet from a content management system, or anything else you want to eyeball before pasting it somewhere. Switching between edit and preview is instant, which makes it a fast loop for tweaking markup.",
+    howTo: [
+      { step: "Paste your markup", detail: "Type or paste an HTML fragment into the editor. A full document or just a snippet both work." },
+      { step: "Switch to preview", detail: "Press Preview to render it. The markup is drawn into the page as it would appear in a browser." },
+      { step: "Switch back and adjust", detail: "Press Edit to return to the markup. Changes are kept, so you can iterate." },
+      { step: "Copy it out when you are happy", detail: "Select the markup in the editor and copy it into your project." },
+    ],
+    faq: [
+      { q: "Does it support CSS and JavaScript?", a: "Style tags and inline styles render. Scripts are rendered as markup, but this is a preview of a fragment, so treat script behaviour as unreliable." },
+      { q: "Why does my snippet look different from my site?", a: "Because the surrounding stylesheet is missing. A fragment inherits nothing here, so anything that relies on your site's CSS will look unstyled." },
+      { q: "Can I load external images or fonts?", a: "Yes, if they are publicly reachable, though the surrounding page's own rules still will not apply." },
+      { q: "Is the markup uploaded?", a: "No. Rendering happens in your browser, so unpublished templates and internal content stay on your device." },
+      { q: "Does it validate the HTML?", a: "No. It renders what you give it. A browser will silently fix some mistakes, so a clean render does not prove the markup is valid." },
+    ],
+    useCases: [
+      "Checking an email template fragment before sending a test.",
+      "Previewing markup pasted out of a content management system.",
+      "Sanity-checking a snippet before pasting it into a pull request.",
+      "Testing whether a table or a list renders the way you expect.",
+    ],
+    tips: [
+      "Add inline styles if your fragment depends on a stylesheet that is not here.",
+      "A clean render is not proof of valid markup; browsers paper over errors.",
+      "Keep the preview in mind for snippets, not for whole pages with script behaviour.",
+    ],
+  },
+  "json-to-yaml": {
+    intro:
+      "The JSON to YAML converter turns a JSON document into indented YAML, which is the form most configuration tools expect. Nested objects become indented keys and arrays become dash-prefixed lists, so a JSON config can be dropped into a Kubernetes manifest, a CI pipeline or an Ansible file without rewriting it by hand. Everything is converted in your browser, so config containing credentials never leaves your machine.",
+    howTo: [
+      { step: "Paste the JSON", detail: "Any valid JSON document works, including nested objects and arrays." },
+      { step: "Convert", detail: "Objects become indented key-value pairs and arrays become dash-prefixed list items." },
+      { step: "Check the indentation", detail: "YAML is indentation-sensitive. Two spaces are used per level, which is the convention most tooling expects." },
+      { step: "Copy the result", detail: "Paste it into your manifest, pipeline file or configuration." },
+    ],
+    faq: [
+      { q: "Is the output valid YAML?", a: "For ordinary data, yes. Values that could be read as another type, such as a string that looks like a date or the word no, are emitted unquoted, so quote those yourself if your parser is strict." },
+      { q: "Does it preserve key order?", a: "Yes. Keys are emitted in the order they appear in the JSON document." },
+      { q: "What happens to null and booleans?", a: "Null becomes the literal null, and true and false are emitted as lowercase literals, which YAML reads as booleans." },
+      { q: "Can I convert YAML back to JSON?", a: "Not with this tool. Convert in the direction you need and keep the original JSON if you may need to go back." },
+      { q: "Why does my result fail to parse downstream?", a: "Usually indentation or an ambiguous value. Check that no tab characters crept in, and quote values that look like dates, numbers or booleans but must stay strings." },
+    ],
+    useCases: [
+      "Turning a JSON config into a Kubernetes manifest.",
+      "Preparing a CI pipeline file from an existing JSON definition.",
+      "Converting an API response into a readable fixture file.",
+      "Migrating configuration between tools that expect different formats.",
+    ],
+    tips: [
+      "Quote strings that look like dates, numbers or the words yes and no.",
+      "Two-space indentation is used; keep it consistent if you edit by hand.",
+      "Keep the original JSON around if you might need to convert back.",
+    ],
+  },
+  "email-validator": {
+    intro:
+      "The Email Validator checks a list of addresses for correct syntax and marks each one valid or invalid, handling several at a time separated by commas, spaces or new lines. It checks the shape of the address, not whether the mailbox exists, which is the honest limit of any client-side check. Use it to clean a mailing list before an import, or to catch typos in a signup form before they turn into bounces.",
+    howTo: [
+      { step: "Paste the addresses", detail: "One per line, or separated by commas or spaces. Any number of addresses can be checked at once." },
+      { step: "Run the check", detail: "Each address is listed with VALID or INVALID next to it, in the order you entered them." },
+      { step: "Look at the failures", detail: "A missing @, a missing dot in the domain, a space inside the address or a trailing comma are the usual causes." },
+      { step: "Clean and re-run", detail: "Fix the failures and run again to confirm the list is clean." },
+    ],
+    faq: [
+      { q: "Does this prove the address exists?", a: "No. It checks syntax only. Proving a mailbox exists means sending mail or querying the mail server, which no browser tool can do." },
+      { q: "Why is a valid-looking address marked invalid?", a: "Usually a stray space, a comma left inside the address, or a missing top-level domain. The check requires an @, a domain, and a dot in the domain." },
+      { q: "Does it accept addresses with plus signs or tags?", a: "Yes. Anything before the @ that contains no whitespace or @ is accepted, so plus addressing passes." },
+      { q: "Will it catch a typo in the domain?", a: "Only if the typo breaks the syntax. gmial.com is syntactically valid and will pass, because there is no way to tell it apart from a real domain from the browser." },
+      { q: "Is my list uploaded?", a: "No. Checking happens in your browser, so customer lists never leave your device." },
+    ],
+    useCases: [
+      "Cleaning a mailing list before importing it into a campaign tool.",
+      "Checking a pasted list of signups for typos.",
+      "Validating test fixtures before a bulk import.",
+      "Finding the one bad row that is breaking an upload.",
+    ],
+    tips: [
+      "Syntax is not existence; a valid address can still bounce.",
+      "Separate addresses with new lines rather than commas when they come from a document.",
+      "Watch for a trailing comma on the last address of a list.",
+    ],
+  },
+  "list-randomizer": {
+    intro:
+      "The List Randomizer shuffles a list into a random order using an unbiased shuffle, so every item has the same chance of landing in any position. One item per line, and the result is the same list in a new order rather than a selection, which makes it useful for drawing a running order, assigning review duties or picking teams. Because the shuffle is random, running it again gives a different order.",
+    howTo: [
+      { step: "Enter your list", detail: "One item per line. Blank lines are dropped before shuffling." },
+      { step: "Randomize", detail: "The items are shuffled and returned in their new order, one per line." },
+      { step: "Take what you need", detail: "If you only need one name, take the first line. If you need a running order, use the whole list." },
+      { step: "Run again for a different order", detail: "Each run is independent, so a new shuffle is produced every time." },
+    ],
+    faq: [
+      { q: "Is the shuffle fair?", a: "Yes. It uses a standard unbiased shuffle, so every ordering is equally likely. That is not true of the naive approach of sorting by a random number." },
+      { q: "Can it pick just one item?", a: "It shuffles the whole list, but the first line of the result is a fair single pick." },
+      { q: "Does it remove duplicates?", a: "No. Every line is kept, including repeated entries. Remove duplicates first if each entry should appear once." },
+      { q: "Can the same order come up twice?", a: "Yes, by chance. With more than a handful of items the odds are small, but it is possible." },
+      { q: "Is randomness good enough for a prize draw?", a: "For an informal draw, yes. For anything with real money or legal weight, use a cryptographically secure generator and record the process." },
+    ],
+    useCases: [
+      "Drawing a speaking or presentation order.",
+      "Assigning code review duties across a team.",
+      "Splitting a group into teams at random.",
+      "Picking a winner from a shortlist.",
+    ],
+    tips: [
+      "Take the first line when you just need one pick.",
+      "Remove duplicates first if each entry should appear once.",
+      "Run it again if you want a different order; each run is independent.",
+    ],
+  },
+  "meta-tag-generator": {
+    intro:
+      "The Meta Tag Generator builds the head tags a page needs for search and sharing: a title, a description, and the matching Open Graph tags. It emits both the plain meta description used by search results and the og equivalents used when a link is shared, so the same text does not have to be written twice. Paste in a title and a description and copy the block straight into your head element.",
+    howTo: [
+      { step: "Enter a title and a description", detail: "Separate the two with a vertical bar, for example My Page | A short description of what it does." },
+      { step: "Generate", detail: "The tool produces a title tag, a meta description, and og:title and og:description tags." },
+      { step: "Copy the block", detail: "Paste the generated tags into the head of your page." },
+      { step: "Adjust to taste", detail: "Treat the output as a starting point. A description written for a specific page will always beat a generic one." },
+    ],
+    faq: [
+      { q: "Why both a meta description and og:description?", a: "They are read by different systems. Search engines use the meta description for result snippets, while social platforms use the og tags for link previews. They can be the same text or different." },
+      { q: "Does a meta description affect ranking?", a: "Not directly. It does affect how often people click your result, which is why it is worth writing properly rather than leaving empty." },
+      { q: "How long should the description be?", a: "Around 150 to 160 characters. Longer text is truncated in search results, so put the important part first." },
+      { q: "Is that all a page needs?", a: "No. A canonical tag, a robots directive and og:image are usually wanted as well. This tool covers the two text fields, not the whole head." },
+      { q: "Does it escape quotes in my text?", a: "No. If your description contains a double quote, replace it with a single quote or escape it before pasting, or the attribute will break." },
+    ],
+    useCases: [
+      "Generating the head block for a new page.",
+      "Adding sharing tags to a page that only has a title.",
+      "Producing a consistent starting block across a set of pages.",
+      "Checking what a page's tags should look like before handing them to a developer.",
+    ],
+    tips: [
+      "Keep the description near 155 characters so it is not truncated.",
+      "Write a distinct description per page; duplicated ones are ignored in practice.",
+      "Avoid double quotes in the text, or escape them before pasting.",
+    ],
+  },
+  "prime-checker": {
+    intro:
+      "The Prime Number Checker tells you whether a whole number is prime, and when it is not, it names a divisor as proof. That second part is the useful bit: a claim that a number is composite is easy to verify when you are shown the factor. The check tests divisors up to the square root of the number, which is why it returns an answer immediately even for large values.",
+    howTo: [
+      { step: "Enter a whole number", detail: "Type any integer of 2 or more. Decimals are not accepted." },
+      { step: "Run the check", detail: "The result says whether the number is prime, or names a divisor that proves it is not." },
+      { step: "Use the divisor as proof", detail: "If a divisor is reported, dividing the number by it confirms the answer immediately." },
+      { step: "Try nearby values", detail: "Run a few numbers either side if you are hunting for the next prime." },
+    ],
+    faq: [
+      { q: "Why does it stop at the square root?", a: "Because if a number has a factor larger than its square root, it must also have one smaller. Testing up to the square root is therefore enough, and much faster." },
+      { q: "Is 1 prime?", a: "No. By definition a prime has exactly two distinct divisors, and 1 has only one. The tool asks for a number of 2 or more." },
+      { q: "Are negative numbers handled?", a: "No. Primality is defined for positive integers above 1." },
+      { q: "What about very large numbers?", a: "Testing up to the square root is fast for numbers up to around fifteen digits. Beyond that the trial division gets slow, and a probabilistic test is the usual answer." },
+      { q: "What is the largest known prime?", a: "It changes as records are set. This tool checks a number you give it rather than searching for primes." },
+    ],
+    useCases: [
+      "Checking a number during a maths exercise or a homework problem.",
+      "Choosing a prime for a hash table size or a modulo operation.",
+      "Verifying a factor you suspect divides a number.",
+      "Exploring which numbers near a given value are prime.",
+    ],
+    tips: [
+      "The reported divisor is your proof; divide by it to confirm the result.",
+      "Keep to numbers up to about fifteen digits for an instant answer.",
+      "Remember 1 is not prime, and neither is any negative number.",
+    ],
+  },
+  "gcf-calculator": {
+    intro:
+      "The GCF and LCM Calculator finds the greatest common factor and the least common multiple of two or more whole numbers in one step. The greatest common factor is what you want when you are simplifying a ratio or a fraction; the least common multiple is what you want when you are adding fractions with different denominators or finding when two cycles line up. Both are reported together because they answer different halves of the same question.",
+    howTo: [
+      { step: "Enter the numbers", detail: "Two or more whole numbers separated by commas, for example 12, 18 or 24, 36, 60." },
+      { step: "Run it", detail: "The greatest common factor and the least common multiple are reported for the whole set." },
+      { step: "Use the GCF to simplify", detail: "Divide both parts of a ratio by the GCF to reduce it to its simplest form." },
+      { step: "Use the LCM to align", detail: "The LCM is the smallest number every input divides into, which is the common denominator or the next alignment point." },
+    ],
+    faq: [
+      { q: "What is the difference between GCF and LCM?", a: "The GCF is the largest number that divides all of them. The LCM is the smallest number that all of them divide into. One reduces, the other aligns." },
+      { q: "Can I use more than two numbers?", a: "Yes. Any number of values is accepted, and both results are computed across the whole set." },
+      { q: "What if the numbers share no factor?", a: "The GCF is 1, which means the numbers are coprime. The LCM is then simply their product." },
+      { q: "Are decimals accepted?", a: "No. Whole numbers only. Multiply decimals by a power of ten first if you need to." },
+      { q: "What does a GCF of 1 mean for a fraction?", a: "That the fraction is already in its simplest form. There is no number greater than 1 that divides both the numerator and the denominator." },
+    ],
+    useCases: [
+      "Simplifying a ratio or a fraction to its lowest terms.",
+      "Finding a common denominator before adding fractions.",
+      "Working out when two repeating schedules next coincide.",
+      "Reducing a recipe or a mix ratio to smaller whole numbers.",
+    ],
+    tips: [
+      "A GCF of 1 means the numbers share nothing; stop looking.",
+      "Use the LCM as your common denominator when adding fractions.",
+      "Whole numbers only; scale decimals up first.",
+    ],
+  },
+  "open-graph-generator": {
+    intro:
+      "The Open Graph Generator builds the og tags that control how a page looks when its link is shared. It emits og:url, og:title, og:description and og:type from a single line of input, which is the minimum set most platforms read. Paste the result into the head of your page and the preview card stops being whatever the platform guessed.",
+    howTo: [
+      { step: "Enter the three fields", detail: "URL, title and description, separated by vertical bars, for example https://example.com | Page Title | A short description." },
+      { step: "Generate", detail: "Four og tags are produced, including og:type set to website." },
+      { step: "Copy the block", detail: "Paste the tags into the head of your page." },
+      { step: "Add an image tag separately", detail: "og:image is not included, because it needs a full URL to a real file. Add it yourself pointing at an image that is publicly reachable." },
+    ],
+    faq: [
+      { q: "Why does my shared link still look wrong?", a: "Platforms cache previews aggressively. Once the tags are correct, force a re-scrape with the platform's own sharing debugger, or wait for the cache to expire." },
+      { q: "Is og:image required?", a: "Not strictly, but a link with no image gets a plain text card, which is far less likely to be clicked. Add one." },
+      { q: "What size should the image be?", a: "Around 1200 by 630 pixels is the common recommendation, because it survives cropping on most platforms." },
+      { q: "Do I need Twitter-specific tags too?", a: "Most platforms read the og tags. A card tag for Twitter can override the layout, but it is optional." },
+      { q: "Can I use relative URLs?", a: "No. og:image and og:url must be absolute, including the scheme, because an external scraper has no base URL to resolve against." },
+    ],
+    useCases: [
+      "Adding sharing tags to a page that currently has none.",
+      "Fixing a link preview that shows the wrong title or description.",
+      "Producing a consistent block across a set of landing pages.",
+      "Preparing tags for a launch before the page goes live.",
+    ],
+    tips: [
+      "Use absolute URLs; scrapers cannot resolve relative paths.",
+      "Add og:image yourself, at about 1200 by 630 pixels.",
+      "Re-scrape with the platform debugger after changing tags; previews are cached.",
+    ],
+  },
+  "json-to-csv": {
+    intro:
+      "The JSON to CSV converter turns an array of JSON objects into a CSV table, using the keys of the first object as the header row. It is the quickest way to get API data into a spreadsheet, since a CSV opens directly in Excel, Google Sheets or any analysis tool. Values are quoted according to CSV rules, so text containing commas survives the round trip.",
+    howTo: [
+      { step: "Paste a JSON array", detail: "An array of objects, such as a list of records from an API. Each object becomes one row." },
+      { step: "Convert", detail: "The keys of the first object become the header row, and each subsequent object becomes a row beneath it." },
+      { step: "Check the header", detail: "Only the keys present on the first object are used. Records with extra keys will lose those fields." },
+      { step: "Copy and save", detail: "Paste the result into a text editor and save it with a .csv extension, or paste it straight into a spreadsheet." },
+    ],
+    faq: [
+      { q: "Why does it say expected JSON array?", a: "Because the top level is an object rather than a list. Wrap it in square brackets, or convert the object you actually need into an array first." },
+      { q: "What happens to nested objects?", a: "They are written as JSON text inside the cell, because CSV has no way to represent nesting. Flatten the structure first if you want one column per field." },
+      { q: "What if records have different keys?", a: "The header comes from the first record. Later records with different keys will have missing or empty cells rather than extra columns." },
+      { q: "Are commas inside values handled?", a: "Yes. Values are quoted following CSV rules, so a comma inside a value does not create an extra column." },
+      { q: "Is my data uploaded?", a: "No. Conversion happens in your browser, so exported customer data stays on your device." },
+    ],
+    useCases: [
+      "Turning an API response into a spreadsheet for analysis.",
+      "Preparing a data import file from JSON records.",
+      "Sending a data extract to someone who works in Excel.",
+      "Spot-checking a set of records in a table rather than as text.",
+    ],
+    tips: [
+      "Flatten nested objects first; CSV has nowhere to put them.",
+      "Make sure the first record has every key you want as a column.",
+      "Save with a .csv extension and UTF-8 encoding if the data is not ASCII.",
+    ],
+  },
+  "unicode-converter": {
+    intro:
+      "The Unicode Converter translates text into \\u escape sequences and back again, detecting the direction from what you paste. It is the tool for those moments when a log line, a translation file or an API response comes back as \\u0048\\u0065\\u006c\\u006c\\u006f and you need to read it, or when you need to put a character into a place that will only accept ASCII. Every character is converted, so the round trip is lossless in both directions.",
+    howTo: [
+      { step: "Paste a value", detail: "Either escaped text such as \\u0048\\u0065\\u006c\\u006c\\u006f, or ordinary text you want escaped." },
+      { step: "Run it", detail: "Input containing escape sequences is decoded to text. Anything else is encoded into escapes." },
+      { step: "Check the direction", detail: "If nothing changes, the input was read as the wrong kind. Add an escape to force decoding, or remove them to force encoding." },
+      { step: "Copy the result", detail: "The output is plain text, ready to paste back into your file or terminal." },
+    ],
+    faq: [
+      { q: "How does it know which way to convert?", a: "It checks whether the input looks like escape sequences. If it does, the input is decoded; otherwise it is encoded." },
+      { q: "Does it handle emoji and characters beyond the basic plane?", a: "Each UTF-16 code unit is escaped separately, so characters outside the basic plane come out as a surrogate pair, which is how JavaScript and JSON represent them." },
+      { q: "Is this the same as URL encoding?", a: "No. This produces \\u escapes, which are a JavaScript and JSON convention. Percent encoding for URLs is a different scheme." },
+      { q: "Why does my decoded text look wrong?", a: "Because the escapes were produced from a different encoding. These escapes represent Unicode code units, not raw bytes." },
+      { q: "Is anything uploaded?", a: "No. Conversion happens in your browser, so logs and response payloads stay on your device." },
+    ],
+    useCases: [
+      "Reading a log line or a response full of escape sequences.",
+      "Putting a non-ASCII character into a file that must stay ASCII.",
+      "Checking what a translation file actually contains.",
+      "Escaping a character before pasting it into a JSON string.",
+    ],
+    tips: [
+      "Characters outside the basic plane become a surrogate pair; that is normal.",
+      "Use URL encoding instead if the target is a URL rather than a string.",
+      "The round trip is lossless, so converting twice returns the original.",
+    ],
+  },
+  "text-to-slug": {
+    intro:
+      "The Text to Slug converter turns a heading or a title into a URL-safe slug: lowercase, with spaces and punctuation replaced by hyphens. The output updates as you type, so you can adjust the title until the slug reads well rather than editing the result afterwards. It is the tool for producing the part of a URL that follows the last slash before you publish a post or a product page.",
+    howTo: [
+      { step: "Type or paste a title", detail: "Enter the heading exactly as you want it to appear to readers." },
+      { step: "Read the slug", detail: "The slug appears below and updates with every keystroke." },
+      { step: "Tidy it up", detail: "Remove filler words from the title if the slug is too long. Short slugs are easier to read and to share." },
+      { step: "Copy it", detail: "Use the copy button and paste the slug into the URL field of your page." },
+    ],
+    faq: [
+      { q: "What characters are removed?", a: "Anything that is not a letter, a digit, a space or a hyphen. Punctuation and symbols are dropped rather than encoded, which keeps the slug readable." },
+      { q: "Are underscores handled?", a: "Yes. Underscores are treated as word separators and become hyphens, which is what most style guides recommend." },
+      { q: "Does it handle non-English text?", a: "Letters from other scripts are kept where the browser recognises them as word characters. If a slug must be pure ASCII, transliterate the title first." },
+      { q: "Should I change a slug after publishing?", a: "Only with a redirect. Changing a published URL breaks existing links and loses whatever search visibility the old one had." },
+      { q: "Can it process a whole list of titles?", a: "One at a time. Paste each title and copy the result." },
+    ],
+    useCases: [
+      "Creating the URL for a new blog post or docs page.",
+      "Producing a slug for a product or category page.",
+      "Turning a heading into an anchor id for in-page links.",
+      "Checking that a slug is readable before you publish.",
+    ],
+    tips: [
+      "Drop filler words from the title so the slug stays short.",
+      "Do not change a slug after publishing unless you can redirect the old one.",
+      "Hyphens, not underscores, are the convention for word separators.",
+    ],
+  },
+  "html-entity-encoder": {
+    intro:
+      "The HTML Entity Encoder converts the five characters that matter in HTML into their entity form, and decodes them back again. Encoding is what you do before putting text into a page that came from a user, an API or a database, and it is the minimum defence against that text being treated as markup. Decoding is what you do when you are reading a source file or a feed and want the characters it actually represents.",
+    howTo: [
+      { step: "Choose a direction", detail: "Press Encode to turn characters into entities, or Decode to turn entities back into characters." },
+      { step: "Paste the text", detail: "The field label and the example change to match the direction you picked." },
+      { step: "Convert", detail: "Press Convert. The result appears below with a copy button." },
+      { step: "Clear between runs", detail: "Press Clear to empty both fields before the next conversion." },
+    ],
+    faq: [
+      { q: "Which characters are encoded?", a: "The ampersand, less-than, greater-than, double quote and single quote. Those are the characters that change how HTML is parsed, so they are the ones that must be escaped." },
+      { q: "Is encoding enough to make user input safe?", a: "For putting text into HTML content, yes. It is not enough on its own for attribute values inside a URL, for JavaScript contexts, or for CSS, each of which needs its own rules." },
+      { q: "Why is the ampersand encoded first?", a: "Because the entities themselves start with an ampersand. Encoding it first prevents already-encoded text from being encoded twice." },
+      { q: "Does it handle numeric entities like &#39;?", a: "Decoding handles the numeric form for the single quote. Other numeric entities are left as they are, since there are thousands of them." },
+      { q: "Is my content uploaded?", a: "No. The conversion happens in your browser, so drafts and internal content stay on your device." },
+    ],
+    useCases: [
+      "Escaping text before dropping it into an HTML template.",
+      "Reading a snippet of source that is full of entities.",
+      "Preparing a code sample for display in a page.",
+      "Checking what a feed actually contains before rendering it.",
+    ],
+    tips: [
+      "Encode before you insert text into HTML; do it once, not twice.",
+      "Numbers and named entities are not interchangeable everywhere; prefer the named forms here.",
+      "URL and JavaScript contexts need different escaping; this is for HTML only.",
+    ],
+  },
+  "random-string": {
+    intro:
+      "The Random String Generator produces a string of letters and digits at whatever length you ask for, up to a thousand characters. Use it when you need a throwaway identifier, a test value or a short code and do not want to make one up by hand, because made-up strings tend to repeat. Be aware of what it is not: the values come from the browser's ordinary random function, so they are fine for test data and short-lived codes and not for anything secret.",
+    howTo: [
+      { step: "Enter a length", detail: "Type the number of characters you want. Anything up to a thousand is accepted." },
+      { step: "Generate", detail: "A string of that length is produced from upper and lower case letters plus digits." },
+      { step: "Copy it", detail: "Use the copy button and paste it where you need it." },
+      { step: "Generate again for another value", detail: "Each run is independent, so a new string is produced every time." },
+    ],
+    faq: [
+      { q: "Is it suitable for passwords or tokens?", a: "No. It uses the ordinary random function rather than a cryptographically secure one, so it must not be used where someone could profit from predicting the value. Use the Password Generator for anything secret." },
+      { q: "Which characters are used?", a: "Upper case letters, lower case letters and the digits 0 to 9: sixty-two possibilities per character. Symbols are not included." },
+      { q: "Can two runs produce the same string?", a: "Yes, in principle. With a long enough string the chance is negligible, but it is not zero, so check for duplicates if uniqueness matters." },
+      { q: "Why is there no option to exclude look-alike characters?", a: "Because the character set is fixed. If you need to avoid 1, l, I and 0, generate a string and replace those characters yourself." },
+      { q: "Is the string uploaded or stored?", a: "No. It is generated in your browser and forgotten when you leave the page." },
+    ],
+    useCases: [
+      "Generating a test identifier for a fixture or a seed script.",
+      "Creating a short code for a demo or a prototype.",
+      "Producing filler data that is obviously not real.",
+      "Making a unique suffix for a file name in a batch job.",
+    ],
+    tips: [
+      "Use the Password Generator instead if the value needs to be secret.",
+      "Longer strings make collisions vanishingly unlikely; sixteen characters is plenty for test data.",
+      "Check for duplicates yourself if uniqueness actually matters.",
+    ],
+  },
+  "letter-counter": {
+    intro:
+      "The Letter Counter counts how often each letter appears in a piece of text and reports each one as a share of the total characters. It is the fastest way to spot an encoding problem, a suspiciously even distribution, or a text that has been through a substitution cipher, since English has a very distinctive letter profile. Counts are case-insensitive and cover a to z only, which keeps the report to what you can act on.",
+    howTo: [
+      { step: "Paste the text", detail: "Any length works, from a single sentence to a whole document." },
+      { step: "Run it", detail: "Each letter from a to z is listed with its count and its percentage, ordered from most to least frequent." },
+      { step: "Compare against English", detail: "In ordinary English prose, e, t, a, o and i lead the table. If they do not, the text is probably not plain English." },
+      { step: "Use it as evidence, not proof", detail: "A frequency profile narrows things down. It does not decode anything for you." },
+    ],
+    faq: [
+      { q: "Are uppercase and lowercase counted together?", a: "Yes. The text is lowercased before counting, so A and a are the same letter." },
+      { q: "What about punctuation, digits and spaces?", a: "They are excluded from the per-letter counts. They are included in the total used for the percentages, which is why the shares may not add to 100 percent." },
+      { q: "Are accented letters counted?", a: "No. Only the unaccented letters a to z are counted, so e and é are treated separately and only the first appears." },
+      { q: "Why do the percentages not add up to 100?", a: "Because the total includes spaces, punctuation and digits, which are not listed as letters." },
+      { q: "Can this break a cipher?", a: "Not by itself. Frequency analysis is the starting point for a substitution cipher, but you still have to do the mapping." },
+    ],
+    useCases: [
+      "Checking whether a text is what it claims to be by its letter profile.",
+      "Starting a frequency analysis on a substitution cipher.",
+      "Spotting a file that has been mangled by the wrong encoding.",
+      "Settling an argument about which letter is most common in a document.",
+    ],
+    tips: [
+      "Compare the top of the list against e, t, a, o, i to sanity-check English text.",
+      "Accented letters are not counted; normalise the text first if that matters.",
+      "Percentages are shares of all characters, so they will not total 100.",
+    ],
+  },
+  "text-repeater": {
+    intro:
+      "The Text Repeater writes a piece of text out as many times as you ask, separated by spaces. It is a small tool with one job, and it exists because doing this by hand in an editor is slower than it should be: filling a column with placeholder content, generating a long test string, or producing a repeated pattern for a layout test. Anything up to a hundred copies is produced in one run.",
+    howTo: [
+      { step: "Enter the text and the count", detail: "Type the text, then a vertical bar, then how many times you want it, for example lorem | 20." },
+      { step: "Run it", detail: "That many copies are produced, separated by spaces." },
+      { step: "Copy the result", detail: "Paste it into your editor, your test fixture or your design tool." },
+      { step: "Run again to change the count", detail: "Change the number after the bar and run it once more." },
+    ],
+    faq: [
+      { q: "What if I do not specify a count?", a: "Three copies are produced by default. Adding the bar and a number overrides it." },
+      { q: "Is there a maximum?", a: "Yes, a hundred copies. That keeps the output usable rather than overwhelming." },
+      { q: "Can I put each copy on its own line?", a: "Not directly. The copies are joined with spaces. Run the result through a text tool if you need one per line." },
+      { q: "Does it work with emoji and other characters?", a: "Yes. The text is repeated exactly, whatever characters it contains." },
+      { q: "Is the text uploaded?", a: "No. Repetition happens in your browser, so nothing leaves your device." },
+    ],
+    useCases: [
+      "Filling a layout with placeholder text to see how it wraps.",
+      "Generating a long string to test a field or a column width.",
+      "Producing a repeated pattern for a design mockup.",
+      "Creating a large input quickly for a performance check.",
+    ],
+    tips: [
+      "Add the bar and a number to control the count; three is the default.",
+      "A hundred copies is the ceiling; run it twice if you need more.",
+      "Copies are joined by spaces; convert to lines afterwards if you need them stacked.",
+    ],
+  },
+  "time-converter": {
+    intro:
+      "The Time Converter converts between seconds, minutes, hours, days, weeks, months, years and the sub-second units, using the second as the reference so any pair converts in one step. It is the tool for turning a duration in a log or a spec into units you can reason about: how long a 90000 millisecond timeout actually is, or how many hours a 600 minute job runs. Months and years use fixed 30 and 365 day conventions, which is what most planning needs.",
+    howTo: [
+      { step: "Enter a value", detail: "Type into either field. Conversion is live in both directions." },
+      { step: "Choose the units", detail: "Pick a from unit and a to unit. Hours to minutes is the default." },
+      { step: "Read the result", detail: "The converted value appears in the other field at full precision." },
+      { step: "Swap to go back", detail: "Switch the two units to convert in the other direction without retyping." },
+    ],
+    faq: [
+      { q: "How are months and years counted?", a: "As fixed values: one month is thirty days and one year is three hundred and sixty-five days. That is a planning convention, not a calendar calculation, so use the Date Difference tool when real calendar accuracy matters." },
+      { q: "Does it account for time zones or daylight saving?", a: "No. It converts a duration, not a moment. A duration of one hour is one hour everywhere; only wall-clock times are affected by time zones." },
+      { q: "Can it convert microseconds and milliseconds?", a: "Yes. Both are included, so values from profiling output and high-resolution timers convert directly." },
+      { q: "Why does my month conversion look wrong?", a: "Because real months are 28 to 31 days. If you need calendar months between two dates, use the Date Difference tool instead." },
+    ],
+    useCases: [
+      "Turning a millisecond timeout into something readable.",
+      "Working out how many hours a long-running job takes.",
+      "Converting a log duration into seconds for a dashboard.",
+      "Estimating a total from a per-unit figure.",
+    ],
+    tips: [
+      "Use fixed 30-day months for planning, and the Date Difference tool for real dates.",
+      "This converts durations, not clock times, so time zones do not apply.",
+      "Type into either field; both directions convert live.",
+    ],
+  },
+  "area-converter": {
+    intro:
+      "The Area Converter converts between square metres, square kilometres, square feet, square yards, acres, hectares and square inches, with the square metre as the reference unit. It is the tool for reading a floor plan in one system and a listing in another, or for checking whether a plot described in acres matches one described in hectares. All conversions run through a single reference unit, so any pair is one step rather than a chain of rounded guesses.",
+    howTo: [
+      { step: "Enter a value", detail: "Type into either field. Both directions convert as you type." },
+      { step: "Choose the units", detail: "Pick a from unit and a to unit. Square metres to square feet is the default." },
+      { step: "Read the result", detail: "The converted figure appears in the other field, at full precision." },
+      { step: "Swap to go back", detail: "Reverse the two units to convert the other way without retyping." },
+    ],
+    faq: [
+      { q: "How many square feet are in a square metre?", a: "About 10.764. The exact factor is used here, so no rounding creeps in until the figure is displayed." },
+      { q: "How big is an acre?", a: "Exactly 4,046.86 square metres, or 43,560 square feet. A hectare is 10,000 square metres, so an acre is roughly 0.405 of a hectare." },
+      { q: "Why does my hectare figure differ from a land register?", a: "Because official records are often rounded to a few decimal places, and some use local units that differ slightly from the standard." },
+      { q: "Can it convert to cubic units?", a: "No. This is an area tool. Use the Volume Converter for cubic or capacity units." },
+    ],
+    useCases: [
+      "Comparing a floor area quoted in square feet with one in square metres.",
+      "Converting a plot size between acres and hectares.",
+      "Checking a material quantity against the area it has to cover.",
+      "Reading a property listing in a unit you do not normally use.",
+    ],
+    tips: [
+      "An acre is about 0.405 hectares; a hectare is ten thousand square metres.",
+      "Check whether a listing uses gross or net floor area before converting.",
+      "Type into either field; both directions convert live.",
+    ],
+  },
+  "volume-converter": {
+    intro:
+      "The Volume Converter converts between litres, millilitres, cubic metres, gallons, quarts, pints, cups, fluid ounces and tablespoons, with the litre as the reference unit. Both the US and the UK gallon are included, because they differ by about twenty percent and mixing them up is the most common error in any recipe or fuel calculation. Use it when a recipe, a tank capacity or a shipping figure arrives in a unit you do not use.",
+    howTo: [
+      { step: "Enter a value", detail: "Type into either field. Conversion is live in both directions." },
+      { step: "Choose the units", detail: "Pick a from unit and a to unit. Litres to US gallons is the default." },
+      { step: "Watch which gallon you pick", detail: "Gallons (US) and Gallons (UK) are separate entries. Check which one the source means." },
+      { step: "Swap to go back", detail: "Reverse the two units to convert the other way without retyping." },
+    ],
+    faq: [
+      { q: "What is the difference between a US and a UK gallon?", a: "A US gallon is 3.785 litres and a UK gallon is 4.546 litres. The UK gallon is about twenty percent larger, so picking the wrong one is a noticeable error." },
+      { q: "Are fluid ounces the same as ounces of weight?", a: "No. A fluid ounce is a volume, about 29.57 millilitres. An ounce of weight is a different unit entirely, and the two only coincide for water by coincidence of definition." },
+      { q: "How many cups are in a litre?", a: "About 4.23 US cups. Note that a US cup, a legal US cup and a metric cup differ slightly, so baking recipes converted between systems can drift." },
+      { q: "Can it convert cubic metres?", a: "Yes. A cubic metre is a thousand litres, which makes it the natural unit for tanks and shipping volumes." },
+    ],
+    useCases: [
+      "Converting a recipe between US and metric measures.",
+      "Working out a tank or container capacity.",
+      "Comparing fuel economy or consumption figures quoted in different units.",
+      "Checking a shipping volume against a quoted limit.",
+    ],
+    tips: [
+      "Always check whether a gallon is US or UK; they differ by twenty percent.",
+      "A cubic metre is exactly a thousand litres.",
+      "Type into either field; both directions convert live.",
+    ],
+  },
+  "text-trimmer": {
+    intro:
+      "The Text Trimmer removes the whitespace you did not mean to keep: spaces at the start and end of every line, repeated blank lines, and whitespace around the whole block. It runs on each line independently, so a list pasted out of a document comes back clean without you touching it. This is the step to run before comparing two blocks of text, since invisible whitespace is the usual reason two identical-looking strings do not match.",
+    howTo: [
+      { step: "Paste the text", detail: "Any block works: a list, a code snippet, or text pasted out of a document." },
+      { step: "Run it", detail: "Each line is trimmed, runs of blank lines collapse to one, and the whole block is trimmed at both ends." },
+      { step: "Check what changed", detail: "Blank lines separating paragraphs are kept as single blank lines, so the structure survives." },
+      { step: "Copy the result", detail: "Paste the cleaned text wherever it needs to go." },
+    ],
+    faq: [
+      { q: "Does it remove blank lines entirely?", a: "No. Runs of blank lines collapse to a single blank line, so paragraph breaks are preserved." },
+      { q: "Does it trim inside lines?", a: "No. Spaces between words are left alone. Only leading and trailing whitespace on each line is removed." },
+      { q: "Does it remove tabs?", a: "Yes, when they are at the start or end of a line. Tabs inside a line are kept, since they may be meaningful." },
+      { q: "Why does my code still not match?", a: "Because the difference is not whitespace, or it is indentation that is meaningful. This tool strips whitespace only; it does not change content." },
+      { q: "Is my text uploaded?", a: "No. Trimming happens in your browser, so pasted documents and code stay on your device." },
+    ],
+    useCases: [
+      "Cleaning a list pasted out of a document or a spreadsheet.",
+      "Making two blocks of text comparable before a diff.",
+      "Removing stray indentation from a pasted code snippet.",
+      "Tidying up text before importing it into a system that is strict about whitespace.",
+    ],
+    tips: [
+      "Run this before comparing two strings that look identical but do not match.",
+      "Paragraph breaks survive; only repeated blank lines are collapsed.",
+      "Indentation at the start of a line is removed, so do not run it on code where indentation matters.",
+    ],
+  },
+  "line-number-adder": {
+    intro:
+      "The Line Number Adder puts a number in front of every line of a block of text, which is what you want when you need to refer to a specific line in a review, a paste or a screenshot. It numbers from one and keeps the original lines untouched, so the result can be pasted into a ticket or a chat message and read back line by line. Removing the numbers afterwards takes one pass with a text editor.",
+    howTo: [
+      { step: "Paste the text", detail: "Any block of text or code, one item per line." },
+      { step: "Run it", detail: "Each line gets a number and a full stop placed in front of it, starting at one." },
+      { step: "Copy the result", detail: "Paste it wherever people need to reference lines by number." },
+      { step: "Strip the numbers when you are done", detail: "Removing the prefix is a single find-and-replace on the numbering pattern." },
+    ],
+    faq: [
+      { q: "Does it start at one?", a: "Yes, and every line is numbered, including blank ones, so the numbering matches what you see." },
+      { q: "Can I start at a different number?", a: "No. Numbering always starts at one. If you need an offset, add it yourself afterwards." },
+      { q: "Is the numbering padded or aligned?", a: "Not padded. Each line gets its number followed by a full stop and a space, so columns shift once you pass nine lines." },
+      { q: "Can it remove line numbers too?", a: "Not with this tool. It only adds them." },
+      { q: "Does it change the content of the lines?", a: "No. Only a prefix is added; the rest of each line is left exactly as it was." },
+    ],
+    useCases: [
+      "Numbering a code snippet so someone can point at a specific line.",
+      "Preparing a log excerpt for a bug report.",
+      "Making a long list easier to discuss line by line.",
+      "Adding references to a pasted configuration before a review.",
+    ],
+    tips: [
+      "Every line is numbered, blank ones included, so the numbers match the original.",
+      "Strip the prefix with a find-and-replace when you need the clean text back.",
+      "Columns shift after line nine because the numbers are not padded.",
+    ],
+  },
+  "list-sorter": {
+    intro:
+      "The List Sorter alphabetises a list and gives you both directions at once, ascending and descending, so you can take whichever you need without running it twice. Sorting uses standard string ordering, which is case-sensitive, meaning capital letters sort before lowercase ones. That is the behaviour to know about when a list mixes cases and the result looks unexpected.",
+    howTo: [
+      { step: "Enter the list", detail: "One item per line. Blank lines are dropped before sorting." },
+      { step: "Run it", detail: "Two blocks are produced: an ascending list and a descending list." },
+      { step: "Take the one you need", detail: "Copy either block. Both contain every item you entered." },
+      { step: "Normalise case if the order looks wrong", detail: "If your list mixes cases, convert it to one case first, since capitals sort before lowercase letters." },
+    ],
+    faq: [
+      { q: "Why do capital letters come first?", a: "Because sorting compares character codes, and uppercase letters have lower codes than lowercase ones. Normalise the case first if you want a plain alphabetical order." },
+      { q: "Does it sort numbers numerically?", a: "No. Items are sorted as text, so 10 comes before 2. Pad numbers to a fixed width if you need numeric order." },
+      { q: "Does it remove duplicates?", a: "No. Every line is kept. Run the list through the Duplicate Line Remover first if you want the unique set." },
+      { q: "Does it handle accented characters?", a: "Yes, following the browser's locale rules, which usually place accented letters near their base letter." },
+      { q: "Can I sort by line length instead?", a: "No. The sort is alphabetical only." },
+    ],
+    useCases: [
+      "Alphabetising a list of names or keywords before publishing it.",
+      "Ordering a set of filenames or tags for a review.",
+      "Finding the first and last entries in a long list quickly.",
+      "Checking whether an item is missing from an unordered list.",
+    ],
+    tips: [
+      "Lowercase the list first if mixed case gives a strange order.",
+      "Pad numbers to a fixed width when you need numeric rather than text order.",
+      "Remove duplicates before sorting if you want a clean unique list.",
+    ],
+  },
+  "rot13-encoder": {
+    intro:
+      "The ROT13 Encoder shifts every letter thirteen places through the alphabet, which is the classic way to hide a spoiler, a puzzle answer or a punchline in plain sight. The trick is that thirteen is half of twenty-six, so the same operation both encodes and decodes: running the tool twice returns the original text. Only letters move; digits, punctuation and spacing are left alone.",
+    howTo: [
+      { step: "Paste the text", detail: "Type or paste anything. Letters are shifted; everything else passes through unchanged." },
+      { step: "Run it", detail: "Each letter moves thirteen places, wrapping around at the end of the alphabet." },
+      { step: "Share the result", detail: "The output is unreadable at a glance but trivially reversible, which is exactly what a spoiler needs." },
+      { step: "Run it again to reveal", detail: "Because ROT13 is its own inverse, pasting the result back in restores the original text." },
+    ],
+    faq: [
+      { q: "Is ROT13 encryption?", a: "No. It provides no security at all. Anyone can reverse it, which is the point when you are hiding a spoiler rather than protecting a secret." },
+      { q: "Why does it work both ways?", a: "Because there are twenty-six letters and the shift is thirteen. Shifting by thirteen twice is a shift of twenty-six, which is a full turn back to the start." },
+      { q: "What happens to numbers and punctuation?", a: "Nothing. Only the letters a to z and A to Z are shifted, and case is preserved." },
+      { q: "Is it the same as a Caesar cipher?", a: "It is one specific case of it, with a shift of thirteen. The Caesar Cipher tool lets you use any shift." },
+      { q: "Does it handle accented letters?", a: "No. Only the unaccented English alphabet is shifted; accented characters are passed through unchanged." },
+    ],
+    useCases: [
+      "Hiding a spoiler or a puzzle answer in plain text.",
+      "Obfuscating a punchline that someone might read by accident.",
+      "Teaching how a simple substitution cipher works.",
+      "Making a string unreadable at a glance without any real security.",
+    ],
+    tips: [
+      "Run it twice to get your original text back.",
+      "Never use it for anything that actually needs protecting.",
+      "Use the Caesar Cipher tool if you want a shift other than thirteen.",
+    ],
+  },
+  "scientific-notation": {
+    intro:
+      "The Scientific Notation Converter expresses a number in the form mantissa times ten to a power, and shows the plain decimal form alongside it. It is the tool for reading values that arrive as 1.23e+8 or 4.5E-6, and for producing that form when a field, a spreadsheet or a spec wants it. Both directions come out of a single input, so you can check one against the other.",
+    howTo: [
+      { step: "Enter a number", detail: "Either plain form such as 0.000045, or exponential form such as 4.5e-5." },
+      { step: "Run it", detail: "The exponential form is shown with its mantissa and exponent, and the plain decimal form underneath." },
+      { step: "Read the exponent", detail: "A positive exponent means a large number, a negative one a small number. The exponent is the number of places the decimal point moves." },
+      { step: "Copy the form you need", detail: "Both are plain text, ready to paste." },
+    ],
+    faq: [
+      { q: "What does e mean in a number?", a: "It means times ten to the power of. So 1.5e3 is 1.5 times ten cubed, which is 1500. It is a compact way to write very large or very small values." },
+      { q: "Why does the mantissa have so many digits?", a: "Six figures are shown after the point, which is more precision than most sources provide. Round it to whatever your context needs." },
+      { q: "Why does a long number lose digits?", a: "Because the value is held as a standard floating point number with limited precision. Very long integers will not survive the conversion exactly." },
+      { q: "Is the e notation the same as engineering notation?", a: "No. Engineering notation forces the exponent to a multiple of three so it matches SI prefixes. This tool uses plain scientific notation." },
+      { q: "Can I convert text that is not a number?", a: "No. Anything that does not parse as a number is reported as invalid." },
+    ],
+    useCases: [
+      "Reading a value from a log, a config or a spec that uses e notation.",
+      "Producing a compact form for a field that requires one.",
+      "Checking the magnitude of a very small or very large figure.",
+      "Converting measurements from an instrument into plain decimals.",
+    ],
+    tips: [
+      "The exponent is simply how far the decimal point moves.",
+      "Round the mantissa; six decimals is more precision than most sources justify.",
+      "Very long integers lose precision; keep them as strings if exactness matters.",
+    ],
+  },
+  "decimal-fraction": {
+    intro:
+      "The Decimal to Fraction converter turns a decimal into a fraction in its lowest terms, using the number of decimal places you typed as the starting denominator and then dividing out the common factor. It is the tool for turning 0.375 into three-eighths, or for checking a measurement against a fraction you are expected to use. Whole numbers are reported as themselves over one.",
+    howTo: [
+      { step: "Enter a decimal", detail: "Type a single decimal number, such as 0.375 or 2.5." },
+      { step: "Run it", detail: "The equivalent fraction is shown in its lowest terms." },
+      { step: "Check the precision", detail: "The denominator comes from the digits you typed, so 0.33 becomes thirty-three hundredths rather than a third." },
+      { step: "Round first if you meant a simpler fraction", detail: "If the value is a rounded version of a common fraction, convert that fraction instead." },
+    ],
+    faq: [
+      { q: "Why is 0.33 not one third?", a: "Because 0.33 is thirty-three hundredths, which is not the same as a third. The tool converts exactly what you typed, not the value you were rounding to." },
+      { q: "Does it handle repeating decimals?", a: "No. A repeating decimal has to be typed to a finite number of places, so the result is the fraction for that finite value." },
+      { q: "What about a value greater than one?", a: "It is converted to an improper fraction, so 2.5 becomes five halves. Converting to a mixed number is a separate step." },
+      { q: "Are negative decimals handled?", a: "Yes. The sign is carried through to the result." },
+      { q: "Why is the result approximate?", a: "Because the conversion rounds to the precision you typed. More decimal places give a closer fraction, usually with a larger denominator." },
+    ],
+    useCases: [
+      "Converting a measurement into the fraction a plan or a recipe expects.",
+      "Checking a decimal against a known fraction.",
+      "Turning a ratio into whole numbers for a mix or a scale.",
+      "Simplifying a value for a report or a specification.",
+    ],
+    tips: [
+      "Type the full precision you have; fewer digits give a cruder fraction.",
+      "A repeating decimal needs to be entered to a finite number of places.",
+      "Values above one come out as improper fractions.",
+    ],
+  },
+  "factorial-calculator": {
+    intro:
+      "The Factorial Calculator computes n factorial, the product of every whole number from one up to n, and it does so with arbitrary-precision arithmetic so large results come out in full rather than rounding. Factorials grow extremely fast, which is why twenty factorial is already nineteen digits long and the tool stops at 170, the point where the value exceeds what a standard floating point number can represent.",
+    howTo: [
+      { step: "Enter a whole number", detail: "Type any non-negative integer. Zero factorial is defined as one." },
+      { step: "Run it", detail: "The full product is shown, with every digit rather than an approximation." },
+      { step: "Watch the size", detail: "Results grow quickly: 10 factorial is about 3.6 million, and 20 factorial is about 2.4 quintillion." },
+      { step: "Stay within the limit", detail: "Values above 170 are rejected, because the result is too large to represent." },
+    ],
+    faq: [
+      { q: "Why is there a limit of 170?", a: "Because that is roughly where the value exceeds the largest number a standard double-precision floating point can hold. Larger values need a big-number library, which is what this tool uses to give exact digits up to that point." },
+      { q: "What is zero factorial?", a: "One, by definition. It is the convention that makes the combinatorial formulas work." },
+      { q: "Are decimals accepted?", a: "No. Factorials are defined on non-negative integers. A decimal input is rejected." },
+      { q: "Why is the result so long?", a: "Because factorials grow faster than exponentially. That is also why they show up in complexity analysis and in counting permutations." },
+      { q: "Can it compute a factorial above 170?", a: "No. The tool rejects anything larger, since the value cannot be represented." },
+    ],
+    useCases: [
+      "Working out the number of orderings for a set of items.",
+      "Checking a combinations or permutations calculation.",
+      "Computing an exact factorial for a maths exercise.",
+      "Seeing how fast factorial growth becomes unmanageable.",
+    ],
+    tips: [
+      "Zero factorial is one, not zero.",
+      "Results past about twenty are enormous; check you meant that input.",
+      "Above 170 the value cannot be represented at all.",
+    ],
+  },
 };
 
 export function getToolContent(slug: string, title: string, description: string): ToolContent {

@@ -15,5 +15,5 @@ export default function PasswordStrength() {
     const colors = ["red", "orange", "yellow", "lime", "green", "teal", "blue"];
     return "Score: " + score + "/7 (" + levels[score] + ")\nLength: " + input.length + "\nUppercase: " + (/[A-Z]/.test(input)?"Yes":"No") + "\nLowercase: " + (/[a-z]/.test(input)?"Yes":"No") + "\nNumbers: " + (/[0-9]/.test(input)?"Yes":"No") + "\nSymbols: " + (/[^a-zA-Z0-9]/.test(input)?"Yes":"No");
   };
-  return <SimpleTool label="Password" placeholder="Enter password..." process={process} multiline={false} />;
+  return <SimpleTool label="Password" placeholder="Type a password to score it" hint="Scoring happens in your browser only. The password is never sent anywhere or stored." process={process} multiline={false} />;
 }
