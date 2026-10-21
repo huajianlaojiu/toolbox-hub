@@ -264,64 +264,6 @@ const overrides: Record<string, ToolContent> = {
       "Never derive anything from a UUID by parsing it; the bits are random, not meaningful.",
     ],
   },
-  "percentage-calculator": {
-    intro:
-      "The Percentage Calculator answers the three questions people constantly confuse: what is X percent of Y, X is what percent of Y, and what is the percentage change from one number to another. Getting the right one matters, because the wrong choice produces an answer that looks plausible and is wrong by a factor of the base. It also computes the reverse case, where you know the final value and the percentage and need the original number, which comes up whenever a price includes tax or a figure has already been marked down.",
-    howTo: [
-      { step: "Identify which question you are asking", detail: "A part of a whole, a ratio expressed as a percentage, or a change between two values. Each has its own field set." },
-      { step: "Enter the two numbers", detail: "For a change, the first value is the starting point and the second is the ending point. Order matters here and reversing it flips the sign of the answer." },
-      { step: "Read the result and the working", detail: "The tool shows the arithmetic as well as the answer, so you can check it against your own reasoning." },
-      { step: "Check the direction of a change", detail: "An increase from 80 to 100 is 25 percent, while a decrease from 100 to 80 is 20 percent. The same 20 unit gap is a different percentage depending on which end you start from." },
-    ],
-    faq: [
-      { q: "What is the difference between percent and percentage points?", a: "A change from 4 percent to 6 percent is an increase of 2 percentage points, but a 50 percent increase in the rate itself. News reporting mixes these up constantly. Use percentage points when comparing two rates, and percent when describing relative growth." },
-      { q: "Why is a 20 percent discount followed by 20 percent tax not back to the original price?", a: "Because each percentage applies to a different base. Multiplying by 0.8 then 1.2 gives 0.96, so you end up 4 percent below where you started. Percentages only add and subtract cleanly when the base stays the same." },
-      { q: "How do I find the original price before a discount?", a: "Divide rather than subtract. If something costs 80 after 20 percent off, the original is 80 divided by 0.8, which is 100. Subtracting 20 percent from 80 gives 64, which is the common mistake." },
-      { q: "How do I calculate a percentage increase?", a: "Subtract the old value from the new one, divide by the old value, then multiply by 100. So a move from 250 to 300 is 50 divided by 250, which is 0.2, or 20 percent." },
-      { q: "Why do percentages over 100 appear?", a: "They are legitimate whenever the new value exceeds the original. Sales rising from 10 to 25 is a 150 percent increase. A percentage above 100 only looks wrong when someone means a proportion of a whole, which cannot exceed 100." },
-    ],
-    useCases: [
-      "Checking a discount against the price on the shelf.",
-      "Working out the growth rate between two months of figures.",
-      "Converting a test score into a percentage.",
-      "Finding the pre-tax amount when only the gross figure is known.",
-    ],
-    tips: [
-      "When comparing rates, say percentage points out loud to yourself before writing the sentence.",
-      "For a chain of changes, multiply the factors rather than adding the percentages.",
-      "Round only at the end; rounding each step compounds the error.",
-    ],
-  },
-  "jwt-decoder": {
-    intro:
-      "The JWT Decoder splits a JSON Web Token into its three parts and shows the header and payload as readable JSON, with the timestamps in the claims converted to actual dates. It is the fastest way to answer the two questions that come up whenever a token misbehaves: which algorithm signed it, and when does it expire. The decoder is deliberately explicit about one thing, because it is the source of a great many security bugs: decoding a token is not verifying it. Anyone can read and modify the payload of a JWT, so the contents are only trustworthy after the signature has been checked against the issuer's key.",
-    howTo: [
-      { step: "Paste the token", detail: "Copy the whole string, including all three dot-separated parts. Tokens copied from a browser header often pick up a leading Bearer prefix, which the decoder strips automatically." },
-      { step: "Read the header", detail: "The alg field names the signing algorithm and typ should be JWT. An alg of none means the token is unsigned, which no production service should accept." },
-      { step: "Read the claims", detail: "Look at iss and aud to confirm the token was meant for your service, sub to see who it represents, and exp to see when it stops being valid." },
-      { step: "Check the timestamps", detail: "exp, iat and nbf are seconds since the Unix epoch, not milliseconds. The decoder shows both the raw number and the readable date so you can tell a genuine expiry from an off-by-a-thousand error." },
-      { step: "Verify, then trust", detail: "Use your library to validate the signature and the claims before acting on anything you read here." },
-    ],
-    faq: [
-      { q: "Does decoding a token prove it is genuine?", a: "No, and this is the important point. Base64url is an encoding, not encryption. The payload is readable and editable by anyone holding the token. Only the signature check, performed with the issuer's key, establishes that the claims have not been altered." },
-      { q: "Where is the signature checked?", a: "On the server, using the shared secret for HMAC algorithms or the public key for RSA and ECDSA. A browser has no business verifying a token it is also allowed to read, because it cannot keep a key secret." },
-      { q: "Why does my token have only two parts?", a: "Because it is not a signed JWT. Some libraries issue unsecured tokens with an empty signature, which still leaves three segments separated by two dots. Two segments usually means the token was truncated when copied." },
-      { q: "What is the difference between base64 and base64url?", a: "Standard base64 uses plus and slash, which are unsafe in URLs and headers. Base64url substitutes minus and underscore and drops the padding equals signs. A token that fails to decode is often one that was passed through a URL without this conversion." },
-      { q: "Why is exp in the past on a token I just received?", a: "Either the issuer set a very short lifetime, or the value is in milliseconds when the consumer expects seconds. A token with exp around 1.7 billion is in seconds; a value with thirteen digits is in milliseconds." },
-      { q: "Is it safe to paste a real token here?", a: "The decoding happens entirely in your browser and nothing is transmitted, so the technical risk is nil. The practical advice still stands: treat any token as a live credential, and prefer a test token over one belonging to a real user." },
-    ],
-    useCases: [
-      "Diagnosing an unexpected 401 by checking exp and aud.",
-      "Confirming which algorithm an identity provider actually signed with.",
-      "Reading custom claims such as roles or tenant IDs during integration work.",
-      "Teaching someone why a JWT payload is not a secret store.",
-    ],
-    tips: [
-      "Never put anything sensitive in a JWT payload; it is readable by design.",
-      "Reject the none algorithm explicitly rather than relying on a library default.",
-      "Keep access token lifetimes short and refresh them, rather than issuing long-lived tokens with broad claims.",
-    ],
-  },
   "image-resizer": {
     intro:
       "The Image Resizer changes the pixel dimensions of an image by drawing it onto a canvas at the new size and exporting the result. Because the work happens in your browser, the file never leaves your machine, which makes it usable for screenshots and photos you would not upload to an unfamiliar server. Resizing down throws pixels away and generally makes a file smaller; resizing up invents pixels by interpolation and cannot add detail that was never captured, so a 400 pixel logo scaled to 1600 will look soft no matter which setting you choose.",
@@ -408,91 +350,6 @@ const overrides: Record<string, ToolContent> = {
       "Leave a blank line before and after every block element; most mystifying rendering bugs are a missing blank line.",
       "Use fenced code blocks with a language name so the code is highlighted rather than treated as plain text.",
       "Keep one sentence per line in long documents; it makes the diffs readable later.",
-    ],
-  },
-  "diff-checker": {
-    intro:
-      "The Diff Checker compares two blocks of text line by line and marks what was added, what was removed and what stayed the same, using a longest-common-subsequence comparison to find the smallest sensible set of changes. It is built for the cases where eyeballing two versions stops working: a configuration file that drifted between staging and production, a contract where a paragraph moved, or two CSV exports that should be identical but are not. Because the comparison is line-based, a single edited character marks the whole line as changed, which is the right behaviour for code and the wrong one for prose.",
-    howTo: [
-      { step: "Paste the original text", detail: "The left pane is usually the older or reference version. Line endings are normalised, so Windows and Unix files can be compared directly." },
-      { step: "Paste the changed text", detail: "The right pane holds the version you want to check against it. Order does not affect correctness, only the direction of the additions and removals." },
-      { step: "Choose how strict to be", detail: "Ignore whitespace when indentation or trailing spaces have changed without meaning anything. Ignore case when the difference between Name and name is not the point." },
-      { step: "Work through the marked lines", detail: "Green lines exist only on one side, red only on the other. Blank lines shifting position usually account for a large block of apparent changes, which is a sign that something was inserted above." },
-    ],
-    faq: [
-      { q: "How is the comparison made?", a: "It is a line-based longest-common-subsequence diff, the same family of algorithm used by version control. It finds the largest set of lines the two texts share and everything outside that set is reported as removed or added." },
-      { q: "Why does changing one character highlight the entire line?", a: "Because the comparison works at line granularity. Word-level diffs exist and are better for prose, but for code and configuration a whole-line marker is more honest about what changed." },
-      { q: "Can I ignore whitespace or letter case?", a: "Yes, both are optional toggles. Ignoring whitespace is essential when comparing files produced on different operating systems or by editors that trim trailing spaces automatically." },
-      { q: "Can I compare whole files?", a: "Paste their contents. Nothing is uploaded and no file is stored, which keeps the tool safe for configuration containing credentials, but it also means very large files are limited by the memory of the tab." },
-      { q: "Can it compare binary files or images?", a: "No. Only text is meaningful here. Binary comparison needs a hash, which the hash generator produces for a quick equality check." },
-    ],
-    useCases: [
-      "Confirming that staging and production configuration files match.",
-      "Reviewing exactly what changed between two versions of a document.",
-      "Finding the rows that differ between two exports of the same report.",
-      "Checking that a find-and-replace did not touch anything unforeseen.",
-    ],
-    tips: [
-      "Normalise both sides first, for example by sorting, so a reorder does not hide the real changes.",
-      "Compare before and after a refactor to confirm only the intended lines moved.",
-      "If the diff is enormous, the files probably differ in line endings rather than content.",
-    ],
-  },
-  "csv-to-json": {
-    intro:
-      "The CSV to JSON converter turns a comma-separated file into an array of objects, using the header row as the property names. It handles the parts of the format that break naive splitting: fields wrapped in quotes that contain commas, embedded newlines inside quoted fields, escaped double quotes, and the byte-order mark that spreadsheet exports put at the start of the file. The output can be an array of objects, which is what most APIs want, or an array of arrays, which preserves column order and is better for feeding a chart library.",
-    howTo: [
-      { step: "Paste the CSV", detail: "Include the header row. Pasting from a spreadsheet works, as long as the cells are separated by commas, tabs or semicolons." },
-      { step: "Set the delimiter if it is not a comma", detail: "European spreadsheet exports often use semicolons, and clipboard copies use tabs. Choosing the wrong one produces one column containing everything." },
-      { step: "Decide on type coercion", detail: "Left off, every value stays a string, which preserves leading zeros in postcodes and account numbers. Turned on, numbers and booleans become real JSON types." },
-      { step: "Choose the output shape", detail: "Objects keyed by header name for API payloads, or nested arrays for tools that expect rows without headers." },
-      { step: "Copy the JSON", detail: "The result is pretty-printed, so you can scan it for an obviously mis-parsed column before using it." },
-    ],
-    faq: [
-      { q: "Why did 007 become 7?", a: "Because numeric coercion turns the string into a number. Leading zeros are not part of a number, so they disappear. If the column holds identifiers, postcodes or phone numbers, leave coercion off and keep everything as strings." },
-      { q: "How are commas inside a field handled?", a: "By quoting. The CSV format, defined in RFC 4180, allows a field to be wrapped in double quotes, and anything inside those quotes, including commas and line breaks, belongs to the field. A literal double quote inside a quoted field is written twice." },
-      { q: "What if my CSV has no header row?", a: "Add one, or the first data row will be consumed as the property names. Naming columns explicitly is also useful when you want JSON keys that differ from the original headings." },
-      { q: "Why does the first column name look strange?", a: "Almost always a byte-order mark left by Excel. It is invisible in the spreadsheet but becomes part of the first heading. Strip it, or re-save the file as UTF-8 without a BOM." },
-      { q: "How large a file can this handle?", a: "It is limited by the memory available to the browser tab, so a few megabytes is comfortable and tens of megabytes starts to lag. For routine large conversions, a command-line tool is the better choice." },
-    ],
-    useCases: [
-      "Turning a spreadsheet export into a payload an API will accept.",
-      "Preparing seed data for a database from a client's list.",
-      "Converting a report into a format a chart library can read.",
-      "Checking that quoted fields were parsed the way you expected before importing.",
-    ],
-    tips: [
-      "Keep identifiers as strings; coercion is only safe on columns you know are genuinely numeric.",
-      "Normalise header names to camelCase or snake_case before converting, so downstream code does not have to deal with spaces.",
-      "Validate the JSON before shipping it; a silently mis-parsed column is harder to find after import than before.",
-    ],
-  },
-  "sql-formatter": {
-    intro:
-      "The SQL Formatter rewrites a query with consistent keyword casing, one clause per line and indented subqueries, which makes the structure of a long statement visible at a glance. That matters most when a query has several joins and a nested aggregate, because unformatted SQL hides the join conditions in a wall of text and mistakes there produce wrong results rather than errors. Formatting only touches whitespace and keyword case, so the query means exactly the same thing afterwards, but it does not validate the SQL: a query with a misspelled column name will still format perfectly.",
-    howTo: [
-      { step: "Paste the query", detail: "Any length works. Minified output from an ORM or a log line with escaped newlines is the usual input." },
-      { step: "Choose a dialect", detail: "Dialects differ in identifier quoting, string concatenation and pagination syntax. Picking the right one keeps backticks or double quotes intact instead of escaping them." },
-      { step: "Pick a keyword case", detail: "Uppercase keywords such as SELECT and WHERE with lowercase identifiers is the common convention, and it separates language from your own names at a glance." },
-      { step: "Format, then read the structure", detail: "Each clause should start on its own line. If a join condition appears in the wrong place after formatting, it was in the wrong place before." },
-    ],
-    faq: [
-      { q: "Does formatting validate my SQL?", a: "No. It is a lexical transformation that understands keywords and quoting rules but does not know your schema. Run the query against a database or a linter to check it is valid." },
-      { q: "Will formatting change what the query does?", a: "It should not, because only whitespace outside string literals and the case of keywords are changed. Identifier case is significant in some databases, which is why the dialect setting matters." },
-      { q: "Why did my string literal get mangled?", a: "Usually an unbalanced quote. If a single quote inside a string is not escaped by doubling it, the formatter treats the rest of the query as part of the literal." },
-      { q: "Which dialect should I choose?", a: "The one the query will actually run on. MySQL uses backticks for identifiers, PostgreSQL and SQL Server use double quotes and brackets respectively, and pagination syntax differs between LIMIT and TOP." },
-      { q: "Can I use this to make a query compact instead?", a: "Yes, the reverse direction exists. When a query is going into a log line or a URL, minifying removes the newlines without changing the semantics." },
-    ],
-    useCases: [
-      "Making a query pasted from an application log readable before debugging it.",
-      "Standardising formatting across a team so reviews focus on logic rather than whitespace.",
-      "Expanding a one-line ORM-generated query to see which joins it actually produced.",
-      "Preparing SQL for documentation or a ticket.",
-    ],
-    tips: [
-      "Format first, then read the join order; a misplaced ON clause is much easier to see with one clause per line.",
-      "Keep one statement per block so the formatted output is not ambiguous.",
-      "Do not format inside a migration file that has already been applied; the diff will be noise.",
     ],
   },
   "age-calculator": {
@@ -1237,34 +1094,6 @@ const overrides: Record<string, ToolContent> = {
       "Multiply successive discounts, never add them.",
       "Divide to reverse a discount; do not subtract.",
       "Compare the final price, not the headline percentage.",
-    ],
-  },
-  "lorem-ipsum": {
-    intro:
-      "The Lorem Ipsum Generator produces placeholder text in the traditional scrambled Latin, so you can see how a layout behaves with real-looking paragraphs before any copy exists. It is worth knowing why designers use it rather than English: readable text draws the eye to the words, so people end up commenting on the content instead of the layout. Filler that cannot be read keeps the review focused on spacing, measure and hierarchy. The text traces back to a passage by Cicero, deliberately scrambled since the sixteenth century.",
-    howTo: [
-      { step: "Enter how many paragraphs you need", detail: "Type a number, for example 3. Up to 50 paragraphs are produced." },
-      { step: "Generate", detail: "The paragraphs appear separated by blank lines, ready to paste." },
-      { step: "Paste into your layout", detail: "Insert it where the real copy will eventually go, and keep the character count roughly similar to the real thing." },
-      { step: "Replace it before you ship", detail: "Placeholder text that reaches production is an embarrassing and surprisingly common mistake. Search the project for lorem before release." },
-    ],
-    faq: [
-      { q: "What does the text actually say?", a: "It is scrambled Latin derived from Cicero's De Finibus Bonorum et Malorum, written in 45 BC, with words removed and rearranged over centuries so that it looks like text without reading as text. It is not meant to mean anything." },
-      { q: "Why not just use English filler?", a: "Because readable words pull attention away from the design. Reviewers start editing copy instead of judging spacing and hierarchy, which is the opposite of what a placeholder is for." },
-      { q: "Does the length match real copy?", a: "Only approximately. Treat the output as a shape, not a volume. If you need to test a specific measure or a truncation rule, use text of a realistic length instead." },
-      { q: "Can I use it in a real product?", a: "No. It is a placeholder. Searching a codebase for lorem before every release is a cheap habit that prevents a very public mistake." },
-      { q: "Is anything uploaded?", a: "No. The passage is stored in the page and generated in your browser, so it works offline once loaded." },
-    ],
-    useCases: [
-      "Filling a mockup before the copy is written.",
-      "Testing how a column of text wraps at different widths.",
-      "Checking line height and paragraph spacing in a real layout.",
-      "Producing filler for a print or email template.",
-    ],
-    tips: [
-      "Match the rough length of the real copy, not just the paragraph count.",
-      "Always search for lorem before shipping.",
-      "For testing truncation or character limits, use realistic text instead.",
     ],
   },
   "random-number": {

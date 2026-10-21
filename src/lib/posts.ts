@@ -81,9 +81,7 @@ export const posts: Post[] = [
           "[[json-formatter|JSON Formatter]] — indent, validate and read a payload. Use it before you debug: half of all \"the API is broken\" tickets are actually malformed JSON with a trailing comma.",
           "[[json-validator|JSON Validator]] — when you need a strict pass/fail answer rather than a pretty print.",
           "[[xml-formatter|XML Formatter]] — the same job for SOAP responses, RSS feeds and Maven POMs that nobody has touched since 2014.",
-          "[[sql-formatter|SQL Formatter]] — paste an unreadable generated query and get something you can actually put in a pull request.",
-          "[[css-minifier|CSS Minifier]], [[js-minifier|JS Minifier]] and [[html-minifier|HTML Minifier]] — shrink assets when you want a quick size win before you set up a real build step.",
-          "[[json-to-yaml|JSON to YAML]], [[yaml-to-json|YAML to JSON]], [[csv-to-json|CSV to JSON]] and [[json-to-csv|JSON to CSV]] — moving data between the formats real systems actually use.",
+          "[[json-to-yaml|JSON to YAML]] and [[json-to-csv|JSON to CSV]] — moving data between the formats real systems actually use.",
         ],
       },
       {
@@ -119,7 +117,6 @@ export const posts: Post[] = [
         l: [
           "[[uuid-generator|UUID Generator]] — generate v4 identifiers for seed data, fixtures or a quick database row.",
           "[[md5-generator|MD5 / SHA Hash Generator]] — verify a download or confirm that two files that should be identical actually are.",
-          "[[jwt-decoder|JWT Decoder]] — read the payload of a token to check a scope or an expiry without writing a script. Remember to treat the contents of any token you paste as sensitive.",
           "[[timestamp-converter|Timestamp Converter]] — the single most-used tool in this whole list. When a log line says 1761000000, this is what tells you whether the incident happened during the deploy or before it.",
         ],
       },
@@ -131,10 +128,8 @@ export const posts: Post[] = [
       { h: "Comparing and debugging" },
       {
         l: [
-          "[[diff-checker|Diff Checker]] — find what changed between two payloads without opening a desktop diff tool.",
           "[[regex-tester|Regex Tester]] — the highest-leverage item here. A regular expression that looks correct and quietly matches nothing is one of the most expensive bugs in development, because it fails silently in the one place nobody reads.",
           "[[html-preview|HTML Preview]] — iterate on a fragment of markup to check how it actually renders.",
-          "[[lorem-ipsum|Lorem Ipsum Generator]] — placeholder copy that is fast to generate and fast to strip out.",
         ],
       },
       {
@@ -151,7 +146,7 @@ export const posts: Post[] = [
         l: [
           "**1. Convert the timestamp.** The report job logged the record's creation time as an epoch value. The [[timestamp-converter|Timestamp Converter]] showed the record was created at 11pm local, which is Tuesday — the job's timezone assumption was the problem, not the record.",
           "**2. Format the payload.** Taking the stored JSON through the [[json-formatter|JSON Formatter]] revealed the record was written with a null date field, because the client twice-called the same endpoint 200ms apart and the second write won.",
-          "**3. Decode the token.** The [[jwt-decoder|JWT Decoder]] confirmed both calls used the same API key — it was a client retry, not two customers.",
+          "**3. Compare the payloads.** Both records carried the same API key and the same client timestamp, which pointed at a retry rather than two separate customers.",
         ],
       },
       {
@@ -216,7 +211,6 @@ export const posts: Post[] = [
         l: [
           "[[word-counter|Word Counter]] — the standard measure. Paste, read, adjust.",
           "[[letter-counter|Letter Counter]] — counts characters and letter frequency. Useful when you are debugging why one paragraph feels wrong: it is usually a repeated letter pattern, not a dream.",
-          "[[text-stats|Advanced Text Statistics]] — reading time, sentence count and average word length in one pass. This is the one to use before you commit to a length you have not tried.",
         ],
       },
       {
@@ -249,7 +243,6 @@ export const posts: Post[] = [
       {
         l: [
           "[[duplicate-line-remover|Duplicate Line Remover]] — compare two lists, or clean one. The output tells you how many duplicates were removed, which is useful when you are reporting the result.",
-          "[[text-sorter|Text Sorter]] — sort alphabetically, by length, numerically. Handles the case where a naive sort puts item 10 before item 2.",
           "[[list-sorter|List Sorter]] — the same job for structured list input.",
           "[[list-randomizer|List Randomizer]] — shuffle a draw order, a quiz sequence or a ring-fenced shortlist so nobody suspects favouritism.",
           "[[line-number-adder|Line Number Adder]] — number lines for reference in a ticket or a code review comment.",
@@ -268,7 +261,6 @@ export const posts: Post[] = [
       {
         l: [
           "[[markdown-preview|Markdown Preview]] — live rendering, so you can check a table or a nested list actually looks right before it reaches a client.",
-          "[[text-reverse|Text Reverser]] — reverse text by character or by word. Obscure until you need to check whether a template string is being reversed by a plugin.",
           "[[text-repeater|Text Repeater]] — repeat a string N times. Useful for generating padding, test data or, occasionally, making a point in a document.",
         ],
       },
@@ -282,7 +274,6 @@ export const posts: Post[] = [
         l: [
           "[[random-string|Random String Generator]] — generate readable nonces, placeholder IDs or short codes. Better than inventing something by hand, because you will not accidentally reuse it.",
           "[[morse-code|Morse Code Translator]] — genuinely fun, occasionally useful for a themed project or a puzzle.",
-          "[[palindrome-checker|Palindrome Checker]] — a party trick that is also a legitimate string-processing sanity check.",
         ],
       },
       {
@@ -299,7 +290,7 @@ export const posts: Post[] = [
         l: [
           "**1. Trim.** Run the whole document through the [[text-trimmer|Text Trimmer]] first. Whitespace damage hides inside paragraphs where you will never see it.",
           "**2. Clean case.** Use the [[text-case-converter|Text Case Converter]] for the headline only. Never apply case conversion to a full draft — it destroys proper nouns.",
-          "**3. Measure.** Check length with the [[word-counter|Word Counter]] and reading time with [[text-stats|Advanced Text Statistics]] so you know before writing what shape the piece is.",
+          "**3. Measure.** Check length with the [[word-counter|Word Counter]] before writing, so you know what shape the piece is meant to be.",
           "**4. Preview.** If it contains Markdown, render it with the [[markdown-preview|Markdown Preview]].",
           "**5. Slug.** Generate the URL slug last, from the final headline, with [[text-to-slug|Text to Slug]] — changing the headline afterwards breaks the slug.",
         ],
@@ -362,7 +353,6 @@ export const posts: Post[] = [
       },
       {
         l: [
-          "[[percentage-calculator|Percentage Calculator]] — the general case, including \"what percent is X of Y\" and \"increase/decrease by\".",
           "[[discount-calculator|Discount Calculator]] — work out the final price and, more importantly, how much you saved. Useful for spotting a \"50% off\" that is really 20% after a raised list price.",
           "[[tip-calculator|Tip Calculator]] — split a bill, pick a percentage, round per person if you want to.",
           "[[loan-calculator|Loan Calculator]] — monthly payment and total interest, which is the number that actually decides whether a loan is affordable.",
@@ -418,7 +408,6 @@ export const posts: Post[] = [
           "[[area-converter|Area Converter]] — square metres, square feet, acres, hectares. This is the one people estimate badly when buying or renting property.",
           "[[volume-converter|Volume Converter]] — litres, millilitres, gallons, cups, cubic metres.",
           "[[time-converter|Time Converter]] — seconds, minutes, hours, days, weeks.",
-          "[[data-storage-converter|Data Storage Converter]] — kilobytes to megabytes, and the question of whether the vendor means 1000 or 1024, which is the actual reason a 500 GB drive shows up as 465 GB.",
         ],
       },
       {
@@ -463,7 +452,7 @@ export const posts: Post[] = [
           "**Wrong base.** \"A 10% rise then a 10% fall leaves you where you started\" is false, because both apply to different bases. Ten per cent of 100 is 10; ten per cent of 90 is 9.",
           "**Percentage of a percentage.** Stacking two discounts multiplies them (0.8 × 0.8 = 0.64, so 36% off), it does not add them.",
           "**Percent versus percentage points.** A rate going from 4% to 6% has risen by 2 percentage points, but by 50% in relative terms. Politics and medicine are full of this confusion, and it is not always accidental.",
-          "**Rounding too early.** Rounding an intermediate step before applying a percentage compounds the error. The [[percentage-calculator|Percentage Calculator]] avoids it by keeping full precision internally, but your own scratch pad will not.",
+          "**Rounding too early.** Rounding an intermediate step before applying a percentage compounds the error. Keep full precision until the final figure, and do the last step on a calculator rather than in your head.",
         ],
       },
       {
@@ -539,7 +528,6 @@ export const posts: Post[] = [
       { h: "Watermarks: what is honestly removable" },
       {
         l: [
-          "[[image-watermark-remover|Image Watermark Remover]] — crop or blur a mark area, which handles a corner logo or a repeated diagonal overlay.",
         ],
       },
       {
@@ -589,7 +577,6 @@ export const posts: Post[] = [
       { h: "The production assets everyone forgets" },
       {
         l: [
-          "[[placeholder-image|Placeholder Image Generator]] — generate a sized placeholder with a colour or text, for wireframes and templates where a real image is not ready.",
           "[[favicon-generator|Favicon Generator]] — produce the small icon set a site actually needs. This is on the list because favicons are the asset most likely to be missing entirely, and a missing one shows a generic browser page icon that makes a finished site look unfinished.",
           "[[emoji-picker|Emoji Picker]] — browse, search and copy emoji without hunting through an operating system picker. Genuinely useful when you are writing copy that needs one specific symbol.",
         ],
@@ -602,7 +589,7 @@ export const posts: Post[] = [
       },
       {
         l: [
-          "**1. Placeholder.** Drop a sized placeholder in from the [[placeholder-image|Placeholder Image Generator]] so the layout has the right height from the first render.",
+          "**1. Reserve the space.** Give the image slot a fixed height in the layout, so the page has the right shape from the first render instead of jumping when the real image lands.",
           "**2. Resize and compress.** When the real photo arrives, run it through the [[image-resizer|Image Resizer]] at 1600px wide, then the [[image-compressor|Image Compressor]] at 75 percent. That is a file you can ship.",
           "**3. Contrast-check the text.** A heading over a photo is the classic contrast failure. Use the [[contrast-checker|Contrast Checker]] to pick either a dark overlay strength or a light text colour that passes AA.",
           "**4. Build the button.** The [[box-shadow-generator|Box Shadow Generator]] gives the elevation, and the [[color-converter|Color Converter]] gets the brand colour into the format the CSS needs.",
@@ -798,11 +785,8 @@ export const posts: Post[] = [
 
       { h: "Randomness, honestly" },
       {
-        l: ["[[coin-flip|Coin Flip Simulator]] — a fair virtual coin flip."],
-      },
-      {
         p:
-          "Worth a sentence on fairness. A virtual coin flip is produced by a pseudo-random generator seeded unpredictably, which for the purposes of deciding who pays for lunch is indistinguishable from a real coin. For anything consequential — a draw with prizes, an allocation with money attached — you want a source you can audit, and a browser tab is not that. The value here is removing the human, who flips badly when motivated.",
+          "The [[random-number|Random Number Generator]] and the [[list-randomizer|List Randomizer]] cover the cases that actually come up: picking a number in a range, and putting a list into a fair order. Worth a sentence on fairness. Both use a pseudo-random generator, which for deciding who pays for lunch is indistinguishable from a real coin. For anything consequential — a draw with prizes, an allocation with money attached — you want a source you can audit, and a browser tab is not that. The value here is removing the human, who picks badly when motivated.",
       },
 
       { h: "The encoding junk drawer" },
