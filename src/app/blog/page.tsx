@@ -5,7 +5,7 @@ import { posts } from "@/lib/posts";
 import { tools } from "@/lib/tools-data";
 
 export const metadata: Metadata = {
-  title: "Blog — Toolbox Hub",
+  title: "Blog — Guides for Using Free Browser Tools",
   description:
     "Practical guides on using free browser-based tools for development, writing and everyday calculations. No installs, no accounts, nothing uploaded.",
   alternates: { canonical: "/blog/" },
@@ -43,7 +43,7 @@ export default function BlogIndex() {
       />
 
       <a
-        href="/"
+        href="/tools/"
         className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"
       >
         <ChevronLeft className="h-4 w-4" />
@@ -109,7 +109,7 @@ export default function BlogIndex() {
         <p className="mt-2 text-sm text-muted-foreground leading-7">
           The blog covers strategy; the tools themselves live in the directory.
           Use the search box in the header, or{" "}
-          <Link href="/" className="text-primary hover:underline">
+          <Link href="/tools/" className="text-primary hover:underline">
             browse all {tools.length} tools
           </Link>
           .

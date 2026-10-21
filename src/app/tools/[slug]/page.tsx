@@ -139,7 +139,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <a href="/" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"><ChevronLeft className="h-4 w-4" />All Tools</a><div className="mb-8"><h1 className="text-2xl font-bold">{tool.title}</h1><p className="mt-2 text-sm text-muted-foreground">{tool.description}</p></div><div className="rounded-xl border bg-card p-6">
+      <a href="/tools/" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"><ChevronLeft className="h-4 w-4" />All Tools</a><div className="mb-8"><h1 className="text-2xl font-bold">{tool.title}</h1><p className="mt-2 text-sm text-muted-foreground">{tool.description}</p></div><div className="rounded-xl border bg-card p-6">
         {slug === "password-strength" && <PasswordStrength />}
         {slug === "html-preview" && <HtmlPreview />}
         {slug === "json-validator" && <JsonValidator />}

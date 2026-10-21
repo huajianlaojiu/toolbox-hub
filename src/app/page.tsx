@@ -14,6 +14,13 @@ export default function HomePage() {
             <button key={cat} data-filter={cat} className="filter-btn rounded-full border px-4 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:border-foreground/30">{cat}</button>
           ))}
         </div>
+        <p className="mt-4 text-sm text-muted-foreground">
+          Prefer to browse by category?{" "}
+          <a href="/tools/" className="text-primary hover:underline">
+            See the full tool directory
+          </a>
+          .
+        </p>
       </section>
 
       <section className="mb-8">

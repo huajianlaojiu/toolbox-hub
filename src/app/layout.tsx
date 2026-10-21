@@ -133,6 +133,9 @@ export default function RootLayout({
         <footer className="border-t py-8 text-sm text-muted-foreground">
           <div className="mx-auto max-w-6xl px-4">
             <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+              <a href="/tools/" className="hover:text-foreground">
+                All Tools
+              </a>
               <a href="/about/" className="hover:text-foreground">
                 About
               </a>

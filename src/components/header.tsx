@@ -1,10 +1,18 @@
 "use client";
 import { Wrench, Search } from "lucide-react";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { tools } from "@/lib/tools-data";
+
+const NAV = [
+  { href: "/", label: "Home" },
+  { href: "/tools/", label: "All Tools" },
+  { href: "/blog/", label: "Blog" },
+];
 
 export default function Header() {
   const [search, setSearch] = useState("");
+  const pathname = usePathname() ?? "/";
 
   const filteredTools = search
     ? tools.filter((t) =>
@@ -51,8 +59,20 @@ export default function Header() {
         </div>
 
         <nav className="hidden sm:flex items-center gap-1 text-sm text-muted-foreground">
-          <a href="/" className="rounded-md bg-muted text-foreground px-3 py-1.5">Home</a>
-          <a href="/blog/" className="rounded-md px-3 py-1.5 hover:text-foreground transition-colors">Blog</a>
+          {NAV.map((item) => {
+            const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                className={`rounded-md px-3 py-1.5 transition-colors ${
+                  active ? "bg-muted text-foreground" : "hover:text-foreground"
+                }`}
+              >
+                {item.label}
+              </a>
+            );
+          })}
         </nav>
       </div>
     </header>

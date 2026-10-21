@@ -13,6 +13,7 @@ const postSlugs = [...postsData.matchAll(/^\s{4}slug: "([^"]+)"/gm)].map((m) => 
 const STATIC_PAGES = [
   { loc: "/", priority: "1.0", changefreq: "weekly" },
   { loc: "/about/", priority: "0.4", changefreq: "monthly" },
+  { loc: "/tools/", priority: "0.95", changefreq: "weekly" },
   { loc: "/blog/", priority: "0.9", changefreq: "weekly" },
   { loc: "/contact/", priority: "0.4", changefreq: "monthly" },
   { loc: "/privacy/", priority: "0.3", changefreq: "yearly" },
