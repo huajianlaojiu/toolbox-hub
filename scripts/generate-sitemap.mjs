@@ -21,18 +21,22 @@ const STATIC_PAGES = [
   { loc: "/disclaimer/", priority: "0.3", changefreq: "yearly" },
 ];
 
+// lastmod：用构建当天日期。CI 里 checkout 默认 fetch-depth=1，拿不到逐文件的 git 历史，
+// 所以只能精确到"本次发布"。对刚批量重写过内容的站点，这个信号足以触发重新抓取。
+const LASTMOD = new Date().toISOString().slice(0, 10);
+
 const urls = [
   ...STATIC_PAGES.map(
     (p) =>
-      `  <url><loc>${SITE}${p.loc}</loc><changefreq>${p.changefreq}</changefreq><priority>${p.priority}</priority></url>`
+      `  <url><loc>${SITE}${p.loc}</loc><lastmod>${LASTMOD}</lastmod><changefreq>${p.changefreq}</changefreq><priority>${p.priority}</priority></url>`
   ),
   ...postSlugs.map(
     (s) =>
-      `  <url><loc>${SITE}/blog/${s}/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>`
+      `  <url><loc>${SITE}/blog/${s}/</loc><lastmod>${LASTMOD}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>`
   ),
   ...slugs.map(
     (s) =>
-      `  <url><loc>${SITE}/tools/${s}/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>`
+      `  <url><loc>${SITE}/tools/${s}/</loc><lastmod>${LASTMOD}</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>`
   ),
 ];
 
