@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/header";
+import Footer from "@/components/footer";
 import { tools } from "@/lib/tools-data";
+import { ThemeProvider } from "@/lib/theme";
+import { I18nProvider } from "@/lib/i18n";
 
 const SITE_URL = "https://toolbox-hub.io";
 
@@ -102,6 +105,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full antialiased" suppressHydrationWarning>
       <head>
+        {/* 暗色模式防闪烁：首帧绘制前同步确定主题 */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var s=localStorage.getItem("tb-theme");var d=s?s==="dark":window.matchMedia("(prefers-color-scheme: dark)").matches;if(d){document.documentElement.classList.add("dark");document.documentElement.style.colorScheme="dark";}}catch(e){}})();`,
+          }}
+        />
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7525547688409082"
@@ -128,42 +137,13 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <footer className="border-t py-8 text-sm text-muted-foreground">
-          <div className="mx-auto max-w-6xl px-4">
-            <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
-              <a href="/tools/" className="hover:text-foreground">
-                All Tools
-              </a>
-              <a href="/about/" className="hover:text-foreground">
-                About
-              </a>
-              <a href="/blog/" className="hover:text-foreground">
-                Blog
-              </a>
-              <a href="/contact/" className="hover:text-foreground">
-                Contact
-              </a>
-              <a href="/privacy/" className="hover:text-foreground">
-                Privacy Policy
-              </a>
-              <a href="/terms/" className="hover:text-foreground">
-                Terms
-              </a>
-              <a href="/disclaimer/" className="hover:text-foreground">
-                Disclaimer
-              </a>
-              <a href="/sitemap.xml" className="hover:text-foreground">
-                Sitemap
-              </a>
-            </div>
-            <p className="mt-4 text-center">
-              &copy; {new Date().getFullYear()} Toolbox Hub. {tools.length} free online
-              tools. No sign-up needed.
-            </p>
-          </div>
-        </footer>
+        <ThemeProvider>
+          <I18nProvider>
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer toolCount={tools.length} />
+          </I18nProvider>
+        </ThemeProvider>
         <script src="/filter.js" defer />
       </body>
     </html>

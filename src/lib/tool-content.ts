@@ -7,15 +7,27 @@ export interface ToolContent {
   faq: { q: string; a: string }[];
   tips?: string[];
   useCases?: string[];
+  introZh?: string;
+  howToZh?: { step: string; detail: string }[];
+  faqZh?: { q: string; a: string }[];
+  tipsZh?: string[];
+  useCasesZh?: string[];
 }
 
 const generic = (title: string, desc: string): ToolContent => ({
   intro: `${title} is a free browser-based tool on Toolbox Hub. ${desc}. It exists to remove a small but annoying task from your workflow: instead of installing an app, writing a script, or hunting through a settings panel, you open one page and get the answer.\n\nEverything runs locally in your browser using JavaScript. Nothing you type is uploaded to a server, no account is required, and the tool keeps working on a slow or intermittent connection. That makes it equally useful for a quick one-off check and for repeated daily use.\n\nTypical uses include checking a value before sending it to a client, converting a batch of numbers for a spreadsheet, cleaning up text before pasting it into a ticket, or verifying a result produced by a script. If you keep landing on this page for the same task, bookmark it.`,
+  introZh: `${title} 是 Toolbox Hub 上的免费浏览器工具。${desc}。它要替你干掉工作流里那些小而烦的环节：不用装软件、不用写脚本、不用翻设置面板，打开一个页面就能得到结果。\n\n所有处理都在你的浏览器里用 JavaScript 完成。输入的内容不会上传到任何服务器，无需账号，弱网环境下也能正常工作。无论是一次性检查还是每天重复使用，它都同样合适。\n\n典型用法：发给客户前核对数值、为表格批量转换单位、粘贴到工单前清理文本、验证脚本输出结果。如果你总是为同一件事回到这个页面，建议收藏。`,
   howTo: [
     { step: "Enter your data", detail: `Paste or type the input into the ${title.toLowerCase()} field above. You can edit the value before running it, so there is no need to prepare anything in advance.` },
     { step: "Run the tool", detail: "Click the action button. The result appears immediately, because all of the work happens in your browser rather than on a remote server." },
     { step: "Copy the result", detail: "Use the Copy button next to the output to place the result on your clipboard, then paste it wherever you need it." },
     { step: "Verify and reuse", detail: "Spot-check the result against your own expectations. The tool stays on this page, so you can run it again with new input as often as you need." },
+  ],
+  howToZh: [
+    { step: "输入内容", detail: "把内容粘贴或输入到上方的输入框。运行前可以随时修改，无需提前准备。" },
+    { step: "运行工具", detail: "点击操作按钮，结果立即出现——所有计算都在你的浏览器里完成，不经过远程服务器。" },
+    { step: "复制结果", detail: "用输出框旁的复制按钮把结果放进剪贴板，再粘贴到需要的地方。" },
+    { step: "核对并复用", detail: "按自己的预期抽查结果。工具停留在当前页面，可以随时用新输入再跑一次。" },
   ],
   faq: [
     { q: `Is this ${title.toLowerCase()} free to use?`, a: "Yes. It is completely free, with no sign-up, no trial period, no usage limit and no watermark. There is also no paid tier that holds back basic functionality." },
@@ -25,16 +37,35 @@ const generic = (title: string, desc: string): ToolContent => ({
     { q: "Can I use it for commercial work?", a: "Yes. The output is yours to use in client work, products and publications. There is no attribution requirement and no restriction on commercial use." },
     { q: "How accurate is the result?", a: "The tool applies a deterministic rule rather than an estimate, so repeated runs on the same input always give the same output. For anything legally or financially consequential, double-check against your own source of truth." },
   ],
+  faqZh: [
+    { q: "这个工具免费吗？", a: "完全免费。无需注册、没有试用期、没有次数限制、不加水印。也没有会把基础功能锁住的付费档。" },
+    { q: "我的数据会上传服务器吗？", a: "不会。工具完全在你的浏览器里运行，输入不会离开你的设备。这也是为什么没有文件大小限制，以及页面加载后离线也能用。" },
+    { q: "手机和平板上能用吗？", a: "可以。布局自适应手机、平板和桌面。小屏幕上控件会纵向排列，保证输入内容可读。" },
+    { q: "需要注册账号吗？", a: "不需要。没有注册、没有邮件确认、没有登录。收藏页面即可，它用起来和你每天用的任何小工具一样。" },
+    { q: "可以用于商业场景吗？", a: "可以。输出结果归你所有，可用于客户项目、产品和出版物。无署名要求，无商业使用限制。" },
+    { q: "结果准确吗？", a: "工具执行的是确定性规则而非估算，同一输入多次运行结果一致。涉及法律或财务后果的内容，请再用你自己的权威来源核对。" },
+  ],
   useCases: [
     "Checking a value before you send it to a client, a colleague, or an API.",
     "Cleaning up a batch of values so they paste cleanly into a spreadsheet or ticket.",
     "Verifying the output of a script so you know what you are shipping.",
     "Doing a one-off task without installing software or filling in a form.",
   ],
+  useCasesZh: [
+    "发给客户、同事或 API 前核对数值。",
+    "批量清理数值，让粘贴进表格或工单时干净整齐。",
+    "验证脚本输出，确认交付内容。",
+    "不装软件、不填表单，一次性完成任务。",
+  ],
   tips: [
     "Bookmark the tool page so you skip the search next time you need it.",
     "Run the tool again with a different input to compare results side by side.",
     "Use the copy button rather than selecting text manually, which avoids stray whitespace.",
+  ],
+  tipsZh: [
+    "收藏工具页，下次需要时直接打开，省得再搜。",
+    "换一组输入再跑一次，并排对比结果。",
+    "用复制按钮而不是手动选文本，避免带入多余空白。",
   ],
 });
 
@@ -2238,6 +2269,734 @@ const overrides: Record<string, ToolContent> = {
       "Zero factorial is one, not zero.",
       "Results past about twenty are enormous; check you meant that input.",
       "Above 170 the value cannot be represented at all.",
+    ],
+  },
+  "video-compressor": {
+    intro:
+      "The Video Compressor shrinks video files directly in your browser using ffmpeg compiled to WebAssembly. No file ever leaves your device, which matters when the video is client work or personal footage you would rather not upload to a stranger's server.\n\nThree compression modes cover the common cases: quality mode uses CRF encoding so you pick a visual quality and let the encoder find the smallest file; bitrate mode pins the output to a number you choose, which is what you need when a platform caps uploads at a fixed size; target-size mode works backwards from a megabyte budget and calculates the bitrate from your video's real duration.\n\nThe engine is the same ffmpeg that professionals use on the command line, running H.264 encoding locally. A typical 100 MB phone video compresses to 10-20 MB in about a minute on a desktop, with no watermark and no sign-up.",
+    introZh:
+      "视频压缩器基于编译为 WebAssembly 的 ffmpeg，全部在浏览器本地完成压缩，文件不会上传到任何服务器——客户素材、私人录像都可以放心处理。\n\n三种压缩模式覆盖常见场景：质量模式（CRF）选择画质等级，编码器自动寻找最小体积；指定码率模式把输出锁定在你选的数值，适合有上传大小限制的平台；目标大小模式从 MB 预算反推码率，并按视频真实时长计算，压出来的文件更接近你要的尺寸。\n\n编码引擎就是专业命令行同款的 ffmpeg，本地运行 H.264 编码。一段 100MB 的手机视频在桌面端通常一分钟内压到 10~20MB，无水印、无需注册。",
+    howTo: [
+      { step: "Drop in your video", detail: "Select or drag an MP4, MOV, WebM or MKV file. The tool reads the duration from the video itself, which the target-size mode needs." },
+      { step: "Pick a mode", detail: "Quality mode: drag the CRF slider (lower is better). Bitrate mode: choose a Mbps value. Target-size mode: enter the megabyte budget." },
+      { step: "Compress", detail: "Click Compress. The progress bar tracks the real encode progress. Stay on the tab; the first run downloads the ffmpeg engine, which takes a few seconds." },
+      { step: "Download", detail: "Compare the before/after sizes, preview the result inline, and download the MP4. Nothing was uploaded at any point." },
+    ],
+    howToZh: [
+      { step: "放入视频", detail: "选择或拖入 MP4、MOV、WebM、MKV 文件。工具会读取视频真实时长，目标大小模式的计算依赖它。" },
+      { step: "选择模式", detail: "质量模式：拖动 CRF 滑块（越小越清晰）；指定码率模式：选择 Mbps 数值；目标大小模式：输入 MB 预算。" },
+      { step: "开始压缩", detail: "点击「开始压缩」，进度条反映真实编码进度。请保持页面在前台；首次运行需要下载 ffmpeg 引擎，约几秒。" },
+      { step: "下载成品", detail: "对比压缩前后大小，在线预览效果后下载 MP4。全过程没有任何文件上传。" },
+    ],
+    faq: [
+      { q: "Is there a file size limit?", a: "The practical limit is your device's memory, not a server quota. Videos up to about 500 MB work comfortably on a desktop; phones handle smaller files better. There is no artificial cap and nothing is uploaded." },
+      { q: "Why is the first compression slow?", a: "The first run downloads the ffmpeg WebAssembly engine (about 25 MB) from a CDN. After that it is cached and later compressions start in about a second." },
+      { q: "Does compression lose quality?", a: "Always some, by design. CRF 23-28 is the usual sweet spot: visually near-identical at a fraction of the size. Target-size mode pushes harder, so check the preview before downloading." },
+      { q: "Can I compress for a specific platform?", a: "Yes. Bitrate mode with 8 Mbps suits most HD uploads; target-size mode is for hard caps like email attachments or form uploads." },
+      { q: "Does it work on mobile?", a: "It runs in mobile browsers, but large videos can exhaust phone memory. For files over roughly 100 MB, a desktop is strongly recommended." },
+    ],
+    faqZh: [
+      { q: "有文件大小限制吗？", a: "实际限制取决于你设备的内存，而不是服务器配额。桌面端处理 500MB 以内视频没有问题，手机建议处理更小的文件。没有人为上限，也不上传任何文件。" },
+      { q: "为什么第一次压缩比较慢？", a: "首次运行需要从 CDN 下载约 25MB 的 ffmpeg WebAssembly 引擎，之后会有缓存，后续压缩约一秒即可开始。" },
+      { q: "压缩会损失画质吗？", a: "一定会有，这是压缩的本质。CRF 23~28 通常是甜点区：体积降到几分之一，观感几乎无损。目标大小模式压得更狠，下载前请先预览确认。" },
+      { q: "可以针对特定平台压缩吗？", a: "可以。指定码率模式选 8Mbps 适合大多数高清上传；有硬性大小限制（邮件附件、表单上传）时用目标大小模式。" },
+      { q: "手机上能用吗？", a: "可以运行，但大视频可能耗尽手机内存。超过约 100MB 的文件强烈建议用桌面端处理。" },
+    ],
+    useCases: [
+      "Shrinking a phone video before emailing it or attaching it to a ticket.",
+      "Meeting a platform's upload size cap without visible quality loss.",
+      "Making a portfolio or client review copy that loads fast.",
+      "Freeing storage on a camera roll before a trip.",
+    ],
+    useCasesZh: [
+      "把手机视频压小后再发邮件或附件上传。",
+      "在平台上传大小限制内尽量保住画质。",
+      "制作加载更快作品集或客户审片版本。",
+      "出行前给手机相册腾空间。",
+    ],
+    tips: [
+      "Start with CRF 28 and only go lower if the preview looks soft.",
+      "Target-size mode needs the real duration; wait for the video to finish loading before compressing.",
+      "For screen recordings, CRF 30 or higher usually still looks clean.",
+    ],
+    tipsZh: [
+      "先用 CRF 28 试，预览发虚再往下调。",
+      "目标大小模式依赖真实时长，等视频加载完成再开始压缩。",
+      "录屏内容通常 CRF 30 以上观感依然干净。",
+    ],
+  },
+  "video-converter": {
+    intro:
+      "The Video Converter moves videos between MP4, WebM, MOV, MKV and AVI without uploading anything. Re-encoding runs locally through ffmpeg compiled to WebAssembly, so the same codecs that power desktop conversion software are doing the work inside your browser tab.\n\nConversions pick the right codec per container: H.264 for MP4 and MOV for maximum device compatibility, VP9 and Opus for WebM for the web, and stream copy for MKV and AVI where the video stream can pass through untouched and finish in seconds.\n\nUse it when a camera produces MOV your editor will not take, when a platform wants WebM, or when you need an MKV that plays everywhere.",
+    introZh:
+      "视频格式转换工具在 MP4、WebM、MOV、MKV、AVI 之间互转，全程不上传文件。重编码由编译为 WebAssembly 的 ffmpeg 在本地完成——驱动桌面转换软件的同款编解码器，就在你的浏览器标签页里运行。\n\n每种容器自动选择合适的编解码器：MP4 和 MOV 用 H.264 保证设备兼容性；WebM 用 VP9 + Opus 面向网页；MKV 和 AVI 在可行时直接流拷贝，几秒完成。\n\n相机拍出 MOV 而剪辑软件不认、平台要求 WebM、需要到处能放的 MKV——这个工具就是干这个的。",
+    howTo: [
+      { step: "Add your video", detail: "Drop in any common video file. The source format does not matter; ffmpeg reads almost everything." },
+      { step: "Choose the target", detail: "Pick MP4, WebM, MOV, MKV or AVI. H.264 targets re-encode; MKV and AVI copy the video stream when possible." },
+      { step: "Convert", detail: "Click convert and watch the progress. WebM (VP9) is the slowest mode; everything else is quick." },
+      { step: "Download", detail: "The converted file is offered for download immediately, with the original size shown for comparison." },
+    ],
+    howToZh: [
+      { step: "添加视频", detail: "拖入任意常见视频文件。源格式无所谓，ffmpeg 几乎什么都能读。" },
+      { step: "选择目标格式", detail: "选 MP4、WebM、MOV、MKV 或 AVI。H.264 目标会重编码；MKV/AVI 在可行时直接拷贝视频流。" },
+      { step: "开始转换", detail: "点击转换后查看进度。WebM（VP9）是最慢的模式，其他都很快。" },
+      { step: "下载文件", detail: "转换完成后立即提供下载，并显示原始大小供对比。" },
+    ],
+    faq: [
+      { q: "Which format should I choose?", a: "MP4 for sharing and phones, WebM for websites, MOV if something in the Apple ecosystem demands it, MKV to keep multiple audio tracks and subtitles, AVI only for legacy tools." },
+      { q: "Does converting lose quality?", a: "Re-encoding does, slightly. MKV and AVI use stream copy where possible, which is mathematically lossless. For MP4/WebM the default settings are visually transparent." },
+      { q: "Can it convert 4K video?", a: "Technically yes, but browser memory is the limit. 1080p is comfortable on desktop; 4K may fail on phones or low-memory machines." },
+      { q: "Is my video uploaded anywhere?", a: "No. The entire pipeline runs in your browser. The only network traffic is the ffmpeg engine download on first use." },
+    ],
+    faqZh: [
+      { q: "该怎么选格式？", a: "分享和手机用 MP4，网站用 WebM，苹果生态特定要求用 MOV，想保留多音轨和字幕用 MKV，AVI 只建议给老软件用。" },
+      { q: "转换会损失画质吗？", a: "重编码会有轻微损失。MKV 和 AVI 在可行时走流拷贝，数学上无损。MP4/WebM 的默认参数观感上基本无差。" },
+      { q: "能转 4K 视频吗？", a: "技术上可以，但浏览器内存是瓶颈。桌面端处理 1080p 很轻松；4K 在手机或低内存机器上可能失败。" },
+      { q: "视频会被上传吗？", a: "不会。整条流水线都在浏览器里跑，唯一网络流量是首次使用时下载 ffmpeg 引擎。" },
+    ],
+    useCases: [
+      "Turning camera-produced MOV into universally playable MP4.",
+      "Preparing WebM versions of a video for a website.",
+      "Wrapping files into MKV to carry extra audio tracks.",
+      "Fixing files an editor or platform refuses to import.",
+    ],
+    useCasesZh: [
+      "把相机拍的 MOV 转成到处能放的 MP4。",
+      "为网站准备 WebM 版本视频。",
+      "封装成 MKV 以携带额外音轨。",
+      "救回剪辑软件或平台拒收的文件。",
+    ],
+    tips: [
+      "If MP4 output will not play somewhere, try WebM as a fallback for web players.",
+      "Converting the same file twice degrades quality; convert from the original each time.",
+    ],
+    tipsZh: [
+      "MP4 输出在某个播放器放不出来时，网页场景可尝试 WebM。",
+      "同一文件反复转换会累积画质损失，尽量每次从原文件转换。",
+    ],
+  },
+  "video-merger": {
+    intro:
+      "The Video Merger joins two to ten clips into a single MP4, entirely in your browser. It uses ffmpeg's concat filter to align video and audio streams from every input, then re-encodes once so the result plays everywhere.\n\nBecause the merge re-encodes, it also normalises small differences between clips. For the cleanest result, feed it files from the same source: same camera, same resolution, same frame rate. Drag the list to reorder clips before merging.\n\nEverything is local: nothing is uploaded, there is no queue, and no watermark is added to the output.",
+    introZh:
+      "视频合并工具把 2~10 个片段合并成一个 MP4，全程在浏览器本地完成。底层用 ffmpeg 的 concat 滤镜对齐每个输入的视频流和音频流，然后一次性重编码，保证成品到处能放。\n\n由于合并过程会重编码，片段间的小差异（分辨率、帧率）也会被归一。想要最干净的结果，请喂入同来源的文件：同一台相机、同一分辨率、同一帧率。合并前可拖动列表调整顺序。\n\n一切本地处理：不上传、不排队、输出不带任何水印。",
+    howTo: [
+      { step: "Add clips in order", detail: "Select multiple videos. They appear in a numbered list; use the arrows to reorder before merging." },
+      { step: "Check compatibility", detail: "Best results come from clips with the same resolution and codec. Mixed sources may fail or show artefacts." },
+      { step: "Merge", detail: "Click merge. All clips are read, then concatenated and encoded in one pass. Keep the tab in the foreground." },
+      { step: "Download the MP4", detail: "The merged file is ready for download as soon as encoding finishes." },
+    ],
+    howToZh: [
+      { step: "按顺序添加片段", detail: "一次选择多个视频，它们会按序号排列；合并前用箭头调整顺序。" },
+      { step: "检查兼容性", detail: "分辨率与编码一致的片段效果最好。混合来源可能失败或出现花屏。" },
+      { step: "开始合并", detail: "点击合并。所有片段先读入，再一次性拼接编码。请保持页面在前台。" },
+      { step: "下载 MP4", detail: "编码完成后即可下载合并成品。" },
+    ],
+    faq: [
+      { q: "Why did my merge fail?", a: "The concat filter needs matching streams. Different resolutions, codecs or missing audio tracks are the usual causes. Convert clips to MP4/H.264 first with the Video Converter." },
+      { q: "Is there a limit on how many clips?", a: "Ten clips, which is the practical limit for browser memory and encoding time." },
+      { q: "How long does it take?", a: "Roughly the combined duration of all clips at encoding speed, plus a few seconds of setup. Ten short clips merge in well under a minute." },
+      { q: "Does merging lose quality?", a: "The output is re-encoded to H.264 at a high-quality preset, so there is minor generation loss. For same-source clips the result is effectively transparent." },
+    ],
+    faqZh: [
+      { q: "为什么合并失败了？", a: "concat 滤镜需要流参数匹配。分辨率、编码不同或缺少音轨是常见原因。可先用格式转换工具把片段统一转成 MP4/H.264。" },
+      { q: "最多能合并几个片段？", a: "10 个，这是浏览器内存和编码时间的实用上限。" },
+      { q: "合并要多久？", a: "大约是所有片段总时长除以编码速度，再加几秒准备时间。十个短片段通常一分钟内完成。" },
+      { q: "合并会损失画质吗？", a: "输出会以高质量预设重编码为 H.264，有轻微代际损失。同来源片段的结果观感上基本无损。" },
+    ],
+    useCases: [
+      "Stitching several takes into one continuous video.",
+      "Combining an intro and outro onto a main clip.",
+      "Assembling a day's footage into a single shareable file.",
+    ],
+    useCasesZh: [
+      "把多条拍摄素材拼成连续视频。",
+      "给主片段加上片头和片尾。",
+      "把一天的素材合成一个方便分享的文件。",
+    ],
+    tips: [
+      "Merge clips from the same device whenever possible.",
+      "If a clip has no audio track, the merge can still work but check the output sound.",
+    ],
+    tipsZh: [
+      "尽量合并同一设备拍出的片段。",
+      "如果某个片段没有音轨，合并仍可能成功，但记得检查成品声音。",
+    ],
+  },
+  "video-speed-changer": {
+    intro:
+      "The Video Speed Changer speeds up or slows down video from 0.25x to 4x, running locally in your browser with ffmpeg. Video frames are retimed with setpts while audio is stretched with a chained atempo filter, so pitch stays natural instead of turning into a chipmunk.\n\nSpeed presets cover the everyday cases: 2x and 4x for condensing lectures, screen recordings and travel footage; 0.5x and 0.75x for slow-motion analysis of a sports move or a tutorial step.\n\nYou can drop the audio entirely for silent memes and GIF-style loops, or keep it with pitch preserved. Everything is processed on your device; nothing is uploaded.",
+    introZh:
+      "视频倍速工具支持 0.25x 到 4x 的变速，用 ffmpeg 在浏览器本地处理。视频帧用 setpts 重定时序，音频用链式 atempo 滤镜拉伸，音调保持自然，不会变成花栗鼠。\n\n倍速预设覆盖日常场景：2x、4x 用来压缩课程、录屏和旅行素材；0.5x、0.75x 用来慢放分析运动动作或教程步骤。\n\n也可以完全去掉音频，适合静音梗图和循环片段；保留音频时音调不变。全部本地处理，不上传任何文件。",
+    howTo: [
+      { step: "Add a video", detail: "Drop in a clip. The tool reads its duration so it can show the new runtime before you commit." },
+      { step: "Pick a speed", detail: "Choose from 0.25x to 4x presets. The new duration updates instantly." },
+      { step: "Choose audio", detail: "Keep audio with pitch preserved, or drop it for a silent result." },
+      { step: "Apply and download", detail: "The retimed MP4 is encoded locally and offered for download." },
+    ],
+    howToZh: [
+      { step: "添加视频", detail: "拖入片段，工具会读取时长并提前显示变速后的新时长。" },
+      { step: "选择倍速", detail: "从 0.25x 到 4x 的预设中选择，新时长即时更新。" },
+      { step: "选择音频", detail: "保留音频（音调不变）或丢弃音频得到静音结果。" },
+      { step: "应用并下载", detail: "变速后的 MP4 在本地编码完成后即可下载。" },
+    ],
+    faq: [
+      { q: "Does the audio pitch change?", a: "No. The atempo filter chain stretches time without altering pitch, which is what separates it from simply changing playback rate." },
+      { q: "What is the fastest speed?", a: "4x with presets, and the same machinery handles 0.25x slow motion. Extreme speeds may look choppy because frames are duplicated, not synthesised." },
+      { q: "Can I make true slow motion?", a: "This tool retimes existing frames. For buttery slow motion you need source footage shot at a high frame rate; the tool can only stretch what exists." },
+      { q: "How long does processing take?", a: "About the video's duration at encoding speed. A one-minute clip typically takes under a minute on desktop." },
+    ],
+    faqZh: [
+      { q: "音调会变吗？", a: "不会。atempo 链只拉伸时间不改音高，这正是它和简单改播放速率的区别。" },
+      { q: "最快能到多少倍？", a: "预设到 4x，同一套机制也支持 0.25x 慢放。极端倍速下画面可能发涩，因为帧是复制而非新生成的。" },
+      { q: "能做真正的慢动作吗？", a: "本工具只是重排已有帧。丝滑慢放需要高帧率素材；工具只能拉伸已有内容。" },
+      { q: "处理要多久？", a: "约等于视频时长除以编码速度。一分钟的片段桌面端通常一分钟内完成。" },
+    ],
+    useCases: [
+      "Condensing a lecture or meeting recording to skim key points.",
+      "Slow-motion analysis of a technique or a play.",
+      "Making a short clip fit a time limit on social platforms.",
+    ],
+    useCasesZh: [
+      "压缩课程或会议录像，快速浏览要点。",
+      "慢放分析技术动作或比赛回合。",
+      "把短片压进社交平台的时长限制。",
+    ],
+    tips: [
+      "Speeds above 2x read better without audio for talking-head footage.",
+      "The tool reports the new duration before you run it, so you can hit a target length exactly.",
+    ],
+    tipsZh: [
+      "口播类素材超过 2x 时去掉音频观感更好。",
+      "运行前就会显示新时长，可以精确卡目标长度。",
+    ],
+  },
+  "video-transformer": {
+    intro:
+      "The Video Transformer flips, rotates and reverses video in your browser. Horizontal and vertical mirroring fixes footage shot through a mirror or upside-down action cams; 90/180/270-degree rotation saves videos recorded in portrait; reverse plays the clip backwards with audio reversed to match.\n\nAll transforms are combined into a single ffmpeg filter chain and encoded once, so applying several effects does not degrade the video repeatedly. Processing is fully local.\n\nThis is the tool for fixing orientation before posting, creating a mirror effect for a dance or transition edit, or producing the classic reverse-footage look.",
+    introZh:
+      "视频变换工具在浏览器里完成镜像、旋转和倒放。水平/垂直镜像修正镜像拍摄或运动相机倒置的素材；90/180/270 度旋转拯救竖屏录制的视频；倒放把画面和音频一起反向，做出经典的回放效果。\n\n所有变换会合并进一条 ffmpeg 滤镜链并一次性编码，叠加多个效果不会反复损失画质。全部本地处理。\n\n发布前修正方向、给舞蹈或转场做镜像效果、制作倒放镜头——都是它的活儿。",
+    howTo: [
+      { step: "Add a video", detail: "Drop in a clip and preview it in the player." },
+      { step: "Stack transforms", detail: "Toggle flip H, flip V, rotate (each click adds 90 degrees) and reverse. Combine as many as you need." },
+      { step: "Apply and export", detail: "One encode applies the whole chain. Watch the progress bar." },
+      { step: "Download", detail: "Preview and download the transformed MP4." },
+    ],
+    howToZh: [
+      { step: "添加视频", detail: "拖入片段，在播放器里预览。" },
+      { step: "叠加变换", detail: "切换水平镜像、垂直镜像、旋转（每点击一次加 90 度）和倒放，可任意组合。" },
+      { step: "应用并导出", detail: "一次性编码应用整条滤镜链，查看进度条即可。" },
+      { step: "下载成品", detail: "预览并下载变换后的 MP4。" },
+    ],
+    faq: [
+      { q: "Can I combine several transforms?", a: "Yes. Flip plus rotate plus reverse all apply in one pass, with a single encode." },
+      { q: "Does reverse work with audio?", a: "Yes, the audio track is reversed too, so speech and effects play backwards in sync." },
+      { q: "Why does rotate change the dimensions?", a: "A 90 or 270-degree rotation swaps width and height; that is expected. 180 keeps the frame size." },
+      { q: "Is quality lost?", a: "Only the single re-encode to H.264 at a high-quality preset. No repeated generation loss." },
+    ],
+    faqZh: [
+      { q: "可以组合多个变换吗？", a: "可以。镜像 + 旋转 + 倒放会在同一次处理里全部应用，只编码一次。" },
+      { q: "倒放会处理音频吗？", a: "会。音轨同样反向，人声和音效同步倒放。" },
+      { q: "为什么旋转后尺寸变了？", a: "90/270 度旋转会交换宽高，这是正常现象；180 度则保持画幅不变。" },
+      { q: "会损失画质吗？", a: "只有一次到 H.264 高质量预设的重编码，不会反复损失。" },
+    ],
+    useCases: [
+      "Fixing portrait or upside-down footage before posting.",
+      "Creating a mirror effect for choreography and transitions.",
+      "Producing reverse-motion clips for comedy or drama.",
+    ],
+    useCasesZh: [
+      "发布前修正竖屏或倒置素材。",
+      "为编舞和转场做镜像效果。",
+      "制作倒放片段用于喜剧或戏剧效果。",
+    ],
+    tips: [
+      "Fix orientation first when combining transforms; the chain handles it in one encode either way.",
+      "Reverse needs audio re-encoded, so it takes slightly longer than visual-only transforms.",
+    ],
+    tipsZh: [
+      "组合变换时先想好方向修正，滤镜链一次编码全部搞定。",
+      "倒放需要重编码音频，比纯画面变换稍慢。",
+    ],
+  },
+  "video-trimmer": {
+    intro:
+      "The Video Trimmer cuts a clip down to the part you need, in the browser, without re-encoding. It uses ffmpeg's stream copy mode with input-side seeking, so a trim finishes in seconds and the kept frames are bit-for-bit identical to the source.\n\nDrag the start and end sliders to frame your cut; the player previews at the selected point. Stream copy cuts on keyframes, so the result is lossless and instant. If the output misbehaves in a specific player, the Video Converter can re-encode it for maximum compatibility.\n\nNothing is uploaded. The file you select stays on your machine, which is what you want when trimming client footage or personal video.",
+    introZh:
+      "视频裁剪工具把片段剪成你要的部分，在浏览器里完成，且不重编码。它用 ffmpeg 的流拷贝模式配合输入侧定位，几秒完成，保留的画面与源文件逐比特一致。\n\n拖动起止滑块框选片段，播放器会在所选位置预览。流拷贝按关键帧切割，无损且瞬时完成。如果成品在某个播放器里行为异常，可以用格式转换工具重编码以最大化兼容性。\n\n不上传任何文件。你选择的文件始终留在本机——剪客户素材或个人视频时这点很重要。",
+    howTo: [
+      { step: "Add a video", detail: "Drop in a clip; its duration is read automatically and the sliders are set to the full range." },
+      { step: "Set start and end", detail: "Drag the two sliders. The selected length is shown live." },
+      { step: "Trim", detail: "Stream copy mode means the cut is nearly instant, regardless of clip length." },
+      { step: "Download", detail: "Preview and download the trimmed MP4. No watermark, no upload." },
+    ],
+    howToZh: [
+      { step: "添加视频", detail: "拖入片段，时长自动读取，滑块默认拉到全长。" },
+      { step: "设置起止点", detail: "拖动两个滑块，选中长度实时显示。" },
+      { step: "开始裁剪", detail: "流拷贝模式下切割几乎瞬时完成，与片段长短无关。" },
+      { step: "下载成品", detail: "预览并下载裁剪后的 MP4，无水印、不上传。" },
+    ],
+    faq: [
+      { q: "Why is trimming so fast?", a: "Stream copy skips re-encoding entirely. Only the container is rewritten; video and audio frames are copied byte-for-byte." },
+      { q: "The cut point is a second or two off. Why?", a: "Stream copy can only cut on keyframes. For frame-exact cuts, trim with a small margin and use the Video Converter to re-encode the result." },
+      { q: "Does it work with any format?", a: "Anything ffmpeg can read: MP4, MOV, MKV, WebM and more. The output is always MP4." },
+      { q: "Is my video uploaded?", a: "No. The whole process runs locally in your browser." },
+    ],
+    faqZh: [
+      { q: "为什么裁剪这么快？", a: "流拷贝完全跳过重编码，只重写容器，视频音频帧按字节原样复制。" },
+      { q: "切点差了一两秒，为什么？", a: "流拷贝只能在关键帧上切。要精确到帧，可以多留一点余量裁剪，再用格式转换工具重编码结果。" },
+      { q: "支持哪些格式？", a: "ffmpeg 能读的都行：MP4、MOV、MKV、WebM 等。输出统一为 MP4。" },
+      { q: "视频会被上传吗？", a: "不会。整个过程都在浏览器本地运行。" },
+    ],
+    useCases: [
+      "Cutting the highlight out of a long recording.",
+      "Removing dead air at the start or end of a clip.",
+      "Extracting a segment to send to someone.",
+    ],
+    useCasesZh: [
+      "从长录像里剪出高光片段。",
+      "去掉片段开头结尾的空白。",
+      "截取一段发给别人。",
+    ],
+    tips: [
+      "If the trimmed file stutters in one player, re-encode it once with the Video Converter.",
+      "Cut a little wide on both sides; you can always trim again but you cannot un-crop.",
+    ],
+    tipsZh: [
+      "裁剪结果在某个播放器卡顿时，用格式转换工具重编码一次。",
+      "起止点各多留一点余量，可以再剪，但裁掉的部分回不来。",
+    ],
+  },
+  "video-to-gif": {
+    intro:
+      "The Video to GIF converter turns a video segment into a high-quality GIF, entirely in your browser. It uses ffmpeg's two-pass method: a custom palette is generated from your clip first, then the GIF is rendered against that palette, which is what separates a clean GIF from the banded, muddy output of naive converters.\n\nYou control the segment, frame rate and width. Shorter clips at 15 fps and 480 px wide hit the sweet spot for file size and compatibility; the tool warns above 30 seconds because GIFs grow fast.\n\nEverything runs locally with ffmpeg compiled to WebAssembly. No upload, no watermark, no queue.",
+    introZh:
+      "视频转 GIF 工具把视频片段变成高质量 GIF，全程在浏览器本地完成。它使用 ffmpeg 的两步法：先从片段生成专用调色板，再按调色板渲染 GIF——这是干净 GIF 和朴素转换器那种色带脏感输出的分水岭。\n\n片段区间、帧率和宽度都可控。15 fps、480px 宽是体积与兼容性的甜点；超过 30 秒工具会提醒，因为 GIF 体积涨得很快。\n\n全部由编译为 WebAssembly 的 ffmpeg 本地运行。不上传、不加水印、不排队。",
+    howTo: [
+      { step: "Add a video", detail: "Drop in a clip. Duration is read for validation." },
+      { step: "Set the segment", detail: "Choose the start time and length in seconds, the frame rate and the output width." },
+      { step: "Convert", detail: "Two ffmpeg passes run: palette generation, then GIF rendering. Progress is shown." },
+      { step: "Download", detail: "Preview the GIF inline and download it. The original video never left your device." },
+    ],
+    howToZh: [
+      { step: "添加视频", detail: "拖入片段，工具会读取时长用于校验。" },
+      { step: "设置片段参数", detail: "选择起始秒数、片段长度、帧率和输出宽度。" },
+      { step: "开始转换", detail: "跑两遍 ffmpeg：先生成调色板，再渲染 GIF。进度实时显示。" },
+      { step: "下载成品", detail: "在线预览 GIF 并下载。原视频始终没离开你的设备。" },
+    ],
+    faq: [
+      { q: "Why is my GIF so large?", a: "GIF stores every frame uncompressed-ish. Lower the width, drop the frame rate to 12, and shorten the clip. Under 30 seconds is strongly recommended." },
+      { q: "Why does it look better than other converters?", a: "The two-pass palette method samples colours from your actual clip instead of using a fixed 256-colour web palette." },
+      { q: "Can I make a GIF from a GIF?", a: "No, the input must be a video file. Use a video source." },
+      { q: "Is there a length limit?", a: "30 seconds per clip, enforced to keep output sizes and memory use sane." },
+    ],
+    faqZh: [
+      { q: "为什么 GIF 这么大？", a: "GIF 每帧几乎是未压缩存储。降低宽度、把帧率降到 12、缩短片段。强烈建议控制在 30 秒以内。" },
+      { q: "为什么比其他转换器清晰？", a: "两遍法调色板从你的实际片段采样颜色，而不是用固定的 256 色网页调色板。" },
+      { q: "可以从 GIF 转 GIF 吗？", a: "不行，输入必须是视频文件，请用视频源。" },
+      { q: "有时长限制吗？", a: "每段 30 秒上限，用来控制输出体积和内存占用。" },
+    ],
+    useCases: [
+      "Turning a reaction or a fail into a shareable GIF.",
+      "Making a looping demo of a UI interaction.",
+      "Creating a lightweight animated preview for a README.",
+    ],
+    useCasesZh: [
+      "把反应瞬间或翻车现场做成可分享的 GIF。",
+      "为界面交互制作循环演示动图。",
+      "给 README 做个轻量动画预览。",
+    ],
+    tips: [
+      "480 px wide at 15 fps is the default sweet spot; halve the width to roughly halve the file.",
+      "Avoid fast camera pans in source clips; they inflate GIF size the most.",
+    ],
+    tipsZh: [
+      "默认 480px 宽 + 15 fps 是甜点；宽度减半体积大约减半。",
+      "源片段里避免快速摇镜，它最能让 GIF 体积膨胀。",
+    ],
+  },
+  "video-to-audio": {
+    intro:
+      "The Video to Audio extractor pulls the soundtrack out of any video and saves it as MP3, AAC/M4A, WAV, OGG, Opus or FLAC. Everything runs locally with ffmpeg compiled to WebAssembly, so the video never leaves your device.\n\nOptional start time and length fields turn it into a ringtone maker: skip the intro, grab thirty seconds, export. Bitrate and lossless formats are both available, so you can pick a small file for sharing or a FLAC for archive.\n\nUse it to save a song from a clip, lift a voice memo from a screen recording, or prepare audio for a podcast edit.",
+    introZh:
+      "视频提取音频工具从任意视频中抽出音轨，保存为 MP3、AAC/M4A、WAV、OGG、Opus 或 FLAC。全部由编译为 WebAssembly 的 ffmpeg 本地运行，视频不出设备。\n\n可选的起始秒数和长度字段让它同时是个铃声制作器：跳过前奏、截取三十秒、导出。码率和无损格式都支持，分享选小文件，存档选 FLAC。\n\n从片段里保存歌曲、从录屏里捞出口播音频、为播客剪辑准备素材——都靠它。",
+    howTo: [
+      { step: "Add a video", detail: "Drop in any video file. Its duration is read for the trim fields." },
+      { step: "Pick format and quality", detail: "Choose the output format; set bitrate for lossy formats. WAV and FLAC are lossless." },
+      { step: "Trim if needed", detail: "Set a start time and length to extract just a segment, or leave both at zero for the full track." },
+      { step: "Extract and download", detail: "Encoding runs locally with a progress bar, then the audio file downloads." },
+    ],
+    howToZh: [
+      { step: "添加视频", detail: "拖入任意视频文件，工具读取时长供裁剪字段使用。" },
+      { step: "选择格式与质量", detail: "选择输出格式；有损格式可设码率。WAV 和 FLAC 为无损。" },
+      { step: "按需裁剪", detail: "设置起始秒数和长度只提取一段，或两者留零提取完整音轨。" },
+      { step: "提取并下载", detail: "本地编码带进度条，完成后下载音频文件。" },
+    ],
+    faq: [
+      { q: "Which format should I choose?", a: "MP3 for compatibility, M4A for efficiency at the same quality, WAV or FLAC when you need lossless for editing, Opus for the best quality per byte." },
+      { q: "Does extraction lose quality?", a: "Decoding the source audio is lossless; re-encoding to a lossy format loses a little. FLAC and WAV keep everything the source had." },
+      { q: "Can I extract from a video with no audio?", a: "If the file truly has no audio track, the extract fails with a clear error rather than producing a silent file." },
+      { q: "Is the video uploaded?", a: "No. Reading, decoding and encoding all happen in your browser." },
+    ],
+    faqZh: [
+      { q: "该怎么选格式？", a: "要兼容选 MP3，同质量更小选 M4A，剪辑要无损选 WAV/FLAC，同码率音质最好选 Opus。" },
+      { q: "提取会损失音质吗？", a: "解码源音频是无损的；重新编码成有损格式会有少量损失。FLAC 和 WAV 保留源文件的一切。" },
+      { q: "没有音轨的视频能提取吗？", a: "文件真的没有音轨时，提取会明确报错，而不是生成一个静音文件。" },
+      { q: "视频会被上传吗？", a: "不会。读取、解码、编码全在浏览器里完成。" },
+    ],
+    useCases: [
+      "Saving a song or soundtrack from a video clip.",
+      "Lifting narration out of a screen recording.",
+      "Making a 30-second ringtone from a longer video.",
+    ],
+    useCasesZh: [
+      "从视频片段里保存歌曲或配乐。",
+      "从录屏里提取解说音频。",
+      "从长视频里截一段 30 秒铃声。",
+    ],
+    tips: [
+      "For ringtones, set start and length to hit the platform's duration cap exactly.",
+      "Extract to WAV first if you plan to edit; encode to MP3 only at the end.",
+    ],
+    tipsZh: [
+      "做铃声时，用起始和长度参数精确卡平台时长上限。",
+      "打算再编辑的话先提 WAV，最后一步再编码 MP3。",
+    ],
+  },
+  "video-frame-capture": {
+    intro:
+      "The Video Frame Capture grabs still images from any video, right in your browser. Scrub to the exact moment and capture a single frame as JPG or PNG, or sample the whole video at even intervals and download every frame as a ZIP.\n\nIt is the quickest way to pull a cover image, a thumbnail, a reaction still or a reference frame without installing anything. Frames are captured at the video's native resolution through a canvas, so what you see in the player is what you get in the file.\n\nBatch mode takes 1 to 30 frames spread evenly across the duration, which is handy for storyboarding, contact sheets or picking the best moment out of a long clip. Everything is local; no video is uploaded.",
+    introZh:
+      "视频封面截帧工具从任意视频中抓取静帧，全部在浏览器本地完成。拖动到精确时刻截取单帧存为 JPG 或 PNG，或者按均匀间隔整段采样，把所有帧打包成 ZIP 下载。\n\n这是抓封面图、缩略图、反应瞬间或参考帧最快的路子，不用装任何软件。帧通过 canvas 按视频原生分辨率捕获，播放器里看到的就是文件里拿到的。\n\n批量模式在时长内均匀抽取 1~30 帧，适合做分镜、contact sheet，或者从长片段里挑最佳瞬间。全部本地处理，视频不上传。",
+    howTo: [
+      { step: "Add a video", detail: "Drop in a clip. The player and timeline slider appear." },
+      { step: "Capture a single frame", detail: "Drag the timestamp slider, choose JPG or PNG, and capture. The frame appears in the grid below." },
+      { step: "Or batch capture", detail: "Enter how many frames (1-30) and capture; they are sampled evenly across the whole duration." },
+      { step: "Download", detail: "Save frames individually or download everything as a ZIP." },
+    ],
+    howToZh: [
+      { step: "添加视频", detail: "拖入片段，播放器和时间滑块随即出现。" },
+      { step: "截取单帧", detail: "拖动时间点滑块，选 JPG 或 PNG，点击截取，帧出现在下方网格。" },
+      { step: "或批量抽帧", detail: "输入帧数（1~30）后截取，帧在全片时长内均匀采样。" },
+      { step: "下载", detail: "可单张保存，也可打包成 ZIP 全部下载。" },
+    ],
+    faq: [
+      { q: "What resolution are the frames?", a: "The video's native resolution. A 1080p video yields 1080p frames; the canvas captures the decoded frame at full size." },
+      { q: "Why do batch frames land slightly off my expectation?", a: "They are placed at even intervals of the duration, which is ideal for coverage but not for specific moments. Use single-frame mode for precision." },
+      { q: "Can I capture from any video format?", a: "Any format your browser can play: MP4, WebM, MOV and more. If the player shows it, the capture works." },
+      { q: "Is the video uploaded?", a: "No. The video element reads the local file directly; frames are drawn on a canvas in your browser." },
+    ],
+    faqZh: [
+      { q: "帧的分辨率是多少？", a: "视频的原生分辨率。1080p 视频出 1080p 帧，canvas 按解码后的完整尺寸捕获。" },
+      { q: "为什么批量帧的位置和我想的不太一样？", a: "批量帧按时长均匀分布，适合全覆盖，不适合精确时刻。精确截取请用单帧模式。" },
+      { q: "支持哪些视频格式？", a: "浏览器能播放的都行：MP4、WebM、MOV 等。播放器能放，就能截。" },
+      { q: "视频会被上传吗？", a: "不会。video 元素直接读本地文件，帧在浏览器 canvas 上绘制。" },
+    ],
+    useCases: [
+      "Pulling a clean cover frame for a video post.",
+      "Building a contact sheet to review a long take.",
+      "Grabbing a reference frame for design or animation work.",
+    ],
+    useCasesZh: [
+      "为视频帖子抓一张干净的封面帧。",
+      "做 contact sheet 通览一条长素材。",
+      "抓参考帧用于设计或动画工作。",
+    ],
+    tips: [
+      "Scrub with the slider while paused for frame-accurate placement.",
+      "PNG keeps the most detail; JPG is smaller and fine for covers.",
+    ],
+    tipsZh: [
+      "暂停时用滑块微调，定位更精确。",
+      "PNG 保留最多细节；JPG 更小，做封面足够。",
+    ],
+  },
+  "audio-converter": {
+    intro:
+      "The Audio Converter changes audio files between WAV, MP3, M4A and OGG entirely in your browser, using the Web Audio API for decoding and encoding. No file is uploaded, which matters when the audio is unreleased music or a private recording.\n\nWAV and MP3 cover almost every need: WAV is the lossless intermediate editors expect, MP3 is the universal share format. M4A and OGG are rendered through MediaRecorder for browsers that support them. Sample rate conversion (44.1 kHz, 48 kHz, 22.05 kHz, 16 kHz) is built in, so you can prepare audio for video work, voice notes or telephony-grade files.\n\nPaste a track, pick a format, download. That is the whole tool.",
+    introZh:
+      "音频格式转换工具用 Web Audio API 在浏览器里完成 WAV、MP3、M4A、OGG 互转，不上传任何文件——未发布的音乐或私人录音都可以放心处理。\n\nWAV 和 MP3 覆盖几乎所有需求：WAV 是剪辑软件期望的无损中间格式，MP3 是通用分享格式。M4A 和 OGG 在支持的浏览器里通过 MediaRecorder 渲染。采样率转换（44.1kHz / 48kHz / 22.05kHz / 16kHz）内置，可以直接为视频制作、语音备忘或通话级文件做准备。\n\n放入音频，选格式，下载。整个工具就这么简单。",
+    howTo: [
+      { step: "Add an audio file", detail: "Drop in MP3, WAV, OGG, M4A, FLAC or anything the browser can decode." },
+      { step: "Pick the output", detail: "Choose WAV, MP3, M4A or OGG, plus sample rate and (for MP3) bitrate." },
+      { step: "Convert", detail: "Decoding and encoding run locally; a short wait scales with file length." },
+      { step: "Download", detail: "Preview the result inline and download it." },
+    ],
+    howToZh: [
+      { step: "添加音频文件", detail: "拖入 MP3、WAV、OGG、M4A、FLAC 等浏览器可解码的格式。" },
+      { step: "选择输出", detail: "选 WAV、MP3、M4A 或 OGG，并设置采样率（MP3 还有码率）。" },
+      { step: "开始转换", detail: "解码编码都在本地，等待时间随文件长度增加。" },
+      { step: "下载成品", detail: "在线预览结果并下载。" },
+    ],
+    faq: [
+      { q: "Which formats can I convert from?", a: "Anything your browser can decode, which in practice means MP3, WAV, OGG, M4A/AAC, FLAC and Opus." },
+      { q: "Is MP3 encoding really local?", a: "Yes. The MP3 encoder (lamejs) runs as WebAssembly inside the page. The only download is the encoder library itself on first use." },
+      { q: "Why is M4A or OGG sometimes unavailable?", a: "Those formats depend on MediaRecorder support, which varies by browser. WAV and MP3 always work." },
+      { q: "Does sample rate conversion lose quality?", a: "Converting to a lower rate discards data by definition; converting upward does not add detail. Match the rate to the destination platform." },
+    ],
+    faqZh: [
+      { q: "支持从哪些格式转换？", a: "浏览器能解码的都行，实际上包括 MP3、WAV、OGG、M4A/AAC、FLAC 和 Opus。" },
+      { q: "MP3 编码真的是本地吗？", a: "是的。MP3 编码器（lamejs）以 WebAssembly 形式在页面内运行，唯一下载是首次使用时加载编码器库本身。" },
+      { q: "为什么有时没有 M4A 或 OGG？", a: "这两种格式依赖 MediaRecorder 支持，各浏览器不一。WAV 和 MP3 始终可用。" },
+      { q: "采样率转换会损失音质吗？", a: "降到更低采样率按定义会丢弃数据；往高转不会增加细节。按目标平台匹配即可。" },
+    ],
+    useCases: [
+      "Turning a WAV master into a shareable MP3.",
+      "Converting a voice memo to the format a platform expects.",
+      "Normalising sample rate before dropping audio into a video edit.",
+    ],
+    useCasesZh: [
+      "把 WAV 母带转成方便分享的 MP3。",
+      "把语音备忘转成平台要求的格式。",
+      "放进视频剪辑前统一采样率。",
+    ],
+    tips: [
+      "Convert to WAV when you will edit further; MP3 last.",
+      "For voice, 22.05 kHz mono MP3 at 96 kbps is tiny and clear.",
+    ],
+    tipsZh: [
+      "还要继续编辑就先转 WAV，最后一步再出 MP3。",
+      "人声用 22.05kHz 单声道 MP3 96kbps，体积小且清晰。",
+    ],
+  },
+  "audio-trimmer": {
+    intro:
+      "The Audio Trimmer cuts any audio file down to the segment you need, in your browser, with a waveform so you can see what you are cutting. Drag the start and end markers, preview the selection, and export as MP3 or lossless WAV.\n\nEditing happens on the decoded audio buffer, so cuts are sample-accurate rather than snapped to keyframes like video trims. Decoding and encoding run through the Web Audio API and a local MP3 encoder; no file is uploaded.\n\nIt is the fastest way to make a ringtone, strip silence from a recording, or pull one track section out of a long file for a edit.",
+    introZh:
+      "音频裁剪工具把任意音频文件剪成你要的片段，在浏览器里完成，带波形显示，剪的是什么一眼可见。拖动起止标记、试听选中段，导出 MP3 或无损 WAV。\n\n编辑在解码后的音频缓冲上进行，切割精确到采样点，不像视频裁剪那样被关键帧吸附。解码编码走 Web Audio API 和本地 MP3 编码器，文件不上传。\n\n做铃声、去掉录音里的静音、从长文件里截一段进剪辑——这是最快的路子。",
+    howTo: [
+      { step: "Add an audio file", detail: "Drop in a track; the waveform renders as soon as it decodes." },
+      { step: "Set the cut", detail: "Drag start and end on the timeline sliders; the selected length updates live." },
+      { step: "Preview", detail: "Play the selection to check the boundaries before exporting." },
+      { step: "Export", detail: "Choose MP3 or WAV and download the trimmed file." },
+    ],
+    howToZh: [
+      { step: "添加音频文件", detail: "拖入音频，解码完成后立即渲染波形。" },
+      { step: "设置裁剪区间", detail: "在时间滑块上拖动起止点，选中长度实时更新。" },
+      { step: "试听", detail: "播放选中段，确认边界后再导出。" },
+      { step: "导出", detail: "选 MP3 或 WAV，下载裁剪后的文件。" },
+    ],
+    faq: [
+      { q: "How accurate are the cuts?", a: "Sample-accurate. The trim operates on decoded PCM, so the boundaries land exactly where you drop them, unlike keyframe-snapped video cuts." },
+      { q: "Does trimming re-encode?", a: "The selection is re-encoded on export: MP3 at 192 kbps, or WAV if you need lossless. Quality loss is minimal." },
+      { q: "Can I fade in or out?", a: "Not in this tool. Export the trim and apply fades in your editor, or keep the cut tight." },
+      { q: "Is the audio uploaded?", a: "No. Decoding, trimming and encoding all happen locally in your browser." },
+    ],
+    faqZh: [
+      { q: "切割精度如何？", a: "精确到采样点。裁剪作用于解码后的 PCM，边界落在你放置的位置，不像视频裁剪会被关键帧吸附。" },
+      { q: "裁剪会重编码吗？", a: "导出时选中段会重新编码：MP3 为 192kbps，需要无损就选 WAV。音质损失很小。" },
+      { q: "能做淡入淡出吗？", a: "本工具不支持。导出裁剪结果后在编辑器里加淡变，或者把切口切干净。" },
+      { q: "音频会被上传吗？", a: "不会。解码、裁剪、编码全部在浏览器本地完成。" },
+    ],
+    useCases: [
+      "Cutting a 30-second ringtone from a full track.",
+      "Trimming dead air from the start of a voice memo.",
+      "Isolating one section of a long recording for an edit.",
+    ],
+    useCasesZh: [
+      "从完整曲目里截 30 秒铃声。",
+      "剪掉语音备忘开头的空白。",
+      "从长录音里截一段进剪辑。",
+    ],
+    tips: [
+      "Zoom your ears, not your eyes: preview the selection before exporting.",
+      "Export WAV if the trim feeds into another edit; MP3 for final delivery.",
+    ],
+    tipsZh: [
+      "导出前一定试听选中段，耳朵比眼睛可靠。",
+      "裁剪结果还要进剪辑就先导 WAV，最终交付再出 MP3。",
+    ],
+  },
+  "pilko-frame-studio": {
+    intro:
+      "Video Frame Studio is a complete screenshot workstation for video, running entirely in your browser. Beyond manual frame grabbing, it detects scene changes automatically so you can sample every cut in a clip, builds contact sheets in a grid, stamps timecode watermarks, and can even capture frames at the exact timestamps listed in an SRT file.\n\nEverything runs locally through the browser's own video decoding. Nothing is uploaded, which matters when the footage is client work or unreleased material. Captured frames come out at the video's native resolution and can be downloaded individually or as a ZIP.\n\nIt is built on the open-source Pilko Frame Capture Studio (MIT License) and embedded here so you get the full workstation without leaving Toolbox Hub.",
+    introZh:
+      "视频截帧工作站是一个完整的视频截图工作台，全部在浏览器本地运行。除了手动截帧，它能自动检测场景切换、按剪辑点采样，能拼九宫格 contact sheet，能打时间码水印，还能按照 SRT 字幕文件里的时间戳精确截帧。\n\n所有处理通过浏览器自带的视频解码完成，不上传任何文件——客户素材和未发布内容都能放心用。截出的帧按视频原生分辨率输出，可单张下载或打包 ZIP。\n\n本工具基于开源项目 Pilko Frame Capture Studio（MIT 许可）构建并内嵌于此，无需离开 Toolbox Hub 即可使用完整工作台。",
+    howTo: [
+      { step: "Drop in a video", detail: "Any format your browser can play. The studio loads it locally and shows the duration." },
+      { step: "Choose a capture mode", detail: "Manual: scrub and grab. Auto: scene detection samples every cut. Contact sheet: grid layout. SRT: capture at subtitle timestamps." },
+      { step: "Adjust output", detail: "Set the image format, watermark options and grid density before capturing." },
+      { step: "Download", detail: "Save frames individually or as a ZIP archive." },
+    ],
+    howToZh: [
+      { step: "放入视频", detail: "浏览器能播放的格式均可。工作台在本地加载并显示时长。" },
+      { step: "选择截帧模式", detail: "手动：拖动截取。自动：场景检测按剪辑点采样。拼图：九宫格排版。SRT：按字幕时间戳截帧。" },
+      { step: "调整输出", detail: "截帧前设置图片格式、水印选项和拼图密度。" },
+      { step: "下载", detail: "单张保存或打包成 ZIP 下载。" },
+    ],
+    faq: [
+      { q: "What is scene detection?", a: "The studio analyses frame-to-frame differences and captures a still at each significant change, so a multi-scene clip yields one image per scene automatically." },
+      { q: "What is the SRT mode for?", a: "It reads timestamps from a subtitle file and captures a frame at each one. Useful for building a visual index of a video that already has subtitles." },
+      { q: "Is the video uploaded?", a: "No. Decoding happens through the browser's video element and canvas. The file never leaves your device." },
+      { q: "What resolution are the frames?", a: "The video's native resolution, up to what your device can decode. A 1080p video gives 1080p frames." },
+    ],
+    faqZh: [
+      { q: "什么是场景检测？", a: "工作台分析逐帧差异，在每个显著变化处截取静帧，多场景片段会自动每个场景出一张图。" },
+      { q: "SRT 模式是干什么的？", a: "它读取字幕文件里的时间戳，在每个时间点截一帧。适合给已有字幕的视频做可视化索引。" },
+      { q: "视频会被上传吗？", a: "不会。解码通过浏览器的 video 元素和 canvas 完成，文件不离开你的设备。" },
+      { q: "帧的分辨率是多少？", a: "视频原生分辨率，上限取决于设备解码能力。1080p 视频出 1080p 帧。" },
+    ],
+    useCases: [
+      "Building a contact sheet to review a long video quickly.",
+      "Capturing one frame per scene for a storyboard or edit list.",
+      "Indexing a subtitled video visually via SRT timestamps.",
+    ],
+    useCasesZh: [
+      "做 contact sheet 快速通览长视频。",
+      "为分镜或剪辑清单每个场景截一帧。",
+      "用 SRT 时间戳给有字幕的视频做可视化索引。",
+    ],
+    tips: [
+      "Scene detection works best on edited content with hard cuts.",
+      "Use the watermark option when sharing frames for review.",
+    ],
+    tipsZh: [
+      "场景检测在硬切剪辑的内容上效果最好。",
+      "分享审片用帧时建议开启水印选项。",
+    ],
+  },
+  "viral-video-studio": {
+    intro:
+      "Viral Video Studio is a short-video script workshop that runs entirely in your browser with no AI and no accounts. It matches your topic to a content track, generates hook lines, a shot-by-shot storyboard and caption copy from built-in templates, and previews the result in a vertical 9:16 frame you can export as a cover image.\n\nEverything is template-driven and deterministic: the same inputs give the same script, which makes it useful as a starting skeleton you then rewrite in your own voice. Nothing you type is uploaded.\n\nIt is built on the open-source Viral Video Studio (MIT License) and embedded here so the workshop runs without leaving Toolbox Hub. The interface is in Chinese, reflecting the short-video ecosystem it was built for.",
+    introZh:
+      "爆款视频工坊是一个短视频脚本工作台，纯浏览器运行，不用 AI、不用账号。它把选题匹配到内容赛道，用内置模板生成黄金钩子、逐镜分镜和文案，并在 9:16 竖屏预览框里展示效果，还能导出封面长图。\n\n一切由模板驱动、结果确定：同样的输入得到同样的脚本——这让它更适合当一个起点骨架，你再用自己的声音重写。输入内容不上传。\n\n本工具基于开源项目 Viral Video Studio（MIT 许可）构建并内嵌于此，无需离开 Toolbox Hub 即可使用完整工作台。界面为中文，源自它所服务的短视频生态。",
+    howTo: [
+      { step: "Pick your track", detail: "Choose a content category that matches your video topic." },
+      { step: "Fill the brief", detail: "Enter the topic and key points. Templates generate hooks, storyboard and copy." },
+      { step: "Preview vertically", detail: "The 9:16 preview shows how the script reads as an actual short video." },
+      { step: "Export", detail: "Copy the script or export the cover image for your post." },
+    ],
+    howToZh: [
+      { step: "选择赛道", detail: "选择与视频选题匹配的内容分类。" },
+      { step: "填写选题", detail: "输入主题和要点，模板会生成钩子、分镜和文案。" },
+      { step: "竖屏预览", detail: "9:16 预览框展示脚本作为短视频的实际效果。" },
+      { step: "导出", detail: "复制脚本或导出封面长图用于发布。" },
+    ],
+    faq: [
+      { q: "Does it use AI?", a: "No. It is entirely template-based, which is why it is instant, free and works offline. Treat the output as a structured draft, not finished copy." },
+      { q: "Why is the interface in Chinese?", a: "The upstream open-source project was built for the Chinese short-video ecosystem (Douyin, Kuaishou, Xiaohongshu). We kept the original interface to respect its design." },
+      { q: "Is my input uploaded?", a: "No. Everything runs locally in your browser." },
+      { q: "Can I use the output commercially?", a: "Yes. The output is yours; the tool adds no watermark and claims no rights." },
+    ],
+    faqZh: [
+      { q: "它用 AI 吗？", a: "不用。完全基于模板，所以即时、免费、可离线。输出当作结构化草稿，不是成品文案。" },
+      { q: "为什么界面是中文？", a: "上游开源项目面向中文短视频生态（抖音、快手、小红书）构建。我们保留原界面以尊重其设计。" },
+      { q: "我的输入会上传吗？", a: "不会。一切都在浏览器本地运行。" },
+      { q: "输出可以商用吗？", a: "可以。输出归你所有，工具不加水墨、不主张任何权利。" },
+    ],
+    useCases: [
+      "Breaking a blank page when planning a short video.",
+      "Structuring a hook-storyboard-caption skeleton fast.",
+      "Exporting a vertical cover image for a post.",
+    ],
+    useCasesZh: [
+      "策划短视频时打破空白页。",
+      "快速搭出钩子-分镜-文案骨架。",
+      "导出竖屏封面长图用于发布。",
+    ],
+    tips: [
+      "The template gives structure; your specific examples make it viral.",
+      "Run it once per track and compare which skeleton fits your topic.",
+    ],
+    tipsZh: [
+      "模板给结构，你的具体例子才让它有传播力。",
+      "每个赛道跑一次，对比哪个骨架更适合你的选题。",
+    ],
+  },
+  "teleprompter": {
+    intro:
+      "This online teleprompter turns any device with a browser into a prompting screen. Paste a script or import a .txt or .srt file, and the text auto-scrolls at a speed you set. Adjust font size and line height for your reading distance, mirror the text for beam-splitter rigs, and go fullscreen so the script fills the screen while you record.\n\nKeyboard shortcuts make it usable mid-take: Space plays or pauses, arrow keys change speed, R restarts. Your script is remembered in this browser, so reopening the page brings it back.\n\nEverything runs locally. No script is uploaded, no account is needed, and it works offline once the page has loaded.",
+    introZh:
+      "这个在线提词器把任何带浏览器的设备变成提词屏。粘贴讲稿或导入 .txt / .srt 文件，文字按你设定的速度自动滚动。字号行距按你的阅读距离调节，镜像翻转适配分光提词器硬件，全屏后讲稿铺满屏幕，边录边看。\n\n快捷键支持录制中操作：空格播放/暂停，方向键调速，R 重新开始。讲稿会在本浏览器记住，重新打开页面即可恢复。\n\n全部本地运行。讲稿不上传、无需账号，页面加载后离线可用。",
+    howTo: [
+      { step: "Add your script", detail: "Paste text or import a .txt / .srt file. Subtitle files are stripped to plain text automatically." },
+      { step: "Set your comfort", detail: "Adjust speed, font size and line height. The reading line marks your focal point." },
+      { step: "Present", detail: "Press Space or Play. Mirror if your rig needs it, fullscreen for a clean screen." },
+      { step: "Reuse", detail: "Your script stays in this browser; reopen the page to continue." },
+    ],
+    howToZh: [
+      { step: "添加讲稿", detail: "粘贴文本或导入 .txt / .srt 文件。字幕文件会自动去除时间码只留文本。" },
+      { step: "设置舒适度", detail: "调节速度、字号、行距。阅读线标示你的视线焦点。" },
+      { step: "开始演讲", detail: "按空格或播放。硬件需要时开镜像，全屏获得干净屏幕。" },
+      { step: "再次使用", detail: "讲稿保留在本浏览器，重新打开页面即可继续。" },
+    ],
+    faq: [
+      { q: "Does it work on my phone?", a: "Yes. Any modern browser works, and a phone or tablet makes an excellent second-screen prompter." },
+      { q: "Can I use it with a physical teleprompter rig?", a: "Yes. Mirror mode flips the text horizontally for beam-splitter setups; keep your device in landscape for the widest lines." },
+      { q: "Is my script uploaded?", a: "No. It is stored only in this browser's local storage and never sent anywhere." },
+      { q: "Does it support SRT files?", a: "Yes. Import a .srt or .vtt and the timecodes are stripped, leaving clean narration text." },
+    ],
+    faqZh: [
+      { q: "手机上能用吗？", a: "可以。任何现代浏览器都行，手机或平板就是一块现成的副屏提词器。" },
+      { q: "能配实体提词器硬件吗？", a: "可以。镜像模式水平翻转文字适配分光提词器；设备横屏可获得最宽行。" },
+      { q: "讲稿会上传吗？", a: "不会。它只存在此浏览器的本地存储里，不发送到任何地方。" },
+      { q: "支持 SRT 文件吗？", a: "支持。导入 .srt 或 .vtt 会自动去时间码，留下干净的口播文本。" },
+    ],
+    useCases: [
+      "Recording talking-head video without memorising lines.",
+      "Reading a long script on a second screen while filming.",
+      "Presenting to a camera with steady eye line.",
+    ],
+    useCasesZh: [
+      "录口播视频不用背稿。",
+      "拍摄时在副屏读长讲稿。",
+      "对着镜头保持稳定视线演讲。",
+    ],
+    tips: [
+      "Start slower than feels natural; speed up once you find your rhythm.",
+      "Short lines read better than long paragraphs on a prompter.",
+    ],
+    tipsZh: [
+      "起始速度比感觉自然的再慢一点，找到节奏后再加速。",
+      "短行比长段落在提词器上更好读。",
+    ],
+  },
+  "subtitle-editor": {
+    intro:
+      "The Subtitle Editor loads, edits and converts subtitle files entirely in your browser. It reads SRT, VTT, ASS, SSA and SBV, shows every cue with editable timestamps and text, and writes back out in SRT, VTT or ASS with correct timecode formatting for each.\n\nLoad the matching video and the editor highlights the cue at the current playback position, so you can spot drift and fix timing against the picture. A one-click shift moves the whole track earlier or later when subtitles run consistently fast or slow.\n\nNothing is uploaded: parsing, editing and export all happen locally. It covers the everyday jobs — fixing an offset, tweaking a line, converting for a platform — without installing anything.",
+    introZh:
+      "字幕编辑器在浏览器里完成字幕文件的加载、编辑和格式转换。它读取 SRT、VTT、ASS、SSA、SBV，逐条展示可编辑的时间码和文本，并能以各自正确的时间码格式导出为 SRT、VTT 或 ASS。\n\n载入对应视频后，编辑器会高亮当前播放位置对应的字幕，对着画面就能发现漂移并修正时间。整体平移功能一键把整条轨道提前或推后，解决字幕整体快/慢的问题。\n\n不上传任何文件：解析、编辑、导出全在本地完成。修偏移、改一行字、转平台格式这些日常活儿，都不用装软件。",
+    howTo: [
+      { step: "Import a subtitle file", detail: "Drop in SRT, VTT, ASS, SSA or SBV. Every cue is parsed into an editable list." },
+      { step: "Edit cues", detail: "Click a cue to edit its text and timestamps. Delete cues you do not need, or add new ones." },
+      { step: "Fix timing", detail: "Load the video for sync preview, or shift the whole track by a fixed offset in seconds." },
+      { step: "Export", detail: "Download as SRT, VTT or ASS with correctly formatted timecodes." },
+    ],
+    howToZh: [
+      { step: "导入字幕文件", detail: "拖入 SRT、VTT、ASS、SSA 或 SBV，所有条目解析为可编辑列表。" },
+      { step: "编辑条目", detail: "点击条目编辑文本和时间码。可删除不需要的条目或添加新条目。" },
+      { step: "修正时间", detail: "载入视频同步预览，或用固定秒数整体平移整条轨道。" },
+      { step: "导出", detail: "以 SRT、VTT 或 ASS 格式下载，时间码格式各自正确。" },
+    ],
+    faq: [
+      { q: "Which formats can it convert between?", a: "It reads SRT, VTT, ASS, SSA and SBV, and writes SRT, VTT and ASS. That covers every platform you are likely to publish to." },
+      { q: "How do I fix subtitles that are consistently early or late?", a: "Enter the offset in seconds (negative for earlier) and click Shift all. Positive values push the track later." },
+      { q: "Can it burn subtitles into video?", a: "No, this is a text editor only. Export the fixed subtitle file and burn it with a video tool." },
+      { q: "Is my file uploaded?", a: "No. The file is read with the browser's file reader and never leaves your device." },
+    ],
+    faqZh: [
+      { q: "支持哪些格式互转？", a: "读取 SRT、VTT、ASS、SSA、SBV，写出 SRT、VTT、ASS。覆盖你可能发布的所有平台。" },
+      { q: "字幕整体偏快或偏慢怎么修？", a: "输入偏移秒数（提前为负），点「整体平移」。正值把轨道推后。" },
+      { q: "能烧字幕进视频吗？", a: "不能，这是纯文本编辑器。导出修好的字幕文件，用视频工具压制。" },
+      { q: "文件会上传吗？", a: "不会。文件通过浏览器文件读取器解析，不离开你的设备。" },
+    ],
+    useCases: [
+      "Fixing a constant offset in a downloaded subtitle file.",
+      "Converting SRT to ASS for styled subtitles.",
+      "Correcting a typo or a timing drift against the video.",
+    ],
+    useCasesZh: [
+      "修正下载字幕文件的固定偏移。",
+      "把 SRT 转成 ASS 做样式字幕。",
+      "对着视频修正错别字或时间漂移。",
+    ],
+    tips: [
+      "Shift in small increments and preview against the video each time.",
+      "Export ASS when you need styling; SRT when you need compatibility.",
+    ],
+    tipsZh: [
+      "小步平移，每次对着视频预览确认。",
+      "要样式选 ASS，要兼容选 SRT。",
     ],
   },
 };

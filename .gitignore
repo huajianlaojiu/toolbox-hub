@@ -56,3 +56,6 @@ next-env.d.ts
 /.next_old*/
 /.next_[0-9a-f]*/
 /out_[0-9a-f]*/
+
+# test fixtures (binary test media)
+/test-fixtures/

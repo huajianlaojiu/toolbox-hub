@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* 暗色模式切换为 .dark class 控制（配合 ThemeProvider + 防闪烁脚本） */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -42,20 +45,19 @@
   --accent-foreground: #1d4ed8;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --card: #171717;
-    --card-foreground: #ededed;
-    --primary: #3b82f6;
-    --primary-foreground: #ffffff;
-    --muted: #1a1a1a;
-    --muted-foreground: #a3a3a3;
-    --border: #262626;
-    --accent: #1e293b;
-    --accent-foreground: #93c5fd;
-  }
+/* 手动切换暗色（class 由 ThemeProvider / 防闪烁脚本控制） */
+:root.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --card: #171717;
+  --card-foreground: #ededed;
+  --primary: #3b82f6;
+  --primary-foreground: #ffffff;
+  --muted: #1a1a1a;
+  --muted-foreground: #a3a3a3;
+  --border: #262626;
+  --accent: #1e293b;
+  --accent-foreground: #93c5fd;
 }
 
 body {

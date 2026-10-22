@@ -86,6 +86,21 @@ import ScientificNotation from "@/components/tools/scientific-notation";
 import DecimalFraction from "@/components/tools/decimal-fraction";
 import GcfCalculator from "@/components/tools/gcf-calculator";
 import ImageToBase64 from "@/components/tools/image-to-base64";
+import { ToolPageHeader, ToolPageSeo } from "@/components/tool-page-content";
+import VideoCompressor from "@/components/tools/video-compressor";
+import VideoConverter from "@/components/tools/video-converter";
+import VideoMerger from "@/components/tools/video-merger";
+import VideoSpeedChanger from "@/components/tools/video-speed-changer";
+import VideoTransformer from "@/components/tools/video-transformer";
+import VideoTrimmer from "@/components/tools/video-trimmer";
+import VideoToGif from "@/components/tools/video-to-gif";
+import VideoToAudio from "@/components/tools/video-to-audio";
+import VideoFrameCapture from "@/components/tools/video-frame-capture";
+import AudioConverter from "@/components/tools/audio-converter";
+import AudioTrimmer from "@/components/tools/audio-trimmer";
+import EmbedFrame from "@/components/tools/embed-frame";
+import Teleprompter from "@/components/tools/teleprompter";
+import SubtitleEditor from "@/components/tools/subtitle-editor";
 
 interface ToolPageProps { params: Promise<{ slug: string }> }
 export function generateStaticParams() { return tools.map((tool) => ({ slug: tool.slug })) }
@@ -139,7 +154,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <a href="/tools/" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"><ChevronLeft className="h-4 w-4" />All Tools</a><div className="mb-8"><h1 className="text-2xl font-bold">{tool.title}</h1><p className="mt-2 text-sm text-muted-foreground">{tool.description}</p></div><div className="rounded-xl border bg-card p-6">
+      <a href="/tools/" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"><ChevronLeft className="h-4 w-4" />All Tools</a><ToolPageHeader tool={tool} /><div className="rounded-xl border bg-card p-6">
         {slug === "password-strength" && <PasswordStrength />}
         {slug === "html-preview" && <HtmlPreview />}
         {slug === "json-validator" && <JsonValidator />}
@@ -220,66 +235,23 @@ export default async function ToolPage({ params }: ToolPageProps) {
         {slug === "decimal-fraction" && <DecimalFraction />}
         {slug === "gcf-calculator" && <GcfCalculator />}
         {slug === "image-to-base64" && <ImageToBase64 />}
+        {slug === "video-compressor" && <VideoCompressor />}
+        {slug === "video-converter" && <VideoConverter />}
+        {slug === "video-merger" && <VideoMerger />}
+        {slug === "video-speed-changer" && <VideoSpeedChanger />}
+        {slug === "video-transformer" && <VideoTransformer />}
+        {slug === "video-trimmer" && <VideoTrimmer />}
+        {slug === "video-to-gif" && <VideoToGif />}
+        {slug === "video-to-audio" && <VideoToAudio />}
+        {slug === "video-frame-capture" && <VideoFrameCapture />}
+        {slug === "audio-converter" && <AudioConverter />}
+        {slug === "audio-trimmer" && <AudioTrimmer />}
+        {slug === "pilko-frame-studio" && <EmbedFrame src="/embed/pilko-frame-studio.html" credit="Pilko Frame Capture Studio" />}
+        {slug === "viral-video-studio" && <EmbedFrame src="/embed/viral-video-studio.html" credit="Viral Video Studio" />}
+        {slug === "teleprompter" && <Teleprompter />}
+        {slug === "subtitle-editor" && <SubtitleEditor />}
       </div>
-      <div className="mt-6 p-4 rounded-lg bg-muted/50 border"><p className="text-sm text-muted-foreground">{tool.description} All processing happens in your browser.</p></div>
-
-      <section className="mt-10 max-w-3xl">
-        <h2 className="text-xl font-semibold mb-3">About the {tool.title}</h2>
-        <div className="space-y-4">
-          {c.intro.split("\n\n").map((para, i) => (
-            <p key={i} className="text-sm leading-7 text-muted-foreground">{para}</p>
-          ))}
-        </div>
-      </section>
-
-      {c.useCases && c.useCases.length > 0 && (
-        <section className="mt-8 max-w-3xl">
-          <h2 className="text-xl font-semibold mb-3">Where people use the {tool.title}</h2>
-          <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground leading-6">
-            {c.useCases.map((u, i) => (<li key={i}>{u}</li>))}
-          </ul>
-        </section>
-      )}
-
-      <section className="mt-8 max-w-3xl">
-        <h2 className="text-xl font-semibold mb-3">How to use the {tool.title}</h2>
-        <ol className="space-y-4">
-          {c.howTo.map((h, i) => (
-            <li key={i} className="flex gap-3">
-              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-sm font-semibold">{i + 1}</span>
-              <div>
-                <p className="font-medium text-sm">{h.step}</p>
-                <p className="text-sm text-muted-foreground leading-6 mt-1">{h.detail}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      {c.tips && c.tips.length > 0 && (
-        <section className="mt-8 max-w-3xl">
-          <h2 className="text-xl font-semibold mb-3">Tips and best practices</h2>
-          <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground leading-6">
-            {c.tips.map((t, i) => (<li key={i}>{t}</li>))}
-          </ul>
-        </section>
-      )}
-
-      <section className="mt-8 max-w-3xl">
-        <h2 className="text-xl font-semibold mb-3">Frequently asked questions</h2>
-        <div className="space-y-5">
-          {c.faq.map((f, i) => (
-            <div key={i}>
-              <h3 className="font-semibold text-sm">{f.q}</h3>
-              <p className="text-sm text-muted-foreground leading-6 mt-1.5">{f.a}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <div className="mt-10 max-w-3xl">
-        <AdUnit />
-      </div>
+      <ToolPageSeo tool={tool} content={c} />
 
       {relatedTools.length > 0 && (<section className="mt-12"><h2 className="text-lg font-semibold mb-4">Related Tools</h2><div className="grid grid-cols-1 gap-4 sm:grid-cols-3">{relatedTools.map((t) => (<ToolCard key={t.slug} tool={t} />))}</div></section>)}
     </div>

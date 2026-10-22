@@ -3,16 +3,20 @@ import { Wrench, Search } from "lucide-react";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { tools } from "@/lib/tools-data";
-
-const NAV = [
-  { href: "/", label: "Home" },
-  { href: "/tools/", label: "All Tools" },
-  { href: "/blog/", label: "Blog" },
-];
+import { getIcon } from "@/lib/icon-map";
+import { useI18n, LangToggle } from "@/lib/i18n";
+import { ThemeToggle } from "@/lib/theme";
 
 export default function Header() {
   const [search, setSearch] = useState("");
   const pathname = usePathname() ?? "/";
+  const { t } = useI18n();
+
+  const NAV = [
+    { href: "/", key: "nav.home" },
+    { href: "/tools/", key: "nav.tools" },
+    { href: "/blog/", key: "nav.blog" },
+  ];
 
   const filteredTools = search
     ? tools.filter((t) =>
@@ -32,7 +36,7 @@ export default function Header() {
         <div className="relative flex-1 max-w-md">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <input
-            type="text" placeholder="Search tools..."
+            type="text" placeholder={t("header.search")}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={(e) => {
@@ -49,7 +53,7 @@ export default function Header() {
               {filteredTools.map((t) => (
                 <a key={t.slug} href={"/tools/" + t.slug + "/"} onClick={() => setSearch("")}
                   className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-muted transition-colors">
-                  <t.icon className="h-4 w-4 text-muted-foreground shrink-0" />
+                  {(() => { const Icon = getIcon(t.icon); return <Icon className="h-4 w-4 text-muted-foreground shrink-0" />; })()}
                   <span className="text-foreground">{t.title}</span>
                   <span className="ml-auto text-xs text-muted-foreground">{t.category}</span>
                 </a>
@@ -69,11 +73,16 @@ export default function Header() {
                   active ? "bg-muted text-foreground" : "hover:text-foreground"
                 }`}
               >
-                {item.label}
+                {t(item.key)}
               </a>
             );
           })}
         </nav>
+
+        <div className="flex items-center gap-2 shrink-0">
+          <ThemeToggle />
+          <LangToggle />
+        </div>
       </div>
     </header>
   );
