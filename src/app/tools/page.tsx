@@ -4,14 +4,14 @@ import ToolCard from "@/components/tool-card";
 import { tools, categories, type ToolMeta } from "@/lib/tools-data";
 
 export const metadata: Metadata = {
-  title: "All Tools — 95 Free Browser-Based Tools",
+  title: "All Tools — 96 Free Browser-Based Tools",
   description:
-    "The full Toolbox Hub directory: 95 free tools grouped by what they do — developer, text, design, image, video, audio, unit converters, calculators, web, math and everyday utilities. No sign-up, nothing uploaded.",
+    "The full Toolbox Hub directory: 96 free tools grouped by what they do — developer, text, design, image, video, audio, unit converters, calculators, web, math and everyday utilities. No sign-up, nothing uploaded.",
   alternates: { canonical: "/tools/" },
   openGraph: {
     title: "All Tools — Toolbox Hub",
     description:
-      "95 free browser-based tools, grouped by category. No sign-up, no install, nothing uploaded.",
+      "96 free browser-based tools, grouped by category. No sign-up, no install, nothing uploaded.",
     url: "/tools/",
     type: "website",
   },
@@ -52,7 +52,7 @@ const jsonLd = {
   "@type": "CollectionPage",
   name: "All Toolbox Hub Tools",
   description:
-    "The full directory of 95 free browser-based tools on Toolbox Hub, grouped by category.",
+    "The full directory of 96 free browser-based tools on Toolbox Hub, grouped by category.",
   url: "https://toolbox-hub.io/tools/",
   mainEntity: {
     "@type": "ItemList",

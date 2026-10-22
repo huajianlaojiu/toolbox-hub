@@ -2882,7 +2882,7 @@ const overrides: Record<string, ToolContent> = {
       { q: "它用 AI 吗？", a: "不用。完全基于模板，所以即时、免费、可离线。输出当作结构化草稿，不是成品文案。" },
       { q: "为什么界面是中文？", a: "上游开源项目面向中文短视频生态（抖音、快手、小红书）构建。我们保留原界面以尊重其设计。" },
       { q: "我的输入会上传吗？", a: "不会。一切都在浏览器本地运行。" },
-      { q: "输出可以商用吗？", a: "可以。输出归你所有，工具不加水墨、不主张任何权利。" },
+      { q: "输出可以商用吗？", a: "可以。输出归你所有，工具不加水印、不主张任何权利。" },
     ],
     useCases: [
       "Breaking a blank page when planning a short video.",
@@ -2997,6 +2997,56 @@ const overrides: Record<string, ToolContent> = {
     tipsZh: [
       "小步平移，每次对着视频预览确认。",
       "要样式选 ASS，要兼容选 SRT。",
+    ],
+  },
+  "openreel-video-editor": {
+    intro:
+      "OpenReel Video Editor is a full timeline editor that runs entirely in your browser — a genuine alternative to desktop editors and to CapCut. It gives you multi-track cutting, transitions, effects, colour grading, audio mixing, text and subtitle layers, and final export, all without uploading a single frame.\n\nEditing happens through the browser's own WebCodecs pipeline and WebAssembly, so the heavy work stays on your machine. There is no account to create, no cloud render queue, and no watermark on the output.\n\nIt is built from the open-source OpenReel Video project (MIT License) and embedded here so you can edit without leaving Toolbox Hub. Because the editor is a complete application rather than a single-purpose tool, it takes a moment to load the first time.",
+    introZh:
+      "OpenReel 在线剪辑器是一个完整的时间线视频编辑器，全部在浏览器本地运行——真正的桌面剪辑软件与剪映替代品。多轨剪辑、转场、特效、调色、音频混音、文字与字幕图层、导出成片，全程不上传任何一帧。\n\n剪辑通过浏览器自带的 WebCodecs 管线与 WebAssembly 完成，重活都在你自己的机器上。不用注册账号，没有云端渲染队列，导出成片不带水印。\n\n本工具基于开源项目 OpenReel Video（MIT 许可）构建并内嵌于此，无需离开 Toolbox Hub 即可剪辑。因为它是完整应用而非单一功能工具，首次加载需要一点时间。",
+    howTo: [
+      { step: "Pick an aspect ratio", detail: "Choose vertical (1080×1920), horizontal (1920×1080) or square (1080×1080) on the start screen." },
+      { step: "Import your clips", detail: "Use the Media panel to import video, audio and images from your device. Nothing is uploaded." },
+      { step: "Edit on the timeline", detail: "Drag clips onto tracks, trim them, add transitions, text, effects and adjust colour in the inspector." },
+      { step: "Preview and export", detail: "Scrub the preview to check the cut, then use Export to render the final video." },
+    ],
+    howToZh: [
+      { step: "选择画幅", detail: "开始页选择竖屏 1080×1920、横屏 1920×1080 或方形 1080×1080。" },
+      { step: "导入素材", detail: "在 Media 面板导入本机视频、音频和图片。不上传任何文件。" },
+      { step: "时间线剪辑", detail: "把素材拖到轨道上裁剪、加转场、文字、特效，并在右侧检查器里调色。" },
+      { step: "预览并导出", detail: "拖动预览确认成片，再用 Export 渲染导出最终视频。" },
+    ],
+    faq: [
+      { q: "Is this a real editor or just a trimmer?", a: "A real editor: multi-track timeline, transitions, effects, colour grading, audio mixing, text layers and export. It is built on the open-source OpenReel Video project." },
+      { q: "Is my footage uploaded?", a: "No. Decoding and rendering run locally through WebCodecs and WebAssembly. Your files never leave the device." },
+      { q: "Does the export have a watermark?", a: "No. The project is open source and free, and the export is clean." },
+      { q: "Why is the first load slow?", a: "The editor is a complete application — several megabytes of code and WebAssembly engines. After the first visit your browser caches it and later loads are much faster." },
+      { q: "Which browsers are supported?", a: "Recent Chrome, Edge and other Chromium browsers, which have the WebCodecs support the editor relies on. Safari support depends on its WebCodecs implementation." },
+    ],
+    faqZh: [
+      { q: "这是真正的剪辑器还是只是裁剪工具？", a: "真正的剪辑器：多轨时间线、转场、特效、调色、音频混音、文字图层与导出，基于开源项目 OpenReel Video 构建。" },
+      { q: "素材会被上传吗？", a: "不会。解码与渲染通过 WebCodecs 和 WebAssembly 在本地完成，文件不离开设备。" },
+      { q: "导出有水印吗？", a: "没有。项目开源免费，导出成片是干净的。" },
+      { q: "为什么首次加载慢？", a: "因为它是完整应用——数 MB 代码和 WebAssembly 引擎。首次访问后浏览器会缓存，后续加载快很多。" },
+      { q: "支持哪些浏览器？", a: "较新的 Chrome、Edge 等 Chromium 浏览器具备编辑器依赖的 WebCodecs 能力；Safari 取决于其 WebCodecs 实现。" },
+    ],
+    useCases: [
+      "Cutting a vertical short video without installing an editor.",
+      "Trimming and joining clips with transitions and background music.",
+      "Adding text, subtitles and colour grading to an existing clip.",
+    ],
+    useCasesZh: [
+      "不装剪辑软件就剪一个竖屏短视频。",
+      "裁剪拼接片段并加转场和背景音乐。",
+      "给现有片段加文字、字幕和调色。",
+    ],
+    tips: [
+      "Start from a preset aspect ratio so export matches your target platform.",
+      "Keep projects local: the editor autosaves to browser storage, so use one browser for an edit session.",
+    ],
+    tipsZh: [
+      "从预设画幅开始，导出尺寸直接匹配目标平台。",
+      "项目存在浏览器本地并自动保存，一个剪辑周期尽量用同一个浏览器。",
     ],
   },
 };
