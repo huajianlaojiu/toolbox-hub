@@ -134,7 +134,9 @@ export function loadFFmpeg(): Promise<FFmpegBundle> {
 
 /** 文件下载辅助 */
 export function downloadBlob(data: Uint8Array | Blob, filename: string, mime: string) {
-  const blob = data instanceof Blob ? data : new Blob([data], { type: mime });
+  // TS 5.7+ 把 Uint8Array 变成 Uint8Array<ArrayBufferLike> 泛型，与 BlobPart 要求的
+  // ArrayBufferView<ArrayBuffer> 不兼容；运行时 Uint8Array 本身就是合法 BlobPart。
+  const blob = data instanceof Blob ? data : new Blob([data as unknown as BlobPart], { type: mime });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;

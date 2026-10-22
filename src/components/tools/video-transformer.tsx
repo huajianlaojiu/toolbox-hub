@@ -89,13 +89,13 @@ export default function VideoTransformer() {
             <button onClick={() => setOpts({ ...opts, hflip: !opts.hflip })} className={`tool-btn ${opts.hflip ? "tool-btn-primary" : "tool-btn-secondary"}`}>
               <FlipHorizontal2 className="h-4 w-4" />{L("Flip H", "水平镜像")}
             </button>
-            <button onClick={() => setOpts(setOptts(opts, "vflip"))} className={`tool-btn ${opts.vflip ? "tool-btn-primary" : "tool-btn-secondary"}`}>
+            <button onClick={() => setOpts(toggleOpt(opts, "vflip"))} className={`tool-btn ${opts.vflip ? "tool-btn-primary" : "tool-btn-secondary"}`}>
               <FlipHorizontal2 className="h-4 w-4 rotate-90" />{L("Flip V", "垂直镜像")}
             </button>
-            <button onClick={() => setOpts(setOptts(opts, "rotate"))} className={`tool-btn ${opts.rotate ? "tool-btn-primary" : "tool-btn-secondary"}`}>
+            <button onClick={() => setOpts(toggleOpt(opts, "rotate"))} className={`tool-btn ${opts.rotate ? "tool-btn-primary" : "tool-btn-secondary"}`}>
               <RotateCcw className="h-4 w-4" />{L(`Rotate ${opts.rotate ? opts.rotate + "°" : ""}`, `旋转 ${opts.rotate ? opts.rotate + "°" : ""}`).trim()}
             </button>
-            <button onClick={() => setOpts(setOptts(opts, "reverse"))} className={`tool-btn ${opts.reverse ? "tool-btn-primary" : "tool-btn-secondary"}`}>
+            <button onClick={() => setOpts(toggleOpt(opts, "reverse"))} className={`tool-btn ${opts.reverse ? "tool-btn-primary" : "tool-btn-secondary"}`}>
               <Rewind className="h-4 w-4" />{L("Reverse", "倒放")}
             </button>
           </div>
@@ -114,7 +114,7 @@ export default function VideoTransformer() {
               {processing ? <Loader2 className="h-4 w-4 animate-spin" /> : <FlipHorizontal2 className="h-4 w-4" />}
               {L("Apply & export", "应用并导出")}
             </button>
-            <button onClick={() => { setFile(null); setResult(null); setOptts({ hflip: false, vflip: false, rotate: 0, reverse: false }); }} className="tool-btn tool-btn-secondary">
+            <button onClick={() => { setFile(null); setResult(null); setOpts({ hflip: false, vflip: false, rotate: 0, reverse: false }); }} className="tool-btn tool-btn-secondary">
               <RotateCcw className="h-4 w-4" />{L("Reset", "重置")}
             </button>
           </div>
@@ -135,7 +135,7 @@ export default function VideoTransformer() {
 }
 
 /** 选项切换辅助 */
-function setOptts(opts: Options, key: keyof Options) {
+function toggleOpt(opts: Options, key: keyof Options) {
   if (key === "rotate") return { ...opts, rotate: (opts.rotate + 90) % 360 };
   return { ...opts, [key]: !opts[key] };
 }
