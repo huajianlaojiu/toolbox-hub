@@ -39,6 +39,9 @@ const dict: Record<string, Record<Lang, string>> = {
   "footer.rights": { en: "All rights reserved.", zh: "保留所有权利。" },
   "footer.freeTools": { en: "free online tools. No sign-up needed.", zh: "个免费在线工具，无需注册。" },
   "lang.label": { en: "Language", zh: "语言" },
+  "theme.toLight": { en: "Switch to light mode", zh: "切换到浅色模式" },
+  "theme.toDark": { en: "Switch to dark mode", zh: "切换到深色模式" },
+  "theme.label": { en: "Toggle theme", zh: "切换主题" },
 };
 
 function detectInitial(): Lang {

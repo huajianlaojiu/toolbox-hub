@@ -1,5 +1,6 @@
 "use client";
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { useI18n } from "./i18n";
 
 type Theme = "light" | "dark";
 
@@ -44,11 +45,13 @@ export function useTheme() {
 
 export function ThemeToggle() {
   const { theme, toggle } = useTheme();
+  const { t } = useI18n();
+  const label = theme === "dark" ? t("theme.toLight") : t("theme.toDark");
   return (
     <button
       onClick={toggle}
-      title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-      aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+      title={label}
+      aria-label={label}
       className="flex h-8 w-8 items-center justify-center rounded-lg border text-muted-foreground transition-colors hover:text-foreground hover:bg-muted"
     >
       {theme === "dark" ? (
