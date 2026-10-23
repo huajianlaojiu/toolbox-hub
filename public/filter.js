@@ -14,7 +14,9 @@
       var filter = this.getAttribute("data-filter");
       buttons.forEach(function(b){ b.className = "filter-btn rounded-full border px-4 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:border-foreground/30"; });
       this.className = "filter-btn rounded-full bg-primary text-primary-foreground px-4 py-1.5 text-sm font-medium";
-      label.textContent = this.textContent.trim();
+      // #filter-label 只有历史页面有，首页没有——null 时跳过，
+      // 否则这里抛错会把下面的显示/隐藏逻辑整段中断（按钮看起来“没作用”）。
+      if (label) label.textContent = this.textContent.trim();
       var shown = 0;
       allCards.forEach(function(c){
         if (filter === "All Tools" || c.cat === filter) { c.el.style.display = ""; shown++; }
