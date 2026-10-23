@@ -1,1 +1,0 @@
-(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,1494,t=>{"use strict";var e=t.i(43476),n=t.i(33499);t.s(["I18nText",0,function({id:t,vars:i}){let{tl:r,t:c}=(0,n.useI18n)();return(0,e.jsx)(e.Fragment,{children:i?r(t,i):c(t)})}])}]);
