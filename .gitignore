@@ -77,3 +77,9 @@ next-env.d.ts
 
 # 翻译缓存
 /.cache/
+
+# 构建产物停放目录（safe-delete 拦截器挡删除时用 mv 让位，不影响仓库）
+/.next.stale*/
+/out.stale*/
+/out.old*/
+/out_bak*/

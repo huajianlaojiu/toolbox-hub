@@ -184,9 +184,9 @@ export default async function ToolPageBody({ lang, slug }: { lang: string; slug:
       <a href={lang === "en" ? "/tools/" : `/${lang}/tools/`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6">
         <span aria-hidden>‹</span> <I18nText id="All Tools" />
       </a>
-      <ToolPageContent meta={tool} content={content} />
-      <div className="rounded-xl border bg-card p-6 mt-6">
-        {slug === "password-strength" && <PasswordStrength />}
+      <ToolPageContent meta={tool} content={content}>
+        <div className="rounded-xl border bg-card p-6 mt-6">
+          {slug === "password-strength" && <PasswordStrength />}
         {slug === "html-preview" && <HtmlPreview />}
         {slug === "json-validator" && <JsonValidator />}
         {slug === "image-resizer" && <ImageResizer />}
@@ -282,7 +282,9 @@ export default async function ToolPageBody({ lang, slug }: { lang: string; slug:
         {slug === "teleprompter" && <Teleprompter />}
         {slug === "subtitle-editor" && <SubtitleEditor />}
         {slug === "openreel-video-editor" && <EmbedFrame src="/embed/openreel/index.html" credit="OpenReel Video" height="min(88vh, 1000px)" />}
-      </div>
+        </div>
+        <div className="mx-auto max-w-6xl mt-8"><AdUnit /></div>
+      </ToolPageContent>
 
       {relatedTools.length > 0 && (
         <section className="mt-12">
