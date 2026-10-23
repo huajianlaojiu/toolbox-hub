@@ -1,8 +1,8 @@
 "use client";
-import { useI18n, localizePath } from "@/lib/i18n";
+import { useI18n, localizePath, intlLocale } from "@/lib/i18n";
 import type { Post } from "@/lib/posts";
 import { getPostI18n } from "@/i18n/posts";
-import { I18nText } from "@/components/i18n-text";
+import { I18nText, ReadingTime } from "@/components/i18n-text";
 
 export function PostCard({ post }: { post: Post }) {
   const { lang } = useI18n();
@@ -12,14 +12,14 @@ export function PostCard({ post }: { post: Post }) {
       <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
         <span className="rounded-full bg-muted px-2.5 py-0.5 font-medium">{p.category}</span>
         <time dateTime={post.date}>
-          {new Date(post.date).toLocaleDateString("en-US", {
+          {new Date(post.date).toLocaleDateString(intlLocale(lang), {
             year: "numeric",
             month: "long",
             day: "numeric",
           })}
         </time>
         <span aria-hidden>·</span>
-        <span>{post.readingTime}</span>
+        <ReadingTime value={post.readingTime} />
       </div>
 
       <h2 className="mt-3 text-xl font-semibold leading-snug">

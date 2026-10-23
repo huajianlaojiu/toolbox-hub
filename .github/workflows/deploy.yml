@@ -20,6 +20,9 @@ concurrency:
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
+    env:
+      # secrets 上下文不能用于 steps.if，先映射到 env 再用 env 判断
+      GOOGLE_TRANSLATE_KEY: ${{ secrets.GOOGLE_TRANSLATE_KEY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -44,9 +47,10 @@ jobs:
           restore-keys: |
             translate-
 
+      # 仅在配置了 GOOGLE_TRANSLATE_KEY 时才重新翻译；
+      # 未配置时沿用仓库里已提交的 15 语言静态译文（脚本也不会覆盖它们）。
       - name: Translate content (build-time, Google Cloud Translation)
-        env:
-          GOOGLE_TRANSLATE_KEY: ${{ secrets.GOOGLE_TRANSLATE_KEY }}
+        if: env.GOOGLE_TRANSLATE_KEY != ''
         run: node scripts/translate-content.mjs
 
       - name: Build static site

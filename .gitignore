@@ -63,15 +63,17 @@ next-env.d.ts
 # push debug logs
 /push*.log
 /build.log
+/translate-run.log
+/tr-*.log
+/shot-*.png
 /out_stale*/
 
-# 构建期生成的翻译产物（由 CI 在 deploy 前跑 scripts/translate-content.mjs 重新生成）
-/src/i18n/messages/*.json
-/src/i18n/messages/index.ts
-/src/i18n/content/*.json
-/src/i18n/content/index.ts
-/src/i18n/posts/*.json
-/src/i18n/posts/index.ts
+# 构建产物停放区（删除被安全策略拦截时临时 mv 出来，非交付物）
+/.next.stale/
+/out.old.stale/
+
+# 翻译产物（15 语言静态 JSON + index.ts）已提交进仓库，作为无密钥时的译文来源；
+# 配置 GOOGLE_TRANSLATE_KEY 后 CI 会重新生成，可在 PR 里 diff 校对。
 
 # 翻译缓存
 /.cache/

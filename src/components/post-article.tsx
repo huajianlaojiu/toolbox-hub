@@ -1,12 +1,12 @@
 "use client";
-import { useI18n, localizePath } from "@/lib/i18n";
+import { useI18n, localizePath, intlLocale } from "@/lib/i18n";
 import { ChevronLeft, Clock, Calendar } from "lucide-react";
 import type { ReactNode } from "react";
 import type { Post } from "@/lib/posts";
 import { posts as allPosts } from "@/lib/posts";
 import { getPostI18n } from "@/i18n/posts";
 import AdUnit from "@/components/shared/ad-unit";
-import { I18nText } from "@/components/i18n-text";
+import { I18nText, ReadingTime } from "@/components/i18n-text";
 
 /** 渲染段落：处理 **bold** 与 [[slug|Title]] 内链 */
 function RichText({ text }: { text: string }) {
@@ -125,7 +125,7 @@ export function PostArticle({ slug }: { slug: string }) {
             <span className="inline-flex items-center gap-1">
               <Calendar className="h-3.5 w-3.5" />
               <time dateTime={post.date}>
-                {new Date(post.date).toLocaleDateString("en-US", {
+                {new Date(post.date).toLocaleDateString(intlLocale(lang), {
                   year: "numeric",
                   month: "long",
                   day: "numeric",
@@ -134,7 +134,7 @@ export function PostArticle({ slug }: { slug: string }) {
             </span>
             <span className="inline-flex items-center gap-1">
               <Clock className="h-3.5 w-3.5" />
-              {post.readingTime}
+              <ReadingTime value={post.readingTime} />
             </span>
           </div>
 

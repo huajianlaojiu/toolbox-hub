@@ -5,12 +5,16 @@
 // 不进代码、不进前端。本地可用 MyMemory 免密钥做冒烟验证。
 //
 // 用法：
-//   node scripts/translate-content.mjs                                  # 全量 14 语言，provider=google
+//   node scripts/translate-content.mjs                                  # 全量 15 语言，provider=google（需 Key）
 //   TRANSLATE_PROVIDER=mymemory node scripts/translate-content.mjs --langs es zh   # 本地子集冒烟
+//   TRANSLATE_PROVIDER=gtx HTTPS_PROXY=http://127.0.0.1:7897 node scripts/translate-content.mjs
+//     # 本地免密钥全量：走 Google 网页版免费端点（translate_a/single），
+//     # 国内机器需配 HTTPS_PROXY；Node>=22 也可用 NODE_USE_ENV_PROXY=1 让内置 fetch 走代理
 
 import { build } from "esbuild";
 import fs from "node:fs";
 import path from "node:path";
+import OpenCC from "opencc-js";
 
 const ROOT = process.cwd();
 const SRC = path.join(ROOT, "src");
@@ -27,27 +31,30 @@ fs.mkdirSync(CACHE_DIR, { recursive: true });
 const PROVIDER = (process.env.TRANSLATE_PROVIDER || "google").toLowerCase();
 const GOOGLE_KEY = process.env.GOOGLE_TRANSLATE_KEY || "";
 const MEMORY_EMAIL = process.env.MYMEMORY_EMAIL || "";
+const PROXY = process.env.TRANSLATE_PROXY || process.env.HTTPS_PROXY || process.env.https_proxy || "";
 const onlyLangs = process.argv.includes("--langs")
   ? process.argv[process.argv.indexOf("--langs") + 1].split(",").filter(Boolean)
   : null;
 
 // 与 src/lib/locales.ts 保持一致（内联，避免循环依赖）
+// gtx = Google 网页版免费端点（translate_a/single），仅本地/免密钥场景使用，
+//      质量与 Cloud Translation 同源；google = Cloud Translation v2（CI 正式通道）。
 const LOCALES = [
-  { code: "zh", google: "zh", mymemory: "zh-CN" },
-  { code: "zh-TW", google: "zh-TW", mymemory: "zh-TW" },
-  { code: "ja", google: "ja", mymemory: "ja" },
-  { code: "ko", google: "ko", mymemory: "ko" },
-  { code: "es", google: "es", mymemory: "es" },
-  { code: "fr", google: "fr", mymemory: "fr" },
-  { code: "de", google: "de", mymemory: "de" },
-  { code: "pt", google: "pt-BR", mymemory: "pt-BR" },
-  { code: "ru", google: "ru", mymemory: "ru" },
-  { code: "ar", google: "ar", mymemory: "ar" },
-  { code: "it", google: "it", mymemory: "it" },
-  { code: "nl", google: "nl", mymemory: "nl" },
-  { code: "tr", google: "tr", mymemory: "tr" },
-  { code: "pl", google: "pl", mymemory: "pl" },
-  { code: "vi", google: "vi", mymemory: "vi" },
+  { code: "zh", google: "zh", gtx: "zh-CN", mymemory: "zh-CN" },
+  { code: "zh-TW", google: "zh-TW", gtx: "zh-CN", mymemory: "zh-TW" }, // gtx 的 tl=zh-TW 是粗糙转换（残留简体+大陆词汇），改用 zh-CN + 下方 s2tw 转正
+  { code: "ja", google: "ja", gtx: "ja", mymemory: "ja" },
+  { code: "ko", google: "ko", gtx: "ko", mymemory: "ko" },
+  { code: "es", google: "es", gtx: "es", mymemory: "es" },
+  { code: "fr", google: "fr", gtx: "fr", mymemory: "fr" },
+  { code: "de", google: "de", gtx: "de", mymemory: "de" },
+  { code: "pt", google: "pt-BR", gtx: "pt-BR", mymemory: "pt-BR" },
+  { code: "ru", google: "ru", gtx: "ru", mymemory: "ru" },
+  { code: "ar", google: "ar", gtx: "ar", mymemory: "ar" },
+  { code: "it", google: "it", gtx: "it", mymemory: "it" },
+  { code: "nl", google: "nl", gtx: "nl", mymemory: "nl" },
+  { code: "tr", google: "tr", gtx: "tr", mymemory: "tr" },
+  { code: "pl", google: "pl", gtx: "pl", mymemory: "pl" },
+  { code: "vi", google: "vi", gtx: "vi", mymemory: "vi" },
 ];
 const TARGETS = onlyLangs ? LOCALES.filter((l) => onlyLangs.includes(l.code)) : LOCALES;
 
@@ -173,14 +180,30 @@ function unescapeStr(s) {
 
 // ---------- 3. 令牌保护 ----------
 const TOKEN_RE = /\{(\w+)\}/g;
+// 品牌名不翻译：各语言保持统一的 "Toolbox Hub"（导航/页脚本就是硬编码英文，
+// 正文若翻成"工具箱中心"会品牌不一致）。与 {title} 占位符同一套保护机制。
+const BRAND_RE = /Toolbox Hub/g;
+// 术语表不翻译：Google gtx 实测会把 Markdown 译成"降价/démarque/ribasso/降價"、
+// Slug 译成"SMS/蜗牛(slak/limace/lumaca/Schnecke)/弹丸"，都是错译。
+// 这些词在任何语言里保留英文原文（大小写原样保留）。
+const GLOSSARY_RE = /\b(Markdown|Slug)\b/g;
 function protectTokens(s) {
   const map = [];
-  const text = s.replace(TOKEN_RE, (_, w) => { const i = map.length; map.push(w); return `__TK${i}__`; });
-  return { text, restore: (t) => t.replace(/__TK(\d+)__/g, (_, i) => `{${map[+i]}}`) };
+  const stash = (lit) => { const i = map.length; map.push(lit); return `__TK${i}__`; };
+  let text = s.replace(TOKEN_RE, (_, w) => stash(`{${w}}`));
+  text = text.replace(BRAND_RE, () => stash("Toolbox Hub"));
+  text = text.replace(GLOSSARY_RE, (m) => stash(m));
+  return { text, restore: (t) => t.replace(/__TK(\d+)__/g, (_, i) => map[+i] ?? `__TK${i}__`) };
 }
 
 // ---------- 4. 翻译 + 缓存 ----------
-const cacheFile = path.join(CACHE_DIR, `translate-${PROVIDER}.json`);
+// gtx 的 tl=zh-TW 只做粗糙字符转换：产出大量简体残留和大陆词汇（文件/網絡/默認/支持）。
+// 正解是 tl=zh-CN 拿高质量简体译文，再用 OpenCC s2twp 转台湾正体
+// （文件→檔案、網絡→網路、默認→預設、支持→支援，词汇级本地化）。
+// 仅 gtx 通道需要：Cloud Translation（google，CI 正式通道）的 zh-TW 质量已达标。
+const s2tw = OpenCC.Converter({ from: "cn", to: "twp" });
+// 并行跑多个语言子集时用 TRANSLATE_CACHE_FILE 给每个进程分配独立缓存，避免互相覆盖
+const cacheFile = process.env.TRANSLATE_CACHE_FILE || path.join(CACHE_DIR, `translate-${PROVIDER}.json`);
 let cache = {};
 try { cache = JSON.parse(fs.readFileSync(cacheFile, "utf8")); } catch { cache = {}; }
 function getCached(src, code) { return cache[src]?.[code]; }
@@ -204,6 +227,8 @@ async function translateItems(items, lang) {
   if (PROVIDER === "google") {
     if (!GOOGLE_KEY) throw new Error("GOOGLE_TRANSLATE_KEY 未设置（CI 需配置 GitHub Actions secret）");
     tr = await googleTranslate(sources, target);
+  } else if (PROVIDER === "gtx") {
+    tr = await gtxTranslate(sources, target);
   } else if (PROVIDER === "mymemory") {
     tr = await myMemoryTranslate(sources, target);
   } else throw new Error("未知 provider: " + PROVIDER);
@@ -211,7 +236,11 @@ async function translateItems(items, lang) {
   todo.forEach((it, k) => {
     let v = tr[k];
     if (v == null) v = it.str; // 失败回退英文
-    else v = prot[k].restore(v);
+    else {
+      v = prot[k].restore(v);
+      // zh-TW 走 gtx 时拿到的是简体（tl=zh-CN），先转台湾正体再入缓存/JSON
+      if (lang.code === "zh-TW" && PROVIDER === "gtx") v = s2tw(v);
+    }
     result.set(it.id, v);
     setCached(it.str, lang.code, v);
   });
@@ -267,7 +296,105 @@ async function myMemoryTranslate(sources, target) {
 }
 function sleep(ms) { return new Promise((r) => setTimeout(r, ms)); }
 
+// ---------- Google 网页版免费端点（translate_a/single，免密钥） ----------
+// 与 Cloud Translation 同源质量，适合本地一次性全量生成后提交静态 JSON。
+// 多条源串用 "\n" 合并成一次请求（省请求数），回来按 "\n" 切分；
+// 切分数与源不一致时退化为逐条翻译，保证译文与字符串不错位。
+const GTX_MAX_CHARS = 1800;
+const GTX_DELAY_MS = Number(process.env.GTX_DELAY_MS || 110); // 请求间隔；被限流时调大（如 2500）
+let gtxFetch = globalThis.fetch;
+if (PROVIDER === "gtx" && PROXY) {
+  try {
+    const undici = await import("undici");
+    undici.setGlobalDispatcher(new undici.ProxyAgent(PROXY));
+    gtxFetch = undici.fetch;
+    console.log(`[gtx] 代理已启用：${PROXY}`);
+  } catch {
+    console.warn("[gtx] 未找到 undici：将直连。国内机器请设 NODE_USE_ENV_PROXY=1，或 npm i -D undici");
+  }
+}
+
+function unescapeEntities(s) {
+  return s
+    .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+    .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(+d))
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&apos;/g, "'")
+    .replace(/&amp;/g, "&");
+}
+
+async function gtxOne(text, target) {
+  const url =
+    "https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=" +
+    encodeURIComponent(target) + "&dt=t&q=" + encodeURIComponent(text);
+  for (let attempt = 0; attempt < 5; attempt++) {
+    try {
+      // 20s 超时：Google 限流时会挂住不响应，没超时会无限等下去
+      const r = await gtxFetch(url, { headers: { "User-Agent": "Mozilla/5.0" }, signal: AbortSignal.timeout(20000) });
+      if (r.status === 429 || r.status >= 500) { await sleep(1500 * (attempt + 1)); continue; }
+      if (!r.ok) { await sleep(800 * (attempt + 1)); continue; }
+      const j = await r.json();
+      const segs = j?.[0];
+      if (!Array.isArray(segs)) throw new Error("bad payload");
+      return unescapeEntities(segs.map((s) => (Array.isArray(s) ? s[0] : "")).join(""));
+    } catch (e) {
+      if (attempt === 4) { console.warn(`  [gtx] 失败(${target}): ${String(e).slice(0, 60)}`); return null; }
+      await sleep(1000 * (attempt + 1));
+    }
+  }
+  return null;
+}
+
+async function gtxTranslate(sources, target) {
+  const out = new Array(sources.length);
+  // 组批：不含换行的串才能合并；超长的单独发
+  const batches = [];
+  let cur = [], chars = 0;
+  for (let i = 0; i < sources.length; i++) {
+    const s = sources[i];
+    const solo = s.includes("\n") || s.length > GTX_MAX_CHARS;
+    if (cur.length && (solo || chars + s.length > GTX_MAX_CHARS || cur.length >= 40)) {
+      batches.push(cur); cur = []; chars = 0;
+    }
+    if (solo) { batches.push([i]); continue; }
+    cur.push(i); chars += s.length;
+  }
+  if (cur.length) batches.push(cur);
+
+  let done = 0;
+  for (const batch of batches) {
+    if (batch.length === 1) {
+      out[batch[0]] = await gtxOne(sources[batch[0]], target);
+    } else {
+      const joined = batch.map((i) => sources[i]).join("\n");
+      const tr = await gtxOne(joined, target);
+      const parts = tr == null ? [] : tr.split("\n");
+      if (parts.length === batch.length) {
+        batch.forEach((idx, k) => (out[idx] = parts[k]));
+      } else {
+        for (const idx of batch) out[idx] = await gtxOne(sources[idx], target); // 错位保护
+      }
+    }
+    done += batch.length;
+    if (done % 500 < batch.length) console.log(`  [gtx] 进度 ${done}/${sources.length}`);
+    await sleep(GTX_DELAY_MS);
+  }
+  return out;
+}
+
 // ---------- 5. 主流程 ----------
+// 无密钥时，已提交的译文 JSON 原样保留（线上多语言依赖它们），
+// 仅在文件缺失时写英文回退，保证全新 checkout 也能构建。
+function writeJson(file, data) {
+  if (SKIP_TRANSLATE && fs.existsSync(file)) {
+    console.log(`  保留已提交译文 ${path.basename(file)}`);
+    return;
+  }
+  fs.writeFileSync(file, JSON.stringify(data) + "\n");
+}
+
 async function main() {
   console.log(`翻译 provider=${PROVIDER}  目标语言=${TARGETS.map((l) => l.code).join(",")}`);
   const src = await loadSource();
@@ -287,7 +414,7 @@ async function main() {
       const v = tr.get(it.id);
       if (v && v !== key) uiMsg[key] = v;
     }
-    fs.writeFileSync(path.join(MSG_DIR, lang.code + ".json"), JSON.stringify(uiMsg) + "\n");
+    writeJson(path.join(MSG_DIR, lang.code + ".json"), uiMsg);
 
     // 内容
     const out = { generic: {}, overrides: {}, meta: {} };
@@ -315,7 +442,7 @@ async function main() {
         keywords: (t.keywords || []).map((kw, i) => get(`meta:${t.slug}:keywords:${i}`, kw)),
       };
     }
-    fs.writeFileSync(path.join(CONTENT_DIR, lang.code + ".json"), JSON.stringify(out) + "\n");
+    writeJson(path.join(CONTENT_DIR, lang.code + ".json"), out);
 
     // 博客文章译文
     const postsOut = {};
@@ -336,25 +463,31 @@ async function main() {
         blocks,
       };
     }
-    fs.writeFileSync(path.join(POSTS_DIR, lang.code + ".json"), JSON.stringify(postsOut) + "\n");
-    console.log(`  UI 词条=${Object.keys(uiMsg).length}  内容字节≈${JSON.stringify(out).length}  文章=${Object.keys(postsOut).length}`);
+    writeJson(path.join(POSTS_DIR, lang.code + ".json"), postsOut);
+    const real = items.filter((it) => { const v = tr.get(it.id); return v != null && v !== it.str; }).length;
+    console.log(`  UI 词条=${Object.keys(uiMsg).length}  内容字节≈${JSON.stringify(out).length}  文章=${Object.keys(postsOut).length}  译文覆盖=${real}/${items.length}`);
+    // 每完成一种语言立即落盘缓存：进程被 kill / 断网也不丢已完成进度
+    try { fs.writeFileSync(cacheFile, JSON.stringify(cache)); } catch { /* ignore */ }
   }
 
   const san = (c) => c.replace(/[^a-zA-Z0-9]/g, "_");
-  const imports = TARGETS.map((l) => `import ${san(l.code)} from "./${l.code}.json";`).join("\n");
-  const map = TARGETS.map((l) => `  ${JSON.stringify(l.code)}: ${san(l.code)}`).join(",\n");
+  // 索引始终覆盖全部 15 语言（即使本次 --langs 只跑子集），
+  // 否则子集运行会生成缺语言的 index.ts 把构建搞坏。
+  const ALL = LOCALES;
+  const imports = ALL.map((l) => `import ${san(l.code)} from "./${l.code}.json";`).join("\n");
+  const map = ALL.map((l) => `  ${JSON.stringify(l.code)}: ${san(l.code)}`).join(",\n");
   const registry =
     imports + "\n\nexport const CONTENT: Record<string, any> = {\n" + map + "\n};\n" +
-    "export const CONTENT_LANGS = " + JSON.stringify(TARGETS.map((l) => l.code)) + ";\n";
+    "export const CONTENT_LANGS = " + JSON.stringify(ALL.map((l) => l.code)) + ";\n";
   fs.writeFileSync(path.join(CONTENT_DIR, "index.ts"), registry);
 
-  const msgImports = TARGETS.map((l) => `import ${san(l.code)}Msg from "./${l.code}.json";`).join("\n");
-  const msgMap = TARGETS.map((l) => `  ${JSON.stringify(l.code)}: ${san(l.code)}Msg`).join(",\n");
+  const msgImports = ALL.map((l) => `import ${san(l.code)}Msg from "./${l.code}.json";`).join("\n");
+  const msgMap = ALL.map((l) => `  ${JSON.stringify(l.code)}: ${san(l.code)}Msg`).join(",\n");
   const msgRegistry = msgImports + "\nexport const MESSAGES: Record<string, any> = {\n" + msgMap + "\n};\n";
   fs.writeFileSync(path.join(MSG_DIR, "index.ts"), msgRegistry);
 
-  const postImports = TARGETS.map((l) => `import ${san(l.code)}Post from "./${l.code}.json";`).join("\n");
-  const postMap = TARGETS.map((l) => `  ${JSON.stringify(l.code)}: ${san(l.code)}Post`).join(",\n");
+  const postImports = ALL.map((l) => `import ${san(l.code)}Post from "./${l.code}.json";`).join("\n");
+  const postMap = ALL.map((l) => `  ${JSON.stringify(l.code)}: ${san(l.code)}Post`).join(",\n");
   const postRegistry = postImports + "\nexport const POSTS: Record<string, any> = {\n" + postMap + "\n};\n";
   fs.writeFileSync(path.join(POSTS_DIR, "index.ts"), postRegistry);
 
@@ -362,4 +495,13 @@ async function main() {
   console.log("\n完成：messages/ + content/ + content/index.ts + messages/index.ts");
 }
 
-main().catch((e) => { console.error(e); process.exit(1); });
+// 导出内部件，供 _cache_from_output.mjs（缓存抢救）等工具复用
+export { LOCALES, loadSource, collectStrings };
+
+// 仅当直接运行时才执行主流程（被 import 时不跑）
+import { pathToFileURL } from "node:url";
+const invokedDirectly =
+  process.argv[1] != null && import.meta.url === pathToFileURL(process.argv[1]).href;
+if (invokedDirectly) {
+  main().catch((e) => { console.error(e); process.exit(1); });
+}

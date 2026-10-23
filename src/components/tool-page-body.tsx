@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getTool, tools } from "@/lib/tools-data";
 import { LOCALES } from "@/lib/locales";
+import { languageAlternates } from "@/lib/alternates";
 import { getMeta, getContent } from "@/i18n/content";
 import ToolPageContent from "@/components/tool-page-content";
 
@@ -104,9 +105,8 @@ import ToolCard from "@/components/tool-card";
 import { I18nText } from "@/components/i18n-text";
 
 function hreflangAlternates(slug: string) {
-  const map: Record<string, string> = { en: `/tools/${slug}/` };
-  for (const l of LOCALES) if (l.code !== "en") map[l.hreflang] = `/${l.code}/tools/${slug}/`;
-  return map;
+  // 与各语言页共用单一来源：languageAlternates 内含 x-default
+  return languageAlternates(`/tools/${slug}/`);
 }
 
 export function generateToolStaticParams() {

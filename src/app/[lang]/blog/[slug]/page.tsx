@@ -21,16 +21,18 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const post = getPost(slug);
   if (!post) return {};
   const path = `/blog/${post.slug}/`;
+  // 自指 canonical：翻译版指向自己，否则会被当成英文版的重复页
+  const selfPath = lang === "en" ? path : `/${lang}${path}`;
   const title = st(lang, post.metaTitle);
   const description = st(lang, post.description);
   return {
     title,
     description,
-    alternates: { languages: languageAlternates(path) },
+    alternates: { canonical: selfPath, languages: languageAlternates(path) },
     openGraph: {
       title,
       description,
-      url: path,
+      url: selfPath,
       type: "article",
       publishedTime: post.date,
       modifiedTime: post.updated,

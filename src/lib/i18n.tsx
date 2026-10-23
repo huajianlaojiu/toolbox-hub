@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { LOCALES, getLocale } from "./locales";
 
 /** 语言包：key 是英文原文（source-string），value 是译文 */
@@ -47,6 +47,13 @@ export function localizePath(pathname: string, code: string): string {
 export function langFromPath(pathname: string): string {
   const seg = pathname.split("/").filter(Boolean)[0] ?? "";
   return KNOWN.has(seg) ? seg : "en";
+}
+
+/** Intl 用的语言标签（站点语言码 → BCP47，保证服务端与浏览器格式一致） */
+export function intlLocale(code: string): string {
+  if (code === "zh") return "zh-CN";
+  if (code === "pt") return "pt-BR";
+  return code;
 }
 
 /**
@@ -104,6 +111,7 @@ export function LangToggle() {
   const { lang, setLocale } = useI18n();
   const [open, setOpen] = useState(false);
   const current = getLocale(lang);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onDoc = (e: MouseEvent) => {
@@ -113,11 +121,20 @@ export function LangToggle() {
     return () => document.removeEventListener("click", onDoc);
   }, []);
 
+  // Esc 关闭（键盘可用性）
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false); };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open]);
+
   return (
-    <div className="lang-menu relative">
+    <div className="lang-menu relative" ref={ref}>
       <button
         onClick={() => setOpen((v) => !v)}
         aria-label="Language"
+        aria-haspopup="listbox"
         aria-expanded={open}
         className="flex h-8 items-center gap-1 rounded-lg border px-2 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-muted"
       >
@@ -133,21 +150,37 @@ export function LangToggle() {
       </button>
 
       {open && (
-        <div className="absolute right-0 z-50 mt-1 max-h-[70vh] w-56 overflow-y-auto rounded-xl border bg-popover p-1 shadow-lg">
-          {LOCALES.map((l) => (
-            <button
-              key={l.code}
-              onClick={() => setLocale(l.code)}
-              lang={l.code}
-              dir={l.rtl ? "rtl" : undefined}
-              className={`flex w-full items-center justify-between gap-2 rounded-lg px-2.5 py-1.5 text-left text-sm transition-colors hover:bg-muted ${
-                l.code === lang ? "font-semibold text-primary" : "text-foreground"
-              }`}
-            >
-              <span>{l.native}</span>
-              <span className="text-[11px] text-muted-foreground">{l.en}</span>
-            </button>
-          ))}
+        <div
+          role="listbox"
+          aria-label="Language"
+          className="absolute right-0 z-50 mt-2 max-h-[70vh] w-64 max-w-[calc(100vw-1.5rem)] overflow-y-auto rounded-xl border bg-popover p-1.5 shadow-lg"
+        >
+          <div className="grid grid-cols-1 min-[380px]:grid-cols-2 gap-0.5">
+            {LOCALES.map((l) => {
+              const active = l.code === lang;
+              return (
+                <button
+                  key={l.code}
+                  role="option"
+                  aria-selected={active}
+                  title={l.en}
+                  onClick={() => { setLocale(l.code); setOpen(false); }}
+                  lang={l.code}
+                  dir={l.rtl ? "rtl" : undefined}
+                  className={`flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-left text-[13px] transition-colors hover:bg-muted ${
+                    active ? "bg-accent font-semibold text-accent-foreground" : "text-foreground"
+                  }`}
+                >
+                  {active && (
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="h-3 w-3 shrink-0">
+                      <path d="M20 6 9 17l-5-5" />
+                    </svg>
+                  )}
+                  <span className="truncate">{l.native}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       )}
     </div>

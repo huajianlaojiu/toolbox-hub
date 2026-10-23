@@ -1,0 +1,741 @@
+{
+  "browser-tools-for-developers": {
+    "title": "De Developer's Toolkit: 24 gratis browsertools die betaalde apps vervangen",
+    "description": "Een praktische gids voor het formatteren, converteren, coderen en debuggen van gegevens met behulp van gratis browsergebaseerde ontwikkelaarstools - geen installaties, geen accounts, niets geüpload.",
+    "category": "Ontwikkelaarstools",
+    "blocks": [
+      {
+        "p": "Voor de meeste kleine klusjes die je honderd keer per week doet – het opnieuw formatteren van een API-antwoord, het decoderen van een token, het controleren van een hash, het inspringen van een stukje SQL – heb je geen IDE, een betaald abonnement of een teamlicentie nodig. Ze hebben één tabblad negentig seconden geopend nodig.\n\nDe onderstaande verzameling bestaat uit vierentwintig browsergebaseerde hulpprogramma's die betrekking hebben op opmaak, conversie, codering, hashing en foutopsporing. Ze draaien allemaal volledig op uw pagina: uw gegevens worden nooit naar een server verzonden, wat belangrijker is dan ontwikkelaars gewoonlijk toegeven, omdat de payload die u plakt meestal van een klant is."
+      },
+      {
+        "h": "Welke browsergebaseerde tools wel en niet kunnen vervangen"
+      },
+      {
+        "p": "Wees realistisch over de grens. Deze hulpmiddelen vervangen eenmalige, hoogfrequente klusjes met een lage inzet. Ze vervangen niet uw taalserver, uw debugger, uw testsuite of iets anders dat u herhaaldelijk in een echte omgeving moet uitvoeren."
+      },
+      {
+        "l": [
+          "**Goede pasvorm:** een reactie één keer lezen, fouten opsporen in een enkele waarde, een bestand converteren voor één import, een formaat controleren voordat het wordt verzonden.",
+          "**Slechte pasvorm:** het uitvoeren van dezelfde controle bij elke implementatie, waarbij honderden bestanden worden getransformeerd, alles wat luid moet mislukken in CI.",
+          "**Nooit:** alles waarbij inloggegevens betrokken zijn, kunt u niet rouleren. Plak een ingetrokken token, geen live token."
+        ]
+      },
+      {
+        "p": "Dat gezegd hebbende, de reden om deze als bladwijzer te bewaren is de doorvoer. Een taak die op een browsertabblad veertig seconden in beslag neemt, wordt nooit gepland, wordt nooit gedelegeerd en wordt nooit een reden om om acht uur 's avonds een IDE te openen."
+      },
+      {
+        "h": "Gegevens formatteren en converteren"
+      },
+      {
+        "p": "De meest voorkomende dagelijkse klus is het leesbaar maken van data. Een API retourneert een blob van één regel, een collega stuurt een configuratiebestand met tabbladen die worden verminkt door een chatvenster, of je exporteert een spreadsheet naar JSON en deze komt terug als één enorme regel."
+      },
+      {
+        "l": [
+          "[[json-formatter|JSON Formatter]] — laat een payload inspringen, valideren en lezen. Gebruik het voordat u fouten gaat opsporen: de helft van alle \"de API is kapot\"-tickets zijn feitelijk verkeerd ingedeelde JSON met een komma erachter.",
+          "[[json-validator|JSON Validator]] — wanneer u een strikt geslaagd/mislukt antwoord nodig heeft in plaats van een mooie afdruk.",
+          "[[xml-formatter|XML Formatter]] — dezelfde taak voor SOAP-reacties, RSS-feeds en Maven POM's die niemand sinds 2014 heeft aangeraakt.",
+          "[[json-to-yaml|JSON to YAML]] en [[json-to-csv|JSON to CSV]] — het verplaatsen van gegevens tussen de formaten die echte systemen daadwerkelijk gebruiken."
+        ]
+      },
+      {
+        "p": "Houd de laatste groep in gedachten voor één specifiek scenario: een klant overhandigt u een spreadsheet en verwacht deze in zijn API. CSV rechtstreeks naar JSON brengen is twee minuten werk in plaats van een middagje scripten."
+      },
+      {
+        "h": "Coderen en ontsnappen"
+      },
+      {
+        "p": "Coderingsfouten zijn onevenredig vervelend omdat de gegevens er goed uitzien. De waarde \"San José & Sons\" komt binnen als \"San Jos%C3%A9 %26 Sons\" en uw vergelijking met de database mislukt om redenen die onzichtbaar zijn in de logbestanden."
+      },
+      {
+        "l": [
+          "[[url-encoder|URL Encoder / Decoder]] — bepaal onmiddellijk of een queryreeks dubbel gecodeerd is.",
+          "[[base64-encoder|Base64 Encoder / Decoder]] — decodeer een certificaatfragment of codeer een klein item voor inline in CSS.",
+          "[[html-entity-encoder|HTML Entity Encoder / Decoder]] — ontdek of die verdwaalde \"&\" op uw pagina afkomstig is van uw sjabloon of uw gegevens.",
+          "[[unicode-converter|Unicode Converter]] — handig wanneer een \"gebroken\" teken een legitiem teken blijkt te zijn, weergegeven in de verkeerde codering.",
+          "[[number-base-converter|Number Base Converter]] — controleer een kleur, een toestemmingsbitmasker of een geheugenadres zonder een rekenmachine-app."
+        ]
+      },
+      {
+        "b": "Een praktische gewoonte: wanneer een waarde onleesbaar aankomt, decodeert u deze laag voor laag en plakt u elk resultaat in een leeg veld. Als de eerste decodering leesbare tekst oplevert, is het probleem één extra codering ergens stroomopwaarts. Als het mojibake produceert, heb je eerder een coderingsprobleem dan een ontsnappingsprobleem, en deze twee hebben verschillende oplossingen nodig."
+      },
+      {
+        "h": "Identificatoren, hashes en tokens"
+      },
+      {
+        "p": "In deze groep verspillen ontwikkelaars de meeste tijd met het zoeken naar het juiste lokale script dat ze ooit hebben geschreven en verloren."
+      },
+      {
+        "l": [
+          "[[uuid-generator|UUID Generator]] — genereer v4-identifiers voor zaadgegevens, wedstrijden of een snelle databaserij.",
+          "[[md5-generator|MD5 / SHA Hash Generator]] — verifieer een download of bevestig dat twee bestanden die identiek zouden moeten zijn, dat ook daadwerkelijk zijn.",
+          "[[timestamp-converter|Timestamp Converter]] — de meest gebruikte tool in deze hele lijst. Als op een logboekregel 1761000000 staat, kunt u hieruit zien of het incident plaatsvond tijdens de implementatie of ervoor."
+        ]
+      },
+      {
+        "p": "De tijdstempelconverter verdient zijn geld om één specifieke reden: een tijdperknummer is tegelijkertijd ondubbelzinnig en nutteloos. Je weet precies wanneer iets is gebeurd en je kunt het niet aan een collega vertellen. Eén keer converteren lost meestal een luider argument op dan zou moeten."
+      },
+      {
+        "h": "Vergelijken en debuggen"
+      },
+      {
+        "l": [
+          "[[regex-tester|Regex Tester]] — het item met de hoogste hefboomwerking hier. Een reguliere expressie die er correct uitziet en stilletjes met niets overeenkomt, is een van de duurste bugs in de ontwikkeling, omdat deze stilletjes faalt op de enige plek waar niemand leest.",
+          "[[html-preview|HTML Preview]] — herhaal een fragment van de markup om te controleren hoe het daadwerkelijk wordt weergegeven."
+        ]
+      },
+      {
+        "p": "Test uw reguliere expressies met de invoer die u daadwerkelijk verwacht, inclusief de lege tekenreeks, een Unicode-naam en een waarde met een nieuwe regel. De meeste patronen breken in het derde geval en niemand merkt het totdat de productiegegevens binnenkomen."
+      },
+      {
+        "h": "Een uitgewerkt voorbeeld: drie tools, één saai incident"
+      },
+      {
+        "p": "Hier is de reeks die mij ervan overtuigde om dit allemaal te bookmarken. Een klant meldde dat een record dat ze dinsdag hadden ingediend, ontbrak in een rapport van donderdag."
+      },
+      {
+        "l": [
+          "**1. Converteer de tijdstempel.** De rapporttaak registreerde de aanmaaktijd van de record als een tijdperkwaarde. De [[timestamp-converter|Timestamp Converter]] liet zien dat het record om 23.00 uur lokaal was aangemaakt, wat dinsdag is. De aanname van de tijdzone van de taak was het probleem, niet het record.",
+          "**2. Formatteer de payload.** Door de opgeslagen JSON door de [[json-formatter|JSON Formatter]] te halen, bleek dat de record was geschreven met een nuldatumveld, omdat de client tweemaal hetzelfde eindpunt had aangeroepen met een tussenpoos van 200 ms en de tweede schrijfactie had gewonnen.",
+          "**3. Vergelijk de payloads.** Beide records hadden dezelfde API-sleutel en dezelfde clienttijdstempel, wat duidde op een nieuwe poging in plaats van op twee afzonderlijke klanten."
+        ]
+      },
+      {
+        "p": "Totaal verstreken tijd: vier minuten. De eerdere poging tot dit onderzoek, waarbij werd gezocht naar dezelfde hoofdoorzaak in een houtkapplatform, duurde een middag en leverde een verkeerde conclusie op."
+      },
+      {
+        "h": "Privacy: waarom lokaal draaien de eigenlijke functie is"
+      },
+      {
+        "p": "Elke tool in deze bibliotheek verwerkt uw invoer in uw eigen browser. Er wordt niets geüpload, wat betekent dat er geen retentievraag is, geen verwerkersovereenkomst en geen ongemakkelijk gesprek over de productiepayload die je drie minuten geleden hebt geplakt.\n\nDit is de reden dat u deze tools verkiest boven een gehoste \"pastebin API\" of een online dienst die u vraagt ​​om u aan te melden. Het betekent ook dat ze blijven werken tijdens een vlucht, in een kelder of wanneer de zakelijke VPN heeft besloten weer een ander domein te blokkeren."
+      },
+      {
+        "p": "Eén voorbehoud dat duidelijk moet worden vermeld: een pagina die offline kan worden gebruikt, is alleen privé als de pagina zelf de code bevat die u denkt dat deze is. Op een gedeelde machine gebruikt u een privévenster en sluit u dit wanneer u klaar bent, vooral als u tokens hebt gedecodeerd."
+      },
+      {
+        "h": "Bouw een workflow om hen heen"
+      },
+      {
+        "p": "De tools zijn individueel triviaal. De waarde ligt in de gewoonte om er onmiddellijk naar te grijpen in plaats van er \"later op in te gaan\", omdat je later een wegwerpscript schrijft, of een IDE opent, of besluit dat het helemaal niet de moeite waard is om te controleren."
+      },
+      {
+        "l": [
+          "Maak een bladwijzer van de collectie, niet van individuele URL's, en plaats deze in de werkbalk van uw browser.",
+          "Als iets verkeerd lijkt, controleer het dan voordat je een theorie vormt. Kost vijftien seconden; doodt hele klassen van verkeerde conclusies.",
+          "Als je hetzelfde twee keer hebt gecontroleerd, is dat het signaal om het te automatiseren – maar automatiseer niet op verdenking.",
+          "Plak geen productiegeheimen. Draai alles waar u niet zeker van bent."
+        ]
+      },
+      {
+        "h": "Veelgestelde vragen"
+      },
+      {
+        "p": "**Zijn deze tools gratis?** Ja, volledig, zonder account en zonder gebruikslimiet. Er is geen betaald niveau dat iets fundamenteels tegenhoudt.\n\n**Werken ze offline?** Zodra een pagina is geladen, ja, alles draait in uw browser. Voor het herladen is een verbinding vereist.\n\n**Kan ik ze gebruiken voor commercieel werk?** Ja. De uitvoer is van jou, zonder attributievereiste.\n\n**Is er een API?** Nee, en dat is opzettelijk: de waarde is de interface. Exporteer de uitvoer en verwerk deze zoals u wilt.\n\n**Waarom installeert u niet gewoon een CLI-tool?** Installeer er een wanneer u deze drie keer nodig heeft. Gebruik een browsertabblad voor de eerste twee."
+      }
+    ]
+  },
+  "text-tools-for-writers": {
+    "title": "17 gratis teksthulpmiddelen voor schrijvers, studenten en marketeers",
+    "description": "Ruim de tekst op, tel de woorden nauwkeurig, maak lijsten op en verander ruwe concepten in iets dat publiceerbaar is - met gratis browsertools waarmee u nooit uw tekst hoeft te uploaden.",
+    "category": "Teksthulpmiddelen",
+    "blocks": [
+      {
+        "p": "Schrijven voor werk brengt verrassend veel mechanisch gezwoeg met zich mee dat niets met schrijven te maken heeft: het verwijderen van losse witruimte uit een geplakte alinea, het controleren van een woordlimiet, het dedupliceren van een lijst met namen, het omzetten van iets in een URL-slug.\n\nDeze zeventien gereedschappen zijn voor dat deel van de klus. Ze draaien allemaal lokaal in de browser, wat geen klein detail is: het concept dat je plakt is vaak niet gepubliceerd en de lijst die je aan het sorteren bent, bestaat vaak uit iemands persoonlijke gegevens."
+      },
+      {
+        "h": "Meten van wat je hebt geschreven"
+      },
+      {
+        "p": "Het aantal woorden lijkt opgelost totdat een klant precies 800 woorden vraagt en uw redacteur 820 zegt, of een formulier uw tekst afwijst op 1.995 tekens zonder uitleg over waar de nieuwe regel is gebleven."
+      },
+      {
+        "l": [
+          "[[woordenteller|Woordenteller]] — de standaardmaat. Plakken, lezen, aanpassen.",
+          "[[letter-counter|Letter Counter]] — telt tekens en letterfrequentie. Handig als je wilt debuggen waarom een ​​alinea verkeerd aanvoelt: het is meestal een herhaald letterpatroon, geen droom."
+        ]
+      },
+      {
+        "p": "Een opmerking over wat \"een woord\" betekent: verschillende tellers zijn het oneens over woordafbreking, cijfers en URL's. Als een exact aantal van belang is, gebruik dan hetzelfde loket dat de persoon die uw werk controleert gebruikt, en spreek dit van tevoren af. Dit is een werkelijk veel voorkomende bron van kleine, zinloze argumenten."
+      },
+      {
+        "h": "Kopieën opruimen die u niet hebt geschreven"
+      },
+      {
+        "p": "De meeste tekst die u ontvangt is licht beschadigd: dubbele spaties bij kopiëren en plakken, een verdwaalde tab, inconsistent hoofdlettergebruik als iemand haastig typt. Het handmatig repareren is traag en foutgevoelig."
+      },
+      {
+        "l": [
+          "[[text-trimmer|Text Trimmer]] — verwijder voor- en achterliggende witruimte van elke regel in één keer. Hiermee worden meer rapporten met de melding \"opmaak ziet er kapot\" opgelost dan iets anders op deze lijst.",
+          "[[text-case-converter|Text Case Converter]] — schakel tussen hoofdletters, hoofdletters, hoofdletters en kleine letters binnen een blok. Ook de snelste manier om een ​​onbedoelde CAPS LOCK-paragraaf ongedaan te maken.",
+          "[[text-to-slug|Text to Slug]] — verander een kop in een schone URL-slug. Plak je titel, pak de slug, klaar."
+        ]
+      },
+      {
+        "p": "De sluggenerator heeft nog één nut naast URL's: het is een snelle manier om een ​​leesbare bestandsnaam of anker te maken die een mens in één oogopslag kan ontleden, en dat is beter dan `final_final_v3`."
+      },
+      {
+        "h": "Werken met lijsten"
+      },
+      {
+        "p": "Lijstjes, inventarissen, samenvoegingen, het opschonen van tags, enquêtereacties, spreadsheetkolommen: op een gegeven moment wordt alles een lijst en moet elke lijst worden gesorteerd, ontdubbeld of gerandomiseerd."
+      },
+      {
+        "l": [
+          "[[duplicate-line-remover|Duplicate Line Remover]] — vergelijk twee lijsten, of maak er één schoon. De uitvoer vertelt u hoeveel duplicaten zijn verwijderd, wat handig is wanneer u het resultaat rapporteert.",
+          "[[list-sorter|List Sorter]] — dezelfde taak voor gestructureerde lijstinvoer.",
+          "[[list-randomizer|List Randomizer]] — schud een trekkingsvolgorde, een quizreeks of een afgeschermde shortlist zodat niemand vriendjespolitiek vermoedt.",
+          "[[line-number-adder|Line Number Adder]] — nummerregels ter referentie in een ticket of commentaar op een codebeoordeling."
+        ]
+      },
+      {
+        "b": "De klassieke valkuil hier is een lijst die er gededupliceerd uitziet, maar dat niet is: 'Apple', 'apple' en 'Apple.' zijn drie verschillende regels voor een computer. Snijd de witruimte weg en verwijder de interpunctie voordat u dedupliceert, anders voegt u niets samen en komt u tot de conclusie dat de gegevens schoon zijn."
+      },
+      {
+        "h": "Voorbeeld bekijken en opmaken"
+      },
+      {
+        "p": "Markdown heeft gewonnen, maar niet op uniforme wijze. De helft van je gereedschap geeft het weer, de andere helft niet, en de helft die dat niet doet, is meestal degene waar iemand in moet plakken."
+      },
+      {
+        "l": [
+          "[[markdown-preview|Markdown Preview]] — live weergave, zodat u kunt controleren of een tabel of een geneste lijst er daadwerkelijk uitziet voordat deze een client bereikt.",
+          "[[text-repeater|Text Repeater]] — herhaal een tekenreeks N keer. Handig voor het genereren van opvulling, testgegevens of, zo nu en dan, om een ​​punt in een document te maken."
+        ]
+      },
+      {
+        "p": "Het Markdown-voorbeeld is het hulpmiddel dat stilletjes de meeste tijd bespaart in deze hele set, omdat een kapotte tabel in een gerenderd document veel zichtbaarder is (en veel gênanter) dan een kapotte tabel in onbewerkte tekst."
+      },
+      {
+        "h": "De rest, en wanneer u ze kunt bereiken"
+      },
+      {
+        "l": [
+          "[[random-string|Random String Generator]] — genereer leesbare nonces, tijdelijke ID's of korte codes. Beter dan iets met de hand verzinnen, want je hergebruikt het niet per ongeluk.",
+          "[[morse-code|Morse Code Translator]] — echt leuk, af en toe handig voor een themaproject of een puzzel."
+        ]
+      },
+      {
+        "p": "Dit zijn tools met een lagere frequentie, maar het kost niets om een ​​bladwijzer bij te houden en ze lossen het specifieke probleem op van \"Ik heb nu een willekeurig ogende waarde nodig en ik vertrouw mezelf niet om er een te verzinnen\"."
+      },
+      {
+        "h": "Een realistische bewerkingspas"
+      },
+      {
+        "p": "Dit is de volgorde die werkt als er een concept van iemand anders binnenkomt en onder jouw naam moet worden verzonden."
+      },
+      {
+        "l": [
+          "**1. Trimmen.** Haal eerst het hele document door de [[text-trimmer|Text Trimmer]]. Schade aan witruimte verbergt zich in paragrafen waar u deze nooit zult zien.",
+          "**2. Schone hoofdletters.** Gebruik de [[text-case-converter|Text Case Converter]] alleen voor de kop. Pas nooit hoofdletterconversie toe op een volledig concept; dit vernietigt eigennamen.",
+          "**3. Meten.** Controleer de lengte met de [[word-counter|Word Counter]] voordat je gaat schrijven, zodat je weet welke vorm het stuk moet hebben.",
+          "**4. Preview.** Als het Markdown bevat, geef het dan weer met [[markdown-preview|Markdown Preview]].",
+          "**5. Slug.** Genereer de URL-slug als laatste, vanaf de laatste kop, met [[text-to-slug|Text to Slug]] — als je de kop daarna wijzigt, wordt de slug verbroken."
+        ]
+      },
+      {
+        "p": "De hele pas duurt een paar minuten en elimineert de categorie fouten waarbij een document technisch correct en zichtbaar fout is."
+      },
+      {
+        "h": "Schrijversvragen over privacy"
+      },
+      {
+        "p": "**Verlaat mijn ongepubliceerde tekst mijn computer?** Nee. Deze tools verwerken tekst in uw browser en er wordt niets opgeslagen of verzonden.\n\n**Is er een lengtelimiet?** Er is geen limiet aan de serverzijde omdat er geen serveroproep is. Extreem grote invoer wordt beperkt door het geheugen van uw eigen apparaat.\n\n**Kan ik de output commercieel gebruiken?** Ja, vrijelijk, zonder bronvermelding.\n\n**Werken ze op een telefoon?** Ja. De lay-out past zich aan en dezelfde code wordt uitgevoerd."
+      },
+      {
+        "h": "Wat deze tools niet voor u zullen doen"
+      },
+      {
+        "p": "Het is de moeite waard om bot te zijn over de grenzen, want een instrument dat het verkeerde mechaniseert, leidt alleen maar tot snellere fouten.\n\nGeen van deze hulpprogramma's kan u vertellen of een zin duidelijk is, of een bewering afkomstig is, of dat de toon goed is voor het publiek. Ze tellen karakters; zij oordelen niet over proza. Een tekst die mooi scoort op elke statistiek op deze pagina kan toch onleesbaar zijn.\n\nZe bewerken ook niet. Op het moment dat je merkt dat je individuele clausules op grote schaal met de hand herschrijft, ben je een teksttool ontgroeid en wil je óf een goede editor, een zoek-en-vervang met regex – waar de [[regex-tester|Regex Tester]] echt goed in is om te oefenen – of een script. Gebruik de browser voor de mechanische laag en behoud je eigen oordeel voor alles daarboven."
+      },
+      {
+        "p": "Nog een ding dat ze niet zullen doen, is een slechte bron repareren. Als uw spreadsheet vol inconsistente namen staat: 'Dr.', 'DR', 'Dr.' alles in één kolom: een tool sorteert en ontdubbelt wat je eraan hebt gegeven, en je hebt nog steeds drie vermeldingen waar er één zou moeten zijn. Het opschonen van de gegevens is een beslissing, geen mechanische stap. Bepaal eerst de canonieke vorm, pas deze toe en controleer vervolgens."
+      },
+      {
+        "h": "Een werklijst bruikbaar houden"
+      },
+      {
+        "p": "Als u een lijst met leads, links, referenties of termen bijhoudt, gaat deze langzaam achteruit. De foutmodus is altijd hetzelfde: vermeldingen die er identiek uitzien, zijn dat niet, en één samenvoeging verwijdert niets.\n\nEen onderhoudspas die werkt is saai: witruimte wegknippen, hoofdlettergebruik standaardiseren, navolgende interpunctie verwijderen en vervolgens ontdubbelen. In die volgorde gaat bij het bijsnijden na het dedupliceren invoer verloren. Als je dit één keer per maand op een actieve lijst doet, verandert een onherstelbare puinhoop van twee uur in een karwei van tien minuten.\n\nWanneer twee lijsten met elkaar in overeenstemming moeten worden gebracht, bijvoorbeeld een registratielijst en een presentielijst, sorteer beide dan eerst met de [[list-sorter|List Sorter]], zodat ze op één lijn komen te staan, en vergelijk ze vervolgens op het oog. Beide partijen sorteren voordat je gaat vergelijken, is het verschil tussen een controle van twee minuten en een jacht van twintig minuten."
+      },
+      {
+        "h": "De afhaalmaaltijd"
+      },
+      {
+        "p": "Geen van deze tools is slim. Dat is het punt: ze verwijderen de mechanische vijf procent van het schrift dat geen schrift is, dus de resterende vijfennegentig procent gaat eigenlijk over zinnen. Maak een bladwijzer van degene die u maandelijks gebruikt, negeer de rest en stop met het handmatig corrigeren van witruimte."
+      }
+    ]
+  },
+  "calculators-and-converters-guide": {
+    "title": "18 gratis rekenmachines en conversieprogramma's voor de getallen waarmee u daadwerkelijk te maken heeft",
+    "description": "Percentages, kortingen, fooien, leningen, datums, BMI en eenheidsconversies: gratis browsercalculators die hun redenering weergeven en uw invoer nooit opslaan.",
+    "category": "Rekenmachines",
+    "blocks": [
+      {
+        "p": "Iedereen moet een rekening splitsen, uitzoeken of een korting echt een korting is, en een temperatuur of een bestandsgrootte omzetten zonder erover na te denken. Iedereen heeft dit ook minstens één keer in het openbaar verkeerd begrepen.\n\nDit is een verzameling van achttien rekenmachines en converters die betrekking hebben op geld, datums, gezondheid en de eenheidconversies die voorkomen in werk en reizen. Ze draaien allemaal in de browser: er wordt niets opgeslagen, dus de cijfers die u typt zijn niemands zaken behalve die van u."
+      },
+      {
+        "h": "Geldberekeningen"
+      },
+      {
+        "p": "De meest voorkomende wiskunde in de echte wereld is een percentage van iets. Omzetbelasting, een fooi, een kortingsstapel, een commissie, een groeipercentage. De formule is eenvoudig, en toch is de reden dat mensen het bij het verkeerde eind hebben bijna altijd dezelfde: ze passen een percentage toe op de verkeerde grondslag."
+      },
+      {
+        "l": [
+          "[[kortingscalculator|Kortingscalculator]] — bereken de uiteindelijke prijs en, nog belangrijker, hoeveel u heeft bespaard. Handig voor het spotten van een \"50% korting\" die in werkelijkheid 20% is na een verhoogde catalogusprijs.",
+          "[[fooicalculator|Fooicalculator]] — deel een rekening, kies een percentage, rond per persoon af als je wilt.",
+          "[[loan-calculator|Leningcalculator]] — maandelijkse betaling en totale rente, het getal dat feitelijk bepaalt of een lening betaalbaar is."
+        ]
+      },
+      {
+        "b": "Over kortingen: een korting van 20% gevolgd door nog eens 20% korting is geen 40% korting, maar 36%. Opeenvolgende percentages worden samengesteld op de gereduceerde basis. Elke rekenmachine in deze lijst zal dit binnen ongeveer twee seconden bevestigen, en het is het meest bruikbare rekenkundige feit in dit artikel."
+      },
+      {
+        "p": "De leningcalculator verdient een specifieke opmerking. Het getal dat ertoe doet is niet de maandelijkse betaling; het is de totale rente die wordt betaald over de looptijd van de lening, want dat zijn de werkelijke kosten van het lenen. Twee leningen met identieke maandelijkse betalingen en verschillende voorwaarden kunnen in totale rente tienduizenden verschillen."
+      },
+      {
+        "h": "Datums en aftellingen"
+      },
+      {
+        "p": "Bij het rekenen met datums hebben de meeste mensen het stilletjes mis, omdat menselijke maanden verschillende lengtes hebben en het antwoord verandert afhankelijk van of je 'kalendermaanden' of '30 dagen' bedoelt."
+      },
+      {
+        "l": [
+          "[[datumverschil|Datumverschilcalculator]] — dagen (en totaal aantal maanden, jaren) tussen twee datums.",
+          "[[days-until|Days Until Calculator]] — een aftelling naar een specifieke datum, waarbij het aantal werkdagen meestal is wat mensen eigenlijk willen.",
+          "[[age-calculator|Leeftijdcalculator]] — exacte leeftijd in jaren en dagen, plus de volgende verjaardag.",
+          "[[timestamp-converter|Timestamp Converter]] — een Unix-tijdstempel in een echte datum, wat er toe doet of je logs, databases of API-reacties aanraakt."
+        ]
+      },
+      {
+        "p": "Het onderscheid waar mensen over struikelen: het aantal dagen tussen 1 maart en 1 april is 31, maar het aantal *maanden* is één. Als u een opzegtermijn of een abonnementstermijn berekent, geeft u dan schriftelijk aan welke eenheid u bedoelt."
+      },
+      {
+        "h": "Gezondheidscijfers, eerlijk gezegd"
+      },
+      {
+        "l": [
+          "[[bmi-calculator|BMI Calculator]] — body mass index met de standaardcategorieën en de onderstaande kanttekeningen."
+        ]
+      },
+      {
+        "p": "BMI is een screeningsstatistiek op populatieniveau. Het zegt niets over de spiermassa, de lichaamssamenstelling of de gezondheid van een individu, en het is een slechte maatstaf voor de fitheid bij atleten, bij oudere volwassenen en bij verschillende etnische groepen. Gebruik het als één datapunt uit meerdere, of als een manier om een ​​verandering in de loop van de tijd bij te houden – niet als een oordeel. Als u beslissingen neemt die van invloed zijn op uw gezondheid, is het juiste hulpmiddel een arts, en geen browsertabblad."
+      },
+      {
+        "h": "Eenheidsconversie: de alledaagse"
+      },
+      {
+        "p": "Eenheidsconversie is onderverdeeld in twee soorten: conversies die u precies goed moet krijgen, en conversies die u grofweg nodig heeft. Deze tools kunnen beide aan, en het werk zit hem in het onthouden van welke welke is."
+      },
+      {
+        "l": [
+          "[[lengte-omzetter|Lengteomzetter]] — metrisch naar imperiaal en terug: millimeters, centimeters, meters, kilometers, inches, voeten, yards, mijlen.",
+          "[[weight-converter|Gewichtconvertor]] — gram, kilogram, ounce, pond, ton. Degene die je moet controleren vóór een recept of een verzendlabel.",
+          "[[temperatuur-omzetter|Temperatuuromzetter]] — Celsius, Fahrenheit, Kelvin. Omdat -10°C niet 14°F is, en de formule geen vermenigvuldiging is.",
+          "[[snelheidsomzetter|Snelheidsomzetter]] — km/u, mph, m/s, knopen. Handig voor een buitenlandse snelheidslimiet of een technische specificatie.",
+          "[[area-converter|Area Converter]] — vierkante meter, vierkante voet, acres, hectare. Dit is degene die mensen slecht inschatten bij het kopen of huren van onroerend goed.",
+          "[[volume-converter|Volume Converter]] — liters, milliliters, gallons, kopjes, kubieke meters.",
+          "[[time-converter|Time Converter]] — seconden, minuten, uren, dagen, weken."
+        ]
+      },
+      {
+        "b": "Twee conversievallen die de moeite waard zijn om te weten: de gegevensopslag hierboven (marketeers verkopen 10^3, besturingssystemen rapporteren 2^10) en het brandstofverbruik – een auto met een prijs van 40 mpg (imperiaal) ligt dichter bij 33 mpg (VS) dan 40, omdat de imperiale gallon groter is. Als je de tweede fout maakt, ziet een huurauto er onrealistisch efficiënt uit."
+      },
+      {
+        "h": "De twee die je niet verwacht nodig te hebben"
+      },
+      {
+        "l": [
+          "[[willekeurig getal|Random Number Generator]] — trekt binnen een bereik, voor een loterij, een beugel of een snelle A/B-splitsing. Handig juist omdat het de verdenking wegneemt dat je ermee hebt gemanipuleerd.",
+          "[[dice-roller|Dice Roller]] — elke dobbelsteen, van een muntstukje tot een twintigzijdige dobbelsteen, voor een bordspel of een tafelsessie waarbij de echte dobbelsteen voor de laatste keer van de tafel is gerold."
+        ]
+      },
+      {
+        "h": "Een rekenmachine op de juiste manier gebruiken"
+      },
+      {
+        "p": "Een rekenmachine helpt alleen als je weet over welk getal je het vraagt. Drie gewoonten maken het verschil."
+      },
+      {
+        "l": [
+          "**Eerst rond, bereken het tweede.** Als het exacte getal uw beslissing niet verandert, gebruik dan een ronde. Percentages van ronde getallen zijn controleerbaar in uw hoofd, waardoor invoerfouten worden opgemerkt.",
+          "**Controleer de omvang van het gezond verstand.** Voordat u een resultaat gelooft, moet u zich afvragen of het groter of kleiner moet zijn dan de invoer, en hoeveel ongeveer. De meeste rekenfouten overleven elke controle, behalve deze.",
+          "**Fotografeer de input, niet de output.** Als je de berekening later opnieuw uitvoert, gaat het erom dat je weet wat je hebt aangenomen, niet wat je hebt geconcludeerd."
+        ]
+      },
+      {
+        "h": "Vragen die mensen daadwerkelijk stellen"
+      },
+      {
+        "p": "**Worden mijn nummers ergens opgeslagen?** Nee. De berekeningen gebeuren in uw browser en er wordt niets verzonden of bewaard.\n\n**Werken deze op een telefoon?** Ja, en de rekenmachines zijn gebouwd voor gebruik met één hand.\n\n**Welke conversiestandaard gebruik je voor dataopslag?** Standaard decimaal (1 KB = 1000 bytes), want zo wordt opslag verkocht. Besturingssystemen rapporteren binair, en daarom lijkt een schijf kleiner te worden; de tool legt het verschil uit in plaats van stilletjes een kant te kiezen.\n\n**Kan ik deze op mijn eigen site insluiten?** Nee. Maak er een bladwijzer van; de kosten daarvan zijn nul en het nauwkeurigheidsprobleem is uw eigen verantwoordelijkheid."
+      },
+      {
+        "h": "Percentages: de vier fouten die er toe doen"
+      },
+      {
+        "p": "Bijna elke procentuele fout die een persoon in het dagelijks leven maakt, is een van dezelfde vier fouten. Door ze een naam te geven, zijn ze vermijdbaar."
+      },
+      {
+        "l": [
+          "**Verkeerde basis.** \"Een stijging van 10% en een daling van 10% brengt je waar je begon\" is niet waar, omdat beide op verschillende bases van toepassing zijn. Tien procent van 100 is 10; tien procent van 90 is 9.",
+          "**Percentage van een percentage.** Het stapelen van twee kortingen vermenigvuldigt ze (0,8 × 0,8 = 0,64, dus 36% korting), maar telt ze niet op.",
+          "**Procent versus procentpunt.** Een percentage van 4% naar 6% is met 2 procentpunt gestegen, maar relatief gezien met 50%. De politiek en de geneeskunde zijn vol van deze verwarring, en het is niet altijd toevallig.",
+          "**Te vroeg afgerond.** Het afronden van een tussenstap voordat een percentage wordt toegepast, vergroot de fout. Houd volledige precisie tot het laatste cijfer en voer de laatste stap op een rekenmachine uit in plaats van in uw hoofd."
+        ]
+      },
+      {
+        "p": "Als je maar één gewoonte uit dit hele gedeelte overneemt, neem dan deze: voordat je iemand een percentage citeert, herhaal dan eerst welk percentage *van* het is. De helft van de argumenten die je ooit over een getal zult hebben, zijn feitelijk argumenten over de noemer."
+      },
+      {
+        "h": "Weten wanneer je moet stoppen met rekenen"
+      },
+      {
+        "p": "Er is een punt waarop precisie niet langer nuttig is. Een maandelijkse betaling tot twee decimalen is zinvol. Een geraamde totale kostprijs tot op acht decimalen is een manier om de daadwerkelijke beslissing te omzeilen, namelijk of de lening past binnen wat u zich zonder stress kunt veroorloven.\n\nDe bruikbare test is de gevoeligheidsvraag: verandert de beslissing als deze input met 10% beweegt? Als dat niet het geval is, stop dan met het verfijnen ervan en gebruik de extra tijd voor de variabele die het antwoord wel verplaatst – meestal de term in plaats van het tarief, of de catalogusprijs in plaats van de korting."
+      },
+      {
+        "p": "En één grens die het duidelijk waard is om te vermelden: deze rekenmachines zijn rekenkundig, geen advies. Een spaardoel, een pensioendatum en een plan voor de afbetaling van schulden zijn allemaal beslissingen over risico, gedrag en tijd, en een browsertabblad kan deze allemaal niet wegen. Het kan u pas vertellen wat de cijfers impliceren als u eenmaal hebt besloten waar u van uitgaat. Dat onderscheid is het verschil tussen nuttig zijn en verantwoordelijk zijn voor een rekenmachine."
+      },
+      {
+        "h": "De éénregelige versie"
+      },
+      {
+        "p": "Maak een goede bladwijzer voor de geld- en datumcalculatoren, beschouw BMI als één signaal in plaats van als een oordeel, onthoud dat gestapelde percentages zich vermenigvuldigen en controleer de omrekening van eenheden wanneer een getal iets contractueels betreft. Dat omvat vrijwel alles."
+      }
+    ]
+  },
+  "image-and-design-tools": {
+    "title": "14 gratis beeld- en ontwerptools die in uw browser worden uitgevoerd",
+    "description": "Afbeeldingen comprimeren, vergroten of verkleinen en voorbereiden, en CSS-effecten, paletten, contrastcontroles en favicons genereren zonder Photoshop of een ontwerpsuite te installeren.",
+    "category": "Ontwerphulpmiddelen",
+    "blocks": [
+      {
+        "p": "Beeldwerk heeft een specifiek probleem: de klus is meestal klein en de aangeboden tools zijn enorm. Je moet 400 KB van een heldenafbeelding schrappen, of een hexadecimale waarde krijgen die je ontwerper noemde, of een favicon genereren die nog niemand heeft gemaakt. Daar is geen abonnement voor nodig.\n\nDe veertien onderstaande tools behandelen het voorbereiden van afbeeldingen, het werken met kleur, het genereren van CSS-effecten en de kleine productiemiddelen die door de kieren vallen. Ze draaien allemaal lokaal, wat voor afbeeldingen belangrijker is dan voor tekst: de foto die je zojuist hebt gecomprimeerd, is vaak een foto die je nog niet hebt gepubliceerd."
+      },
+      {
+        "h": "Afbeeldingen voorbereiden voor internet"
+      },
+      {
+        "p": "De meeste imagoproblemen zijn eigenlijk gewichtsproblemen. Een pagina die traag aanvoelt, bevat meestal afbeeldingen die groter zijn dan hun weergaveformaat, in het verkeerde formaat, met een kwaliteitsinstelling waar niemand ooit vraagtekens bij heeft gezet."
+      },
+      {
+        "l": [
+          "[[image-compressor|Image Compressor]] — verklein de bestandsgrootte terwijl de afbeelding visueel intact blijft. Voer het uit voordat u iets uploadt naar een formulier met een maximale grootte.",
+          "[[image-resizer|Image Resizer]] — stel de werkelijke pixelafmetingen in die u nodig hebt. Dit is de grotere overwinning: een afbeelding van 4000 px, weergegeven op 800 px, bevat vijf keer zoveel gegevens die hij nodig heeft.",
+          "[[image-to-base64|Image to Base64]] — converteer een kleine afbeelding naar een gegevens-URI voor inlining in CSS, HTML of een e-mailsjabloon."
+        ]
+      },
+      {
+        "b": "De volgorde is belangrijk. Eerst het formaat wijzigen, daarna comprimeren. Het comprimeren van een afbeelding van 4000 px levert een veel zwaarder bestand op dan het formaat wijzigen naar 800 px en vervolgens comprimeren met dezelfde kwaliteit, omdat compressoren hun inspanningen besteden aan pixels die toch zouden worden weggegooid."
+      },
+      {
+        "p": "Hoeveel moet je comprimeren? Het eerlijke antwoord is: totdat het er verkeerd uitziet, en dan een stap teruggaan. Voor een fotografisch heldenbeeld is de kwaliteit van 70 tot 80 procent bij normaal kijkformaat meestal niet te onderscheiden van het origineel. Voor een logo, een screenshot of iets anders met een effen kleur en harde randen, gebruik PNG en comprimeer harder: deze winnen meer en verliezen minder."
+      },
+      {
+        "p": "Een praktische vuistregel: alles onder de 200 KB is prima voor een hero-afbeelding, onder de 80 KB voor een thumbnail, en als je niet onder de 300 KB kunt komen, heb je waarschijnlijk eerder een dimensieprobleem dan een kwaliteitsprobleem."
+      },
+      {
+        "h": "Base64: wanneer inlinen de juiste call is"
+      },
+      {
+        "p": "Door een afbeelding naar een Base64-gegevens-URI te converteren, wordt een HTTP-verzoek verwijderd, wat klinkt als een pure overwinning. Meestal niet. De gecodeerde tekenreeks is ongeveer een derde groter dan het binaire bestand, kan niet afzonderlijk in de cache worden opgeslagen en vergroot uw CSS of HTML.\n\nAlleen inline als de afbeelding klein is (minder dan een paar kilobytes), één keer gebruikt en van cruciaal belang. Een klein pictogram in één e-mailsjabloon is het klassieke geval. Voor alles wat herhaald wordt over pagina's of groter is dan een paar kilobytes, dient u het als een bestand weer te geven en de browser het in de cache te laten opslaan."
+      },
+      {
+        "h": "Watermerken: wat eerlijk verwijderbaar is"
+      },
+      {
+        "l": []
+      },
+      {
+        "p": "Wees duidelijk over wat dit doet. Het verwijdert of verbergt het zichtbare merkteken. Het kan de onderliggende pixels niet reconstrueren; informatie die overschilderd is, is verdwenen en geen enkel filter vindt deze opnieuw uit. De resultaten variëren van onzichtbaar, wanneer de markering op een effen achtergrond zit, tot een duidelijke uitstrijkje wanneer de markering over details heen zit.\n\nNog één ding dat de moeite waard is om duidelijk te zeggen: het verwijderen van het watermerk van iemand anders en het publiceren van het resultaat is in de meeste rechtsgebieden een auteursrechtprobleem en een schending van de licentie, ongeacht of u gepakt wordt. Het verwijderen van markeringen uit uw eigen afbeeldingen of uit voorraad waarvoor u een licentie hebt, is het doel van deze tool."
+      },
+      {
+        "h": "Kleur: omzetten, controleren, kiezen"
+      },
+      {
+        "p": "Kleur is waar kleine fouten heel zichtbaar worden. Een contrastverhouding die niet toegankelijk is, een hex-waarde die eigenlijk een HSL-triple is, een palet dat er coherent uitziet op je monitor en modderig op een projector."
+      },
+      {
+        "l": [
+          "[[color-converter|Color Converter]] — schakel tussen HEX, RGB en HSL. HSL is de moeite waard om te leren lezen, omdat tint 210, verzadiging 40 procent, lichtheid 50 procent veel gemakkelijker met de hand is aan te passen dan een hexadecimale waarde.",
+          "[[contrast-checker|Contrast Checker]] — test tekst tegen de achtergrond tegen WCAG-drempels. Dit is het nuttigste hulpmiddel in dit artikel, omdat het eerder een echt nalevingsprobleem dan een smaakprobleem aanpakt.",
+          "[[color-palette|Color Palette Generator]] — genereer een samenhangende set wanneer u begint met een merkkleur en de rest van de schaal nodig heeft."
+        ]
+      },
+      {
+        "b": "Daarentegen vraagt ​​WCAG AA 4,5 op 1 voor normale hoofdtekst en 3 op 1 voor grote tekst. Als je voor een knop tussen twee merkkleuren moet kiezen, is de toegankelijke kleur meestal niet degene die de ontwerper leuk vindt. Controleer eerst en voer dan het argument met gegevens."
+      },
+      {
+        "p": "Eén kanttekening bij kleurhulpmiddelen: ze gaan er allemaal van uit dat uw monitor is gekalibreerd en dat de persoon die uw pagina bekijkt, werkende ogen heeft. Geen van beide veronderstellingen is veilig. Dat is een reden om combinaties met contrastcontrole te verkiezen boven subjectieve combinaties."
+      },
+      {
+        "h": "CSS-effecten zonder een ontwerptool te openen"
+      },
+      {
+        "p": "Met de hand een verloop of een gelaagde schaduw schrijven is een echt onaangename taak. De syntaxis is onhandig, je kunt niet zien wat je produceert, en het verschil tussen een goede en een slechte schaduw is een paar pixels onscherpte."
+      },
+      {
+        "l": [
+          "[[gradient-generator|CSS Gradient Generator]] — bouw lineaire en radiale gradiënten en kopieer de CSS rechtstreeks.",
+          "[[box-shadow-generator|Box Shadow Generator]] — breng meerdere schaduwen aan, wat een subtiele hoogte scheidt van een zware val.",
+          "[[border-radius-generator|Border Radius Generator]] — verkrijg de asymmetrische stralen die ervoor zorgen dat een vorm er opzettelijk uitziet.",
+          "[[text-shadow-generator|Text Shadow Generator]] — spaarzaam nuttig. De meeste tekstschaduwen zijn te sterk; Hiermee kunt u de offset aanpassen en vervagen totdat deze verdwijnt."
+        ]
+      },
+      {
+        "p": "De truc voor alle vier is terughoudendheid. Twee schaduwen – een strakke donkere en een brede, zachte – lezen als fysieke verheffing. Eén schaduw leest als een website van vijftien jaar geleden. Genereer, kopieer en verwijder vervolgens totdat u niet meer weet dat het er is."
+      },
+      {
+        "h": "De productiemiddelen die iedereen vergeet"
+      },
+      {
+        "l": [
+          "[[favicon-generator|Favicon Generator]] — produceer de kleine pictogrammenset die een site daadwerkelijk nodig heeft. Dit staat op de lijst omdat favicons de activa zijn die het meest waarschijnlijk volledig zullen ontbreken, en een ontbrekende toont een algemeen browserpaginapictogram dat een voltooide site er onvoltooid uit laat zien.",
+          "[[emoji-picker|Emoji Picker]] — blader, zoek en kopieer emoji zonder door een besturingssysteemkiezer te hoeven zoeken. Echt handig als u teksten schrijft waarvoor één specifiek symbool nodig is."
+        ]
+      },
+      {
+        "h": "Een uitgewerkt voorbeeld: het verzenden van een heldensectie"
+      },
+      {
+        "p": "Hier is het hele cluster bezig met één echte taak. Een pagina heeft een held nodig met een achtergrondafbeelding, een kop en een knop, en die is nog niet gebouwd."
+      },
+      {
+        "l": [
+          "**1. Reserveer de ruimte.** Geef de afbeeldingssleuf een vaste hoogte in de lay-out, zodat de pagina vanaf de eerste render de juiste vorm heeft in plaats van te springen wanneer de echte afbeelding landt.",
+          "**2. Formaat wijzigen en comprimeren.** Wanneer de echte foto arriveert, voert u deze door de [[image-resizer|Image Resizer]] op 1600px breed, en vervolgens door de [[image-compressor|Image Compressor]] op 75 procent. Dat is een bestand dat u kunt verzenden.",
+          "**3. Controleer het contrast van de tekst.** Een kop boven een foto is de klassieke contrastfout. Gebruik de [[contrast-checker|Contrast Checker]] om een ​​donkere overlaysterkte of een lichte tekstkleur te kiezen die AA passeert.",
+          "**4. Bouw de knop.** De [[box-shadow-generator|Box Shadow Generator]] geeft de hoogte, en de [[color-converter|Color Converter]] krijgt de merkkleur in het formaat dat de CSS nodig heeft.",
+          "**5. Ship.** Voeg een favicon toe van de [[favicon-generator|Favicon Generator]] zodat het tabblad er niet verlaten uitziet en de sectie klaar is."
+        ]
+      },
+      {
+        "p": "Vijf tools, geen ontwerpsuite, en elke uitvoer is een waarde die u rechtstreeks in code kunt plakken."
+      },
+      {
+        "h": "Veelgestelde vragen"
+      },
+      {
+        "p": "**Worden mijn afbeeldingen ergens geüpload?** Nee. Compressie, formaatwijziging en Base64-conversie gebeuren allemaal in uw browser, wat de reden is dat er geen limiet voor de bestandsgrootte is en geen uploadwachtrij.\n\n**Zal bij het comprimeren van een afbeelding kwaliteit verloren gaan?** Altijd, per definitie. De vraag is of het zichtbaar is. Bij 70 tot 80 procent kwaliteit en correcte afmetingen is dat meestal niet het geval.\n\n**Waarom ziet mijn gewijzigde afbeelding er nog steeds groot uit?** Negen van de tien keer heb je gecomprimeerd voordat je de afbeelding hebt aangepast, of je slaat deze op als PNG terwijl een foto beter is als JPEG.\n\n**Kan ik deze gebruiken voor klantwerk?** Ja, zonder bronvermelding en zonder commerciële beperkingen.\n\n**Werken ze op een telefoon?** Ja, hoewel het wijzigen van de grootte en het comprimeren van grote foto's op een telefoon afhankelijk is van het geheugen van uw apparaat en niet van een server."
+      },
+      {
+        "h": "De éénregelige versie"
+      },
+      {
+        "p": "Pas het formaat aan voordat je comprimeert, controleer het contrast voordat je ruzie maakt over kleur, houd schaduwen subtiel en vergeet nooit de favicon. Dat is sowieso het meeste van wat een ontwerpsuite voor je deed."
+      }
+    ]
+  },
+  "math-tools-for-real-numbers": {
+    "title": "6 gratis wiskundige hulpmiddelen voor getallen die zich niet gedragen",
+    "description": "Wetenschappelijke notatie, decimalen naar breuken, controle van priemgetallen, faculteiten en GCF/LCM: gratis browsertools voor het getallenwerk dat gemakkelijk fout kan gaan.",
+    "category": "Wiskundige hulpmiddelen",
+    "blocks": [
+      {
+        "p": "De wiskunde die je eigenlijk nodig hebt op een computer, is niet de wiskunde waarop je bent geëxamineerd. Het is: heeft dit getal het formaat dat het systeem verwacht, is deze breuk vereenvoudigd, hoe snel groeit dit, en waarom zijn de rekenmachine en het spreadsheet het daar niet mee eens.\n\nDeze zes instrumenten bestrijken dat gebied. Ze draaien lokaal, wat voor rekenen één specifiek voordeel betekent dat het vermelden waard is: het getal dat je typt, wordt nergens heen gestuurd, zodat je zonder nadenken een berekening met een salaris, een saldo of een klantencijfer kunt controleren."
+      },
+      {
+        "h": "Getallen in een vorm krijgen die een machine accepteert"
+      },
+      {
+        "p": "Computers slaan decimale breuken op als binaire breuken. 0,1 is niet precies representatief in binair getal - de dichtstbijzijnde waarde met dubbele precisie is 0,100000000000000055511151231257827. Voeg 0,1 + 0,2 toe en je krijgt 0,30000000000000004, die standaard wordt afgedrukt als 0,3 en stilletjes een gelijkheidscontrole verbreekt."
+      },
+      {
+        "l": [
+          "[[scientific-notation|Scientific Notation Converter]] — schakel tussen de standaard- en wetenschappelijke vorm, wat de manier is waarop de meeste logs, spreadsheets en API's feitelijk grote en kleine getallen opslaan.",
+          "[[decimale breuk|Decimaal naar breuk]] — converteer een decimaal getal naar een exacte breuk. Dit is de oplossing voor het bovenstaande probleem: 0,1 + 0,2 in de berekening van exacte breuken is 3/10, geen benadering."
+        ]
+      },
+      {
+        "b": "Als je ooit een totaal hebt gezien dat 0,000000000000004 fout is, dan is dit de reden. In financiële code is het standaardantwoord om te werken in gehele centen, of in een decimale bibliotheek, en nooit in drijvende komma. Als je ooit hebt gezien dat een spreadsheet het met een fractie van een cent oneens was met een script, is het dezelfde bug met een andere hoed."
+      },
+      {
+        "p": "Het is de moeite waard om de wetenschappelijke notatie vloeiend te beheersen, omdat dit het verschil is tussen het lezen van een logregel en het loensen ervan. 6.022e23, 1.6e-19 en 3e8 zijn het getal van Avogadro, de elementaire lading en de snelheid van het licht. Als deze op ruis lijken in plaats van cijfers, kunt u deze permanent oplossen door er een paar via de tool te converteren."
+      },
+      {
+        "h": "Primes, en waarom het iemand iets kan schelen"
+      },
+      {
+        "l": [
+          "[[prime-checker|Prime Number Checker]] — test of een getal een priemgetal is en bekijk de ontbinding ervan als dat niet het geval is.",
+          "[[gcf-calculator|GCF LCM Calculator]] — grootste gemene deler en kleinste gemene veelvoud."
+        ]
+      },
+      {
+        "p": "Priemgetallen zijn geen schooloefening. De veiligheid van elke HTTPS-verbinding die u maakt, hangt af van het feit dat het vermenigvuldigen van twee grote priemgetallen eenvoudig is en het terugbetalen van het resultaat moeilijk is. Die asymmetrie is de hele basis van RSA.\n\nVoor alledaagse doeleinden gaat prime-controle meestal over breuken. Het vereenvoudigen van een breuk betekent dat je de boven- en onderkant deelt door hun grootste gemene deler, en dat kun je niet vinden zonder te ontbinden in factoren. Daarom horen deze twee tools bij elkaar: controleer de factoren en verkrijg vervolgens in één stap de GCF en LCM."
+      },
+      {
+        "p": "De LCM-helft is degene die mensen vergeten, en het is degene die planningsproblemen oplost: twee evenementen die zich elke 18 dagen herhalen en elke 12 dagen vallen elke 36 dagen samen. Dezelfde rekenkunde, andere toepassing."
+      },
+      {
+        "h": "Faculteiten, en de snelheid waarmee ze exploderen"
+      },
+      {
+        "l": [
+          "[[factoriële rekenmachine|Factoriële rekenmachine]] — n! voor waarden waarbij het antwoord nog steeds betekenisvol is."
+        ]
+      },
+      {
+        "p": "Factorials groeien sneller dan bijna alles wat je aan een bureau tegenkomt. 10! bedraagt ​​ongeveer 3,6 miljoen. 20! is ongeveer 2,4 quintiljoen – ruimschoots groter dan het aantal zandkorrels op aarde. 52!, het aantal manieren om een ​​pak kaarten te schudden, is grofweg 8 gevolgd door 67 cijfers.\n\nDe praktische consequentie is dat een programma dat alle permutaties opsomt, prima is op vijf items, aanvaardbaar is op acht, en permanent vastzit op twaalf. Als een taak het gevoel heeft dat hij nooit zal eindigen en je loopt over permutaties heen, dan is dit vrijwel zeker de reden. Het is ook het argument tegen de meeste brute-force-benaderingen, die eerder als rekenkundig dan als mening worden geformuleerd."
+      },
+      {
+        "h": "Romeinse cijfers, en het vreemde eraan"
+      },
+      {
+        "l": [
+          "[[Romeinse cijfers|Romeinse cijfers converter]] — converteren van en naar Romeinse cijfers."
+        ]
+      },
+      {
+        "p": "Romeinse cijfers zijn de moeite waard om te begrijpen in plaats van alleen maar te converteren, omdat het systeem iets onthult over positionele notatie. Er is geen nul en geen plaatswaarde: XI betekent elf, of het nu elf stokjes of elfduizend vertegenwoordigt. Dat is de reden waarom het rekenen met Romeinse cijfers echt moeilijk is, en waarom het systeem eeuwenlang heeft bestaan, vooral vanwege tellen en dateren in plaats van rekenen.\n\nDe subtractieve regel is het deel dat mensen fout hebben. IV is vier, niet VI; IX is negen. Klokken vormen een bekende uitzondering: de Big Ben gebruikt IIII in plaats van IV, om redenen waar historici nog steeds over discussiëren. Converteren in plaats van afleiden is in elk geval de juiste keuze."
+      },
+      {
+        "h": "Een uitgewerkt voorbeeld: een breuk met de hand controleren"
+      },
+      {
+        "p": "Voor een recept zijn 0,375 kopjes nodig en een weegschaal die in grammen aangeeft, een rapport geeft een verhouding aan van 0,625, en beide zien eruit als cijfers die iemand haastig heeft getypt."
+      },
+      {
+        "l": [
+          "**1. Zoek de exacte breuk.** Voer 0,375 uit met de tool [[decimale breuk|Decimaal naar breuk]]: 3/8. Run 0,625: 5/8. Geen van beiden had een rekenmachinegewoonte nodig die jij niet hebt.",
+          "**2. Vereenvoudig de verhouding.** Om 3/8 tegen 5/8 uit te drukken, heb je de GCF van 3 en 5 nodig. De [[gcf-calculator|GCF LCM Calculator]] geeft 1, dus de verhouding is 3:5 en al het eenvoudigst.",
+          "**3. Controleer de claim van de faculteiten.** Als iemand je vertelt dat een wachtrij van 9 bestellingen 362.880 arrangementen heeft, bevestigt de [[factorial-calculator|Factorial Calculator]] 9! is precies dat. Nu weet je of de schatting van de bouwtijd plausibel was.",
+          "**4. Normaliseer alles wat groot is.** Een server die 1,5-9 nanoseconden rapporteert, is 1,5 seconde, volgens de [[wetenschappelijke-notatie|Scientific Notation Converter]] – wat het verschil is tussen een latentieprobleem en een afrondingsartefact."
+        ]
+      },
+      {
+        "h": "Wat deze tools bewust niet doen"
+      },
+      {
+        "p": "Ze laten niet zien hoe ze werken, en ze geven geen les. Als je wilt begrijpen waarom een ​​formule waar is, is een rekenmachine het verkeerde instrument; hij geeft het antwoord zonder de reden, waardoor mensen uiteindelijk wel kunnen rekenen, maar niet kunnen redeneren.\n\nZe doen ook niet aan willekeurige precisie. Factoriële factoren en grote factorisaties zullen hun nauwkeurigheid verliezen voorbij het punt waarop het antwoord nog bruikbaar is, en een browsertabblad is geen computeralgebrasysteem. Voor alles waar correctheid er echt toe doet – techniek, financiën, cryptografie – gebruik een goede bibliotheek met exacte rekenkunde, geen webpagina."
+      },
+      {
+        "h": "Je eigen rekenkunde controleren"
+      },
+      {
+        "p": "De meest waardevolle wiskundige gewoonte is niet snelheid, maar schatting. Voordat u enig resultaat gelooft, moet u zich afvragen of het de juiste orde van grootte heeft: groter of kleiner dan de invoer, en ongeveer hoeveel. De meeste rekenfouten overleven elke andere controle, behalve deze.\n\nDoor eerst af te ronden, is de schatting gratis. Rond 0,375 tot 0,4, rond 5/8 tot 0,6, en de verhouding is duidelijk ongeveer 2:3 – dicht genoeg bij 3:5 om de breuk te bevestigen die u precies hebt berekend. Als het exacte antwoord en de schatting niet overeenkomen, heeft u een invoerfout gevonden in plaats van een afrondingsprobleem, en heeft u deze binnen enkele seconden gevonden.\n\nDit is ook de reden waarom een ​​rekenmachine geen vervanging is voor het nadenken over wat je hem vraagt. Een tool berekent perfect de verkeerde hoeveelheid, en de enige verdediging is weten hoe het antwoord zou moeten aanvoelen."
+      },
+      {
+        "h": "Veelgestelde vragen"
+      },
+      {
+        "p": "**Wordt mijn invoer ergens naartoe gestuurd?** Nee. Deze worden allemaal lokaal in uw browser uitgevoerd.\n\n**Waarom is 0,1 plus 0,2 niet gelijk aan 0,3?** Omdat noch 0,1, noch 0,2 exact representeerbaar is in binaire drijvende komma. De som is 0,30000000000000004, wat het dubbele is dat het dichtst bij 0,3 ligt.\n\n**Hoe groot kunnen deze faculteiten zijn?** Tot 170 voordat ze het bereik van een dubbel overschrijden. Voorbij wordt het antwoord weergegeven in wetenschappelijke notatie en heeft het dan geen betekenis meer.\n\n**Kan ik de uitvoer in code gebruiken?** Ja. Met name voor de resultaten van decimaal naar breuk moet u rekenen met gehele getallen op de teller en de noemer gebruiken in plaats van terug te rekenen naar een decimaal getal."
+      },
+      {
+        "h": "De éénregelige versie"
+      },
+      {
+        "p": "Gebruik exacte breuken als het om geld gaat. Bedenk dat faculteiten sneller ontploffen dan je verwacht, en priemfactorisatie is zowel een veiligheidsbasis als een truc om breuken te vereenvoudigen."
+      }
+    ]
+  },
+  "everyday-utility-tools": {
+    "title": "13 gratis dagelijkse hulpprogramma's: wachtwoorden, QR-codes, timers en tekstcodering",
+    "description": "Genereer wachtwoorden, bouw QR-codes, voer timers en klokken uit en decodeer binaire, hexadecimale en gecodeerde tekst - allemaal met gratis browsertools die niets uploaden.",
+    "category": "Hulpprogramma's",
+    "blocks": [
+      {
+        "p": "Deze laatste groep is de rommellade. Wachtwoorden, QR-codes, een stopwatch, een wereldklok, een muntstuk en vier tools die tekst omzetten in andere representaties van zichzelf. Individueel triviaal, gezamenlijk de spullen die je nodig hebt op lastige momenten.\n\nDe rode draad is dat ze alle dertien lokaal draaien. Voor een wachtwoordgenerator is dat geen aardigheidje; het is de hele reden dat de tool überhaupt te vertrouwen is."
+      },
+      {
+        "h": "Wachtwoorden: het deel dat er echt toe doet"
+      },
+      {
+        "l": [
+          "[[password-generator|Password Generator]] — genereer sterke willekeurige wachtwoorden van elke lengte en tekenset.",
+          "[[password-strength|Password Strength Checker]] — schat hoe resistent een wachtwoord is om lokaal te worden geraden."
+        ]
+      },
+      {
+        "b": "Het allerbelangrijkste feit over de sterkte van wachtwoorden: **lengte wint het van complexiteit, en hergebruik is gevaarlijker.** Een wachtwoord van 16 tekens bestaande uit niet-gerelateerde woorden is sterker en veel beter typbaar dan een wirwar van symbolen van 10 tekens. Ondertussen wordt door één hergebruikt wachtwoord dat bij een inbreuk opduikt, in één keer elk account waarmee het in aanraking komt, uitgeschakeld. Het genereren van een duidelijk lang wachtwoord per site is de hele klus."
+      },
+      {
+        "p": "Hoe de sterkte wordt geschat, is ook van belang. De meeste checkers benaderen de grootte van de zoekruimte, wat een redelijke indicatie is maar niet de waarheid: `CorrectHorseBatteryStaple` scoort goed op entropie, terwijl `P@ssw0rd1!` goed scoort op karaktervariatie en slecht in de praktijk omdat het in elke krakende woordenlijst ter wereld voorkomt.\n\nGebruik de generator voor alles wat u interesseert, en als u een wachtwoord moet onthouden, gebruik dan een wachtwoordzin van vier of vijf niet-gerelateerde woorden. Dat is het specifieke geval waarin memorabiliteit en kracht elkaar feitelijk overlappen."
+      },
+      {
+        "h": "QR-codes: wat moet je erin zetten?"
+      },
+      {
+        "l": [
+          "[[qr-code-generator|QR Code Generator]] — genereer een QR-code voor een URL, tekst, Wi-Fi-gegevens of contactgegevens."
+        ]
+      },
+      {
+        "p": "QR-codes zijn een van die tools waarbij de uitvoerkwaliteit volledig wordt bepaald door één beslissing: hoeveel gegevens u invoert. Een korte URL wordt gecodeerd in een kleine, gemakkelijk scanbare code. Een alinea tekst met interpunctie wordt bij kleine formaten gecodeerd in iets compacts en onbetrouwbaars.\n\nTwee praktische regels. Maak eerst altijd een testscan van de code op het formaat waarin deze daadwerkelijk wordt afgedrukt, voordat u er tweehonderd afdrukt. Ten tweede gedragen Wi-Fi- en gewone URL-codes zich verschillend op verschillende telefoons. Als een code naar een gemengd publiek gaat, geef dan de voorkeur aan een gewone URL boven een landingspagina die vervolgens doorlinkt, omdat deze overal werkt en je kunt wijzigen waar deze naartoe verwijst."
+      },
+      {
+        "h": "Tijd: timers, klokken en de val in tijdzones"
+      },
+      {
+        "l": [
+          "[[stopwatch|Online Stopwatch]] — een gewone stopwatch, handig als je telefoon in de andere kamer ligt.",
+          "[[pomodoro-timer|Pomodoro Timer]] — Focusblokken van 25 minuten met pauzes, voor mensen die vinden dat die structuur werkt.",
+          "[[wereldklok|Wereldklok]] — huidige tijd in verschillende steden tegelijk."
+        ]
+      },
+      {
+        "p": "De wereldklok verdient zijn plaats om één specifieke reden: zomertijd. De helft van de planningsfouten in de wereld zijn geen rekenfouten, maar een moment waarop twee steden vorige week vier uur uit elkaar lagen en deze week vijf uur, en niemand controleerde.\n\nVoordat u iets in een tijdzone plant, plaatst u beide steden in de wereldklok en kijkt u: bereken de offset niet uit het geheugen. Dit is ook de reden waarom uitnodigingen voor vergaderingen een tijdzone moeten bevatten in plaats van een enkel uur."
+      },
+      {
+        "p": "Op de Pomodoro-timer: de techniek werkt voor een specifiek soort taak: begrensd, gefocust, ononderbroken. Het werkt niet bij het debuggen, waarbij de juiste zet bij het vastlopen is om weg te lopen, en niet om nog een blok van 25 minuten te starten. Gebruik het wanneer het helpt."
+      },
+      {
+        "h": "Willekeurigheid, eerlijk gezegd"
+      },
+      {
+        "p": "De [[random-number|Random Number Generator]] en de [[list-randomizer|List Randomizer]] behandelen de gevallen die zich daadwerkelijk voordoen: het kiezen van een getal in een bereik, en het in een goede volgorde plaatsen van een lijst. Een straf waard over eerlijkheid. Beiden maken gebruik van een pseudo-willekeurige generator, die voor het beslissen wie de lunch betaalt niet te onderscheiden is van een echte munt. Voor alles wat gevolgen heeft – een trekking met prijzen, een toewijzing waaraan geld is verbonden – wil je een bron die je kunt controleren, en een browsertabblad is dat niet. De waarde hier is het verwijderen van de mens, die slecht kiest als hij gemotiveerd is."
+      },
+      {
+        "h": "De coderingsrommellade"
+      },
+      {
+        "p": "Vier tools die tekst tussen representaties verplaatsen. Geen ervan is encryptie, en het onderscheid is de moeite waard om te vermelden omdat het voortdurend verward wordt: een codering is door iedereen omkeerbaar en heeft geen sleutel. Voor codering is een sleutel vereist."
+      },
+      {
+        "l": [
+          "[[binary-text|Binary to Text]] — converteer tussen tekst en zijn binaire representatie.",
+          "[[hex-text|Hex naar tekst]] — converteer tussen tekst en hex, de representatie die je het vaakst ziet in netwerktools en debuggers.",
+          "[[caesar-cipher|Caesar Cipher]] - verschuif letters met een vast bedrag, het klassieke cijfer in het klaslokaal.",
+          "[[rot13-encoder|ROT13 Encoder]] — roteer letters met 13, een speciaal geval dat zijn eigen inverse is."
+        ]
+      },
+      {
+        "p": "Deze zijn voor precies twee dingen nuttig. Ten eerste: begrijpen hoe tekst bytes wordt, het mentale model dat je nodig hebt als iets er onleesbaar uitziet. Ten tweede: het debuggen: wanneer een payload als hex verschijnt, kun je met de [[hex-text|Hex to Text]]-converter ontdekken wat er staat.\n\nZe zijn niet nuttig om iets te verbergen. ROT13 heeft geen sleutel – de dienst is openbaar – dus het verbergt niets voor iedereen die weet wat ROT13 is. Het Caesarcijfer heeft 25 mogelijke verschuivingen, die een mens in minuut één kan doorbreken."
+      },
+      {
+        "h": "De twee die dingen formatteren"
+      },
+      {
+        "l": [
+          "[[phone-formatter|Phone Number Formatter]] — normaliseer telefoonnummers in een consistent formaat.",
+          "[[file-size-converter|File Size Converter]] — converteer tussen KB, MB, GB en TB, waarbij het decimale en binaire onderscheid wordt uitgelegd."
+        ]
+      },
+      {
+        "p": "De bestandsgrootteconverter heeft één echt waardevolle output: hij vertelt u waarom een ​​schijf een groter aantal adverteert dan uw computer meldt. Verkopers verkopen in machten van tien, besturingssystemen rapporteren machten van twee, en het verschil bedraagt ​​op elke schaal ongeveer 7 procent. Dat is geen fout, het zijn twee conventies."
+      },
+      {
+        "h": "Een uitgewerkt voorbeeld: de verminkte API-reactie"
+      },
+      {
+        "p": "De validatie van een webhook mislukt en de payload in het logboek ziet er als volgt uit: `\\x48\\x65\\x6c\\x6c\\x6f`. Dit is een tweeënnegentigste diagnose."
+      },
+      {
+        "l": [
+          "**1. Convert.** Plak `48656c6c6f` in de [[hex-text|Hex to Text]] converter — het resultaat is `Hallo`. Het is nooit verminkt, alleen gecodeerd.",
+          "**2. Controleer de vorm.** Iets stroomopwaarts codeert de payload vóór ondertekening. De handtekening werd berekend over de originele tekst en gevalideerd tegen de hexadecimale tekst, dus de vergelijking mislukt.",
+          "**3. Sluit de andere richting uit.** Als het logboek leesbare tekst had getoond, zou het probleem het omgekeerde zijn geweest: het ondertekenen van het gecodeerde formulier.",
+          "**4. Bevestig de claim over de grootte.** Als hetzelfde logboek een payload van 1,2 MB rapporteert, bepaalt de [[file-size-converter|File Size Converter]] of dat decimaal of binair is voordat iemand ruzie maakt over een quotum."
+        ]
+      },
+      {
+        "h": "Veelgestelde vragen"
+      },
+      {
+        "p": "**Is de wachtwoordgenerator veilig als alles in de browser draait?** Ja, en meer nog dan een servergebaseerde generator: het wachtwoord wordt op uw machine gegenereerd en nooit verzonden, dus er valt niets te onderscheppen, te loggen of te kraken. Het nadeel is dat u een wachtwoord dat u niet hebt opgeslagen, niet kunt herstellen.\n\n**Kan ik de virtuele muntwissel vertrouwen?** Voor informele beslissingen, ja. Gebruik voor alles waar geld of prijzen aan verbonden zijn een bron die u kunt controleren.\n\n**Zijn de cijfers veilig?** Nee. Geen van allen. ROT13- en Caesar-cijfers hebben geen geheime sleutel en zijn bedoeld om codering aan te leren, niet om iets te beschermen.\n\n**Werken deze offline?** Zodra een pagina is geladen, ja – alles is lokaal.\n\n**Is er een limiet op de tekstlengte voor de converters?** Alleen het geheugen van uw apparaat, aangezien er niets ergens naartoe wordt verzonden."
+      },
+      {
+        "h": "De éénregelige versie"
+      },
+      {
+        "p": "Lange unieke wachtwoorden verslaan korte slimme wachtwoorden, een QR-code is slechts zo goed als de gegevens erin, controleer tijdzone-offsets in plaats van ze te berekenen, en codering is geen encryptie."
+      }
+    ]
+  }
+}
