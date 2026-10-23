@@ -36,6 +36,19 @@ jobs:
       - name: Generate sitemap
         run: node scripts/generate-sitemap.mjs
 
+      - name: Restore translation cache
+        uses: actions/cache@v4
+        with:
+          path: .cache
+          key: translate-${{ github.sha }}
+          restore-keys: |
+            translate-
+
+      - name: Translate content (build-time, Google Cloud Translation)
+        env:
+          GOOGLE_TRANSLATE_KEY: ${{ secrets.GOOGLE_TRANSLATE_KEY }}
+        run: node scripts/translate-content.mjs
+
       - name: Build static site
         run: npm run build
 

@@ -15,8 +15,7 @@ const TARGETS: Target[] = [
 ];
 
 export default function VideoConverter() {
-  const { lang } = useI18n();
-  const L = (en: string, zh: string) => (lang === "zh" ? zh : en);
+  const { L } = useI18n();
 
   const [file, setFile] = useState<File | null>(null);
   const [videoUrl, setVideoUrl] = useState("");
@@ -67,7 +66,7 @@ export default function VideoConverter() {
       await ffmpeg.deleteFile(outName);
       ffmpeg.off("progress", onProg);
     } catch (e: any) {
-      alert(L("Conversion failed: ", "转换失败：") + (e?.message || e));
+      alert(L("Conversion failed: ") + (e?.message || e));
     } finally {
       setProcessing(false);
     }
@@ -78,7 +77,7 @@ export default function VideoConverter() {
       {!file ? (
         <label className="flex flex-col items-center gap-4 rounded-xl border-2 border-dashed p-12 cursor-pointer hover:border-primary hover:bg-muted/30 transition-all">
           <Upload className="h-8 w-8 text-muted-foreground" />
-          <p className="text-sm text-muted-foreground">{L("Drop a video or click to select", "点击或拖拽视频到此处")}</p>
+          <p className="text-sm text-muted-foreground">{L("Drop a video or click to select")}</p>
           <input type="file" accept="video/*" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); }} />
         </label>
       ) : (
@@ -92,7 +91,7 @@ export default function VideoConverter() {
           <video src={videoUrl} controls className="w-full rounded-lg border max-h-56" />
 
           <div className="flex flex-wrap items-center gap-2 text-sm">
-            <span className="text-muted-foreground">{L("Convert to:", "转换为：")}</span>
+            <span className="text-muted-foreground">{L("Convert to:")}</span>
             {TARGETS.map((t) => (
               <button key={t.id} onClick={() => setTarget(t)} className={`tool-btn ${target.id === t.id ? "tool-btn-primary" : "tool-btn-secondary"}`}>{t.label}</button>
             ))}
@@ -103,25 +102,25 @@ export default function VideoConverter() {
               <div className="h-2 rounded-full bg-muted overflow-hidden">
                 <div className="h-full bg-primary transition-all" style={{ width: `${progress}%` }} />
               </div>
-              <p className="text-xs text-muted-foreground">{L("Converting in your browser...", "浏览器本地转换中...")} {progress}%</p>
+              <p className="text-xs text-muted-foreground">{L("Converting in your browser...")} {progress}%</p>
             </div>
           )}
 
           <div className="flex gap-2">
             <button onClick={convert} disabled={processing} className="tool-btn tool-btn-primary">
               {processing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Repeat className="h-4 w-4" />}
-              {L(`Convert to ${target.label}`, `转换为 ${target.label}`)}
+              {L(`Convert to ${target.label}`)}
             </button>
             <button onClick={() => { setFile(null); setResult(null); }} className="tool-btn tool-btn-secondary">
-              <RotateCcw className="h-4 w-4" />{L("Reset", "重置")}
+              <RotateCcw className="h-4 w-4" />{L("Reset")}
             </button>
           </div>
 
           {result && (
             <div className="rounded-lg border bg-muted/30 p-4 space-y-3">
-              <p className="text-sm font-medium">{L("Done — ", "完成 — ")}{formatBytes(file.size)} → {formatBytes(result.size)}</p>
+              <p className="text-sm font-medium">{L("Done — ")}{formatBytes(file.size)} → {formatBytes(result.size)}</p>
               <button onClick={() => downloadBlob(result.blob, `${file.name.replace(/\.[^.]+$/, "")}.${target.ext}`, target.mime)} className="tool-btn tool-btn-primary">
-                <Download className="h-4 w-4" />{L(`Download .${target.ext}`, `下载 .${target.ext}`)}
+                <Download className="h-4 w-4" />{L(`Download .${target.ext}`)}
               </button>
             </div>
           )}

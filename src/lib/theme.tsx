@@ -46,7 +46,7 @@ export function useTheme() {
 export function ThemeToggle() {
   const { theme, toggle } = useTheme();
   const { t } = useI18n();
-  const label = theme === "dark" ? t("theme.toLight") : t("theme.toDark");
+  const label = theme === "dark" ? t("Switch to light mode") : t("Switch to dark mode");
   return (
     <button
       onClick={toggle}

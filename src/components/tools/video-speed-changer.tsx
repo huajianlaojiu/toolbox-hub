@@ -17,8 +17,7 @@ function buildAtempo(speed: number): string[] {
 const PRESETS = [0.25, 0.5, 0.75, 1.5, 2, 3, 4];
 
 export default function VideoSpeedChanger() {
-  const { lang } = useI18n();
-  const L = (en: string, zh: string) => (lang === "zh" ? zh : en);
+  const { L } = useI18n();
 
   const [file, setFile] = useState<File | null>(null);
   const [videoUrl, setVideoUrl] = useState("");
@@ -39,7 +38,7 @@ export default function VideoSpeedChanger() {
   const run = async () => {
     if (!file) return;
     if (Math.abs(speed - 1) < 0.001) {
-      alert(L("Speed is already 1x.", "当前为 1 倍速，无需处理"));
+      alert(L("Speed is already 1x."));
       return;
     }
     setProcessing(true);
@@ -73,7 +72,7 @@ export default function VideoSpeedChanger() {
       await ffmpeg.deleteFile("output.mp4");
       ffmpeg.off("progress", onProg);
     } catch (e: any) {
-      alert(L("Failed: ", "处理失败：") + (e?.message || e));
+      alert(L("Failed: ") + (e?.message || e));
     } finally {
       setProcessing(false);
     }
@@ -84,7 +83,7 @@ export default function VideoSpeedChanger() {
       {!file ? (
         <label className="flex flex-col items-center gap-4 rounded-xl border-2 border-dashed p-12 cursor-pointer hover:border-primary hover:bg-muted/30 transition-all">
           <Upload className="h-8 w-8 text-muted-foreground" />
-          <p className="text-sm text-muted-foreground">{L("Drop a video or click to select", "点击或拖拽视频到此处")}</p>
+          <p className="text-sm text-muted-foreground">{L("Drop a video or click to select")}</p>
           <input type="file" accept="video/*" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); }} />
         </label>
       ) : (
@@ -98,7 +97,7 @@ export default function VideoSpeedChanger() {
           <video src={videoUrl} controls className="w-full rounded-lg border max-h-56" onLoadedMetadata={(e) => setDuration(e.currentTarget.duration)} />
 
           <div className="flex flex-wrap items-center gap-2 text-sm">
-            <span className="text-muted-foreground">{L("Speed:", "倍速：")}</span>
+            <span className="text-muted-foreground">{L("Speed:")}</span>
             {PRESETS.map((s) => (
               <button key={s} onClick={() => setSpeed(s)} className={`tool-btn ${speed === s ? "tool-btn-primary" : "tool-btn-secondary"}`}>{s}x</button>
             ))}
@@ -106,11 +105,11 @@ export default function VideoSpeedChanger() {
 
           <label className="flex items-center gap-2 text-sm">
             <input type="checkbox" checked={keepAudio} onChange={(e) => setKeepAudio(e.target.checked)} />
-            <span className="text-muted-foreground">{L("Keep audio (pitch preserved)", "保留音频（音调不变）")}</span>
+            <span className="text-muted-foreground">{L("Keep audio (pitch preserved)")}</span>
           </label>
 
           {duration > 0 && speed !== 1 && (
-            <p className="text-xs text-muted-foreground">{L(`New duration: ${(duration / speed).toFixed(1)}s`, `新时长：${(duration / speed).toFixed(1)} 秒`)}</p>
+            <p className="text-xs text-muted-foreground">{L(`New duration: ${(duration / speed).toFixed(1)}s`)}</p>
           )}
 
           {processing && (
@@ -118,26 +117,26 @@ export default function VideoSpeedChanger() {
               <div className="h-2 rounded-full bg-muted overflow-hidden">
                 <div className="h-full bg-primary transition-all" style={{ width: `${progress}%` }} />
               </div>
-              <p className="text-xs text-muted-foreground">{L("Processing...", "处理中...")} {progress}%</p>
+              <p className="text-xs text-muted-foreground">{L("Processing...")} {progress}%</p>
             </div>
           )}
 
           <div className="flex gap-2">
             <button onClick={run} disabled={processing} className="tool-btn tool-btn-primary">
               {processing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Gauge className="h-4 w-4" />}
-              {L(`Apply ${speed}x`, `应用 ${speed} 倍速`)}
+              {L(`Apply ${speed}x`)}
             </button>
             <button onClick={() => { setFile(null); setResult(null); }} className="tool-btn tool-btn-secondary">
-              <RotateCcw className="h-4 w-4" />{L("Reset", "重置")}
+              <RotateCcw className="h-4 w-4" />{L("Reset")}
             </button>
           </div>
 
           {result && (
             <div className="rounded-lg border bg-muted/30 p-4 space-y-3">
-              <p className="text-sm font-medium">{L("Done — ", "完成 — ")}{formatBytes(result.size)}</p>
+              <p className="text-sm font-medium">{L("Done — ")}{formatBytes(result.size)}</p>
               <video src={result.url} controls className="w-full rounded-lg border max-h-48" />
               <button onClick={() => downloadBlob(result.blob, `speed-${speed}x-${file.name.replace(/\.[^.]+$/, "")}.mp4`, "video/mp4")} className="tool-btn tool-btn-primary">
-                <Download className="h-4 w-4" />{L("Download MP4", "下载 MP4")}
+                <Download className="h-4 w-4" />{L("Download MP4")}
               </button>
             </div>
           )}

@@ -5,8 +5,7 @@ import { loadFFmpeg, downloadBlob, formatBytes } from "@/lib/ffmpeg";
 import { useI18n } from "@/lib/i18n";
 
 export default function VideoToGif() {
-  const { lang } = useI18n();
-  const L = (en: string, zh: string) => (lang === "zh" ? zh : en);
+  const { L } = useI18n();
 
   const [file, setFile] = useState<File | null>(null);
   const [videoUrl, setVideoUrl] = useState("");
@@ -30,7 +29,7 @@ export default function VideoToGif() {
   const run = async () => {
     if (!file) return;
     if (clipDuration > 30) {
-      alert(L("Keep the GIF clip under 30 seconds.", "GIF 片段建议不超过 30 秒"));
+      alert(L("Keep the GIF clip under 30 seconds."));
       return;
     }
     setProcessing(true);
@@ -71,7 +70,7 @@ export default function VideoToGif() {
       await ffmpeg.deleteFile("palette.png");
       ffmpeg.off("progress", onProg);
     } catch (e: any) {
-      alert(L("GIF conversion failed: ", "GIF 转换失败：") + (e?.message || e));
+      alert(L("GIF conversion failed: ") + (e?.message || e));
     } finally {
       setProcessing(false);
     }
@@ -82,7 +81,7 @@ export default function VideoToGif() {
       {!file ? (
         <label className="flex flex-col items-center gap-4 rounded-xl border-2 border-dashed p-12 cursor-pointer hover:border-primary hover:bg-muted/30 transition-all">
           <Upload className="h-8 w-8 text-muted-foreground" />
-          <p className="text-sm text-muted-foreground">{L("Drop a video or click to select", "点击或拖拽视频到此处")}</p>
+          <p className="text-sm text-muted-foreground">{L("Drop a video or click to select")}</p>
           <input type="file" accept="video/*" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); }} />
         </label>
       ) : (
@@ -97,11 +96,11 @@ export default function VideoToGif() {
 
           <div className="grid gap-4 sm:grid-cols-3">
             <label className="text-sm">
-              <span className="text-muted-foreground block mb-1">{L("Start (s)", "起始时间（秒）")}</span>
+              <span className="text-muted-foreground block mb-1">{L("Start (s)")}</span>
               <input type="number" min={0} max={Math.max(0, duration - 0.5)} step={0.1} value={startTime} onChange={(e) => setStartTime(Math.max(0, Number(e.target.value)))} className="tool-input" />
             </label>
             <label className="text-sm">
-              <span className="text-muted-foreground block mb-1">{L("Length (s)", "片段长度（秒）")}</span>
+              <span className="text-muted-foreground block mb-1">{L("Length (s)")}</span>
               <input type="number" min={0.5} max={30} step={0.5} value={clipDuration} onChange={(e) => setClipDuration(Math.min(30, Math.max(0.5, Number(e.target.value))))} className="tool-input" />
             </label>
             <label className="text-sm">
@@ -113,11 +112,11 @@ export default function VideoToGif() {
           </div>
 
           <label className="text-sm block">
-            <span className="text-muted-foreground block mb-1">{L("Width", "宽度（px）")}</span>
+            <span className="text-muted-foreground block mb-1">{L("Width")}</span>
             <div className="flex items-center gap-3">
               <input type="range" min={200} max={800} step={20} value={width} onChange={(e) => setWidth(Number(e.target.value))} className="w-48" />
               <span className="font-mono text-sm">{width}px</span>
-              <span className="text-xs text-muted-foreground">{L("height auto", "高度自动")}</span>
+              <span className="text-xs text-muted-foreground">{L("height auto")}</span>
             </div>
           </label>
 
@@ -126,26 +125,26 @@ export default function VideoToGif() {
               <div className="h-2 rounded-full bg-muted overflow-hidden">
                 <div className="h-full bg-primary transition-all" style={{ width: `${progress}%` }} />
               </div>
-              <p className="text-xs text-muted-foreground">{L("Rendering GIF...", "正在渲染 GIF...")} {progress}%</p>
+              <p className="text-xs text-muted-foreground">{L("Rendering GIF...")} {progress}%</p>
             </div>
           )}
 
           <div className="flex gap-2">
             <button onClick={run} disabled={processing} className="tool-btn tool-btn-primary">
               {processing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Film className="h-4 w-4" />}
-              {L("Convert to GIF", "转换为 GIF")}
+              {L("Convert to GIF")}
             </button>
             <button onClick={() => { setFile(null); setResult(null); }} className="tool-btn tool-btn-secondary">
-              <RotateCcw className="h-4 w-4" />{L("Reset", "重置")}
+              <RotateCcw className="h-4 w-4" />{L("Reset")}
             </button>
           </div>
 
           {result && (
             <div className="rounded-lg border bg-muted/30 p-4 space-y-3">
-              <p className="text-sm font-medium">{L("Done — ", "完成 — ")}{formatBytes(result.size)}</p>
+              <p className="text-sm font-medium">{L("Done — ")}{formatBytes(result.size)}</p>
               <img src={result.url} alt="GIF result" className="max-w-full rounded-lg border max-h-64" />
               <button onClick={() => downloadBlob(result.blob, `${file.name.replace(/\.[^.]+$/, "")}.gif`, "image/gif")} className="tool-btn tool-btn-primary">
-                <Download className="h-4 w-4" />{L("Download GIF", "下载 GIF")}
+                <Download className="h-4 w-4" />{L("Download GIF")}
               </button>
             </div>
           )}

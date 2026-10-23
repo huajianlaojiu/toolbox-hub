@@ -62,3 +62,16 @@ next-env.d.ts
 
 # push debug logs
 /push*.log
+/build.log
+/out_stale*/
+
+# 构建期生成的翻译产物（由 CI 在 deploy 前跑 scripts/translate-content.mjs 重新生成）
+/src/i18n/messages/*.json
+/src/i18n/messages/index.ts
+/src/i18n/content/*.json
+/src/i18n/content/index.ts
+/src/i18n/posts/*.json
+/src/i18n/posts/index.ts
+
+# 翻译缓存
+/.cache/

@@ -16,8 +16,7 @@ const FORMATS: AudioFormat[] = [
 ];
 
 export default function VideoToAudio() {
-  const { lang } = useI18n();
-  const L = (en: string, zh: string) => (lang === "zh" ? zh : en);
+  const { L } = useI18n();
 
   const [file, setFile] = useState<File | null>(null);
   const [videoUrl, setVideoUrl] = useState("");
@@ -73,7 +72,7 @@ export default function VideoToAudio() {
       await ffmpeg.deleteFile(outName);
       ffmpeg.off("progress", onProg);
     } catch (e: any) {
-      alert(L("Extraction failed: ", "提取失败：") + (e?.message || e));
+      alert(L("Extraction failed: ") + (e?.message || e));
     } finally {
       setProcessing(false);
     }
@@ -86,7 +85,7 @@ export default function VideoToAudio() {
       {!file ? (
         <label className="flex flex-col items-center gap-4 rounded-xl border-2 border-dashed p-12 cursor-pointer hover:border-primary hover:bg-muted/30 transition-all">
           <Upload className="h-8 w-8 text-muted-foreground" />
-          <p className="text-sm text-muted-foreground">{L("Drop a video or click to select", "点击或拖拽视频到此处")}</p>
+          <p className="text-sm text-muted-foreground">{L("Drop a video or click to select")}</p>
           <input type="file" accept="video/*" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); }} />
         </label>
       ) : (
@@ -100,7 +99,7 @@ export default function VideoToAudio() {
           <video src={videoUrl} controls className="w-full rounded-lg border max-h-48" onLoadedMetadata={(e) => setDuration(e.currentTarget.duration)} />
 
           <div className="flex flex-wrap items-center gap-2 text-sm">
-            <span className="text-muted-foreground">{L("Format:", "格式：")}</span>
+            <span className="text-muted-foreground">{L("Format:")}</span>
             {FORMATS.map((f) => (
               <button key={f.id} onClick={() => setFormat(f)} className={`tool-btn ${format.id === f.id ? "tool-btn-primary" : "tool-btn-secondary"}`}>{f.label}</button>
             ))}
@@ -108,7 +107,7 @@ export default function VideoToAudio() {
 
           {!lossless && (
             <div className="flex items-center gap-3">
-              <span className="text-sm text-muted-foreground whitespace-nowrap">{L("Bitrate:", "码率：")}</span>
+              <span className="text-sm text-muted-foreground whitespace-nowrap">{L("Bitrate:")}</span>
               <input type="range" min={64} max={320} step={32} value={bitrate} onChange={(e) => setBitrate(Number(e.target.value))} className="w-48" />
               <span className="text-sm font-mono">{bitrate} kbps</span>
             </div>
@@ -117,11 +116,11 @@ export default function VideoToAudio() {
           {duration > 0 && (
             <div className="grid gap-4 sm:grid-cols-2">
               <label className="text-sm">
-                <span className="text-muted-foreground block mb-1">{L("Start (s, 0 = beginning)", "起始秒（0 = 从头）")}</span>
+                <span className="text-muted-foreground block mb-1">{L("Start (s, 0 = beginning)")}</span>
                 <input type="number" min={0} max={duration} step={0.1} value={trimStart} onChange={(e) => setTrimStart(Math.max(0, Number(e.target.value)))} className="tool-input" />
               </label>
               <label className="text-sm">
-                <span className="text-muted-foreground block mb-1">{L("Length (s, 0 = to end)", "长度秒（0 = 到结尾）")}</span>
+                <span className="text-muted-foreground block mb-1">{L("Length (s, 0 = to end)")}</span>
                 <input type="number" min={0} step={0.1} value={trimDuration} onChange={(e) => setTrimDuration(Math.max(0, Number(e.target.value)))} className="tool-input" />
               </label>
             </div>
@@ -132,26 +131,26 @@ export default function VideoToAudio() {
               <div className="h-2 rounded-full bg-muted overflow-hidden">
                 <div className="h-full bg-primary transition-all" style={{ width: `${progress}%` }} />
               </div>
-              <p className="text-xs text-muted-foreground">{L("Extracting audio...", "正在提取音频...")} {progress}%</p>
+              <p className="text-xs text-muted-foreground">{L("Extracting audio...")} {progress}%</p>
             </div>
           )}
 
           <div className="flex gap-2">
             <button onClick={run} disabled={processing} className="tool-btn tool-btn-primary">
               {processing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Music className="h-4 w-4" />}
-              {L(`Extract ${format.label}`, `提取 ${format.label}`)}
+              {L(`Extract ${format.label}`)}
             </button>
             <button onClick={() => { setFile(null); setResult(null); }} className="tool-btn tool-btn-secondary">
-              <RotateCcw className="h-4 w-4" />{L("Reset", "重置")}
+              <RotateCcw className="h-4 w-4" />{L("Reset")}
             </button>
           </div>
 
           {result && (
             <div className="rounded-lg border bg-muted/30 p-4 space-y-3">
-              <p className="text-sm font-medium">{L("Done — ", "完成 — ")}{formatBytes(result.size)}</p>
+              <p className="text-sm font-medium">{L("Done — ")}{formatBytes(result.size)}</p>
               <audio src={result.url} controls className="w-full" />
               <button onClick={() => downloadBlob(result.blob, `${file.name.replace(/\.[^.]+$/, "")}.${format.ext}`, format.mime)} className="tool-btn tool-btn-primary">
-                <Download className="h-4 w-4" />{L(`Download .${format.ext}`, `下载 .${format.ext}`)}
+                <Download className="h-4 w-4" />{L(`Download .${format.ext}`)}
               </button>
             </div>
           )}

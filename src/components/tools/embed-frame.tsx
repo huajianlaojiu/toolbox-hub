@@ -16,7 +16,7 @@ export default function EmbedFrame({
   /** 全屏级应用（如视频剪辑器）传更高的值 */
   height?: string;
 }) {
-  const { lang } = useI18n();
+  const { L } = useI18n();
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => { setLoaded(false); }, [src]);
@@ -28,7 +28,7 @@ export default function EmbedFrame({
           <div className="absolute inset-0 flex items-center justify-center bg-card">
             <div className="flex flex-col items-center gap-3 text-muted-foreground">
               <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-              <p className="text-sm">{lang === "zh" ? "正在加载工具..." : "Loading tool..."}</p>
+              <p className="text-sm">{L("Loading tool...")}</p>
             </div>
           </div>
         )}
@@ -41,9 +41,7 @@ export default function EmbedFrame({
         />
       </div>
       <p className="text-xs text-muted-foreground text-center">
-        {lang === "zh"
-          ? `本工具基于开源项目 ${credit}（MIT 许可）构建，所有处理均在浏览器本地完成。`
-          : `Powered by the open-source project ${credit} (MIT License). All processing happens locally in your browser.`}
+        {L("Powered by the open-source project {credit} (MIT License). All processing happens locally in your browser.").replace("{credit}", credit)}
       </p>
     </div>
   );

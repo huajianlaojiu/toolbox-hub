@@ -7,8 +7,7 @@ import { useI18n } from "@/lib/i18n";
 interface Frame { time: number; url: string; blob: Blob }
 
 export default function VideoFrameCapture() {
-  const { lang } = useI18n();
-  const L = (en: string, zh: string) => (lang === "zh" ? zh : en);
+  const { L } = useI18n();
 
   const [file, setFile] = useState<File | null>(null);
   const [videoUrl, setVideoUrl] = useState("");
@@ -111,7 +110,7 @@ export default function VideoFrameCapture() {
       {!file ? (
         <label className="flex flex-col items-center gap-4 rounded-xl border-2 border-dashed p-12 cursor-pointer hover:border-primary hover:bg-muted/30 transition-all">
           <Upload className="h-8 w-8 text-muted-foreground" />
-          <p className="text-sm text-muted-foreground">{L("Drop a video or click to select", "点击或拖拽视频到此处")}</p>
+          <p className="text-sm text-muted-foreground">{L("Drop a video or click to select")}</p>
           <input type="file" accept="video/*" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); }} />
         </label>
       ) : (
@@ -126,7 +125,7 @@ export default function VideoFrameCapture() {
 
           <div>
             <div className="mb-1.5 flex items-center justify-between text-xs">
-              <span className="text-muted-foreground">{L("Pick a timestamp", "拖动选择封面时间点")}</span>
+              <span className="text-muted-foreground">{L("Pick a timestamp")}</span>
               <span className="font-mono font-semibold text-primary">{time.toFixed(2)}s / {duration.toFixed(1)}s</span>
             </div>
             <input type="range" min={0} max={duration || 0} step={0.01} value={time} onChange={(e) => { const v = Number(e.target.value); setTime(v); if (videoRef.current) videoRef.current.currentTime = v; }} className="w-full" />
@@ -135,21 +134,21 @@ export default function VideoFrameCapture() {
           <div className="flex flex-wrap gap-2">
             <button onClick={captureSingle} disabled={processing} className="tool-btn tool-btn-primary">
               {processing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Camera className="h-4 w-4" />}
-              {L("Capture this frame", "截取当前帧")}
+              {L("Capture this frame")}
             </button>
             <select value={fmt} onChange={(e) => setFmt(e.target.value as any)} className="tool-input w-auto">
               <option value="image/jpeg">JPG</option>
               <option value="image/png">PNG</option>
             </select>
             <div className="flex items-center gap-2">
-              <span className="text-xs text-muted-foreground">{L("Batch:", "批量：")}</span>
+              <span className="text-xs text-muted-foreground">{L("Batch:")}</span>
               <input type="number" min={1} max={30} value={batchCount} onChange={(e) => setBatchCount(Number(e.target.value))} className="tool-input w-16" />
               <button onClick={captureBatch} disabled={processing} className="tool-btn tool-btn-secondary">
-                <Images className="h-4 w-4" />{L("Capture N frames", `抽 ${batchCount} 帧`)}
+                <Images className="h-4 w-4" />{L("Capture N frames").replace("N", String(batchCount))}
               </button>
             </div>
             <button onClick={() => { setFile(null); setFrames([]); }} className="tool-btn tool-btn-secondary">
-              <RotateCcw className="h-4 w-4" />{L("Reset", "重置")}
+              <RotateCcw className="h-4 w-4" />{L("Reset")}
             </button>
           </div>
 
@@ -164,7 +163,7 @@ export default function VideoFrameCapture() {
                     <div className="flex items-center justify-between p-2 text-xs">
                       <span className="font-mono text-muted-foreground">{f.time.toFixed(1)}s</span>
                       <a href={f.url} download={`frame_${i + 1}_${f.time.toFixed(1)}s.${fmt === "image/jpeg" ? "jpg" : "png"}`} className="text-primary hover:underline inline-flex items-center gap-1">
-                        <Download className="h-3 w-3" />{L("Save", "保存")}
+                        <Download className="h-3 w-3" />{L("Save")}
                       </a>
                     </div>
                   </div>
@@ -172,7 +171,7 @@ export default function VideoFrameCapture() {
               </div>
               <button onClick={downloadAll} disabled={zipping} className="tool-btn tool-btn-primary">
                 {zipping ? <Loader2 className="h-4 w-4 animate-spin" /> : <Package className="h-4 w-4" />}
-                {L("Download all as ZIP", "打包下载 ZIP")}
+                {L("Download all as ZIP")}
               </button>
             </div>
           )}

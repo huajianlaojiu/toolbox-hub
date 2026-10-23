@@ -86,8 +86,7 @@ function fmtTime(s: number): string {
 }
 
 export default function AudioTrimmer() {
-  const { lang } = useI18n();
-  const L = (en: string, zh: string) => (lang === "zh" ? zh : en);
+  const { L } = useI18n();
 
   const [file, setFile] = useState<File | null>(null);
   const [buffer, setBuffer] = useState<AudioBuffer | null>(null);
@@ -113,7 +112,7 @@ export default function AudioTrimmer() {
       setStart(0);
       setEnd(buf.duration);
     } catch {
-      alert(L("Could not decode this audio file.", "无法解码该音频文件"));
+      alert(L("Could not decode this audio file."));
       setFile(null);
     }
   };
@@ -170,7 +169,7 @@ export default function AudioTrimmer() {
       const blob = outFmt === "wav" ? encodeWav(trimmed) : await encodeMp3(trimmed, 192);
       setResult({ url: URL.createObjectURL(blob), blob });
     } catch (e: any) {
-      alert(L("Trim failed: ", "裁剪失败：") + (e?.message || e));
+      alert(L("Trim failed: ") + (e?.message || e));
     } finally {
       setProcessing(false);
     }
@@ -181,7 +180,7 @@ export default function AudioTrimmer() {
       {!file ? (
         <label className="flex flex-col items-center gap-4 rounded-xl border-2 border-dashed p-12 cursor-pointer hover:border-primary hover:bg-muted/30 transition-all">
           <Upload className="h-8 w-8 text-muted-foreground" />
-          <p className="text-sm text-muted-foreground">{L("Drop an audio file or click to select", "点击或拖拽音频文件到此处")}</p>
+          <p className="text-sm text-muted-foreground">{L("Drop an audio file or click to select")}</p>
           <input type="file" accept="audio/*" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); }} />
         </label>
       ) : (
@@ -196,9 +195,9 @@ export default function AudioTrimmer() {
 
           <div className="space-y-2">
             <div className="flex justify-between text-xs text-muted-foreground">
-              <span>{L("Start", "开始")}: <b className="text-foreground font-mono">{fmtTime(start)}</b></span>
+              <span>{L("Start")}: <b className="text-foreground font-mono">{fmtTime(start)}</b></span>
               <span className="font-mono text-primary">{(end - start).toFixed(1)}s</span>
-              <span>{L("End", "结束")}: <b className="text-foreground font-mono">{fmtTime(end)}</b></span>
+              <span>{L("End")}: <b className="text-foreground font-mono">{fmtTime(end)}</b></span>
             </div>
             <input type="range" min={0} max={duration} step={0.05} value={start} onChange={(e) => setStart(Math.min(Number(e.target.value), end - 0.1))} className="w-full" />
             <input type="range" min={0} max={duration} step={0.05} value={end} onChange={(e) => setEnd(Math.max(Number(e.target.value), start + 0.1))} className="w-full" />
@@ -207,24 +206,24 @@ export default function AudioTrimmer() {
           <div className="flex flex-wrap gap-2 items-center">
             <button onClick={playing ? stop : preview} className="tool-btn tool-btn-secondary">
               {playing ? <Square className="h-4 w-4" /> : <Play className="h-4 w-4" />}
-              {playing ? L("Stop", "停止") : L("Preview clip", "试听片段")}
+              {playing ? L("Stop") : L("Preview clip")}
             </button>
             <select value={outFmt} onChange={(e) => setOutFmt(e.target.value as any)} className="tool-input w-auto">
-              <option value="mp3">MP3 192kbps</option>
-              <option value="wav">WAV 无损</option>
+              <option value="mp3">{L("MP3 192kbps")}</option>
+              <option value="wav">{L("WAV lossless")}</option>
             </select>
             <button onClick={run} disabled={processing} className="tool-btn tool-btn-primary">
               {processing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Scissors className="h-4 w-4" />}
-              {L("Trim & export", "裁剪并导出")}
+              {L("Trim & export")}
             </button>
             <button onClick={() => { stop(); setFile(null); setBuffer(null); setResult(null); }} className="tool-btn tool-btn-secondary">
-              <RotateCcw className="h-4 w-4" />{L("Reset", "重置")}
+              <RotateCcw className="h-4 w-4" />{L("Reset")}
             </button>
           </div>
 
           {result && (
             <div className="rounded-lg border bg-muted/30 p-4 space-y-3">
-              <p className="text-sm font-medium">{L("Done — ", "完成 — ")}{formatBytes(result.blob.size)}</p>
+              <p className="text-sm font-medium">{L("Done — ")}{formatBytes(result.blob.size)}</p>
               <audio src={result.url} controls className="w-full" />
               <button onClick={() => {
                 const a = document.createElement("a");
@@ -232,7 +231,7 @@ export default function AudioTrimmer() {
                 a.download = `${file!.name.replace(/\.[^.]+$/, "")}-trimmed.${outFmt}`;
                 a.click();
               }} className="tool-btn tool-btn-primary">
-                <Download className="h-4 w-4" />{L(`Download .${outFmt.toUpperCase()}`, `下载 .${outFmt.toUpperCase()}`)}
+                <Download className="h-4 w-4" />{L(`Download .${outFmt.toUpperCase()}`)}
               </button>
             </div>
           )}

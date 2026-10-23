@@ -5,8 +5,7 @@ import { loadFFmpeg, downloadBlob, formatBytes } from "@/lib/ffmpeg";
 import { useI18n } from "@/lib/i18n";
 
 export default function VideoMerger() {
-  const { lang } = useI18n();
-  const L = (en: string, zh: string) => (lang === "zh" ? zh : en);
+  const { L } = useI18n();
 
   const [files, setFiles] = useState<File[]>([]);
   const [processing, setProcessing] = useState(false);
@@ -32,12 +31,12 @@ export default function VideoMerger() {
     if (files.length < 2) return;
     setProcessing(true);
     setResult(null);
-    setStatus(L("Loading engine...", "正在加载转码引擎…"));
+    setStatus(L("Loading engine..."));
     try {
       const { ffmpeg, fetchFile } = await loadFFmpeg();
       const names = files.map((_, i) => `in${i}.mp4`);
       for (let i = 0; i < files.length; i++) {
-        setStatus(L(`Reading ${i + 1}/${files.length}...`, `正在读取第 ${i + 1}/${files.length} 个视频…`));
+        setStatus(L(`Reading ${i + 1}/${files.length}...`));
         await ffmpeg.writeFile(names[i], await fetchFile(files[i]));
       }
 
@@ -54,7 +53,7 @@ export default function VideoMerger() {
         "-y", "merged.mp4",
       );
 
-      setStatus(L("Merging...", "正在合并…"));
+      setStatus(L("Merging..."));
       await ffmpeg.exec(args);
       const data = await ffmpeg.readFile("merged.mp4");
       const blob = new Blob([data], { type: "video/mp4" });
@@ -63,7 +62,7 @@ export default function VideoMerger() {
       for (const n of names) await ffmpeg.deleteFile(n).catch(() => {});
       await ffmpeg.deleteFile("merged.mp4").catch(() => {});
     } catch (e: any) {
-      alert(L("Merge failed. Videos must share the same resolution/codec: ", "合并失败，请确认各视频分辨率与编码一致：") + (e?.message || e));
+      alert(L("Merge failed. Videos must share the same resolution/codec: ") + (e?.message || e));
     } finally {
       setProcessing(false);
       setStatus("");
@@ -74,7 +73,7 @@ export default function VideoMerger() {
     <div className="space-y-4">
       <label className="flex flex-col items-center gap-4 rounded-xl border-2 border-dashed p-8 cursor-pointer hover:border-primary hover:bg-muted/30 transition-all">
         <Upload className="h-8 w-8 text-muted-foreground" />
-        <p className="text-sm text-muted-foreground">{L("Add videos (2-10, same resolution recommended)", "添加视频（2~10 个，建议分辨率一致）")}</p>
+        <p className="text-sm text-muted-foreground">{L("Add videos (2-10, same resolution recommended)")}</p>
         <input type="file" accept="video/*" multiple className="hidden" onChange={(e) => addFiles(e.target.files)} />
       </label>
 
@@ -102,18 +101,18 @@ export default function VideoMerger() {
       <div className="flex gap-2">
         <button onClick={merge} disabled={processing || files.length < 2} className="tool-btn tool-btn-primary">
           {processing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Combine className="h-4 w-4" />}
-          {L(`Merge ${files.length} videos`, `合并 ${files.length} 个视频`)}
+          {L(`Merge ${files.length} videos`)}
         </button>
         <button onClick={() => { setFiles([]); setResult(null); }} className="tool-btn tool-btn-secondary">
-          <RotateCcw className="h-4 w-4" />{L("Reset", "重置")}
+          <RotateCcw className="h-4 w-4" />{L("Reset")}
         </button>
       </div>
 
       {result && (
         <div className="rounded-lg border bg-muted/30 p-4 space-y-3">
-          <p className="text-sm font-medium">{L("Done — ", "完成 — ")}{formatBytes(result.size)}</p>
+          <p className="text-sm font-medium">{L("Done — ")}{formatBytes(result.size)}</p>
           <button onClick={() => downloadBlob(result.blob, "merged.mp4", "video/mp4")} className="tool-btn tool-btn-primary">
-            <Download className="h-4 w-4" />{L("Download merged MP4", "下载合并后的 MP4")}
+            <Download className="h-4 w-4" />{L("Download merged MP4")}
           </button>
         </div>
       )}

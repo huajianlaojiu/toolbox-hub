@@ -113,8 +113,7 @@ async function resample(buffer: AudioBuffer, targetRate: number): Promise<AudioB
 }
 
 export default function AudioConverter() {
-  const { lang } = useI18n();
-  const L = (en: string, zh: string) => (lang === "zh" ? zh : en);
+  const { L } = useI18n();
 
   const [file, setFile] = useState<File | null>(null);
   const [format, setFormat] = useState<OutFormat>("mp3");
@@ -140,7 +139,7 @@ export default function AudioConverter() {
 
       setResult({ url: URL.createObjectURL(blob), blob });
     } catch (e: any) {
-      alert(L("Conversion failed: ", "转换失败：") + (e?.message || e));
+      alert(L("Conversion failed: ") + (e?.message || e));
     } finally {
       setProcessing(false);
     }
@@ -151,7 +150,7 @@ export default function AudioConverter() {
       {!file ? (
         <label className="flex flex-col items-center gap-4 rounded-xl border-2 border-dashed p-12 cursor-pointer hover:border-primary hover:bg-muted/30 transition-all">
           <Upload className="h-8 w-8 text-muted-foreground" />
-          <p className="text-sm text-muted-foreground">{L("Drop an audio file or click to select (MP3, WAV, OGG, M4A, FLAC...)", "点击或拖拽音频文件（MP3 / WAV / OGG / M4A / FLAC）")}</p>
+          <p className="text-sm text-muted-foreground">{L("Drop an audio file or click to select (MP3, WAV, OGG, M4A, FLAC...)")}</p>
           <input type="file" accept="audio/*" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) { setFile(f); setResult(null); } }} />
         </label>
       ) : (
@@ -165,7 +164,7 @@ export default function AudioConverter() {
           <audio src={URL.createObjectURL(file)} controls className="w-full" />
 
           <div className="flex flex-wrap items-center gap-2 text-sm">
-            <span className="text-muted-foreground">{L("Convert to:", "转换为：")}</span>
+            <span className="text-muted-foreground">{L("Convert to:")}</span>
             {FORMATS.map((f) => (
               <button key={f.id} onClick={() => setFormat(f.id)} className={`tool-btn ${format === f.id ? "tool-btn-primary" : "tool-btn-secondary"}`}>{f.label}</button>
             ))}
@@ -173,14 +172,14 @@ export default function AudioConverter() {
 
           <div className="flex flex-wrap items-center gap-4">
             <label className="flex items-center gap-2 text-sm">
-              <span className="text-muted-foreground">{L("Sample rate:", "采样率：")}</span>
+              <span className="text-muted-foreground">{L("Sample rate:")}</span>
               <select value={sampleRate} onChange={(e) => setSampleRate(Number(e.target.value))} className="tool-input w-auto">
                 {[44100, 48000, 22050, 16000].map((r) => <option key={r} value={r}>{r / 1000} kHz</option>)}
               </select>
             </label>
             {format === "mp3" && (
               <label className="flex items-center gap-2 text-sm">
-                <span className="text-muted-foreground">{L("Bitrate:", "码率：")}</span>
+                <span className="text-muted-foreground">{L("Bitrate:")}</span>
                 <select value={bitrate} onChange={(e) => setBitrate(Number(e.target.value))} className="tool-input w-auto">
                   {[96, 128, 192, 256, 320].map((b) => <option key={b} value={b}>{b} kbps</option>)}
                 </select>
@@ -190,23 +189,23 @@ export default function AudioConverter() {
 
           {processing && (
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Loader2 className="h-4 w-4 animate-spin" />{L("Converting in your browser...", "浏览器本地转换中...")}
+              <Loader2 className="h-4 w-4 animate-spin" />{L("Converting in your browser...")}
             </div>
           )}
 
           <div className="flex gap-2">
             <button onClick={run} disabled={processing} className="tool-btn tool-btn-primary">
               {processing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Repeat className="h-4 w-4" />}
-              {L("Convert", "开始转换")}
+              {L("Convert")}
             </button>
             <button onClick={() => { setFile(null); setResult(null); }} className="tool-btn tool-btn-secondary">
-              <RotateCcw className="h-4 w-4" />{L("Reset", "重置")}
+              <RotateCcw className="h-4 w-4" />{L("Reset")}
             </button>
           </div>
 
           {result && (
             <div className="rounded-lg border bg-muted/30 p-4 space-y-3">
-              <p className="text-sm font-medium">{L("Done — ", "完成 — ")}{formatBytes(result.blob.size)}</p>
+              <p className="text-sm font-medium">{L("Done — ")}{formatBytes(result.blob.size)}</p>
               <audio src={result.url} controls className="w-full" />
               <button onClick={() => {
                 const f = FORMATS.find((x) => x.id === format)!;
@@ -215,7 +214,7 @@ export default function AudioConverter() {
                 a.download = `${file!.name.replace(/\.[^.]+$/, "")}.${f.ext}`;
                 a.click();
               }} className="tool-btn tool-btn-primary">
-                <Download className="h-4 w-4" />{L("Download", "下载")}
+                <Download className="h-4 w-4" />{L("Download")}
               </button>
             </div>
           )}

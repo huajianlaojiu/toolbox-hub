@@ -73,8 +73,7 @@ function toAss(cues: Cue[]): string {
 }
 
 export default function SubtitleEditor() {
-  const { lang } = useI18n();
-  const L = (en: string, zh: string) => (lang === "zh" ? zh : en);
+  const { L } = useI18n();
 
   const [cues, setCues] = useState<Cue[]>([]);
   const [selected, setSelected] = useState(0);
@@ -89,7 +88,7 @@ export default function SubtitleEditor() {
     reader.onload = () => {
       const parsed = parseSub(String(reader.result || ""));
       if (parsed.length === 0) {
-        alert(L("Could not parse any subtitle cues from this file.", "无法从该文件解析出字幕条目"));
+        alert(L("Could not parse any subtitle cues from this file."));
         return;
       }
       setCues(parsed);
@@ -134,12 +133,12 @@ export default function SubtitleEditor() {
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="flex flex-col items-center gap-3 rounded-xl border-2 border-dashed p-6 cursor-pointer hover:border-primary hover:bg-muted/30 transition-all">
           <FileText className="h-7 w-7 text-muted-foreground" />
-          <p className="text-sm text-muted-foreground text-center">{L("Import subtitles (SRT / VTT / ASS / SSA / SBV)", "导入字幕（SRT / VTT / ASS / SSA / SBV）")}</p>
+          <p className="text-sm text-muted-foreground text-center">{L("Import subtitles (SRT / VTT / ASS / SSA / SBV)")}</p>
           <input type="file" accept=".srt,.vtt,.ass,.ssa,.sbv,text/plain" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) loadFile(f); }} />
         </label>
         <label className="flex flex-col items-center gap-3 rounded-xl border-2 border-dashed p-6 cursor-pointer hover:border-primary hover:bg-muted/30 transition-all">
           <Play className="h-7 w-7 text-muted-foreground" />
-          <p className="text-sm text-muted-foreground text-center">{L("Load a video to preview timing (optional)", "加载视频预览时间轴（可选）")}</p>
+          <p className="text-sm text-muted-foreground text-center">{L("Load a video to preview timing (optional)")}</p>
           <input type="file" accept="video/*" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) loadVideo(f); }} />
         </label>
       </div>
@@ -147,12 +146,12 @@ export default function SubtitleEditor() {
       {cues.length > 0 && (
         <>
           <div className="flex flex-wrap items-center gap-2 text-sm">
-            <span className="text-muted-foreground">{cues.length} {L("cues", "条字幕")}</span>
+            <span className="text-muted-foreground">{cues.length} {L("cues")}</span>
             <div className="flex items-center gap-1">
               <Clock className="h-4 w-4 text-muted-foreground" />
               <input type="number" step={0.1} value={offset} onChange={(e) => setOffset(Number(e.target.value))} className="tool-input w-20 py-1" />
               <span className="text-xs text-muted-foreground">s</span>
-              <button onClick={applyOffset} className="tool-btn tool-btn-secondary py-1">{L("Shift all", "整体平移")}</button>
+              <button onClick={applyOffset} className="tool-btn tool-btn-secondary py-1">{L("Shift all")}</button>
             </div>
             <div className="ml-auto flex gap-2">
               <button onClick={() => download("srt")} className="tool-btn tool-btn-secondary py-1"><Download className="h-3.5 w-3.5" />SRT</button>
@@ -228,14 +227,14 @@ export default function SubtitleEditor() {
             }}
             className="tool-btn tool-btn-secondary"
           >
-            <Plus className="h-4 w-4" />{L("Add cue", "添加字幕")}
+            <Plus className="h-4 w-4" />{L("Add cue")}
           </button>
         </>
       )}
 
       {cues.length === 0 && (
         <p className="text-center text-sm text-muted-foreground py-6">
-          {L("Import a subtitle file to start editing. Everything stays in your browser.", "导入字幕文件开始编辑。所有处理都在浏览器本地完成。")}
+          {L("Import a subtitle file to start editing. Everything stays in your browser.")}
         </p>
       )}
     </div>

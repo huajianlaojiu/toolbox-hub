@@ -9,8 +9,7 @@ import { useI18n } from "@/lib/i18n";
  *       导入 .txt / .srt（自动去时间码只留文本）/ localStorage 记忆
  */
 export default function Teleprompter() {
-  const { lang } = useI18n();
-  const L = (en: string, zh: string) => (lang === "zh" ? zh : en);
+  const { L } = useI18n();
 
   const [text, setText] = useState("");
   const [speed, setSpeed] = useState(40); // px/s
@@ -98,28 +97,28 @@ export default function Teleprompter() {
       <div className="space-y-4">
         <label className="flex flex-col items-center gap-4 rounded-xl border-2 border-dashed p-8 cursor-pointer hover:border-primary hover:bg-muted/30 transition-all">
           <Upload className="h-8 w-8 text-muted-foreground" />
-          <p className="text-sm text-muted-foreground">{L("Import a .txt or .srt script (optional)", "导入 .txt 或 .srt 讲稿（可选）")}</p>
+          <p className="text-sm text-muted-foreground">{L("Import a .txt or .srt script (optional)")}</p>
           <input type="file" accept=".txt,.srt,.vtt,text/plain" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) importFile(f); }} />
         </label>
         <textarea
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder={L("Paste your script here...", "在此粘贴讲稿...")}
+          placeholder={L("Paste your script here...")}
           className="tool-input h-64 resize-y"
           autoFocus
         />
         <div className="flex gap-2">
           <button onClick={() => { if (scrollRef.current) scrollRef.current.scrollTop = 0; setEditing(false); }} disabled={!text.trim()} className="tool-btn tool-btn-primary">
-            <Play className="h-4 w-4" />{L("Start presenting", "开始演讲")}
+            <Play className="h-4 w-4" />{L("Start presenting")}
           </button>
           {text.trim() && (
             <button onClick={() => { setText(""); localStorage.removeItem("tb-teleprompter-text"); }} className="tool-btn tool-btn-secondary">
-              <RotateCcw className="h-4 w-4" />{L("Clear", "清空")}
+              <RotateCcw className="h-4 w-4" />{L("Clear")}
             </button>
           )}
         </div>
         <p className="text-xs text-muted-foreground">
-          {L("Shortcuts: Space = play/pause · ↑/↓ = speed · R = restart", "快捷键：空格 = 播放/暂停 · ↑/↓ = 调速 · R = 重新开始")}
+          {L("Shortcuts: Space = play/pause · ↑/↓ = speed · R = restart")}
         </p>
       </div>
     );
@@ -148,37 +147,37 @@ export default function Teleprompter() {
       <div className="flex flex-wrap items-center gap-3">
         <button onClick={() => setPlaying((p) => !p)} className="tool-btn tool-btn-primary">
           {playing ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
-          {playing ? L("Pause", "暂停") : L("Play", "播放")}
+          {playing ? L("Pause") : L("Play")}
         </button>
         <button onClick={() => { if (scrollRef.current) scrollRef.current.scrollTop = 0; setPlaying(false); }} className="tool-btn tool-btn-secondary">
-          <RotateCcw className="h-4 w-4" />{L("Restart", "重新开始")}
+          <RotateCcw className="h-4 w-4" />{L("Restart")}
         </button>
         <button onClick={() => setMirror((m) => !m)} className={`tool-btn ${mirror ? "tool-btn-primary" : "tool-btn-secondary"}`}>
-          <FlipHorizontal2 className="h-4 w-4" />{L("Mirror", "镜像")}
+          <FlipHorizontal2 className="h-4 w-4" />{L("Mirror")}
         </button>
         <button onClick={fullscreen} className="tool-btn tool-btn-secondary">
-          <Maximize2 className="h-4 w-4" />{L("Fullscreen", "全屏")}
+          <Maximize2 className="h-4 w-4" />{L("Fullscreen")}
         </button>
         <button onClick={() => setEditing(true)} className="tool-btn tool-btn-secondary">
-          <Type className="h-4 w-4" />{L("Edit script", "编辑讲稿")}
+          <Type className="h-4 w-4" />{L("Edit script")}
         </button>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">
         <label className="flex items-center gap-2 text-sm">
           <Gauge className="h-4 w-4 text-muted-foreground" />
-          <span className="text-muted-foreground whitespace-nowrap">{L("Speed", "速度")}</span>
+          <span className="text-muted-foreground whitespace-nowrap">{L("Speed")}</span>
           <input type="range" min={5} max={300} value={speed} onChange={(e) => setSpeed(Number(e.target.value))} className="w-full" />
           <span className="font-mono text-xs w-12 text-right">{speed}</span>
         </label>
         <label className="flex items-center gap-2 text-sm">
           <Type className="h-4 w-4 text-muted-foreground" />
-          <span className="text-muted-foreground whitespace-nowrap">{L("Font size", "字号")}</span>
+          <span className="text-muted-foreground whitespace-nowrap">{L("Font size")}</span>
           <input type="range" min={16} max={72} value={fontSize} onChange={(e) => setFontSize(Number(e.target.value))} className="w-full" />
           <span className="font-mono text-xs w-12 text-right">{fontSize}</span>
         </label>
         <label className="flex items-center gap-2 text-sm">
-          <span className="text-muted-foreground whitespace-nowrap">{L("Line height", "行距")}</span>
+          <span className="text-muted-foreground whitespace-nowrap">{L("Line height")}</span>
           <input type="range" min={1.2} max={3} step={0.1} value={lineHeight} onChange={(e) => setLineHeight(Number(e.target.value))} className="w-full" />
           <span className="font-mono text-xs w-12 text-right">{lineHeight.toFixed(1)}</span>
         </label>

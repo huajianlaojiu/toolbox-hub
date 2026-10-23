@@ -7,8 +7,7 @@ import { useI18n } from "@/lib/i18n";
 type Mode = "quality" | "bitrate" | "size";
 
 export default function VideoCompressor() {
-  const { lang } = useI18n();
-  const L = (en: string, zh: string) => (lang === "zh" ? zh : en);
+  const { L } = useI18n();
 
   const [file, setFile] = useState<File | null>(null);
   const [videoUrl, setVideoUrl] = useState("");
@@ -66,7 +65,7 @@ export default function VideoCompressor() {
       await ffmpeg.deleteFile(outputName);
       ffmpeg.off("progress", onProg);
     } catch (e: any) {
-      alert(L("Compression failed: ", "压缩失败：") + (e?.message || e));
+      alert(L("Compression failed: ") + (e?.message || e));
     } finally {
       setProcessing(false);
     }
@@ -79,7 +78,7 @@ export default function VideoCompressor() {
       {!file ? (
         <label className="flex flex-col items-center gap-4 rounded-xl border-2 border-dashed p-12 cursor-pointer hover:border-primary hover:bg-muted/30 transition-all">
           <Upload className="h-8 w-8 text-muted-foreground" />
-          <p className="text-sm text-muted-foreground">{L("Drop a video or click to select (MP4, MOV, WebM, MKV)", "点击或拖拽视频到此处（MP4 / MOV / WebM / MKV）")}</p>
+          <p className="text-sm text-muted-foreground">{L("Drop a video or click to select (MP4, MOV, WebM, MKV)")}</p>
           <input type="file" accept="video/*" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); }} />
         </label>
       ) : (
@@ -93,11 +92,11 @@ export default function VideoCompressor() {
           <video src={videoUrl} controls className="w-full rounded-lg border max-h-64" onLoadedMetadata={(e) => setDuration(e.currentTarget.duration)} />
 
           <div className="flex flex-wrap items-center gap-2 text-sm">
-            <span className="text-muted-foreground">{L("Mode:", "模式：")}</span>
+            <span className="text-muted-foreground">{L("Mode:")}</span>
             {([
-              ["quality", L("Quality (CRF)", "质量（CRF）")],
-              ["bitrate", L("Bitrate", "指定码率")],
-              ["size", L("Target size", "目标大小")],
+              ["quality", L("Quality (CRF)")],
+              ["bitrate", L("Bitrate")],
+              ["size", L("Target size")],
             ] as [Mode, string][]).map(([m, label]) => (
               <button key={m} onClick={() => setMode(m)} className={`tool-btn ${mode === m ? "tool-btn-primary" : "tool-btn-secondary"}`}>{label}</button>
             ))}
@@ -108,22 +107,22 @@ export default function VideoCompressor() {
               <span className="text-sm text-muted-foreground whitespace-nowrap">CRF:</span>
               <input type="range" min={18} max={32} value={crf} onChange={(e) => setCrf(Number(e.target.value))} className="w-48" />
               <span className="text-sm font-mono">{crf}</span>
-              <span className="text-xs text-muted-foreground">{L("lower = better quality, bigger file", "越小越清晰，文件越大")}</span>
+              <span className="text-xs text-muted-foreground">{L("lower = better quality")}</span>
             </div>
           )}
           {mode === "bitrate" && (
             <div className="flex items-center gap-3">
-              <span className="text-sm text-muted-foreground whitespace-nowrap">{L("Bitrate:", "码率：")}</span>
+              <span className="text-sm text-muted-foreground whitespace-nowrap">{L("Bitrate:")}</span>
               <input type="range" min={0.5} max={10} step={0.5} value={bitrate} onChange={(e) => setBitrate(Number(e.target.value))} className="w-48" />
               <span className="text-sm font-mono">{bitrate} Mbps</span>
             </div>
           )}
           {mode === "size" && (
             <div className="flex items-center gap-3">
-              <span className="text-sm text-muted-foreground whitespace-nowrap">{L("Target size:", "目标大小：")}</span>
+              <span className="text-sm text-muted-foreground whitespace-nowrap">{L("Target size:")}</span>
               <input type="number" min={1} max={500} value={targetMB} onChange={(e) => setTargetMB(Number(e.target.value))} className="tool-input w-24" />
               <span className="text-sm text-muted-foreground">MB</span>
-              {duration > 0 && <span className="text-xs text-muted-foreground">{L(`≈ ${Math.round((targetMB * 8 * 1024) / duration)} kbps total`, `≈ 总码率 ${Math.round((targetMB * 8 * 1024) / duration)} kbps`)}</span>}
+              {duration > 0 && <span className="text-xs text-muted-foreground">{L(`≈ ${Math.round((targetMB * 8 * 1024) / duration)} kbps total`)}</span>}
             </div>
           )}
 
@@ -132,29 +131,29 @@ export default function VideoCompressor() {
               <div className="h-2 rounded-full bg-muted overflow-hidden">
                 <div className="h-full bg-primary transition-all" style={{ width: `${progress}%` }} />
               </div>
-              <p className="text-xs text-muted-foreground">{L("Compressing in your browser...", "浏览器本地压缩中...")} {progress}%</p>
+              <p className="text-xs text-muted-foreground">{L("Compressing in your browser...")} {progress}%</p>
             </div>
           )}
 
           <div className="flex gap-2">
             <button onClick={compress} disabled={processing} className="tool-btn tool-btn-primary">
               {processing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Minimize2 className="h-4 w-4" />}
-              {L("Compress", "开始压缩")}
+              {L("Compress")}
             </button>
             <button onClick={() => { setFile(null); setResult(null); }} className="tool-btn tool-btn-secondary">
-              <RotateCcw className="h-4 w-4" />{L("Reset", "重置")}
+              <RotateCcw className="h-4 w-4" />{L("Reset")}
             </button>
           </div>
 
           {result && (
             <div className="rounded-lg border bg-muted/30 p-4 space-y-3">
               <p className="text-sm font-medium">
-                {L("Done — ", "完成 — ")}{formatBytes(file.size)} → {formatBytes(result.size)}
+                {L("Done — ")}{formatBytes(file.size)} → {formatBytes(result.size)}
                 <span className="text-primary ml-2">(-{savedPercent}%)</span>
               </p>
               <video src={result.url} controls className="w-full rounded-lg border max-h-48" />
               <button onClick={() => downloadBlob(result.blob, `compressed-${file.name.replace(/\.[^.]+$/, "")}.mp4`, "video/mp4")} className="tool-btn tool-btn-primary">
-                <Download className="h-4 w-4" />{L("Download MP4", "下载 MP4")}
+                <Download className="h-4 w-4" />{L("Download MP4")}
               </button>
             </div>
           )}

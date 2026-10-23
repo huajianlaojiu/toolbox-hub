@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import type { ToolMeta } from "@/lib/tools-data";
 import { tools } from "@/lib/tools-data";
 import { ChevronLeft } from "lucide-react";
-import Link from "next/link";
+import { useI18n, localizePath } from "@/lib/i18n";
 import ToolCard from "@/components/tool-card";
 
 const toolComponents: Record<string, React.ComponentType> = {
@@ -26,6 +26,7 @@ const toolComponents: Record<string, React.ComponentType> = {
 };
 
 export default function ToolPageClient({ tool }: { tool: ToolMeta }) {
+  const { t, lang } = useI18n();
   const ToolComponent = toolComponents[tool.slug];
 
   const relatedTools = tools
@@ -34,13 +35,13 @@ export default function ToolPageClient({ tool }: { tool: ToolMeta }) {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
-      <Link
-        href="/"
+      <a
+        href={localizePath("/tools/", lang)}
         className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"
       >
         <ChevronLeft className="h-4 w-4" />
-        All Tools
-      </Link>
+        {t("All Tools")}
+      </a>
 
       <div className="mb-8">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">{tool.title}</h1>

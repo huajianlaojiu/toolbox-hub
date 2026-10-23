@@ -7,8 +7,7 @@ import { useI18n } from "@/lib/i18n";
 interface Options { hflip: boolean; vflip: boolean; rotate: number; reverse: boolean }
 
 export default function VideoTransformer() {
-  const { lang } = useI18n();
-  const L = (en: string, zh: string) => (lang === "zh" ? zh : en);
+  const { L } = useI18n();
 
   const [file, setFile] = useState<File | null>(null);
   const [videoUrl, setVideoUrl] = useState("");
@@ -61,7 +60,7 @@ export default function VideoTransformer() {
       await ffmpeg.deleteFile("output.mp4");
       ffmpeg.off("progress", onProg);
     } catch (e: any) {
-      alert(L("Failed: ", "处理失败：") + (e?.message || e));
+      alert(L("Failed: ") + (e?.message || e));
     } finally {
       setProcessing(false);
     }
@@ -72,7 +71,7 @@ export default function VideoTransformer() {
       {!file ? (
         <label className="flex flex-col items-center gap-4 rounded-xl border-2 border-dashed p-12 cursor-pointer hover:border-primary hover:bg-muted/30 transition-all">
           <Upload className="h-8 w-8 text-muted-foreground" />
-          <p className="text-sm text-muted-foreground">{L("Drop a video or click to select", "点击或拖拽视频到此处")}</p>
+          <p className="text-sm text-muted-foreground">{L("Drop a video or click to select")}</p>
           <input type="file" accept="video/*" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); }} />
         </label>
       ) : (
@@ -87,16 +86,16 @@ export default function VideoTransformer() {
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             <button onClick={() => setOpts({ ...opts, hflip: !opts.hflip })} className={`tool-btn ${opts.hflip ? "tool-btn-primary" : "tool-btn-secondary"}`}>
-              <FlipHorizontal2 className="h-4 w-4" />{L("Flip H", "水平镜像")}
+              <FlipHorizontal2 className="h-4 w-4" />{L("Flip H")}
             </button>
             <button onClick={() => setOpts(toggleOpt(opts, "vflip"))} className={`tool-btn ${opts.vflip ? "tool-btn-primary" : "tool-btn-secondary"}`}>
-              <FlipHorizontal2 className="h-4 w-4 rotate-90" />{L("Flip V", "垂直镜像")}
+              <FlipHorizontal2 className="h-4 w-4 rotate-90" />{L("Flip V")}
             </button>
             <button onClick={() => setOpts(toggleOpt(opts, "rotate"))} className={`tool-btn ${opts.rotate ? "tool-btn-primary" : "tool-btn-secondary"}`}>
-              <RotateCcw className="h-4 w-4" />{L(`Rotate ${opts.rotate ? opts.rotate + "°" : ""}`, `旋转 ${opts.rotate ? opts.rotate + "°" : ""}`).trim()}
+              <RotateCcw className="h-4 w-4" />{L(`Rotate ${opts.rotate ? opts.rotate + "°" : ""}`).trim()}
             </button>
             <button onClick={() => setOpts(toggleOpt(opts, "reverse"))} className={`tool-btn ${opts.reverse ? "tool-btn-primary" : "tool-btn-secondary"}`}>
-              <Rewind className="h-4 w-4" />{L("Reverse", "倒放")}
+              <Rewind className="h-4 w-4" />{L("Reverse")}
             </button>
           </div>
 
@@ -105,26 +104,26 @@ export default function VideoTransformer() {
               <div className="h-2 rounded-full bg-muted overflow-hidden">
                 <div className="h-full bg-primary transition-all" style={{ width: `${progress}%` }} />
               </div>
-              <p className="text-xs text-muted-foreground">{L("Processing...", "处理中...")} {progress}%</p>
+              <p className="text-xs text-muted-foreground">{L("Processing...")} {progress}%</p>
             </div>
           )}
 
           <div className="flex gap-2">
             <button onClick={run} disabled={processing || !hasAny} className="tool-btn tool-btn-primary">
               {processing ? <Loader2 className="h-4 w-4 animate-spin" /> : <FlipHorizontal2 className="h-4 w-4" />}
-              {L("Apply & export", "应用并导出")}
+              {L("Apply & export")}
             </button>
             <button onClick={() => { setFile(null); setResult(null); setOpts({ hflip: false, vflip: false, rotate: 0, reverse: false }); }} className="tool-btn tool-btn-secondary">
-              <RotateCcw className="h-4 w-4" />{L("Reset", "重置")}
+              <RotateCcw className="h-4 w-4" />{L("Reset")}
             </button>
           </div>
 
           {result && (
             <div className="rounded-lg border bg-muted/30 p-4 space-y-3">
-              <p className="text-sm font-medium">{L("Done — ", "完成 — ")}{formatBytes(result.size)}</p>
+              <p className="text-sm font-medium">{L("Done — ")}{formatBytes(result.size)}</p>
               <video src={result.url} controls className="w-full rounded-lg border max-h-48" />
               <button onClick={() => downloadBlob(result.blob, `transformed-${file.name.replace(/\.[^.]+$/, "")}.mp4`, "video/mp4")} className="tool-btn tool-btn-primary">
-                <Download className="h-4 w-4" />{L("Download MP4", "下载 MP4")}
+                <Download className="h-4 w-4" />{L("Download MP4")}
               </button>
             </div>
           )}

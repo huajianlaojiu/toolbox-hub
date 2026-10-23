@@ -1,105 +1,155 @@
 "use client";
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { LOCALES, getLocale } from "./locales";
 
-export type Lang = "en" | "zh";
+/** 语言包：key 是英文原文（source-string），value 是译文 */
+export type Messages = Record<string, string>;
 
 interface I18nCtx {
-  lang: Lang;
-  setLang: (l: Lang) => void;
+  lang: string;
+  /** 英文原文 → 当前语言译文；查不到就回退英文原文（永远可渲染，不会开天窗） */
+  L: (en: string) => string;
+  /** 同 L 的别名，站点 UI 沿用历史调用名 */
   t: (key: string) => string;
+  /** 带占位符插值的翻译：tl("About the {title}", { title }) → 先翻译模板再注入变量 */
+  tl: (tmpl: string, vars: Record<string, string>) => string;
+  setLocale: (code: string) => void;
 }
 
-const Ctx = createContext<I18nCtx>({ lang: "en", setLang: () => {}, t: (k) => k });
+const Ctx = createContext<I18nCtx>({
+  lang: "en",
+  L: (s) => s,
+  t: (s) => s,
+  tl: (tmpl, vars) => tmpl.replace(/\{(\w+)\}/g, (_, k) => (vars[k] != null ? vars[k] : `{${k}}`)),
+  setLocale: () => {},
+});
 
 const STORAGE_KEY = "tb-lang";
 
-/** 站点级 UI 文案（导航、页脚、工具页框架、通用）。工具内部文案由各组件自带双语。 */
-const dict: Record<string, Record<Lang, string>> = {
-  "nav.home": { en: "Home", zh: "首页" },
-  "nav.tools": { en: "All Tools", zh: "全部工具" },
-  "nav.blog": { en: "Blog", zh: "博客" },
-  "header.search": { en: "Search tools...", zh: "搜索工具..." },
-  "tool.about": { en: "About the", zh: "关于" },
-  "tool.useCases": { en: "Where people use the", zh: "适用场景：" },
-  "tool.howTo": { en: "How to use the", zh: "使用方法：" },
-  "tool.tips": { en: "Tips and best practices", zh: "使用技巧" },
-  "tool.faq": { en: "Frequently asked questions", zh: "常见问题" },
-  "tool.related": { en: "Related Tools", zh: "相关工具" },
-  "tool.local": { en: "All processing happens in your browser.", zh: "所有处理均在浏览器本地完成。" },
-  "tool.freeTag": { en: "Free", zh: "免费" },
-  "tool.noUpload": { en: "No upload · No sign-up", zh: "无需上传 · 无需注册" },
-  "footer.tools": { en: "All Tools", zh: "全部工具" },
-  "footer.about": { en: "About", zh: "关于" },
-  "footer.blog": { en: "Blog", zh: "博客" },
-  "footer.contact": { en: "Contact", zh: "联系" },
-  "footer.privacy": { en: "Privacy Policy", zh: "隐私政策" },
-  "footer.terms": { en: "Terms", zh: "服务条款" },
-  "footer.disclaimer": { en: "Disclaimer", zh: "免责声明" },
-  "footer.sitemap": { en: "Sitemap", zh: "站点地图" },
-  "footer.rights": { en: "All rights reserved.", zh: "保留所有权利。" },
-  "footer.freeTools": { en: "free online tools. No sign-up needed.", zh: "个免费在线工具，无需注册。" },
-  "lang.label": { en: "Language", zh: "语言" },
-  "theme.toLight": { en: "Switch to light mode", zh: "切换到浅色模式" },
-  "theme.toDark": { en: "Switch to dark mode", zh: "切换到深色模式" },
-  "theme.label": { en: "Toggle theme", zh: "切换主题" },
-};
+const NON_EN_CODES = LOCALES.filter((l) => l.code !== "en").map((l) => l.code);
+const KNOWN = new Set(NON_EN_CODES);
 
-function detectInitial(): Lang {
-  if (typeof window === "undefined") return "en";
-  try {
-    const url = new URL(window.location.href);
-    const q = url.searchParams.get("lang");
-    if (q === "zh" || q === "en") return q;
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved === "zh" || saved === "en") return saved;
-    if (navigator.language && navigator.language.toLowerCase().startsWith("zh")) return "zh";
-  } catch { /* ignore */ }
-  return "en";
+/** 把路径切成目标语言版本：根路径加前缀，已有前缀则替换 */
+export function localizePath(pathname: string, code: string): string {
+  const segments = pathname.split("/").filter(Boolean);
+  if (code === "en") {
+    if (KNOWN.has(segments[0] ?? "")) segments.shift();
+  } else if (KNOWN.has(segments[0] ?? "")) {
+    segments[0] = code;
+  } else {
+    segments.unshift(code);
+  }
+  const rest = segments.join("/");
+  return rest ? `/${rest}/` : "/";
 }
 
-export function I18nProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLangState] = useState<Lang>("en");
+/** 从 /zh/tools/xxx/ 取出语言段，没有则视为英文 */
+export function langFromPath(pathname: string): string {
+  const seg = pathname.split("/").filter(Boolean)[0] ?? "";
+  return KNOWN.has(seg) ? seg : "en";
+}
 
-  useEffect(() => { setLangState(detectInitial()); }, []);
+/**
+ * 语言包由 Server Component 在构建时读取并通过 props 注入——
+ * 每个语言版本只打包自己的译文，不会 15 种语言全塞进一个 bundle。
+ */
+export function I18nProvider({
+  lang,
+  dict,
+  children,
+}: {
+  lang: string;
+  dict: Messages;
+  children: React.ReactNode;
+}) {
+  const lookup = useCallback((s: string) => dict[s] ?? s, [dict]);
+  const tl = useCallback(
+    (tmpl: string, vars: Record<string, string>) => lookup(tmpl).replace(/\{(\w+)\}/g, (_, k) => (vars[k] != null ? vars[k] : `{${k}}`)),
+    [lookup]
+  );
 
-  const setLang = useCallback((l: Lang) => {
-    setLangState(l);
-    try { localStorage.setItem(STORAGE_KEY, l); } catch { /* ignore */ }
+  const setLocale = useCallback((code: string) => {
     try {
-      const url = new URL(window.location.href);
-      if (l === "en") url.searchParams.delete("lang");
-      else url.searchParams.set("lang", l);
-      window.history.replaceState(null, "", url.toString());
-    } catch { /* ignore */ }
+      localStorage.setItem(STORAGE_KEY, code);
+    } catch {
+      /* ignore */
+    }
+    try {
+      window.location.href = localizePath(window.location.pathname, code);
+    } catch {
+      /* ignore */
+    }
   }, []);
 
-  const t = useCallback((key: string) => {
-    const entry = dict[key];
-    return entry ? entry[lang] : key;
+  // RTL 语言（阿拉伯语）需要 dir="rtl"
+  useEffect(() => {
+    try {
+      document.documentElement.dir = getLocale(lang).rtl ? "rtl" : "ltr";
+    } catch {
+      /* ignore */
+    }
   }, [lang]);
 
-  return <Ctx.Provider value={{ lang, setLang, t }}>{children}</Ctx.Provider>;
+  const value = useMemo<I18nCtx>(() => ({ lang, L: lookup, t: lookup, tl, setLocale }), [lang, lookup, tl, setLocale]);
+
+  return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
 
 export function useI18n() {
   return useContext(Ctx);
 }
 
-/** 头部语言切换按钮：EN / 中文 */
+/** 头部语言切换菜单：15 种语言，显示母语名（用户要能认出自己的语言） */
 export function LangToggle() {
-  const { lang, setLang } = useI18n();
+  const { lang, setLocale } = useI18n();
+  const [open, setOpen] = useState(false);
+  const current = getLocale(lang);
+
+  useEffect(() => {
+    const onDoc = (e: MouseEvent) => {
+      if (!(e.target as HTMLElement)?.closest?.(".lang-menu")) setOpen(false);
+    };
+    document.addEventListener("click", onDoc);
+    return () => document.removeEventListener("click", onDoc);
+  }, []);
+
   return (
-    <div className="flex h-8 items-center rounded-lg border text-xs font-medium overflow-hidden">
-      {(["en", "zh"] as Lang[]).map((l) => (
-        <button
-          key={l}
-          onClick={() => setLang(l)}
-          title={l === "en" ? "English" : "中文"}
-          className={`h-full px-2.5 transition-colors ${lang === l ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}
-        >
-          {l === "en" ? "EN" : "中"}
-        </button>
-      ))}
+    <div className="lang-menu relative">
+      <button
+        onClick={() => setOpen((v) => !v)}
+        aria-label="Language"
+        aria-expanded={open}
+        className="flex h-8 items-center gap-1 rounded-lg border px-2 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-muted"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+          <circle cx="12" cy="12" r="10" />
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+          <path d="M2 12h20" />
+        </svg>
+        <span className="hidden sm:inline">{current.native}</span>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`h-3 w-3 transition-transform ${open ? "rotate-180" : ""}`}>
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+
+      {open && (
+        <div className="absolute right-0 z-50 mt-1 max-h-[70vh] w-56 overflow-y-auto rounded-xl border bg-popover p-1 shadow-lg">
+          {LOCALES.map((l) => (
+            <button
+              key={l.code}
+              onClick={() => setLocale(l.code)}
+              lang={l.code}
+              dir={l.rtl ? "rtl" : undefined}
+              className={`flex w-full items-center justify-between gap-2 rounded-lg px-2.5 py-1.5 text-left text-sm transition-colors hover:bg-muted ${
+                l.code === lang ? "font-semibold text-primary" : "text-foreground"
+              }`}
+            >
+              <span>{l.native}</span>
+              <span className="text-[11px] text-muted-foreground">{l.en}</span>
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
