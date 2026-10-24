@@ -281,7 +281,7 @@ export default async function ToolPageBody({ lang, slug }: { lang: string; slug:
         {slug === "viral-video-studio" && <EmbedFrame src="/embed/viral-video-studio.html" credit="Viral Video Studio" />}
         {slug === "teleprompter" && <Teleprompter />}
         {slug === "subtitle-editor" && <SubtitleEditor />}
-        {slug === "openreel-video-editor" && <EmbedFrame src="/embed/openreel/index.html" credit="OpenReel Video" height="min(88vh, 1000px)" />}
+        {slug === "openreel-video-editor" && <EmbedFrame src="/embed/openreel/index.html" credit="OpenReel Video" height="min(88dvh, 1000px)" />}
         </div>
         <div className="mx-auto max-w-6xl mt-8"><AdUnit /></div>
       </ToolPageContent>
