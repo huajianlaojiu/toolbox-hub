@@ -277,11 +277,11 @@ export default async function ToolPageBody({ lang, slug }: { lang: string; slug:
         {slug === "video-frame-capture" && <VideoFrameCapture />}
         {slug === "audio-converter" && <AudioConverter />}
         {slug === "audio-trimmer" && <AudioTrimmer />}
-        {slug === "pilko-frame-studio" && <EmbedFrame src="/embed/pilko-frame-studio.html" credit="Pilko Frame Capture Studio" />}
-        {slug === "viral-video-studio" && <EmbedFrame src="/embed/viral-video-studio.html" credit="Viral Video Studio" />}
+        {slug === "pilko-frame-studio" && <EmbedFrame src="/embed/pilko-frame-studio.html" credit="Pilko Frame Capture Studio" auto={false} height="100dvh" />}
+        {slug === "viral-video-studio" && <EmbedFrame src="/embed/viral-video-studio.html" credit="Viral Video Studio" height="min(90dvh, 1200px)" />}
         {slug === "teleprompter" && <Teleprompter />}
         {slug === "subtitle-editor" && <SubtitleEditor />}
-        {slug === "openreel-video-editor" && <EmbedFrame src="/embed/openreel/index.html" credit="OpenReel Video" height="min(88dvh, 1000px)" />}
+        {slug === "openreel-video-editor" && <EmbedFrame src="/embed/openreel/index.html" credit="OpenReel Video" auto={false} height="100dvh" />}
         </div>
         <div className="mx-auto max-w-6xl mt-8"><AdUnit /></div>
       </ToolPageContent>

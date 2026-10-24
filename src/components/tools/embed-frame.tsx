@@ -7,35 +7,82 @@ import { useI18n } from "@/lib/i18n";
  * 嵌入第三方单文件工具（public/embed/*.html）。
  * 这些工具是 MIT 许可的独立静态页，用 iframe 隔离样式与脚本。
  *
- * 注意：OpenReel 这类全屏级应用本是按完整浏览器视口设计的，塞进固定高度的
- * iframe 后，底部按钮会和「Skip on startup · Press Esc」之类提示文字挤在一起
- * 重叠（用户反馈的「下部文字折叠」）。iframe 再高也只是接近视口，治不了本——
- * 所以提供全屏入口：让 iframe 容器进入 Fullscreen，应用拿到完整视口重新布局，
- * 挤压消失且用户不离开页面；浏览器不支持时降级为新标签页打开。
+ * 历史问题：OpenReel / Pilko 这类全屏级应用本按完整浏览器视口（100vh）设计，
+ * 塞进固定高度的 iframe 后，应用把全部 UI 压缩进更小空间，底部按钮与提示文字
+ * 重叠（用户反馈的「下部文字折叠」）。
+ *
+ * 根治：
+ *  - `auto`（默认，流式内容页如 Viral）：加载后直接读取 iframe 内部文档真实高度
+ *    （同源可读 contentDocument），把 iframe 撑到内容高度，底部不再被截断。
+ *  - 视口级编辑器（openreel / pilko）传 `auto={false}` 且 `height="100dvh"`，
+ *    给满屏高度，应用按设计布局，挤压/重叠消失。
+ *  - 全屏按钮保留：让容器进入浏览器 Fullscreen 拿完整视口；不支持时降级新标签页。
  */
 export default function EmbedFrame({
   src,
   credit,
   height = "min(78dvh, 820px)",
+  /** 流式内容页传 true（自动撑高到真实内容高度）；视口级编辑器传 false */
+  auto = true,
 }: {
   src: string;
   credit: string;
-  /** 全屏级应用（如视频剪辑器）传更高的值 */
   height?: string;
+  auto?: boolean;
 }) {
   const { L } = useI18n();
   const [loaded, setLoaded] = useState(false);
   const [isFs, setIsFs] = useState(false);
+  const [autoH, setAutoH] = useState<number | null>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
-  useEffect(() => { setLoaded(false); }, [src]);
+  useEffect(() => {
+    setLoaded(false);
+    setAutoH(null);
+  }, [src]);
 
-  // 跟踪全屏状态——全屏时容器必须撑满，否则仍只有 78dvh 那一小块
+  // 跟踪全屏状态——全屏时容器必须撑满，否则仍只有那一小块
   useEffect(() => {
     const onChange = () => setIsFs(document.fullscreenElement === wrapRef.current);
     document.addEventListener("fullscreenchange", onChange);
     return () => document.removeEventListener("fullscreenchange", onChange);
   }, []);
+
+  // 同源读取嵌入页真实内容高度，自动撑开 iframe（避免固定高度截断底部）
+  useEffect(() => {
+    if (!auto) return;
+    const iframe = iframeRef.current;
+    if (!iframe) return;
+    let ro: ResizeObserver | null = null;
+    const measure = () => {
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc || !doc.documentElement) return;
+        const h = doc.documentElement.scrollHeight;
+        if (h > 0) setAutoH((prev) => (prev === null ? h : Math.max(prev, Math.min(h, 3000))));
+        if (!ro && window.ResizeObserver) {
+          ro = new ResizeObserver(() => {
+            try {
+              const hh = iframe.contentDocument?.documentElement.scrollHeight ?? 0;
+              if (hh > 0) setAutoH((prev) => (prev === null ? hh : Math.max(prev, Math.min(hh, 3000))));
+            } catch {
+              /* cross-origin */
+            }
+          });
+          ro.observe(doc.documentElement);
+        }
+      } catch {
+        /* 跨域或尚未就绪：保持 fallback 高度 */
+      }
+    };
+    iframe.addEventListener("load", measure);
+    measure();
+    return () => {
+      iframe.removeEventListener("load", measure);
+      ro?.disconnect();
+    };
+  }, [src, auto]);
 
   const openFullscreen = useCallback(() => {
     const el = wrapRef.current;
@@ -48,12 +95,14 @@ export default function EmbedFrame({
     window.open(src, "_blank", "noopener,noreferrer");
   }, [src]);
 
+  const frameHeight = isFs ? "100dvh" : autoH ? `${autoH}px` : height;
+
   return (
     <div className="space-y-3">
       <div
         ref={wrapRef}
         className="relative rounded-xl border bg-card overflow-hidden"
-        style={{ height: isFs ? "100dvh" : height }}
+        style={{ height: frameHeight }}
       >
         {/* z-20 压在加载遮罩之上，加载中也能点 */}
         <div className="absolute right-2 top-2 z-20 flex items-center gap-1.5">
@@ -85,6 +134,7 @@ export default function EmbedFrame({
           </div>
         )}
         <iframe
+          ref={iframeRef}
           src={src}
           title={credit}
           onLoad={() => setLoaded(true)}
