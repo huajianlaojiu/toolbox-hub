@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { tools } from "./tools-data";
+import { visibleTools } from "./tools-data";
 
 export const SITE_URL = "https://toolbox-hub.io";
 
@@ -85,7 +85,7 @@ export function siteJsonLd(lang: string) {
     },
     {
       question: "Which tools are included?",
-      answer: `Toolbox Hub currently ships ${tools.length} free tools across developer, text, design, image, calculator, converter, utility, math and web categories, including a JSON formatter, Base64 encoder, QR code generator, password generator, image compressor and unit converters.`,
+      answer: `Toolbox Hub currently ships ${visibleTools.length} free tools across developer, text, design, image, calculator, converter, utility, math and web categories, including a JSON formatter, Base64 encoder, QR code generator, password generator, image compressor and unit converters.`,
     },
     {
       question: "How do I report a bug or suggest a tool?",

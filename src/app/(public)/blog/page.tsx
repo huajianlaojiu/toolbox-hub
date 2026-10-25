@@ -3,7 +3,7 @@ import I18nLink from "@/components/i18n-link";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import { posts } from "@/lib/posts";
-import { tools } from "@/lib/tools-data";
+import { visibleTools } from "@/lib/tools-data";
 import { I18nText } from "@/components/i18n-text";
 import { PostCard } from "@/components/post-card";
 import { languageAlternates } from "@/lib/alternates";
@@ -72,7 +72,7 @@ export default function BlogIndex() {
         <p className="mt-2 text-sm text-muted-foreground leading-7">
           <I18nText id="The blog covers strategy; the tools themselves live in the directory. Use the search box in the header, or" />{" "}
           <I18nLink href="/tools/" className="text-primary hover:underline">
-            <I18nText id="browse all {count} tools" vars={{ count: String(tools.length) }} />
+            <I18nText id="browse all {count} tools" vars={{ count: String(visibleTools.length) }} />
           </I18nLink>
           .
         </p>

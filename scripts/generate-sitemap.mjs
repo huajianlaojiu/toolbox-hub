@@ -26,7 +26,10 @@ const LANGS = [
 const prefix = (code) => (code === "en" ? "" : `/${code}`);
 
 const data = readFileSync(join(ROOT, "src/lib/tools-data.ts"), "utf8");
-const slugs = [...data.matchAll(/\{ slug: "([^"]+)"/g)].map((m) => m[1]);
+// 跳过已被收编（redirect）的旧工具，避免 noindex 页进 sitemap 造成冲突
+const slugs = [...data.matchAll(/\{ slug: "([^"]+)"([^}]*)\}/g)]
+  .filter((m) => !/redirect:\s*"/.test(m[2]))
+  .map((m) => m[1]);
 
 const postsData = readFileSync(join(ROOT, "src/lib/posts.ts"), "utf8");
 const postSlugs = [...postsData.matchAll(/^\s{4}slug: "([^"]+)"/gm)].map((m) => m[1]);

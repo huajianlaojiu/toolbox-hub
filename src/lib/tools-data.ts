@@ -1,9 +1,9 @@
 import type { ComponentType } from "react";
 
-export interface ToolMeta { slug: string; title: string; description: string; titleZh?: string; descriptionZh?: string; keywordsZh?: string[]; category: string; icon: string; keywords: string[]; isPureFrontend: boolean; }
+export interface ToolMeta { slug: string; title: string; description: string; titleZh?: string; descriptionZh?: string; keywordsZh?: string[]; category: string; icon: string; keywords: string[]; isPureFrontend: boolean; redirect?: string; }
 
 export const tools: ToolMeta[] = [
-  { slug: "json-formatter", title: "JSON Formatter", description: "Format validate beautify JSON", category: "Developer", icon: "wrench", keywords: ["json formatter", "json beautifier", "json validator"], isPureFrontend: true },
+  { slug: "json-formatter", title: "JSON Formatter", description: "Format validate beautify JSON", category: "Developer", icon: "wrench", keywords: ["json formatter", "json beautifier", "json validator"], isPureFrontend: true, redirect: "data-converter" },
   { slug: "base64-encoder", title: "Base64 Encoder/Decoder", description: "Encode decode Base64", category: "Developer", icon: "wrench", keywords: ["base64 encode", "base64 decode", "base64 encoder"], isPureFrontend: true },
   { slug: "url-encoder", title: "URL Encoder/Decoder", description: "URL encode decode", category: "Developer", icon: "wrench", keywords: ["url encode", "url decode", "url encoder"], isPureFrontend: true },
   { slug: "qr-code-generator", title: "QR Code Generator", description: "Generate QR codes", category: "Utility", icon: "wrench", keywords: ["qr code generator", "qr code maker"], isPureFrontend: true },
@@ -17,10 +17,10 @@ export const tools: ToolMeta[] = [
   { slug: "html-entity-encoder", title: "HTML Entity Encoder/Decoder", description: "Encode decode HTML entities", category: "Developer", icon: "wrench", keywords: ["html entity encoder", "html entities"], isPureFrontend: true },
   { slug: "file-size-converter", title: "File Size Converter", description: "Convert file sizes", category: "Utility", icon: "wrench", keywords: ["file size converter", "bytes to mb"], isPureFrontend: true },
   { slug: "markdown-preview", title: "Markdown Preview", description: "Live Markdown preview", category: "Text", icon: "wrench", keywords: ["markdown preview", "markdown editor"], isPureFrontend: true },
-  { slug: "image-compressor", title: "Image Compressor", description: "Compress images", category: "Image", icon: "wrench", keywords: ["image compressor", "compress image"], isPureFrontend: true },
-  { slug: "json-to-yaml", title: "JSON to YAML", description: "Convert JSON to YAML", category: "Developer", icon: "wrench", keywords: ["json to yaml", "json yaml"], isPureFrontend: true },
-  { slug: "json-to-csv", title: "JSON to CSV", description: "Convert JSON to CSV", category: "Developer", icon: "wrench", keywords: ["json to csv", "json csv"], isPureFrontend: true },
-  { slug: "xml-formatter", title: "XML Formatter", description: "Format XML", category: "Developer", icon: "wrench", keywords: ["xml formatter", "xml beautifier"], isPureFrontend: true },
+  { slug: "image-compressor", title: "Image Compressor", description: "Compress images", category: "Image", icon: "wrench", keywords: ["image compressor", "compress image"], isPureFrontend: true, redirect: "image-format-converter" },
+  { slug: "json-to-yaml", title: "JSON to YAML", description: "Convert JSON to YAML", category: "Developer", icon: "wrench", keywords: ["json to yaml", "json yaml"], isPureFrontend: true, redirect: "data-converter" },
+  { slug: "json-to-csv", title: "JSON to CSV", description: "Convert JSON to CSV", category: "Developer", icon: "wrench", keywords: ["json to csv", "json csv"], isPureFrontend: true, redirect: "data-converter" },
+  { slug: "xml-formatter", title: "XML Formatter", description: "Format XML", category: "Developer", icon: "wrench", keywords: ["xml formatter", "xml beautifier"], isPureFrontend: true, redirect: "data-converter" },
   { slug: "number-base-converter", title: "Number Base Converter", description: "Binary octal decimal hex", category: "Developer", icon: "wrench", keywords: ["number base converter", "binary decimal"], isPureFrontend: true },
   { slug: "regex-tester", title: "Regex Tester", description: "Test regular expressions", category: "Developer", icon: "wrench", keywords: ["regex tester", "regex test"], isPureFrontend: true },
   { slug: "text-case-converter", title: "Text Case Converter", description: "Change text case", category: "Text", icon: "wrench", keywords: ["text case converter", "case converter"], isPureFrontend: true },
@@ -78,8 +78,8 @@ export const tools: ToolMeta[] = [
   { slug: "image-to-base64", title: "Image to Base64", description: "Convert images to Base64", category: "Image", icon: "wrench", keywords: ["image to base64", "base64 image"], isPureFrontend: true },
   { slug: "password-strength", title: "Password Strength Checker", description: "Check password strength", category: "Utility", icon: "wrench", keywords: ["password strength", "password checker", "password test"], isPureFrontend: true },
   { slug: "html-preview", title: "HTML Preview", description: "Preview HTML code", category: "Developer", icon: "wrench", keywords: ["html preview", "html viewer", "html tester"], isPureFrontend: true },
-  { slug: "json-validator", title: "JSON Validator", description: "Validate JSON", category: "Developer", icon: "wrench", keywords: ["json validator", "json checker", "validate json"], isPureFrontend: true },
-  { slug: "image-resizer", title: "Image Resizer", description: "Resize images", category: "Image", icon: "wrench", keywords: ["image resizer", "resize image", "image resize"], isPureFrontend: true },
+  { slug: "json-validator", title: "JSON Validator", description: "Validate JSON", category: "Developer", icon: "wrench", keywords: ["json validator", "json checker", "validate json"], isPureFrontend: true, redirect: "data-converter" },
+  { slug: "image-resizer", title: "Image Resizer", description: "Resize images", category: "Image", icon: "wrench", keywords: ["image resizer", "resize image", "image resize"], isPureFrontend: true, redirect: "image-format-converter" },
   { slug: "image-format-converter", title: "Image Format Converter", description: "Convert images between JPG PNG WEBP BMP ICO with resize rotate grayscale", category: "Image", icon: "image", keywords: ["image format converter", "convert image", "jpg to png", "png to webp", "bmp to png", "image converter online"], isPureFrontend: true },
   { slug: "pdf-toolkit", title: "PDF Toolkit", description: "Merge split PDF, images to PDF, PDF to images and text", category: "Document", icon: "file-text", keywords: ["pdf toolkit", "merge pdf", "split pdf", "images to pdf", "pdf to images", "pdf to text", "compress pdf"], isPureFrontend: true },
   { slug: "archive-tool", title: "Archive Tool", description: "Create and extract ZIP TAR archives in your browser", category: "File", icon: "archive", keywords: ["archive tool", "zip creator", "unzip online", "tar extractor", "create zip", "extract archive"], isPureFrontend: true },
@@ -108,3 +108,6 @@ export const tools: ToolMeta[] = [
 export const categories = Array.from(new Set(tools.map((t) => t.category)));
 
 export function getTool(slug: string): ToolMeta | undefined { return tools.find((t) => t.slug === slug); }
+
+// 收编后的可见工具（排除已 redirect 到统一工具箱的旧单点工具），用于首页/目录列表与计数
+export const visibleTools = tools.filter((t) => !t.redirect);

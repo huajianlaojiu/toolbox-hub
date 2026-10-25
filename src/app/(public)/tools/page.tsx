@@ -3,18 +3,18 @@ import I18nLink from "@/components/i18n-link";
 import AdUnit from "@/components/shared/ad-unit";
 import ToolCard from "@/components/tool-card";
 import { I18nText } from "@/components/i18n-text";
-import { tools, categories, type ToolMeta } from "@/lib/tools-data";
+import { visibleTools, categories, type ToolMeta } from "@/lib/tools-data";
 import { languageAlternates } from "@/lib/alternates";
 
 export const metadata: Metadata = {
-  title: "All Tools — 96 Free Browser-Based Tools",
+  title: `All Tools — ${visibleTools.length} Free Browser-Based Tools`,
   description:
-    "The full Toolbox Hub directory: 96 free tools grouped by what they do — developer, text, design, image, video, audio, unit converters, calculators, web, math and everyday utilities. No sign-up, nothing uploaded.",
+    `The full Toolbox Hub directory: ${visibleTools.length} free tools grouped by what they do — developer, text, design, image, video, audio, unit converters, calculators, web, math and everyday utilities. No sign-up, nothing uploaded.`,
   alternates: { canonical: "/tools/", languages: languageAlternates("/tools/") },
   openGraph: {
     title: "All Tools — Toolbox Hub",
     description:
-      "96 free browser-based tools, grouped by category. No sign-up, no install, nothing uploaded.",
+      `${visibleTools.length} free browser-based tools, grouped by category. No sign-up, no install, nothing uploaded.`,
     url: "/tools/",
     type: "website",
   },
@@ -44,7 +44,7 @@ const BLURB: Record<string, string> = {
 function groupByCategory(): { category: string; items: ToolMeta[] }[] {
   return categories.map((cat) => ({
     category: cat,
-    items: tools.filter((t) => t.category === cat),
+    items: visibleTools.filter((t) => t.category === cat),
   }));
 }
 
@@ -55,12 +55,12 @@ const jsonLd = {
   "@type": "CollectionPage",
   name: "All Toolbox Hub Tools",
   description:
-    "The full directory of 96 free browser-based tools on Toolbox Hub, grouped by category.",
+    `The full directory of ${visibleTools.length} free browser-based tools on Toolbox Hub, grouped by category.`,
   url: "https://toolbox-hub.io/tools/",
   mainEntity: {
     "@type": "ItemList",
-    numberOfItems: tools.length,
-    itemListElement: tools.map((t, i) => ({
+    numberOfItems: visibleTools.length,
+    itemListElement: visibleTools.map((t, i) => ({
       "@type": "ListItem",
       position: i + 1,
       url: `https://toolbox-hub.io/tools/${t.slug}/`,
@@ -100,8 +100,8 @@ export default function ToolsIndex() {
           <span aria-hidden> / </span>
           <span><I18nText id="All Tools" /></span>
         </p>
-        <h1 className="mt-3 text-3xl font-bold tracking-tight text-foreground">
-          <I18nText id="All {count} Tools" vars={{ count: String(tools.length) }} />
+          <h1 className="mt-3 text-3xl font-bold tracking-tight text-foreground">
+          <I18nText id="All {count} Tools" vars={{ count: String(visibleTools.length) }} />
         </h1>
         <p className="mt-4 max-w-3xl leading-7 text-muted-foreground">
           <I18nText id="Every tool on Toolbox Hub, grouped by the kind of job it does. Each one runs entirely in your browser: there is nothing to install, no account to create, and nothing you type or upload is sent to a server. Pick a category below, or jump straight to the section you need." />

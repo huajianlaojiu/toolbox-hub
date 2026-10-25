@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { tools } from "@/lib/tools-data";
+import { visibleTools } from "@/lib/tools-data";
 import { I18nText } from "@/components/i18n-text";
 import { languageAlternates } from "@/lib/alternates";
 
@@ -17,7 +17,7 @@ export default function AboutPage() {
 
       <div className="mt-6 space-y-5 text-sm leading-7 text-muted-foreground">
         <p>
-          <I18nText id="Toolbox Hub is a collection of {count} free online tools for developers, designers, and everyday tasks. It exists for one reason: most quick tasks do not deserve an account, a download, or an upload. You should be able to format a JSON payload, compress an image, or generate a password in under five seconds without handing your data to a stranger." vars={{ count: String(tools.length) }} />
+          <I18nText id="Toolbox Hub is a collection of {count} free online tools for developers, designers, and everyday tasks. It exists for one reason: most quick tasks do not deserve an account, a download, or an upload. You should be able to format a JSON payload, compress an image, or generate a password in under five seconds without handing your data to a stranger." vars={{ count: String(visibleTools.length) }} />
         </p>
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="How it works" /></h2>

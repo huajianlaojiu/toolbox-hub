@@ -1,7 +1,7 @@
 import { I18nProvider, type Messages } from "@/lib/i18n";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import { tools } from "@/lib/tools-data";
+import { visibleTools } from "@/lib/tools-data";
 
 /**
  * 站点外壳：在 I18nProvider（含目标语言字典）内渲染Header/main/Footer。
@@ -21,7 +21,7 @@ export default function SiteShell({
     <I18nProvider lang={lang} dict={dict}>
       <Header />
       <main className="flex-1">{children}</main>
-      <Footer toolCount={tools.length} />
+      <Footer toolCount={visibleTools.length} />
     </I18nProvider>
   );
 }

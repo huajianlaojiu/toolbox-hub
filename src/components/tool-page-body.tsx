@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getTool, tools } from "@/lib/tools-data";
+import ToolRedirect from "@/components/tools/tool-redirect";
 import { LOCALES } from "@/lib/locales";
 import { languageAlternates } from "@/lib/alternates";
 import { getMeta, getContent } from "@/i18n/content";
@@ -9,8 +10,6 @@ import ToolPageContent from "@/components/tool-page-content";
 import AdUnit from "@/components/shared/ad-unit";
 import PasswordStrength from "@/components/tools/password-strength";
 import HtmlPreview from "@/components/tools/html-preview";
-import JsonValidator from "@/components/tools/json-validator";
-import ImageResizer from "@/components/tools/image-resizer";
 import ImageFormatConverter from "@/components/tools/image-format-converter";
 import PdfToolkit from "@/components/tools/pdf-toolkit";
 import ArchiveTool from "@/components/tools/archive-tool";
@@ -18,7 +17,6 @@ import DataConverter from "@/components/tools/data-converter";
 import UnicodeConverter from "@/components/tools/unicode-converter";
 import UrlExtractor from "@/components/tools/url-extractor";
 import PhoneFormatter from "@/components/tools/phone-formatter";
-import JsonFormatter from "@/components/tools/json-formatter";
 import Base64Encoder from "@/components/tools/base64-encoder";
 import UrlEncoder from "@/components/tools/url-encoder";
 import QrCodeGenerator from "@/components/tools/qr-code-generator";
@@ -32,10 +30,6 @@ import TextToSlug from "@/components/tools/text-to-slug";
 import HtmlEntityEncoder from "@/components/tools/html-entity-encoder";
 import FileSizeConverter from "@/components/tools/file-size-converter";
 import MarkdownPreview from "@/components/tools/markdown-preview";
-import ImageCompressor from "@/components/tools/image-compressor";
-import JsonToYaml from "@/components/tools/json-to-yaml";
-import JsonToCsv from "@/components/tools/json-to-csv";
-import XmlFormatter from "@/components/tools/xml-formatter";
 import NumberBaseConverter from "@/components/tools/number-base-converter";
 import RegexTester from "@/components/tools/regex-tester";
 import TextCaseConverter from "@/components/tools/text-case-converter";
@@ -129,6 +123,15 @@ export function generateLangToolStaticParams() {
 export function generateToolMetadata(lang: string, slug: string): Metadata {
   const tool = getTool(slug);
   if (!tool) return {};
+  // 被收编的旧工具：不索引自身，canonical 指向统一工具箱，权重转移过去
+  if (tool.redirect) {
+    const targetUrl = lang === "en" ? `/tools/${tool.redirect}/` : `/${lang}/tools/${tool.redirect}/`;
+    return {
+      title: `${tool.title} - Free Online Tool`,
+      robots: { index: false, follow: true },
+      alternates: { canonical: targetUrl },
+    };
+  }
   const meta = getMeta(lang, slug);
   const content = getContent(lang, slug);
   const desc = content.intro.slice(0, 158);
@@ -150,7 +153,19 @@ export function generateToolMetadata(lang: string, slug: string): Metadata {
 export default async function ToolPageBody({ lang, slug }: { lang: string; slug: string }) {
   const tool = getTool(slug);
   if (!tool) notFound();
-  const relatedTools = tools.filter((t) => t.category === tool.category && t.slug !== tool.slug).slice(0, 3);
+  // 被收编的旧工具：渲染中转页（自动跳转 + 可见链接），不渲染旧组件
+  if (tool.redirect) {
+    const target = getTool(tool.redirect);
+    return (
+      <div className="mx-auto max-w-6xl px-4 py-8">
+        <a href={lang === "en" ? "/tools/" : `/${lang}/tools/`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6">
+          <span aria-hidden>‹</span> All Tools
+        </a>
+        <ToolRedirect target={tool.redirect} targetTitle={target?.title ?? tool.redirect} lang={lang} />
+      </div>
+    );
+  }
+  const relatedTools = tools.filter((t) => t.category === tool.category && t.slug !== tool.slug && !t.redirect).slice(0, 3);
   const meta = getMeta(lang, slug);
   const content = getContent(lang, slug);
   const url = lang === "en" ? `/tools/${slug}/` : `/${lang}/tools/${slug}/`;
@@ -192,8 +207,6 @@ export default async function ToolPageBody({ lang, slug }: { lang: string; slug:
         <div className="rounded-xl border bg-card p-6 mt-6">
           {slug === "password-strength" && <PasswordStrength />}
         {slug === "html-preview" && <HtmlPreview />}
-        {slug === "json-validator" && <JsonValidator />}
-        {slug === "image-resizer" && <ImageResizer />}
         {slug === "image-format-converter" && <ImageFormatConverter />}
         {slug === "pdf-toolkit" && <PdfToolkit />}
         {slug === "archive-tool" && <ArchiveTool />}
@@ -201,7 +214,6 @@ export default async function ToolPageBody({ lang, slug }: { lang: string; slug:
         {slug === "unicode-converter" && <UnicodeConverter />}
         {slug === "url-extractor" && <UrlExtractor />}
         {slug === "phone-formatter" && <PhoneFormatter />}
-        {slug === "json-formatter" && <JsonFormatter />}
         {slug === "base64-encoder" && <Base64Encoder />}
         {slug === "url-encoder" && <UrlEncoder />}
         {slug === "qr-code-generator" && <QrCodeGenerator />}
@@ -215,10 +227,6 @@ export default async function ToolPageBody({ lang, slug }: { lang: string; slug:
         {slug === "html-entity-encoder" && <HtmlEntityEncoder />}
         {slug === "file-size-converter" && <FileSizeConverter />}
         {slug === "markdown-preview" && <MarkdownPreview />}
-        {slug === "image-compressor" && <ImageCompressor />}
-        {slug === "json-to-yaml" && <JsonToYaml />}
-        {slug === "json-to-csv" && <JsonToCsv />}
-        {slug === "xml-formatter" && <XmlFormatter />}
         {slug === "number-base-converter" && <NumberBaseConverter />}
         {slug === "regex-tester" && <RegexTester />}
         {slug === "text-case-converter" && <TextCaseConverter />}

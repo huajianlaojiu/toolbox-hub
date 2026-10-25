@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import I18nLink from "@/components/i18n-link";
 import AdUnit from "@/components/shared/ad-unit";
-import { tools, categories } from "@/lib/tools-data";
+import { visibleTools, categories } from "@/lib/tools-data";
 import ToolCard from "@/components/tool-card";
 import { I18nText } from "@/components/i18n-text";
 import { languageAlternates } from "@/lib/alternates";
@@ -51,10 +51,10 @@ export default function HomePage() {
 
       <section className="mb-8">
         <h2 className="text-lg font-semibold mb-4">
-          <I18nText id="All Tools" /> (<span id="filter-count">{tools.length}</span> <I18nText id="tools" />)
+          <I18nText id="All Tools" /> (<span id="filter-count">{visibleTools.length}</span> <I18nText id="tools" />)
         </h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3" id="tools-grid">
-          {tools.map((tool) => (
+          {visibleTools.map((tool) => (
             <ToolCard key={tool.slug} tool={tool} />
           ))}
         </div>
