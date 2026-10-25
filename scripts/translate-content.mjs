@@ -428,14 +428,17 @@ async function main() {
     // 优先用仓库里已提交的各语种译文，而不是直接回退英文源。
     const prevContent = readJsonSafe(path.join(CONTENT_DIR, lang.code + ".json"));
     const prevMeta = (slug) => prevContent?.meta?.[slug] || {};
+    const prevMsg = readJsonSafe(path.join(MSG_DIR, lang.code + ".json"));
 
-    // UI 消息
-    const uiMsg = {};
+    // UI 消息：以已提交译文为底，API 给出真译文（≠英文源串）才覆盖；
+    // 若 API 把串原样返回英文源串，保留已提交译文，绝不把手动补的分类名冲掉。
+    const uiMsg = { ...prevMsg };
     for (const it of items) {
       if (!it.id.startsWith("ui:")) continue;
       const key = it.id.slice(3);
       const v = tr.get(it.id);
       if (v && v !== key) uiMsg[key] = v;
+      else if (uiMsg[key] == null || uiMsg[key] === key) uiMsg[key] = prevMsg[key] ?? key;
     }
     writeJson(path.join(MSG_DIR, lang.code + ".json"), uiMsg);
 
@@ -458,12 +461,17 @@ async function main() {
       };
     }
 
+    // 当 API 把串原样返回英文源串（如把 "PDF Toolkit" 当作品牌名不翻译）时，
+    // 不能让它覆盖已提交的中文译文：优先用 API 真译文，其次回退已提交译文，最后才是英文源。
+    const pick = (apiVal, fallback, source) =>
+      apiVal && apiVal !== source ? apiVal : fallback;
     for (const t of src.tools) {
       const pm = prevMeta(t.slug);
       out.meta[t.slug] = {
-        title: tr.get(`meta:${t.slug}:title`) ?? pm.title ?? t.title,
-        description: tr.get(`meta:${t.slug}:description`) ?? pm.description ?? t.description,
-        keywords: (t.keywords || []).map((kw, i) => tr.get(`meta:${t.slug}:keywords:${i}`) ?? pm.keywords?.[i] ?? kw),
+        title: pick(tr.get(`meta:${t.slug}:title`), pm.title ?? t.title, t.title),
+        description: pick(tr.get(`meta:${t.slug}:description`), pm.description ?? t.description, t.description),
+        keywords: (t.keywords || []).map((kw, i) =>
+          pick(tr.get(`meta:${t.slug}:keywords:${i}`), pm.keywords?.[i] ?? kw, kw)),
       };
     }
     writeJson(path.join(CONTENT_DIR, lang.code + ".json"), out);
