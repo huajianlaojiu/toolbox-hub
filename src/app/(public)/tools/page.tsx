@@ -3,7 +3,7 @@ import I18nLink from "@/components/i18n-link";
 import AdUnit from "@/components/shared/ad-unit";
 import ToolCard from "@/components/tool-card";
 import { I18nText } from "@/components/i18n-text";
-import { visibleTools, categories, type ToolMeta } from "@/lib/tools-data";
+import { visibleTools, categories, CATEGORY_BLURBS, type ToolMeta } from "@/lib/tools-data";
 import { languageAlternates } from "@/lib/alternates";
 
 export const metadata: Metadata = {
@@ -18,27 +18,6 @@ export const metadata: Metadata = {
     url: "/tools/",
     type: "website",
   },
-};
-
-const BLURB: Record<string, string> = {
-  Developer:
-    "Formatters, validators, encoders and generators for the data you move between services: JSON, XML, Base64, hashes, UUIDs, timestamps and regular expressions.",
-  Utility:
-    "Everyday helpers that do one job and get out of the way: QR codes, passwords, a stopwatch, a world clock, timers and simple ciphers.",
-  Text: "Cleaning, counting, sorting and reshaping text: case conversion, duplicate removal, slugs, trimming, sorting and letter frequency.",
-  Design:
-    "Colour and CSS work: palettes, gradients, shadows, contrast checks against WCAG, border radius and an emoji picker.",
-  Image: "Compress, resize and convert images locally, without a file ever leaving your device.",
-  Converter:
-    "Unit conversions across length, weight, temperature, speed, area, volume, time and file size, calculated through a single reference unit so no precision is lost.",
-  Calculator:
-    "Money, dates and health: discounts, tips, loans, age, the gap between two dates, BMI, and random draws when you need a fair number.",
-  Web: "Page-level helpers: meta tags, Open Graph tags, favicons, URL parsing, email syntax checks and YouTube thumbnails.",
-  Math: "Number work: primes, factorials, scientific notation, fractions, greatest common factor and least common multiple, and Roman numerals.",
-  Video:
-    "Short-video work that runs locally: compress, convert, merge, trim, speed up, flip and rotate clips, pull frames or GIFs, rip audio, and assemble covers and scripts — all processed in your browser with nothing uploaded.",
-  Audio:
-    "Convert between audio formats and trim tracks with a waveform, entirely on your device.",
 };
 
 function groupByCategory(): { category: string; items: ToolMeta[] }[] {
@@ -133,7 +112,7 @@ export default function ToolsIndex() {
             </span>
           </h2>
           <p className="mt-2 max-w-3xl text-sm leading-7 text-muted-foreground">
-            <I18nText id={BLURB[g.category]} />
+            <I18nText id={CATEGORY_BLURBS[g.category]} />
           </p>
           <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {g.items.map((tool) => (

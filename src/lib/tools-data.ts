@@ -107,6 +107,34 @@ export const tools: ToolMeta[] = [
 ];
 export const categories = Array.from(new Set(tools.map((t) => t.category)));
 
+// 分类区块描述（/tools 目录页用）。放在这里而不是页面组件里，是为了让
+// scripts/translate-content.mjs 能连同分类名一起收录进自动翻译——
+// 页面里以 id={BLURB[cat]} 动态渲染，正则扫描发现不了，会被漏译。
+export const CATEGORY_BLURBS: Record<string, string> = {
+  Developer:
+    "Formatters, validators, encoders and generators for the data you move between services: JSON, XML, Base64, hashes, UUIDs, timestamps and regular expressions.",
+  Utility:
+    "Everyday helpers that do one job and get out of the way: QR codes, passwords, a stopwatch, a world clock, timers and simple ciphers.",
+  Text: "Cleaning, counting, sorting and reshaping text: case conversion, duplicate removal, slugs, trimming, sorting and letter frequency.",
+  Design:
+    "Colour and CSS work: palettes, gradients, shadows, contrast checks against WCAG, border radius and an emoji picker.",
+  Image: "Compress, resize and convert images locally, without a file ever leaving your device.",
+  Converter:
+    "Unit conversions across length, weight, temperature, speed, area, volume, time and file size, calculated through a single reference unit so no precision is lost.",
+  Calculator:
+    "Money, dates and health: discounts, tips, loans, age, the gap between two dates, BMI, and random draws when you need a fair number.",
+  Web: "Page-level helpers: meta tags, Open Graph tags, favicons, URL parsing, email syntax checks and YouTube thumbnails.",
+  Math: "Number work: primes, factorials, scientific notation, fractions, greatest common factor and least common multiple, and Roman numerals.",
+  Video:
+    "Short-video work that runs locally: compress, convert, merge, trim, speed up, flip and rotate clips, pull frames or GIFs, rip audio, and assemble covers and scripts — all processed in your browser with nothing uploaded.",
+  Audio:
+    "Convert between audio formats and trim tracks with a waveform, entirely on your device.",
+  Document:
+    "Work with PDFs entirely in your browser: merge several files into one, split a long document into pages, turn images into a PDF, or pull pages out as images and text, with nothing uploaded.",
+  File:
+    "Pack and unpack archives without installing anything: build a ZIP or TAR from your files, or open an archive and pull out what you need, all processed locally in your browser.",
+};
+
 export function getTool(slug: string): ToolMeta | undefined { return tools.find((t) => t.slug === slug); }
 
 // 收编后的可见工具（排除已 redirect 到统一工具箱的旧单点工具），用于首页/目录列表与计数

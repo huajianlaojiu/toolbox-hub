@@ -72,6 +72,8 @@ async function loadSource() {
     getGenericTemplate: tc.getGenericTemplate,
     overrides: tc.contentOverrides,
     tools: td.tools,
+    categories: td.categories,
+    categoryBlurbs: td.CATEGORY_BLURBS,
     posts: pd.posts,
   };
 }
@@ -111,6 +113,14 @@ function collectStrings(src) {
     }
   }
   for (const s of ui) items.push({ id: "ui:" + s, str: s });
+
+  // 2a-2. 分类名与分类区块描述：页面上以 id={cat} / id={CATEGORY_BLURBS[cat]} 动态渲染，
+  // 上面的字面量正则发现不了。messages 是每次从零重建的，漏收=永久英文，
+  // 所以必须显式收录（否则手工补的键也会在下次自动翻译时被冲掉）。
+  for (const c of src.categories || []) items.push({ id: "ui:" + c, str: c });
+  for (const blurb of Object.values(src.categoryBlurbs || {})) {
+    items.push({ id: "ui:" + blurb, str: blurb });
+  }
 
   // 2b. generic 模板
   const g = src.getGenericTemplate();
