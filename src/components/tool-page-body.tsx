@@ -11,6 +11,10 @@ import PasswordStrength from "@/components/tools/password-strength";
 import HtmlPreview from "@/components/tools/html-preview";
 import JsonValidator from "@/components/tools/json-validator";
 import ImageResizer from "@/components/tools/image-resizer";
+import ImageFormatConverter from "@/components/tools/image-format-converter";
+import PdfToolkit from "@/components/tools/pdf-toolkit";
+import ArchiveTool from "@/components/tools/archive-tool";
+import DataConverter from "@/components/tools/data-converter";
 import UnicodeConverter from "@/components/tools/unicode-converter";
 import UrlExtractor from "@/components/tools/url-extractor";
 import PhoneFormatter from "@/components/tools/phone-formatter";
@@ -190,6 +194,10 @@ export default async function ToolPageBody({ lang, slug }: { lang: string; slug:
         {slug === "html-preview" && <HtmlPreview />}
         {slug === "json-validator" && <JsonValidator />}
         {slug === "image-resizer" && <ImageResizer />}
+        {slug === "image-format-converter" && <ImageFormatConverter />}
+        {slug === "pdf-toolkit" && <PdfToolkit />}
+        {slug === "archive-tool" && <ArchiveTool />}
+        {slug === "data-converter" && <DataConverter />}
         {slug === "unicode-converter" && <UnicodeConverter />}
         {slug === "url-extractor" && <UrlExtractor />}
         {slug === "phone-formatter" && <PhoneFormatter />}
