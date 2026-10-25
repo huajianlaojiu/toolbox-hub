@@ -3,10 +3,14 @@ import { useState } from "react";
 import type { ReactNode } from "react";
 import { Upload, Loader2, Merge, Scissors, Image as ImageIcon, Type, FileDown } from "lucide-react";
 import { PDFDocument } from "pdf-lib";
-import * as pdfjsLib from "pdfjs-dist";
 import JSZip from "jszip";
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
+// pdf.js 仅在浏览器端按需加载，避免 SSR 预渲染时在 Node 环境中求值（其依赖 Node 22+ 全局 Iterator）
+async function loadPdfjs() {
+  const mod = await import("pdfjs-dist");
+  mod.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
+  return mod;
+}
 
 type Mode = "merge" | "split" | "img2pdf" | "pdf2img" | "pdf2text";
 
@@ -129,6 +133,7 @@ export default function PdfToolkit() {
 
   const pdf2img = (file: File, scale: number) =>
     run(async () => {
+      const pdfjsLib = await loadPdfjs();
       const buf = await file.arrayBuffer();
       const doc = await pdfjsLib.getDocument({ data: new Uint8Array(buf) }).promise;
       const zip = new JSZip();
@@ -148,6 +153,7 @@ export default function PdfToolkit() {
 
   const pdf2text = (file: File) =>
     run(async () => {
+      const pdfjsLib = await loadPdfjs();
       const buf = await file.arrayBuffer();
       const doc = await pdfjsLib.getDocument({ data: new Uint8Array(buf) }).promise;
       let full = "";
