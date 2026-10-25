@@ -225,7 +225,9 @@ async function translateItems(items, lang) {
   const todo = [];
   items.forEach((it) => {
     const c = getCached(it.str, lang.code);
-    if (c != null) result.set(it.id, c);
+    // 防缓存投毒：若缓存值等于英文源串（= 上次 API 失败时的英文回退被错误缓存），
+    // 视为未命中、强制重新翻译，否则该串会永久卡在英文、后续构建再也无法修复。
+    if (c != null && c !== it.str) result.set(it.id, c);
     else todo.push(it);
   });
   if (todo.length === 0) return result;
@@ -252,7 +254,8 @@ async function translateItems(items, lang) {
       if (lang.code === "zh-TW" && PROVIDER === "gtx") v = s2tw(v);
     }
     result.set(it.id, v);
-    setCached(it.str, lang.code, v);
+    // 不要把英文回退值写进缓存，否则失败串被永久毒化为英文、后续再也无法自愈
+    if (v !== it.str) setCached(it.str, lang.code, v);
   });
   return result;
 }
@@ -405,6 +408,11 @@ function writeJson(file, data) {
   fs.writeFileSync(file, JSON.stringify(data) + "\n");
 }
 
+/** 安全读取已提交译文，作为 API 缺失/回退时的兜底（避免被英文源串覆盖） */
+function readJsonSafe(file) {
+  try { return JSON.parse(fs.readFileSync(file, "utf8")); } catch { return {}; }
+}
+
 async function main() {
   console.log(`翻译 provider=${PROVIDER}  目标语言=${TARGETS.map((l) => l.code).join(",")}`);
   const src = await loadSource();
@@ -415,6 +423,11 @@ async function main() {
     console.log(`\n→ ${lang.code} (${lang[PROVIDER]})`);
     const tr = await translateItems(items, lang);
     const get = (id, fallback) => tr.get(id) ?? fallback;
+
+    // 已提交译文作为兜底：API 没给出有效译文（缺失或回退成英文源串）时，
+    // 优先用仓库里已提交的各语种译文，而不是直接回退英文源。
+    const prevContent = readJsonSafe(path.join(CONTENT_DIR, lang.code + ".json"));
+    const prevMeta = (slug) => prevContent?.meta?.[slug] || {};
 
     // UI 消息
     const uiMsg = {};
@@ -446,10 +459,11 @@ async function main() {
     }
 
     for (const t of src.tools) {
+      const pm = prevMeta(t.slug);
       out.meta[t.slug] = {
-        title: get(`meta:${t.slug}:title`, t.title),
-        description: get(`meta:${t.slug}:description`, t.description),
-        keywords: (t.keywords || []).map((kw, i) => get(`meta:${t.slug}:keywords:${i}`, kw)),
+        title: tr.get(`meta:${t.slug}:title`) ?? pm.title ?? t.title,
+        description: tr.get(`meta:${t.slug}:description`) ?? pm.description ?? t.description,
+        keywords: (t.keywords || []).map((kw, i) => tr.get(`meta:${t.slug}:keywords:${i}`) ?? pm.keywords?.[i] ?? kw),
       };
     }
     writeJson(path.join(CONTENT_DIR, lang.code + ".json"), out);
