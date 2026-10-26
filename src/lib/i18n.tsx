@@ -1,6 +1,6 @@
 "use client";
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
-import { LOCALES, getLocale } from "./locales";
+import { LOCALES, getLocale, isPublished } from "./locales";
 
 /** 语言包：key 是英文原文（source-string），value 是译文 */
 export type Messages = Record<string, string>;
@@ -108,7 +108,7 @@ export function useI18n() {
 
 /** 头部语言切换菜单：15 种语言，显示母语名（用户要能认出自己的语言） */
 export function LangToggle() {
-  const { lang, setLocale } = useI18n();
+  const { lang, setLocale, t } = useI18n();
   const [open, setOpen] = useState(false);
   const current = getLocale(lang);
   const ref = useRef<HTMLDivElement>(null);
@@ -158,18 +158,19 @@ export function LangToggle() {
           <div className="grid grid-cols-1 min-[380px]:grid-cols-2 gap-0.5">
             {LOCALES.map((l) => {
               const active = l.code === lang;
+              const published = isPublished(l.code);
               return (
                 <button
                   key={l.code}
                   role="option"
                   aria-selected={active}
-                  title={l.en}
+                  title={l.en + (published ? "" : " — coming soon")}
                   onClick={() => { setLocale(l.code); setOpen(false); }}
                   lang={l.code}
                   dir={l.rtl ? "rtl" : undefined}
                   className={`flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-left text-[13px] transition-colors hover:bg-muted ${
                     active ? "bg-accent font-semibold text-accent-foreground" : "text-foreground"
-                  }`}
+                  } ${published ? "" : "opacity-60"}`}
                 >
                   {active && (
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="h-3 w-3 shrink-0">
@@ -177,6 +178,11 @@ export function LangToggle() {
                     </svg>
                   )}
                   <span className="truncate">{l.native}</span>
+                  {!published && !active && (
+                    <span className="ml-auto shrink-0 rounded bg-muted px-1 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+                      {t("Soon")}
+                    </span>
+                  )}
                 </button>
               );
             })}
