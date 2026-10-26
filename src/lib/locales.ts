@@ -36,6 +36,25 @@ export const LOCALES: Locale[] = [
 ];
 /** 需要生成静态页的语言（英文是根路径，不走前缀） */
 export const TARGET_LOCALES = LOCALES.filter((l) => l.code !== "en");
+
+/**
+ * 已发布（有真实译文、允许被搜索引擎收录）的语言白名单。
+ * 其余语言虽会构建静态页（语言选择器可直达），但内容仍是英文回退的壳，
+ * 不当作独立语言版本收录——否则 9 份近重复英文页会稀释整站 SEO。
+ * 某语言译文填实后，把它加进这里即“发布”。
+ */
+export const PUBLISHED_LANGS = new Set([
+  "en",
+  "zh",
+  "zh-TW",
+  "fr",
+  "de",
+  "it",
+  "nl",
+]);
+export function isPublished(code: string): boolean {
+  return PUBLISHED_LANGS.has(code);
+}
 export function getLocale(code: string): Locale {
   return LOCALES.find((l) => l.code === code) ?? LOCALES[0];
 }

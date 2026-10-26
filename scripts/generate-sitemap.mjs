@@ -23,6 +23,13 @@ const LANGS = [
   { code: "pl", hreflang: "pl" },
   { code: "vi", hreflang: "vi" },
 ];
+// 已发布（有真实译文、允许收录）的语言白名单，与 src/lib/locales.ts PUBLISHED_LANGS 同步。
+// 未发布语言仍会构建静态页（语言选择器可直达），但不写进 sitemap、也不作为 hreflang 目标，
+// 避免 9 份英文壳页被 Google 当作独立语言版本而稀释整站 SEO。
+const PUBLISHED = new Set([
+  "en", "zh", "zh-TW", "fr", "de", "it", "nl",
+]);
+const LANGS_PUB = LANGS.filter((l) => PUBLISHED.has(l.code));
 const prefix = (code) => (code === "en" ? "" : `/${code}`);
 
 const data = readFileSync(join(ROOT, "src/lib/tools-data.ts"), "utf8");
@@ -48,7 +55,7 @@ const STATIC_PAGES = [
 const LASTMOD = new Date().toISOString().slice(0, 10);
 
 function alternateLinks(loc) {
-  const links = LANGS.map(
+  const links = LANGS_PUB.map(
     (l) => `    <xhtml:link rel="alternate" hreflang="${l.hreflang}" href="${SITE}${prefix(l.code)}${loc}"/>`
   );
   links.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${loc}"/>`);
@@ -57,7 +64,7 @@ function alternateLinks(loc) {
 
 const urls = [];
 for (const p of STATIC_PAGES) {
-  for (const l of LANGS) {
+  for (const l of LANGS_PUB) {
     urls.push(
       `  <url><loc>${SITE}${prefix(l.code)}${p.loc}</loc><lastmod>${LASTMOD}</lastmod><changefreq>${p.changefreq}</changefreq><priority>${p.priority}</priority>\n${alternateLinks(p.loc)}\n  </url>`
     );
@@ -65,7 +72,7 @@ for (const p of STATIC_PAGES) {
 }
 for (const s of postSlugs) {
   const loc = `/blog/${s}/`;
-  for (const l of LANGS) {
+  for (const l of LANGS_PUB) {
     urls.push(
       `  <url><loc>${SITE}${prefix(l.code)}${loc}</loc><lastmod>${LASTMOD}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority>\n${alternateLinks(loc)}\n  </url>`
     );
@@ -73,7 +80,7 @@ for (const s of postSlugs) {
 }
 for (const s of slugs) {
   const loc = `/tools/${s}/`;
-  for (const l of LANGS) {
+  for (const l of LANGS_PUB) {
     urls.push(
       `  <url><loc>${SITE}${prefix(l.code)}${loc}</loc><lastmod>${LASTMOD}</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>\n${alternateLinks(loc)}\n  </url>`
     );
@@ -87,4 +94,4 @@ ${urls.join("\n")}
 `;
 
 writeFileSync(join(ROOT, "public/sitemap.xml"), xml, "utf8");
-console.log(`sitemap: ${urls.length} urls (${slugs.length} tools × ${LANGS.length} langs + ${postSlugs.length} posts + ${STATIC_PAGES.length} static)`);
+console.log(`sitemap: ${urls.length} urls (${slugs.length} tools × ${LANGS_PUB.length} langs + ${postSlugs.length} posts + ${STATIC_PAGES.length} static)`);

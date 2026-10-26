@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getTool, tools } from "@/lib/tools-data";
 import ToolRedirect from "@/components/tools/tool-redirect";
-import { LOCALES } from "@/lib/locales";
+import { LOCALES, isPublished } from "@/lib/locales";
 import { languageAlternates } from "@/lib/alternates";
 import { getMeta, getContent } from "@/i18n/content";
 import ToolPageContent from "@/components/tool-page-content";
@@ -136,7 +136,7 @@ export function generateToolMetadata(lang: string, slug: string): Metadata {
   const content = getContent(lang, slug);
   const desc = content.intro.slice(0, 158);
   const url = lang === "en" ? `/tools/${slug}/` : `/${lang}/tools/${slug}/`;
-  return {
+  const m: Metadata = {
     title: `${meta.title} - Free Online Tool`,
     description: desc,
     keywords: meta.keywords,
@@ -148,6 +148,9 @@ export function generateToolMetadata(lang: string, slug: string): Metadata {
       type: "article",
     },
   };
+  // 未发布语言（译文仍是英文壳）不当作独立版本收录，避免近重复页稀释 SEO
+  if (!isPublished(lang)) m.robots = { index: false, follow: true };
+  return m;
 }
 
 export default async function ToolPageBody({ lang, slug }: { lang: string; slug: string }) {

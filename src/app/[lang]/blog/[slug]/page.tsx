@@ -1,6 +1,6 @@
 export { default } from "../../../(public)/blog/[slug]/page";
 import type { Metadata } from "next";
-import { LOCALES } from "@/lib/locales";
+import { LOCALES, isPublished } from "@/lib/locales";
 import { posts, getPost } from "@/lib/posts";
 import { languageAlternates } from "@/lib/alternates";
 import { st } from "@/lib/lang-meta";
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const selfPath = lang === "en" ? path : `/${lang}${path}`;
   const title = st(lang, post.metaTitle);
   const description = st(lang, post.description);
-  return {
+  const m: Metadata = {
     title,
     description,
     alternates: { canonical: selfPath, languages: languageAlternates(path) },
@@ -38,4 +38,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       modifiedTime: post.updated,
     },
   };
+  // 未发布语言（译文仍是英文壳）不当作独立版本收录，避免近重复页稀释 SEO
+  if (!isPublished(lang)) m.robots = { index: false, follow: true };
+  return m;
 }
