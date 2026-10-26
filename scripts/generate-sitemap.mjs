@@ -27,7 +27,7 @@ const LANGS = [
 // 未发布语言仍会构建静态页（语言选择器可直达），但不写进 sitemap、也不作为 hreflang 目标，
 // 避免 9 份英文壳页被 Google 当作独立语言版本而稀释整站 SEO。
 const PUBLISHED = new Set([
-  "en", "zh", "zh-TW", "fr", "de", "it", "nl",
+  "en", "zh", "zh-TW", "es", "fr", "de", "it", "nl",
 ]);
 const LANGS_PUB = LANGS.filter((l) => PUBLISHED.has(l.code));
 const prefix = (code) => (code === "en" ? "" : `/${code}`);

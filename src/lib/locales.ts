@@ -47,6 +47,7 @@ export const PUBLISHED_LANGS = new Set([
   "en",
   "zh",
   "zh-TW",
+  "es", // 2026-10-26 发布：gtx 翻译覆盖 3485/3490，内容已填实
   "fr",
   "de",
   "it",
