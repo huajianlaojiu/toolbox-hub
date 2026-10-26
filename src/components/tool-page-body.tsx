@@ -14,6 +14,10 @@ import ImageFormatConverter from "@/components/tools/image-format-converter";
 import PdfToolkit from "@/components/tools/pdf-toolkit";
 import ArchiveTool from "@/components/tools/archive-tool";
 import DataConverter from "@/components/tools/data-converter";
+import GitignoreGenerator from "@/components/tools/gitignore-generator";
+import MermaidDiagram from "@/components/tools/mermaid-diagram";
+import ImageToText from "@/components/tools/image-to-text";
+import ExcelConverter from "@/components/tools/excel-converter";
 import UnicodeConverter from "@/components/tools/unicode-converter";
 import UrlExtractor from "@/components/tools/url-extractor";
 import PhoneFormatter from "@/components/tools/phone-formatter";
@@ -214,6 +218,10 @@ export default async function ToolPageBody({ lang, slug }: { lang: string; slug:
         {slug === "pdf-toolkit" && <PdfToolkit />}
         {slug === "archive-tool" && <ArchiveTool />}
         {slug === "data-converter" && <DataConverter />}
+        {slug === "gitignore-generator" && <GitignoreGenerator />}
+        {slug === "mermaid-diagram" && <MermaidDiagram />}
+        {slug === "image-to-text" && <ImageToText />}
+        {slug === "excel-converter" && <ExcelConverter />}
         {slug === "unicode-converter" && <UnicodeConverter />}
         {slug === "url-extractor" && <UrlExtractor />}
         {slug === "phone-formatter" && <PhoneFormatter />}

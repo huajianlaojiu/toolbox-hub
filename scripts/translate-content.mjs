@@ -196,7 +196,7 @@ const BRAND_RE = /Toolbox Hub/g;
 // 术语表不翻译：Google gtx 实测会把 Markdown 译成"降价/démarque/ribasso/降價"、
 // Slug 译成"SMS/蜗牛(slak/limace/lumaca/Schnecke)/弹丸"，都是错译。
 // 这些词在任何语言里保留英文原文（大小写原样保留）。
-const GLOSSARY_RE = /\b(Markdown|Slug)\b/g;
+const GLOSSARY_RE = /\b(Markdown|Slug|Mermaid)\b/g;
 function protectTokens(s) {
   const map = [];
   const stash = (lit) => { const i = map.length; map.push(lit); return `__TK${i}__`; };
