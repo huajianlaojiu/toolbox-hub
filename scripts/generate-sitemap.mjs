@@ -28,8 +28,8 @@ const LANGS = [
 // 避免 9 份英文壳页被 Google 当作独立语言版本而稀释整站 SEO。
 const PUBLISHED = new Set([
   "en", "zh", "zh-TW", "es", "fr", "de", "it",   "nl",
-  // 2026-10-26 第二批：与 src/lib/locales.ts PUBLISHED_LANGS 同步（批次1：ja, ko）
-  "ja", "ko",
+  // 2026-10-26 第二批：与 src/lib/locales.ts PUBLISHED_LANGS 同步（批次1：ja,ko；批次2：pt,ru）
+  "ja", "ko", "pt", "ru",
 ]);
 const LANGS_PUB = LANGS.filter((l) => PUBLISHED.has(l.code));
 const prefix = (code) => (code === "en" ? "" : `/${code}`);
