@@ -52,15 +52,10 @@ export const PUBLISHED_LANGS = new Set([
   "de",
   "it",
   "nl",
-  // 2026-10-26 第二批：CI 海外 gtx 免密钥通道翻译并发布
+  // 2026-10-26 第二批：CI 海外 gtx 免密钥通道分批翻译并发布（每批 2 语言，独立 IP 刷新限流预算）
+  // 批次1：ja, ko
   "ja",
   "ko",
-  "pt",
-  "ru",
-  "ar",
-  "tr",
-  "pl",
-  "vi",
 ]);
 export function isPublished(code: string): boolean {
   return PUBLISHED_LANGS.has(code);

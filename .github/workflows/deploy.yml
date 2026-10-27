@@ -60,10 +60,23 @@ jobs:
         env:
           TRANSLATE_PROVIDER: gtx
           GTX_DELAY_MS: 200
-        run: node scripts/translate-content.mjs --langs ja,ko,pt,ru,ar,tr,pl,vi
+        run: node scripts/translate-content.mjs --langs ja,ko
 
       - name: Build static site
         run: npm run build
+
+      - name: Persist translated JSON to master (skip CI)
+        if: env.GOOGLE_TRANSLATE_KEY == ''
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/i18n/messages src/i18n/content
+          if git diff --cached --quiet; then
+            echo "no translation changes to commit"
+          else
+            git commit -m "chore(i18n): persist translated JSON [skip ci]"
+            git push origin HEAD:master
+          fi
 
       - name: Strip internal Next artifacts
         run: |

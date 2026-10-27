@@ -27,9 +27,9 @@ const LANGS = [
 // 未发布语言仍会构建静态页（语言选择器可直达），但不写进 sitemap、也不作为 hreflang 目标，
 // 避免 9 份英文壳页被 Google 当作独立语言版本而稀释整站 SEO。
 const PUBLISHED = new Set([
-  "en", "zh", "zh-TW", "es", "fr", "de", "it", "nl",
-  // 2026-10-26 第二批：与 src/lib/locales.ts PUBLISHED_LANGS 同步
-  "ja", "ko", "pt", "ru", "ar", "tr", "pl", "vi",
+  "en", "zh", "zh-TW", "es", "fr", "de", "it",   "nl",
+  // 2026-10-26 第二批：与 src/lib/locales.ts PUBLISHED_LANGS 同步（批次1：ja, ko）
+  "ja", "ko",
 ]);
 const LANGS_PUB = LANGS.filter((l) => PUBLISHED.has(l.code));
 const prefix = (code) => (code === "en" ? "" : `/${code}`);
