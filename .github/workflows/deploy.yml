@@ -60,7 +60,7 @@ jobs:
         env:
           TRANSLATE_PROVIDER: gtx
           GTX_DELAY_MS: 200
-        run: node scripts/translate-content.mjs --langs pt,ru
+        run: node scripts/translate-content.mjs --langs ar,tr
 
       - name: Build static site
         run: npm run build
