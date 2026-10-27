@@ -47,11 +47,20 @@ jobs:
           restore-keys: |
             translate-
 
-      # 仅在配置了 GOOGLE_TRANSLATE_KEY 时才重新翻译；
-      # 未配置时沿用仓库里已提交的 15 语言静态译文（脚本也不会覆盖它们）。
-      - name: Translate content (build-time, Google Cloud Translation)
+      # 若配置了 GOOGLE_TRANSLATE_KEY（正式通道），翻译全量 15 语言；
+      # 否则（无密钥）用 gtx 免密钥端点翻译本次新增的 8 语言。
+      # 说明：gtx 端点（translate.googleapis.com）在海外 CI 直连可达；
+      # 本地大陆被 GFW 拦截、且 mymemory 免费配额瞬时耗尽，故只能放海外 CI 跑。
+      - name: Translate content (Google Cloud, all languages)
         if: env.GOOGLE_TRANSLATE_KEY != ''
         run: node scripts/translate-content.mjs
+
+      - name: Translate new languages (gtx keyless, overseas-only)
+        if: env.GOOGLE_TRANSLATE_KEY == ''
+        env:
+          TRANSLATE_PROVIDER: gtx
+          GTX_DELAY_MS: 200
+        run: node scripts/translate-content.mjs --langs ja,ko,pt,ru,ar,tr,pl,vi
 
       - name: Build static site
         run: npm run build
