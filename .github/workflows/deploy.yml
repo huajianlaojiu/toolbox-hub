@@ -8,7 +8,23 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [master]
+    # 文档 / 日志 / 记忆类改动不触发约 13 分钟的全量静态构建。
+    # 注意：只要本次 push 含任一未被忽略的文件，工作流仍会正常触发。
+    paths-ignore:
+      - "docs/**"
+      - "*.md"
+      - ".workbuddy/**"
+      - "*.log"
   workflow_dispatch:
+    inputs:
+      translate:
+        description: "跑增量翻译并把译文回写 master（默认关闭；gtx 失败会写英文回退）"
+        type: boolean
+        default: false
+      langs:
+        description: "要补翻的语言代码，逗号分隔"
+        type: string
+        default: "pl,vi,es,pt"
 
 permissions:
   contents: write
@@ -23,6 +39,12 @@ jobs:
     env:
       # secrets 上下文不能用于 steps.if，先映射到 env 再用 env 判断
       GOOGLE_TRANSLATE_KEY: ${{ secrets.GOOGLE_TRANSLATE_KEY }}
+      # 自动翻译默认关闭。此前每次 push 都在无密钥时跑 gtx --langs pl,vi，
+      # 端点失败会把英文源串原样写成「译文」并回写 master：既污染字典（永久挡住
+      # 补翻），又产生 [skip ci] 提交使远程领先、后续 push 必须先 rebase。
+      # 需要补翻时到 Actions 手动 Run workflow 并勾选 translate。
+      RUN_TRANSLATE: ${{ github.event_name == 'workflow_dispatch' && inputs.translate == true && 'true' || 'false' }}
+      TRANSLATE_LANGS: ${{ github.event_name == 'workflow_dispatch' && inputs.langs || 'pl,vi,es,pt' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -36,10 +58,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Generate sitemap
-        run: node scripts/generate-sitemap.mjs
-
+      # sitemap 由 package.json 的 prebuild 在 npm run build 前生成；
+      # 这里不再重复执行（此前一次构建跑了两遍 generate-sitemap.mjs）。
       - name: Restore translation cache
+        if: env.RUN_TRANSLATE == 'true'
         uses: actions/cache@v4
         with:
           path: .cache
@@ -47,30 +69,31 @@ jobs:
           restore-keys: |
             translate-
 
-      # 若配置了 GOOGLE_TRANSLATE_KEY（正式通道），翻译全量 15 语言；
-      # 否则（无密钥）用 gtx 免密钥端点翻译本次新增的 8 语言。
-      # 说明：gtx 端点（translate.googleapis.com）在海外 CI 直连可达；
-      # 本地大陆被 GFW 拦截、且 mymemory 免费配额瞬时耗尽，故只能放海外 CI 跑。
+      # 有正式密钥走全量；无密钥用 gtx 免密钥端点（仅海外 CI 可达）。
+      # 两个分支都只在手动触发且勾选 translate 时执行。
       - name: Translate content (Google Cloud, all languages)
-        if: env.GOOGLE_TRANSLATE_KEY != ''
+        if: env.RUN_TRANSLATE == 'true' && env.GOOGLE_TRANSLATE_KEY != ''
         run: node scripts/translate-content.mjs
 
-      - name: Translate new languages (gtx keyless, overseas-only)
-        if: env.GOOGLE_TRANSLATE_KEY == ''
+      - name: Translate selected languages (gtx keyless, overseas-only)
+        if: env.RUN_TRANSLATE == 'true' && env.GOOGLE_TRANSLATE_KEY == ''
         env:
           TRANSLATE_PROVIDER: gtx
           GTX_DELAY_MS: 200
-        run: node scripts/translate-content.mjs --langs pl,vi
+        run: node scripts/translate-content.mjs --langs "$TRANSLATE_LANGS"
 
       - name: Build static site
         run: npm run build
 
       - name: Persist translated JSON to master (skip CI)
-        if: env.GOOGLE_TRANSLATE_KEY == ''
+        if: env.RUN_TRANSLATE == 'true' && env.GOOGLE_TRANSLATE_KEY == ''
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add src/i18n/messages src/i18n/content
+          # 防投毒：回写前删掉所有「值 === 英文源串」的失败回退条目。
+          node scripts/clean-fallbacks.mjs
+          # posts 目录此前被漏掉，博客译文的补翻结果永远回写不进仓库。
+          git add src/i18n/messages src/i18n/content src/i18n/posts
           if git diff --cached --quiet; then
             echo "no translation changes to commit"
           else
@@ -84,7 +107,9 @@ jobs:
           # 不应发布：会被搜索引擎收录，且 build 间哈希不稳定。
           # 注意 _next/（单下划线）是真实静态资源，绝不能删。
           find out -name '__next*' -delete
-          echo "remaining __next*: $(find out -name '__next*' | wc -l)"
+          remaining=$(find out -name '__next*' | wc -l)
+          test "$remaining" -eq 0 || (echo "__next* cleanup failed: $remaining left" && exit 1)
+          echo "remaining __next*: $remaining"
           echo "html pages: $(find out -name index.html | wc -l) | tools: $(ls -1 out/tools | wc -l)"
 
       - name: Verify build output

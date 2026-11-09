@@ -31,8 +31,14 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const lookedUp = st(lang, post.metaTitle);
   // metaTitle 目前没有单独译文字段：优先字典精确命中，否则用已翻译的文章标题。
   const title = lookedUp !== post.metaTitle ? lookedUp : translated.title;
-  const description =
-    translated.description !== post.description ? translated.description : st(lang, post.description);
+  // description 暂不采用 posts/<lang>.json 里的译文：那批译文是 2026-10 旧英文
+  // 文案的机翻，而英文源串在 11-07/11-09 合规修订后已改（去掉了
+  // "nothing uploaded" / "never upload" 这类绝对化宣称）。直接采用会把过时
+  // 且与站点实际行为不符的宣称送进 SERP 摘要与 OG 卡片。
+  // 改查 messages 字典中「新英文描述」的译文，缺失时回退英文源串。
+  // 待一次翻译会话重翻 posts/<lang>.json 并补齐字典后，把本行替换为
+  // translated.description 即可恢复本地化描述。
+  const description = st(lang, post.description);
   const m: Metadata = {
     title,
     description,

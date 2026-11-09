@@ -191,7 +191,7 @@ export const posts: Post[] = [
     metaTitle: "17 Free Text Tools for Writers, Students and Marketers",
     title: "17 Free Text Tools for Writers, Students and Marketers",
     description:
-      "Clean up copy, count words accurately, format lists and turn rough drafts into something publishable — with free browser tools that never upload your text.",
+      "Clean up copy, count words accurately, format lists and turn rough drafts into something publishable — with free browser tools that run locally in your browser.",
     date: "2026-10-20",
     updated: "2026-10-20",
     readingTime: "10 min read",
@@ -335,7 +335,7 @@ export const posts: Post[] = [
     metaTitle: "18 Free Calculators and Converters for Everyday Numbers",
     title: "18 Free Calculators and Converters for the Numbers You Actually Deal With",
     description:
-      "Percentages, discounts, tips, loans, dates, BMI and unit conversions — free browser calculators that show their reasoning and never save your input.",
+      "Percentages, discounts, tips, loans, dates, BMI and unit conversions — free browser calculators that show their reasoning, with no account required.",
     date: "2026-10-20",
     updated: "2026-10-20",
     readingTime: "11 min read",
@@ -730,7 +730,7 @@ export const posts: Post[] = [
     metaTitle: "13 Free Everyday Utilities: Passwords, QR Codes, Timers, Encoding",
     title: "13 Free Everyday Utilities: Passwords, QR Codes, Timers and Text Encoding",
     description:
-      "Generate passwords, build QR codes, run timers and clocks, and decode binary, hex and cipher text — all with free browser tools that upload nothing.",
+      "Generate passwords, build QR codes, run timers and clocks, and decode binary, hex and cipher text — all with free browser tools that run locally, with no account required.",
     date: "2026-10-20",
     updated: "2026-10-20",
     readingTime: "11 min read",
