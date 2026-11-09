@@ -1,6 +1,7 @@
 import { I18nProvider, type Messages } from "@/lib/i18n";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import ConsentBanner from "@/components/shared/consent-banner";
 import { visibleTools } from "@/lib/tools-data";
 
 /**
@@ -22,6 +23,8 @@ export default function SiteShell({
       <Header />
       <main className="flex-1">{children}</main>
       <Footer toolCount={visibleTools.length} />
+      {/* 同意管理横幅放在 Provider 内，文案可随当前语言字典翻译 */}
+      <ConsentBanner />
     </I18nProvider>
   );
 }

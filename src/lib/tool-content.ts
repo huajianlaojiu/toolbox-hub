@@ -30,7 +30,7 @@ const generic = (): ToolContent => ({
   ],
   faq: [
     { q: `Is this {title} free to use?`, a: "Yes. It is completely free, with no sign-up, no trial period, no usage limit and no watermark. There is also no paid tier that holds back basic functionality." },
-    { q: "Is my data uploaded to a server?", a: "No. The tool runs entirely in your browser, so your input never leaves your device. This is also why there is no file size limit and why the tool still works offline once the page has loaded." },
+    { q: "Is my data uploaded to a server?", a: "For most tools, no — the computation runs in your browser and your input is not sent to a server we operate. Some tools download a processing engine or language model from a third-party CDN on first use. See the privacy policy for the full list of third-party services." },
     { q: "Does it work on a phone or tablet?", a: "Yes. The layout is responsive and adapts to phones, tablets and desktops. On a small screen the controls stack vertically so the input stays readable." },
     { q: "Do I need to create an account?", a: "No. There is no registration, no email confirmation and no login. Bookmark the page instead, and it will behave like any other utility you use daily." },
     { q: "Can I use it for commercial work?", a: "Yes. The output is yours to use in client work, products and publications. There is no attribution requirement and no restriction on commercial use." },

@@ -60,7 +60,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <div className="mx-auto max-w-6xl mb-8"><AdUnit /></div>
+      <div className="mx-auto max-w-6xl mb-8"><AdUnit placement="home" /></div>
 
       <section className="rounded-2xl border bg-card p-8 text-center">
         <h2 className="text-2xl font-bold text-foreground">

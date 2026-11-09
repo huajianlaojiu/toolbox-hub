@@ -9,12 +9,12 @@ import { languageAlternates } from "@/lib/alternates";
 export const metadata: Metadata = {
   title: `All Tools — ${visibleTools.length} Free Browser-Based Tools`,
   description:
-    `The full Toolbox Hub directory: ${visibleTools.length} free tools grouped by what they do — developer, text, design, image, video, audio, unit converters, calculators, web, math and everyday utilities. No sign-up, nothing uploaded.`,
+    `The full Toolbox Hub directory: ${visibleTools.length} free tools grouped by what they do — developer, text, design, image, video, audio, unit converters, calculators, web, math and everyday utilities. No sign-up; most tools run locally in your browser.`,
   alternates: { canonical: "/tools/", languages: languageAlternates("/tools/") },
   openGraph: {
     title: "All Tools — Toolbox Hub",
     description:
-      `${visibleTools.length} free browser-based tools, grouped by category. No sign-up, no install, nothing uploaded.`,
+      `${visibleTools.length} free browser-based tools, grouped by category. No sign-up, no install, most processing happens on your device.`,
     url: "/tools/",
     type: "website",
   },
@@ -83,7 +83,7 @@ export default function ToolsIndex() {
           <I18nText id="All {count} Tools" vars={{ count: String(visibleTools.length) }} />
         </h1>
         <p className="mt-4 max-w-3xl leading-7 text-muted-foreground">
-          <I18nText id="Every tool on Toolbox Hub, grouped by the kind of job it does. Each one runs entirely in your browser: there is nothing to install, no account to create, and nothing you type or upload is sent to a server. Pick a category below, or jump straight to the section you need." />
+          <I18nText id="Every tool on Toolbox Hub, grouped by the kind of job it does. Most tools process your input on your own device: there is nothing to install and no account to create. A few need to download a processing engine from a CDN on first use. Pick a category below, or jump straight to the section you need." />
         </p>
       </header>
 
@@ -121,7 +121,7 @@ export default function ToolsIndex() {
           </div>
           {gi === 3 && (
             <div className="mt-8">
-              <AdUnit />
+              <AdUnit placement="directory" />
             </div>
           )}
         </section>
@@ -133,9 +133,9 @@ export default function ToolsIndex() {
         </h2>
         <div className="mt-4 grid gap-6 sm:grid-cols-3">
           <div>
-            <h3 className="font-semibold text-foreground"><I18nText id="Nothing leaves your device" /></h3>
+            <h3 className="font-semibold text-foreground"><I18nText id="Runs on your device" /></h3>
             <p className="mt-2 text-sm leading-7 text-muted-foreground">
-              <I18nText id="Every conversion, format and calculation happens in the page. That is why there is no upload limit, and why the tools keep working once the page has loaded." />
+              <I18nText id="Most conversions, formats and calculations happen in the page, so your input is not sent to a server we operate. A few tools download a processing engine from a CDN on first use; see the privacy policy for details." />
             </p>
           </div>
           <div>

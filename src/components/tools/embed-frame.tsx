@@ -143,7 +143,7 @@ export default function EmbedFrame({
         />
       </div>
       <p className="text-xs text-muted-foreground text-center">
-        {L("Powered by the open-source project {credit} (MIT License). All processing happens locally in your browser.").replace("{credit}", credit)}
+        {L("This tool embeds the third-party project {credit}. It runs in an iframe and may contact its own services and APIs; see the privacy policy for details.").replace("{credit}", credit)}
       </p>
     </div>
   );

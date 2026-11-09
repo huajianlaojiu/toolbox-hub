@@ -310,7 +310,7 @@ export default async function ToolPageBody({ lang, slug }: { lang: string; slug:
         {slug === "subtitle-editor" && <SubtitleEditor />}
         {slug === "openreel-video-editor" && <EmbedFrame src="/embed/openreel/index.html" credit="OpenReel Video" auto={false} height="100dvh" />}
         </div>
-        <div className="mx-auto max-w-6xl mt-8"><AdUnit /></div>
+        <div className="mx-auto max-w-6xl mt-8"><AdUnit placement="tool" /></div>
       </ToolPageContent>
 
       {relatedTools.length > 0 && (

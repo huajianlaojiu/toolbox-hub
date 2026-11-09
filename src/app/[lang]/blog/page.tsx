@@ -13,6 +13,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     lang,
     "/blog/",
     "Blog — Guides for Using Free Browser Tools",
-    "Practical guides on using free browser-based tools for development, writing and everyday calculations. No installs, no accounts, nothing uploaded."
+    "Practical guides on using free browser-based tools for development, writing and everyday calculations. No installs, no accounts; most tools process input locally."
   );
 }

@@ -22,7 +22,7 @@ export default function AboutPage() {
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="How it works" /></h2>
         <p>
-          <I18nText id="Every tool on this site runs entirely in your browser using JavaScript. When you paste text or select a file, the processing happens on your own device. Nothing is uploaded, nothing is stored on a server, and there is no account to create. That design is also why the tools are fast and why they keep working even on a poor connection." />
+          <I18nText id="Most tools process your input in your own browser using JavaScript: when you paste text or select a file, the computation happens on your device rather than on a server we operate, and there is no account to create. A few tools download a processing engine from a third-party CDN on first use, and the Site loads advertising scripts only after you consent. The privacy policy lists every third-party service." />
         </p>
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="What we do not do" /></h2>

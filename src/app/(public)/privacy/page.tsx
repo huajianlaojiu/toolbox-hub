@@ -25,7 +25,7 @@ export default function PrivacyPage() {
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="1. The short version" /></h2>
         <p>
-          <I18nText id="The tools themselves do not send your data anywhere. Your input is processed in your browser. The only data collected automatically is standard web server and advertising data described below." />
+          <I18nText id="Most tools process your input inside your browser and do not upload it to a server. The Site itself does, however, load third-party resources: advertising (only after you consent), JavaScript engines and language models from a CDN for some tools, and a small number of embedded third-party applications that make their own network requests. These are described in section 4 below." />
         </p>
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="2. Information you provide" /></h2>
@@ -35,7 +35,7 @@ export default function PrivacyPage() {
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="3. Files you select" /></h2>
         <p>
-          <I18nText id="When you use a tool such as the image compressor, the image resizer or the watermark remover, the file is read by JavaScript running in your browser. The file is not transmitted to our servers, is not stored, and is not shared with any third party. Closing or refreshing the page discards it." />
+          <I18nText id="When you use a tool such as the image compressor, the image resizer or the watermark remover, the file is read by JavaScript running in your browser. For these tools the file is not transmitted to a server we operate and is discarded when you close or refresh the page. Some tools need to download a processing engine or language model from a third-party CDN before they can work, so they require an internet connection on first use. A few embedded third-party applications handle data inside an iframe under their own policies." />
         </p>
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="4. Advertising and cookies" /></h2>
@@ -71,7 +71,7 @@ export default function PrivacyPage() {
             .
           </li>
           <li>
-            <I18nText id="For European, UK and Swiss visitors, Google publishes a consent management notice that lets you review and change your cookie choices before personalised ads are served." />
+            <I18nText id="We show our own consent banner before any advertising script is loaded. Advertising cookies are only used if you choose to accept them, and you can review or withdraw your choice at any time using the Cookie settings link in the footer. This applies to all visitors, including those in Europe, the UK and Switzerland." />
           </li>
         </ul>
         <p>
@@ -87,6 +87,14 @@ export default function PrivacyPage() {
           .
         </p>
 
+        <h3 className="mt-4 text-base font-semibold text-foreground"><I18nText id="Third-party services and external requests" /></h3>
+        <p className="mt-2">
+          <I18nText id="To be precise about what this Site loads: advertising is served by Google AdSense and its script is only requested after you accept advertising cookies; some tools download processing engines and language models (FFmpeg WebAssembly, Tesseract.js, JSZip, lamejs) from the unpkg CDN on first use; and a small number of embedded third-party applications run in an iframe and may contact their own APIs and services. Those third parties have their own privacy policies. Fonts are self-hosted from this domain." />
+        </p>
+        <p className="mt-2">
+          <I18nText id="The Site is hosted on GitHub Pages. Standard access logs (IP address, browser type, referring page and request time) are collected by the hosting provider under its own policy; we do not have access to a user-level analytics dataset from those logs." />
+        </p>
+
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="5. Analytics and server logs" /></h2>
         <p>
           <I18nText id="Like almost every website, the hosting provider records standard access logs such as IP address, browser type, referring page, and the time of the request. These logs are used to keep the Site available, to diagnose errors, and to detect abuse. They are not used to build a profile of you." />
@@ -94,7 +102,7 @@ export default function PrivacyPage() {
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="6. Local storage and cookies" /></h2>
         <p>
-          <I18nText id="The Site uses a small amount of browser storage to remember interface preferences such as your selected theme or timezone. This data never leaves your device. You can clear it at any time through your browser settings." />
+          <I18nText id="The Site uses browser local storage to remember your selected theme, your language preference, the full text you type into the teleprompter tool, and your cookie consent choice. This data stays in your browser and is not sent to us; you can clear it at any time through your browser settings." />
         </p>
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="7. Legal basis" /></h2>

@@ -161,7 +161,7 @@ export default function GitignoreGenerator() {
       <p className="text-xs text-muted-foreground">
         Templates come from github/gitignore (CC0-1.0), with a few hand-written rules for stacks the
         upstream repo does not ship (PHP, Django, Vue, Nuxt, C#, Jupyter). Everything is generated in
-        your browser — no upload, no request leaves your device.
+        your browser — your selections are not uploaded to a server.
       </p>
     </div>
   );

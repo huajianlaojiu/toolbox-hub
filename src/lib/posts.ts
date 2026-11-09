@@ -44,7 +44,7 @@ export const posts: Post[] = [
     metaTitle: "24 Free Browser Tools Every Developer Should Bookmark (2026)",
     title: "The Developer's Toolkit: 24 Free Browser Tools That Replace Paid Apps",
     description:
-      "A practical guide to formatting, converting, encoding and debugging data using free browser-based developer tools — no installs, no accounts, nothing uploaded.",
+      "A practical guide to formatting, converting, encoding and debugging data using free browser-based developer tools — no installs, no accounts; most tools process input locally.",
     date: "2026-10-20",
     updated: "2026-10-20",
     readingTime: "12 min read",

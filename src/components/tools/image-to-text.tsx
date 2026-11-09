@@ -151,9 +151,10 @@ export default function ImageToText() {
       )}
 
       <p className="text-xs text-muted-foreground">
-        Powered by Tesseract.js (Apache-2.0). Recognition runs entirely on your device — your image is
-        never uploaded. The engine and selected language model download once (a few MB) and are then
-        cached by your browser, so later runs work offline.
+        Powered by Tesseract.js (Apache-2.0). Your image is processed in your browser and is not
+        uploaded by this tool. The OCR engine and the selected language model are downloaded from a
+        third-party CDN on first use (a few MB) and cached by your browser; changing languages may
+        require another download, so an internet connection is needed.
       </p>
     </div>
   );

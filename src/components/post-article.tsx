@@ -212,7 +212,7 @@ export function PostArticle({ slug }: { slug: string }) {
         <section className="mt-14 rounded-xl border bg-muted/40 p-6">
           <h2 className="text-lg font-semibold"><I18nText id="All tools are free and private" /></h2>
           <p className="mt-2 text-sm text-muted-foreground leading-7">
-            <I18nText id="Every tool referenced in this guide runs entirely in your browser. Nothing you type or paste is uploaded, no account is required, and there is no usage limit." />{" "}
+            <I18nText id="Every tool referenced in this guide processes your input in the browser rather than uploading it to a server we operate, requires no account, and has no usage limit. A few tools load a processing engine from a CDN on first use; see the privacy policy for details." />{" "}
             <a href={localizePath("/", lang)} className="text-primary hover:underline">
               <I18nText id="Browse the full toolbox →" />
             </a>
@@ -221,7 +221,7 @@ export function PostArticle({ slug }: { slug: string }) {
       </article>
 
       <div className="mt-10 max-w-3xl">
-        <AdUnit />
+        <AdUnit placement="post" />
       </div>
 
       {related.length > 0 && (

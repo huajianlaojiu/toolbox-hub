@@ -16,6 +16,14 @@ export default function Footer({ toolCount }: { toolCount: number }) {
           <a href={lp("/terms/")} className="hover:text-foreground">{t("Terms")}</a>
           <a href={lp("/disclaimer/")} className="hover:text-foreground">{t("Disclaimer")}</a>
           <a href="/sitemap.xml" className="hover:text-foreground">{t("Sitemap")}</a>
+          {/* 随时重开同意面板（GDPR：撤回/变更同意必须与给予同意一样容易） */}
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new Event("tb-consent-open"))}
+            className="hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+          >
+            {t("Cookie settings")}
+          </button>
         </div>
         <p className="mt-4 text-center">
           &copy; {new Date().getFullYear()} Toolbox Hub. {toolCount} {t("free tools")} {t("All rights reserved.")}

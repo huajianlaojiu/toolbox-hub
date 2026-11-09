@@ -15,6 +15,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     lang,
     "/tools/",
     `All Tools — ${count} Free Browser-Based Tools`,
-    `The full Toolbox Hub directory: ${count} free tools grouped by what they do — developer, text, design, image, video, audio, unit converters, calculators, web, math and everyday utilities. No sign-up, nothing uploaded.`
+    `The full Toolbox Hub directory: ${count} free tools grouped by what they do — developer, text, design, image, video, audio, unit converters, calculators, web, math and everyday utilities. No sign-up; most tools run locally in your browser.`
   );
 }

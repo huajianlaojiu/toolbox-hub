@@ -53,7 +53,7 @@ export function siteJsonLd(lang: string) {
     alternateName: "Toolbox Hub Free Online Tools",
     url: SITE_URL,
     description:
-      "Free browser-based tools for developers, designers, and everyday tasks. No sign-up, no upload, everything runs in your browser.",
+      "Free browser-based tools for developers, designers, and everyday tasks. No sign-up; most tools process your input locally in the browser.",
     inLanguage: lang,
     publisher: {
       "@type": "Organization",
@@ -76,7 +76,7 @@ export function siteJsonLd(lang: string) {
     {
       question: "Is my data uploaded to a server?",
       answer:
-        "No. All processing happens locally in your browser using JavaScript. Files you select, such as images or text, never leave your device, so your data stays private.",
+        "Most tools process your input in the browser and do not upload it to a server. Some tools download a processing engine from a third-party CDN on first use, and the Site shows advertising subject to your consent. See the privacy policy for details.",
     },
     {
       question: "Can I use these tools on mobile?",
