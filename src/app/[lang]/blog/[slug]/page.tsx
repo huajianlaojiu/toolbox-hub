@@ -4,7 +4,7 @@ import { LOCALES, isPublished } from "@/lib/locales";
 import { posts, getPost } from "@/lib/posts";
 import { languageAlternates } from "@/lib/alternates";
 import { st } from "@/lib/lang-meta";
-import { getPostI18n } from "@/i18n/posts";
+import { getPostI18n, isPostTranslated } from "@/i18n/posts";
 
 export function generateStaticParams() {
   const langs = LOCALES.filter((l) => l.code !== "en").map((l) => l.code);
@@ -39,21 +39,31 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   // 待一次翻译会话重翻 posts/<lang>.json 并补齐字典后，把本行替换为
   // translated.description 即可恢复本地化描述。
   const description = st(lang, post.description);
+  // 8 种语言的 6 篇博文正文仍是英文源串（见 isPostTranslated 注释）：
+  // 这些页不该被收录，也不该被 hreflang 声明成该语言的官方版本。
+  const postReady = isPostTranslated(lang, slug);
+  const blogAlts = languageAlternates(path);
+  for (const l of LOCALES) {
+    if (l.code !== "en" && !isPostTranslated(l.code, slug)) delete blogAlts[l.hreflang];
+  }
+  // 英文壳页的 canonical 指向英文原文，配合 noindex 让搜索引擎合并重复内容；
+  // 有真实译文的页仍自指 canonical，行为完全不变。
+  const canonical = postReady ? selfPath : path;
   const m: Metadata = {
     title,
     description,
     keywords: translated.title.toLowerCase(),
-    alternates: { canonical: selfPath, languages: languageAlternates(path) },
+    alternates: { canonical, languages: blogAlts },
     openGraph: {
       title,
       description,
-      url: selfPath,
+      url: canonical,
       type: "article",
       publishedTime: post.date,
       modifiedTime: post.updated,
     },
   };
-  // 未发布语言（译文仍是英文壳）不当作独立版本收录，避免近重复页稀释 SEO
-  if (!isPublished(lang)) m.robots = { index: false, follow: true };
+  // 未发布语言（译文仍是英文壳）或该文章未翻译，都不当作独立版本收录
+  if (!isPublished(lang) || !postReady) m.robots = { index: false, follow: true };
   return m;
 }
