@@ -96,7 +96,7 @@ export default function ConsentBanner() {
         <div className="max-w-2xl text-sm leading-6 text-muted-foreground">
           <p className="font-semibold text-foreground">{t("Your privacy choices")}</p>
           <p className="mt-1">
-            {t("We use Google AdSense to fund this site. Advertising cookies are only set after you agree. You can change your choice at any time from the footer.")}{" "}
+            {t("We use Google AdSense to fund this site and Google Analytics 4 to see which tools are useful. Advertising and analytics scripts only load after you agree. You can change your choice at any time from the footer.")}{" "}
             <a
               href={localizePath("/privacy/", lang)}
               className="text-foreground underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
@@ -146,7 +146,7 @@ export default function ConsentBanner() {
             <span>
               <span className="font-medium">{t("Analytics cookies")}</span>
               <span className="mt-0.5 block text-xs leading-5 text-muted-foreground">
-                {t("Reserved for future traffic measurement. No analytics provider is currently installed.")}
+                {t("Lets us measure page views and which tools are used with Google Analytics 4. It never reads the text or files you enter into a tool. Off by default.")}
               </span>
             </span>
           </label>

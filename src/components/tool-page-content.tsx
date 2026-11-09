@@ -1,8 +1,19 @@
 "use client";
 import type { ReactNode } from "react";
-import type { ToolMeta } from "@/lib/tools-data";
 import type { ToolContent } from "@/lib/tool-content";
 import { useI18n } from "@/lib/i18n";
+
+/**
+ * 工具页只需要标题/描述两个字段。
+ * 之前这里要求完整的 ToolMeta（slug/category/icon/keywords/isPureFrontend…），
+ * 于是服务端只能把英文的 `tool` 传进来，语言版 H1 恒为英文。
+ * 收窄成最小形状后，服务端可以直接传 `getMeta(lang, slug)` 的译文结果。
+ * 这个对象经由 Server → Client props 传递，必须保持可序列化（纯字符串/数组）。
+ */
+export interface ToolPageMeta {
+  title: string;
+  description: string;
+}
 
 /**
  * 工具页整体骨架：标题 → 工具主体 → SEO 文案。
@@ -18,7 +29,7 @@ export function ToolPageContent({
   content,
   children,
 }: {
-  meta: ToolMeta;
+  meta: ToolPageMeta;
   content: ToolContent;
   children?: ReactNode;
 }) {
@@ -26,7 +37,7 @@ export function ToolPageContent({
     <>
       <ToolPageHeader meta={meta} />
       {children}
-      <ToolPageSeo content={content} />
+      <ToolPageSeo meta={meta} content={content} />
     </>
   );
 }
@@ -42,7 +53,7 @@ export function ToolPageContent({
  * 工具站的核心价值是工具本身，不能把交互区埋在长篇文案下面——
  * 用户点进工具页第一屏就必须能看到并操作工具。
  */
-export function ToolPageHeader({ meta }: { meta: ToolMeta }) {
+export function ToolPageHeader({ meta }: { meta: ToolPageMeta }) {
   const { t } = useI18n();
   const title = meta.title;
   const desc = meta.description;
@@ -59,13 +70,13 @@ export function ToolPageHeader({ meta }: { meta: ToolMeta }) {
   );
 }
 
-export function ToolPageSeo({ content }: { content: ToolContent }) {
+export function ToolPageSeo({ meta, content }: { meta: ToolPageMeta; content: ToolContent }) {
   const { t, tl } = useI18n();
 
   return (
     <>
       <section className="mt-10 max-w-3xl">
-        <h2 className="text-xl font-semibold mb-3">{tl("About the {title}", { title: "" })}</h2>
+        <h2 className="text-xl font-semibold mb-3">{tl("About the {title}", { title: meta.title })}</h2>
         <div className="space-y-4">
           {content.intro.split("\n\n").map((para, i) => (
             <p key={i} className="text-sm leading-7 text-muted-foreground">{para}</p>
@@ -75,7 +86,7 @@ export function ToolPageSeo({ content }: { content: ToolContent }) {
 
       {content.useCases && content.useCases.length > 0 && (
         <section className="mt-8 max-w-3xl">
-          <h2 className="text-xl font-semibold mb-3">{tl("Where people use the {title}", { title: "" })}</h2>
+          <h2 className="text-xl font-semibold mb-3">{tl("Where people use the {title}", { title: meta.title })}</h2>
           <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground leading-6">
             {content.useCases.map((u, i) => (<li key={i}>{u}</li>))}
           </ul>
@@ -83,7 +94,7 @@ export function ToolPageSeo({ content }: { content: ToolContent }) {
       )}
 
       <section className="mt-8 max-w-3xl">
-        <h2 className="text-xl font-semibold mb-3">{tl("How to use the {title}", { title: "" })}</h2>
+        <h2 className="text-xl font-semibold mb-3">{tl("How to use the {title}", { title: meta.title })}</h2>
         <ol className="space-y-4">
           {content.howTo.map((h, i) => (
             <li key={i} className="flex gap-3">

@@ -15,7 +15,7 @@ export default function PrivacyPage() {
     <div className="mx-auto max-w-3xl px-4 py-10">
       <h1 className="text-3xl font-bold tracking-tight"><I18nText id="Privacy Policy" /></h1>
       <p className="mt-2 text-sm text-muted-foreground">
-        <I18nText id="Last updated: 20 October 2026" />
+        <I18nText id="Last updated: 9 November 2026" />
       </p>
 
       <div className="mt-6 space-y-5 text-sm leading-7 text-muted-foreground">
@@ -25,7 +25,7 @@ export default function PrivacyPage() {
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="1. The short version" /></h2>
         <p>
-          <I18nText id="Most tools process your input inside your browser and do not upload it to a server. The Site itself does, however, load third-party resources: advertising (only after you consent), JavaScript engines and language models from a CDN for some tools, and a small number of embedded third-party applications that make their own network requests. These are described in section 4 below." />
+          <I18nText id="Most tools process your input inside your browser and do not upload it to a server. The Site itself does, however, load third-party resources: advertising and audience measurement (only after you consent), JavaScript engines and language models from a CDN for some tools, and a small number of embedded third-party applications that make their own network requests. These are described in sections 4 and 5 below." />
         </p>
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="2. Information you provide" /></h2>
@@ -71,7 +71,7 @@ export default function PrivacyPage() {
             .
           </li>
           <li>
-            <I18nText id="We show our own consent banner before any advertising script is loaded. Advertising cookies are only used if you choose to accept them, and you can review or withdraw your choice at any time using the Cookie settings link in the footer. This applies to all visitors, including those in Europe, the UK and Switzerland." />
+            <I18nText id="We show our own consent banner before any advertising or analytics script is loaded. Advertising and analytics cookies are only used if you choose to accept them, and you can review or withdraw your choice at any time using the Cookie settings link in the footer. This applies to all visitors, including those in Europe, the UK and Switzerland." />
           </li>
         </ul>
         <p>
@@ -92,12 +92,15 @@ export default function PrivacyPage() {
           <I18nText id="To be precise about what this Site loads: advertising is served by Google AdSense and its script is only requested after you accept advertising cookies; some tools download processing engines and language models (FFmpeg WebAssembly, Tesseract.js, JSZip, lamejs) from the unpkg CDN on first use; and a small number of embedded third-party applications run in an iframe and may contact their own APIs and services. Those third parties have their own privacy policies. Fonts are self-hosted from this domain." />
         </p>
         <p className="mt-2">
-          <I18nText id="The Site is hosted on GitHub Pages. Standard access logs (IP address, browser type, referring page and request time) are collected by the hosting provider under its own policy; we do not have access to a user-level analytics dataset from those logs." />
+          <I18nText id="The Site is hosted on GitHub Pages. Standard access logs (IP address, browser type, referring page and request time) are collected by the hosting provider under its own policy; we do not have access to a user-level analytics dataset from those logs. The only audience measurement we receive is the consent-based Google Analytics 4 data described in section 5." />
         </p>
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="5. Analytics and server logs" /></h2>
         <p>
           <I18nText id="Like almost every website, the hosting provider records standard access logs such as IP address, browser type, referring page, and the time of the request. These logs are used to keep the Site available, to diagnose errors, and to detect abuse. They are not used to build a profile of you." />
+        </p>
+        <p>
+          <I18nText id="If you allow analytics cookies, the Site also uses Google Analytics 4 (GA4) to measure which pages and tools are visited. GA4 receives the page URL, browser and device information, a cookie or device identifier, and an approximate location derived from your IP address; it does not receive the text or files you enter into a tool, and raw IP addresses are not made available to us. If you do not allow analytics cookies, the GA4 script is never loaded. You can withdraw consent at any time using the Cookie settings link in the footer." />
         </p>
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="6. Local storage and cookies" /></h2>

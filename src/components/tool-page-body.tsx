@@ -210,7 +210,8 @@ export default async function ToolPageBody({ lang, slug }: { lang: string; slug:
       <a href={lang === "en" ? "/tools/" : `/${lang}/tools/`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6">
         <span aria-hidden>‹</span> <I18nText id="All Tools" />
       </a>
-      <ToolPageContent meta={tool} content={content}>
+      {/* 传译文 meta（getMeta），不是英文 tool：否则 15 语言版 H1/副标题恒为英文，与 <title> 语言相反 */}
+      <ToolPageContent meta={meta} content={content}>
         <div className="rounded-xl border bg-card p-6 mt-6">
           {slug === "password-strength" && <PasswordStrength />}
         {slug === "html-preview" && <HtmlPreview />}

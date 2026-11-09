@@ -4,6 +4,7 @@ import { LOCALES, isPublished } from "@/lib/locales";
 import { posts, getPost } from "@/lib/posts";
 import { languageAlternates } from "@/lib/alternates";
 import { st } from "@/lib/lang-meta";
+import { getPostI18n } from "@/i18n/posts";
 
 export function generateStaticParams() {
   const langs = LOCALES.filter((l) => l.code !== "en").map((l) => l.code);
@@ -23,11 +24,19 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const path = `/blog/${post.slug}/`;
   // 自指 canonical：翻译版指向自己，否则会被当成英文版的重复页
   const selfPath = lang === "en" ? path : `/${lang}${path}`;
-  const title = st(lang, post.metaTitle);
-  const description = st(lang, post.description);
+  // 文章译文在 src/i18n/posts/<lang>.json（按 slug），不在 messages 字典里。
+  // 之前用 st(lang, post.metaTitle) 查 messages，必然查不到 → 90 个语言博客页
+  // 的 title/description/OG 全是英文，正文却是译文。
+  const translated = getPostI18n(lang, slug) ?? post;
+  const lookedUp = st(lang, post.metaTitle);
+  // metaTitle 目前没有单独译文字段：优先字典精确命中，否则用已翻译的文章标题。
+  const title = lookedUp !== post.metaTitle ? lookedUp : translated.title;
+  const description =
+    translated.description !== post.description ? translated.description : st(lang, post.description);
   const m: Metadata = {
     title,
     description,
+    keywords: translated.title.toLowerCase(),
     alternates: { canonical: selfPath, languages: languageAlternates(path) },
     openGraph: {
       title,
