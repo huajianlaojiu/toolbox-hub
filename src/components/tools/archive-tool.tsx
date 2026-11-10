@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { Upload, Download, Loader2, Archive, PackageOpen } from "lucide-react";
 import JSZip from "jszip";
 
+import { useI18n } from "@/lib/i18n";
 type Entry = { name: string; size: number; blob: Blob };
 
 /* ── TAR 读写（纯 JS，格式固定：512 字节头 + 数据 + 512 对齐填充） ── */
@@ -85,6 +86,7 @@ const TABS: { id: string; label: string; icon: ReactNode }[] = [
 ];
 
 export default function ArchiveTool() {
+  const { t } = useI18n();
   const [tab, setTab] = useState("create");
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState("");
@@ -166,7 +168,7 @@ export default function ArchiveTool() {
             <input type="file" multiple className="hidden" onChange={(e) => setSrc(Array.from(e.target.files || []))} />
           </label>
           <div className="flex items-center gap-3">
-            <span className="text-xs text-muted-foreground">Format</span>
+            <span className="text-xs text-muted-foreground">{t("Format")}</span>
             <select value={fmt} onChange={(e) => setFmt(e.target.value as "zip" | "tar")} className="tool-input w-32">
               <option value="zip">ZIP</option>
               <option value="tar">TAR</option>
@@ -193,7 +195,7 @@ export default function ArchiveTool() {
                   <span className="text-sm truncate flex-1">{en.name}</span>
                   <span className="text-xs text-muted-foreground shrink-0">{sizeStr(en.size)}</span>
                   <button onClick={() => save(en.blob, en.name.split("/").pop() || en.name)} className="tool-btn tool-btn-secondary py-1 shrink-0">
-                    <Download className="h-3.5 w-3.5" />Save
+                    <Download className="h-3.5 w-3.5" />{t("Save")}
                   </button>
                 </div>
               ))}

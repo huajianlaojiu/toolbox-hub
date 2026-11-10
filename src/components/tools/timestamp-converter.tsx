@@ -3,7 +3,9 @@ import { useState } from "react";
 import { ArrowLeftRight } from "lucide-react";
 import CopyButton from "@/components/copy-button";
 
+import { useI18n } from "@/lib/i18n";
 export default function TimestampConverter() {
+  const { t } = useI18n();
   const [ts, setTs] = useState(Math.floor(Date.now() / 1000).toString());
   const [dateStr, setDateStr] = useState("");
   const [result, setResult] = useState("");
@@ -52,12 +54,12 @@ export default function TimestampConverter() {
           <input type="datetime-local" className="tool-input tool-input-sm font-sans" value={dateStr} onChange={(e) => setDateStr(e.target.value)} />
         )}
       </div>
-      <button onClick={convert} className="tool-btn tool-btn-primary">Convert</button>
+      <button onClick={convert} className="tool-btn tool-btn-primary">{t("Convert")}</button>
       {error && <p className="text-sm text-red-500">{error}</p>}
       {result && (
         <div>
           <div className="flex items-center justify-between mb-2">
-            <label className="text-sm font-medium text-foreground">Result</label>
+            <label className="text-sm font-medium text-foreground">{t("Result")}</label>
             <CopyButton text={result} />
           </div>
           <pre className="tool-result">{result}</pre>

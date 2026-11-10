@@ -3,7 +3,9 @@ import { useState, useRef, useCallback } from "react";
 import { Download } from "lucide-react";
 import QRCode from "qrcode";
 
+import { useI18n } from "@/lib/i18n";
 export default function QrCodeGenerator() {
+  const { t } = useI18n();
   const [text, setText] = useState("");
   const [qrDataUrl, setQrDataUrl] = useState("");
   const [size, setSize] = useState(256);
@@ -45,7 +47,7 @@ export default function QrCodeGenerator() {
       </div>
       <div className="flex gap-2">
         <button onClick={generate} className="tool-btn tool-btn-primary">Generate QR Code</button>
-        <button onClick={() => { setText(""); setQrDataUrl(""); }} className="tool-btn tool-btn-secondary">Clear</button>
+        <button onClick={() => { setText(""); setQrDataUrl(""); }} className="tool-btn tool-btn-secondary">{t("Clear")}</button>
       </div>
       <div className="flex flex-col items-center gap-4 p-4 bg-muted rounded-lg">
         <canvas ref={canvasRef} className="hidden" />

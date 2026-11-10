@@ -12,8 +12,11 @@ export default function PasswordStrength() {
     if (/[^a-zA-Z0-9]/.test(input)) score++;
     if (input.length >= 16) score++;
     const levels = ["Very Weak", "Weak", "Fair", "Good", "Strong", "Very Strong", "Excellent"];
+    // score 上限是 7（七条独立规则全中），levels 只有 7 项（索引 0..6）。
+    // 不 clamp 时 `P@ssw0rdP@ssw0rd` 之类满分输入会显示 "Score: 7/7 (undefined)"。
+    const label = levels[Math.min(score, levels.length - 1)];
     const colors = ["red", "orange", "yellow", "lime", "green", "teal", "blue"];
-    return "Score: " + score + "/7 (" + levels[score] + ")\nLength: " + input.length + "\nUppercase: " + (/[A-Z]/.test(input)?"Yes":"No") + "\nLowercase: " + (/[a-z]/.test(input)?"Yes":"No") + "\nNumbers: " + (/[0-9]/.test(input)?"Yes":"No") + "\nSymbols: " + (/[^a-zA-Z0-9]/.test(input)?"Yes":"No");
+    return "Score: " + score + "/7 (" + label + ")\nLength: " + input.length + "\nUppercase: " + (/[A-Z]/.test(input)?"Yes":"No") + "\nLowercase: " + (/[a-z]/.test(input)?"Yes":"No") + "\nNumbers: " + (/[0-9]/.test(input)?"Yes":"No") + "\nSymbols: " + (/[^a-zA-Z0-9]/.test(input)?"Yes":"No");
   };
   return <SimpleTool label="Password" placeholder="Type a password to score it" hint="Scoring happens in your browser only. The password is never sent anywhere or stored." process={process} multiline={false} />;
 }

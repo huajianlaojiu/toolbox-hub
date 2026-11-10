@@ -2,6 +2,7 @@
 import { useState } from "react";
 import CopyButton from "@/components/copy-button";
 
+import { useI18n } from "@/lib/i18n";
 interface Emoji {
   e: string;
   name: string;
@@ -137,6 +138,7 @@ const EMOJI: Emoji[] = [
 ];
 
 export default function EmojiPicker() {
+  const { t } = useI18n();
   const [q, setQ] = useState("");
   const [recent, setRecent] = useState<string[]>([]);
 
@@ -155,7 +157,7 @@ export default function EmojiPicker() {
   return (
     <div className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-foreground mb-2">Search</label>
+        <label className="block text-sm font-medium text-foreground mb-2">{t("Search")}</label>
         <input
           className="tool-input tool-input-sm"
           value={q}

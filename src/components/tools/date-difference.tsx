@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ArrowLeftRight } from "lucide-react";
 import CopyButton from "@/components/copy-button";
 
+import { useI18n } from "@/lib/i18n";
 const today = () => new Date().toISOString().slice(0, 10);
 
 function parseDate(value: string): Date | null {
@@ -39,6 +40,7 @@ function weekdaysBetween(start: Date, end: Date) {
 }
 
 export default function DateDifference() {
+  const { t } = useI18n();
   const [from, setFrom] = useState("2026-01-01");
   const [to, setTo] = useState(today());
   const [inclusive, setInclusive] = useState(false);
@@ -138,7 +140,7 @@ export default function DateDifference() {
       </div>
 
       <div className="flex items-center justify-between">
-        <span className="text-sm font-medium text-foreground">Result</span>
+        <span className="text-sm font-medium text-foreground">{t("Result")}</span>
         <CopyButton text={summary} />
       </div>
       <pre className="tool-result">{summary}</pre>

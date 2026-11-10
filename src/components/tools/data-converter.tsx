@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ArrowLeftRight, Copy, Download, Loader2 } from "lucide-react";
 import * as yaml from "js-yaml";
 
+import { useI18n } from "@/lib/i18n";
 type Fmt = "json" | "yaml" | "xml" | "csv";
 const FMTS: Fmt[] = ["json", "yaml", "xml", "csv"];
 
@@ -116,6 +117,7 @@ const SAMPLE: Record<Fmt, string> = {
 const EXT: Record<Fmt, string> = { json: "json", yaml: "yaml", xml: "xml", csv: "csv" };
 
 export default function DataConverter() {
+  const { t: tr } = useI18n();
   const [from, setFrom] = useState<Fmt>("json");
   const [to, setTo] = useState<Fmt>("yaml");
   const [input, setInput] = useState(SAMPLE.json);
@@ -162,7 +164,7 @@ export default function DataConverter() {
     <div className="space-y-4">
       <div className="flex flex-wrap items-end gap-3">
         <div>
-          <label className="text-xs text-muted-foreground">From</label>
+          <label className="text-xs text-muted-foreground">{tr("From")}</label>
           <select value={from} onChange={(e) => setFrom(e.target.value as Fmt)} className="tool-input">
             {FMTS.map((f) => (<option key={f} value={f}>{f.toUpperCase()}</option>))}
           </select>
@@ -171,7 +173,7 @@ export default function DataConverter() {
           <ArrowLeftRight className="h-4 w-4" />
         </button>
         <div>
-          <label className="text-xs text-muted-foreground">To</label>
+          <label className="text-xs text-muted-foreground">{tr("To")}</label>
           <select value={to} onChange={(e) => setTo(e.target.value as Fmt)} className="tool-input">
             {FMTS.map((f) => (<option key={f} value={f}>{f.toUpperCase()}</option>))}
           </select>
@@ -199,7 +201,7 @@ export default function DataConverter() {
 
       {output && (
         <div className="flex gap-2">
-          <button onClick={copy} className="tool-btn tool-btn-secondary"><Copy className="h-4 w-4" />Copy</button>
+          <button onClick={copy} className="tool-btn tool-btn-secondary"><Copy className="h-4 w-4" />{tr("Copy")}</button>
           <button onClick={download} className="tool-btn tool-btn-secondary"><Download className="h-4 w-4" />Download .{EXT[to]}</button>
         </div>
       )}

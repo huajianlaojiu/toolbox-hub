@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import CopyButton from "@/components/copy-button";
+import { useI18n } from "@/lib/i18n";
 
 export interface UnitDef {
   name: string;
@@ -22,6 +23,7 @@ export default function UnitConverter({ units, defaultFrom, defaultTo, precision
   const [from, setFrom] = useState(defaultFrom || keys[0]);
   const [to, setTo] = useState(defaultTo || keys[1] || keys[0]);
   const [result, setResult] = useState("");
+  const { t } = useI18n();
 
   const convert = () => {
     const v = parseFloat(value);
@@ -35,31 +37,31 @@ export default function UnitConverter({ units, defaultFrom, defaultTo, precision
     <div className="space-y-4">
       <div className="flex flex-wrap items-end gap-3">
         <div>
-          <label className="block text-sm font-medium text-foreground mb-2">Value</label>
+          <label className="block text-sm font-medium text-foreground mb-2">{t("Value")}</label>
           <input className="tool-input tool-input-sm font-mono w-32" value={value} onChange={(e) => setValue(e.target.value)} placeholder="1" />
         </div>
         <div>
-          <label className="block text-sm font-medium text-foreground mb-2">From</label>
+          <label className="block text-sm font-medium text-foreground mb-2">{t("From")}</label>
           <select value={from} onChange={(e) => setFrom(e.target.value)} className="tool-input tool-input-sm font-sans w-28">
-            {keys.map((k) => <option key={k} value={k}>{units[k].name}</option>)}
+            {keys.map((k) => <option key={k} value={k}>{t(units[k].name)}</option>)}
           </select>
         </div>
         <div className="flex items-center pb-2"><ArrowRight className="h-5 w-5 text-muted-foreground" /></div>
         <div>
-          <label className="block text-sm font-medium text-foreground mb-2">To</label>
+          <label className="block text-sm font-medium text-foreground mb-2">{t("To")}</label>
           <select value={to} onChange={(e) => setTo(e.target.value)} className="tool-input tool-input-sm font-sans w-28">
-            {keys.map((k) => <option key={k} value={k}>{units[k].name}</option>)}
+            {keys.map((k) => <option key={k} value={k}>{t(units[k].name)}</option>)}
           </select>
         </div>
       </div>
-      <button onClick={convert} className="tool-btn tool-btn-primary">Convert</button>
+      <button onClick={convert} className="tool-btn tool-btn-primary">{t("Convert")}</button>
       {result && (
         <div>
           <div className="flex items-center justify-between mb-2">
-            <label className="text-sm font-medium text-foreground">Result</label>
+            <label className="text-sm font-medium text-foreground">{t("Result")}</label>
             <CopyButton text={`${result} ${units[to].name}`} />
           </div>
-          <div className="tool-result font-mono text-lg font-medium">{value} {units[from].name} = {result} {units[to].name}</div>
+          <div className="tool-result font-mono text-lg font-medium">{value} {t(units[from].name)} = {result} {t(units[to].name)}</div>
         </div>
       )}
     </div>

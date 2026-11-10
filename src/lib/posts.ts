@@ -1176,6 +1176,419 @@ export const posts: Post[] = [
       },
     ],
   },
+  {
+    slug: "your-character-count-is-wrong",
+    metaTitle: "Why Your Character Count Is Wrong: UTF-16, Emoji and Grapheme Clusters",
+    title: "Your Character Count Is Wrong (And So Is Your Word Count)",
+    description:
+      "A string has at least three different lengths. A close reading of how browser-based word counters, letter counters and Unicode escapers actually compute their numbers — and which definition to use for limits, storage and billing.",
+    date: "2026-11-10",
+    updated: "2026-11-10",
+    readingTime: "11 min read",
+    category: "Developer Tools",
+    blocks: [
+      {
+        p:
+          "Ask three people how long the string `👨‍👩‍👧‍👦` is and you will get three defensible answers: one, seven, or eleven. All three are correct, depending on whether you are counting what a human sees, what Unicode calls a code point, or what JavaScript stores in memory. Most counter tools silently pick one of these and label it 'characters', which is where the trouble starts.\n\nThis is not an abstract concern. Character limits in forms, database column widths, SMS billing, social platform post limits and 'words read per minute' estimates all depend on that choice. When the number is wrong, a user gets their text truncated mid-glyph, a database rejects a value that appears to fit, or an analytics dashboard reports a reading time that nobody can reproduce.",
+      },
+      { h: "Three different things called a character" },
+      {
+        l: [
+          "**Grapheme cluster** — what a reader perceives as one symbol. The family emoji above is one grapheme, even though it is built from several emoji joined by invisible zero-width joiners.",
+          "**Code point** — one Unicode scalar value. The family emoji is seven code points: four people, three joiners. A flag such as 🇨🇳 is two regional indicator code points.",
+          "**UTF-16 code unit** — the 16-bit slot JavaScript strings are made of. Code points above U+FFFF need a surrogate pair, two slots. The family emoji is eleven of these.",
+        ],
+      },
+      {
+        p:
+          "JavaScript's `String.prototype.length` counts UTF-16 code units, not characters in any human sense. That is a language design decision dating to the mid-1990s, when Unicode fit in 16 bits, and it is not going to change because changing it would break the web. `Array.from(s).length` and `[...s].length` count code points instead, because the string iterator walks scalar values. Neither counts graphemes; for that you need `Intl.Segmenter`.",
+      },
+      {
+        b:
+          "Measured on the family emoji: `'👨‍👩‍👧‍👦'.length` is 11, `[...'👨‍👩‍👧‍👦'].length` is 7, and `Intl.Segmenter` with `granularity: 'grapheme'` reports 1. Three numbers from one symbol, all from standard browser APIs.",
+      },
+      { h: "What a browser word counter actually computes" },
+      {
+        p:
+          "The [[word-counter|Word Counter]] on this site is a compact example of the whole problem. Its `count()` function is short enough to read in one sitting, and every line makes a specific assumption about what text is.",
+      },
+      {
+        l: [
+          "`text.trim().split(/\\s+/).length` — words are runs of non-whitespace separated by ASCII-ish whitespace.",
+          "`text.length` — characters are UTF-16 code units.",
+          "`text.replace(/\\s/g, '').length` — the same definition, with whitespace removed.",
+          "`text.split(/[.!?]+/).filter(Boolean).length` — a sentence ends at a full stop, exclamation mark or question mark.",
+          "`Math.ceil(words / 200)` — a person reads 200 of those words per minute.",
+        ],
+      },
+      {
+        p:
+          "Run a Chinese sentence through it and you get a striking result: `今天天气很好，我们去公园吧。` reports 14 characters and **1 word**. There are no spaces between Chinese words, so the whitespace split never fires. The reading time then comes out as one minute no matter how long the paragraph is. Japanese and Thai behave the same way. The counter is not broken — it implements a definition of 'word' that only works for space-delimited scripts, and it never tells you that.",
+      },
+      {
+        p:
+          "Sentence splitting has its own edge cases. `Dr. Smith arrived at 3.14 pm. Really!` is two sentences to a human and **four** to `split(/[.!?]+/)`: the abbreviation, the decimal point and the final `pm.` each create an artificial boundary. Ellipses, initials, version numbers and quoted sentences all do this. Regular expressions that look for punctuation cannot distinguish an abbreviation from a sentence end without a dictionary or a model.",
+      },
+      { h: "The letter counter has a units mismatch" },
+      {
+        p:
+          "The [[letter-counter|Letter Counter]] is even more instructive. It iterates with `for (const c of input.toLowerCase())`, which walks **code points**, and tests each against `/[a-z]/`. But it computes the percentage denominator as `input.length`, which counts **UTF-16 code units**. The numerator and denominator are in different units.",
+      },
+      {
+        p:
+          "For pure ASCII the two agree, so the bug is invisible in the common case. Feed it text containing emoji, accented characters outside the Latin-1 range, or CJK, and the reported 'share of total characters' quietly stops being a share of anything. It also ignores every letter outside `a-z` by design — `é`, `ñ`, `ü`, `ß` and all non-Latin scripts are simply not counted. The tool says so in its hint text, which is the honest way to ship a deliberately narrow definition.",
+      },
+      { h: "Escaping Unicode exposes the surrogate pair" },
+      {
+        p:
+          "The [[unicode-converter|Unicode Converter]] encodes input with `input.split('').map(c => '\\\\u' + c.charCodeAt(0).toString(16).padStart(4, '0'))`. `split('')` splits on UTF-16 code units, so a supplementary-plane character is torn into its two surrogates. A single 😀 becomes `\\ud83d\\ude00` — two escape sequences, neither of which is a valid standalone character.",
+      },
+      {
+        p:
+          "That output is not useless: it is an accurate description of how the string is stored, and it round-trips correctly if you paste it back, because the decoder reconstructs the pair. But it cannot represent a code point above U+FFFF as `\\u{1F600}` the way modern JavaScript escape syntax allows, and it will confuse anyone who expects one escape per visible symbol. If you need code-point escapes, iterate with `for...of` and use `codePointAt(0)`.",
+      },
+      { h: "Which definition should you actually use?" },
+      {
+        l: [
+          "**Form `maxlength` and legacy database `VARCHAR(n)`**: UTF-16 code units, because that is what the constraint will actually count. Use `text.length`. If your database counts bytes in UTF-8 instead, use `new TextEncoder().encode(s).length` — a CJK character is three bytes, an emoji four.",
+          "**User-facing character limits**: grapheme clusters, via `Intl.Segmenter`. A user who sees one family emoji will not accept being charged eleven characters.",
+          "**Cursor movement, deletion and text selection**: grapheme clusters too. Deleting half a surrogate pair produces an invalid string; deleting half a ZWJ sequence mangles an emoji.",
+          "**Word counts for CJK**: whitespace splitting is the wrong instrument. Segmenters with `granularity: 'word'` and a matching locale do far better, though word segmentation in Chinese remains a research problem rather than a settled rule.",
+          "**Billing and rate limits**: whatever the other party specified. SMS counts GSM-7 septets or UCS-2 code units depending on the alphabet; social platforms use their own weighted-length rules. Read the spec rather than assuming `length`.",
+        ],
+      },
+      {
+        p:
+          "The [[text-trimmer|Text Trimmer]] and [[line-number-adder|Line Number Adder]] are useful here in a narrow way: they let you see exactly where a transformation cut a string relative to line boundaries. They do not change the underlying counting rule, so treat their output as a view of the same UTF-16 model, not as a different definition.",
+      },
+      { h: "A short checklist before you ship a counter" },
+      {
+        l: [
+          "**Name the unit in the UI.** 'Characters (UTF-16 code units)' is ugly but unambiguous; 'Characters' alone is a promise you cannot keep.",
+          "**Decide what happens at a boundary.** Truncating at `n` code units can leave a dangling high surrogate. Clamp to the nearest grapheme boundary instead.",
+          "**Normalise before comparing.** `é` (U+00E9) and `e` + U+0301 look identical, have different lengths, and compare unequal without NFC normalisation via `s.normalize('NFC')`.",
+          "**Test with a fixed corpus**: a ZWJ emoji sequence, a flag, a combining accent in both forms, a CJK paragraph, and a right-to-left string. These five inputs catch almost every counting bug.",
+        ],
+      },
+      { h: "Frequently asked questions" },
+      {
+        p:
+          "**Why does the word counter say my Chinese paragraph is one word?** It splits on whitespace. CJK text does not use spaces between words, so use a word segmenter or report characters instead.\n\n**Is `Array.from(s).length` the right character count?** It counts code points, which fixes surrogate pairs but still splits combined emoji and accented characters built from a base plus a combining mark. For visible characters use `Intl.Segmenter`.\n\n**Can I just use a library?** For grapheme-aware slicing, yes — but check whether it ships its own Unicode tables and how current they are. `Intl.Segmenter` is supported in current browsers and tracks the platform's Unicode version.\n\n**Why do two tools disagree on the same text?** They are almost certainly using different definitions. Ask which unit each one counts before assuming one is broken.\n\n**Does any of this involve sending my text anywhere?** No. These counters run in the page using built-in JavaScript APIs; the calculation never leaves the browser.",
+      },
+      { h: "The one-line version" },
+      {
+        p:
+          "A string does not have a length until you say what you are counting. Pick the unit that matches the constraint you are enforcing, put its name next to the number, and test with an emoji family before you believe the result.",
+      },
+    ],
+  },
+  {
+    slug: "password-strength-meters-measure-the-wrong-thing",
+    metaTitle: "Password Strength Meters Measure Character Classes, Not Guessing Difficulty",
+    title: "Password Strength Meters Measure the Wrong Thing",
+    description:
+      "A line-by-line look at what a browser password scorer and a client-side password generator actually compute: why rule-based scores reward predictable patterns, what real entropy depends on, and where the random number generation is genuinely sound.",
+    date: "2026-11-10",
+    updated: "2026-11-10",
+    readingTime: "12 min read",
+    category: "Security",
+    blocks: [
+      {
+        p:
+          "Type `aaaaaaaaaaaaaaaa1!` into a typical strength meter and it lights up green. Type `correct horse battery staple` and it may score lower. The first password is one of the worst choices a person could make — a single repeated character with two predictable suffixes — while the second is four unrelated common words. The meter is not malfunctioning. It is answering a different question from the one users think they asked.\n\nRules-based meters measure **which character classes appear in a string**. Attackers measure **how many guesses it takes to find the string**. Those two quantities are only loosely related, and the gap between them is where most bad password advice lives.",
+      },
+      { h: "What the scorer actually counts" },
+      {
+        p:
+          "The [[password-strength|Password Strength Checker]] on this site is about twenty lines long, which makes it unusually easy to audit. It starts at zero and adds one point for each condition that is true:",
+      },
+      {
+        l: [
+          "length ≥ 8",
+          "length ≥ 12",
+          "contains a lowercase `a-z` character",
+          "contains an uppercase `A-Z` character",
+          "contains a digit `0-9`",
+          "contains anything outside `[a-zA-Z0-9]`",
+          "length ≥ 16",
+        ],
+      },
+      {
+        p:
+          "Seven independent checks, so the score runs from 0 to 7 and maps to a label from Very Weak through Excellent. Running a few inputs through that exact function gives results worth sitting with:",
+      },
+      {
+        l: [
+          "`aaaaaaaaaaaaaaaa1!` — 6 points, labelled Excellent. Eighteen characters, one distinct letter, an exclamation mark.",
+          "`x7!Kp` — 4 points, labelled Strong. Five characters. A modern GPU cluster exhausts a five-character search space almost instantly.",
+          "`correct horse battery staple` — 5 points, Very Strong. Twenty-eight characters, no uppercase, no digits, no symbols, but four genuinely independent words.",
+          "`Tr0ub4dor&3` — 5 points, Very Strong. Eleven characters built from a well-known substitution pattern that password-cracking rule sets generate automatically.",
+        ],
+      },
+      {
+        p:
+          "Notice that the five-character password is one point away from the twenty-eight-character one. Every rule is binary and every rule is worth the same, so a single uppercase letter buys exactly as much score as four extra words. There is no check for repetition, no check for dictionary words, no check for keyboard walks, no check for dates, and no check against breached-password corpora. A scorer built from character-class rules cannot detect any of those, because none of them change which classes are present.",
+      },
+      { h: "What an attacker's cost function looks like" },
+      {
+        p:
+          "A cracker does not try every string in order. It tries the strings people actually choose: leaked password lists, dictionary words with mutation rules, appended years and symbols, keyboard patterns, site names, and phrases from the same language as the target. Only after those are exhausted does it fall back to brute force over a character set. That is why `P@ssw0rd2026!` is a terrible password despite passing all seven checks, while a randomly generated twenty-character string is a good one even if it happens to contain no symbols.",
+      },
+      {
+        p:
+          "The quantity that matters is **entropy under the attacker's model**: roughly the base-2 logarithm of the number of candidates the attacker must try before reaching yours. If a password came from a uniform random draw over a 62-character alphabet and is 16 characters long, that is about 95 bits, and no plausible attacker will search it. If it came from a human choosing a word and decorating it, the effective candidate set might be a few million — around 22 bits — regardless of how many character classes the decoration added.",
+      },
+      {
+        b:
+          "Practical reading: a meter is a UI nudge against empty or trivially short inputs, not a security estimate. Treat 'Excellent' as 'this input satisfies seven formatting checks', nothing more.",
+      },
+      {
+        p:
+          "There is one important distinction that makes short passwords less catastrophic than they sound. An **online** attack — someone guessing against a live login — is bounded by rate limits, account lockouts, CAPTCHAs and multi-factor authentication, so even a modest password can survive if the service is competent. An **offline** attack happens after a database leak: the attacker has the hash and can try billions of candidates per second with no rate limit at all. Strength meters are often used to reassure people about the first scenario, while the second is the one that actually ends in account takeover. The right defences are different in each case, and neither is a label on a form.",
+      },
+      { h: "What a generator has to get right instead" },
+      {
+        p:
+          "If the fix is to stop choosing passwords yourself, the generator has to be trustworthy. The [[password-generator|Password Generator]] here uses `crypto.getRandomValues(new Uint32Array(length))` — the browser's cryptographically secure PRNG, seeded by the operating system — rather than `Math.random()`, whose output is not designed to resist prediction. That distinction matters more than any character-class rule.",
+      },
+      {
+        p:
+          "Each random 32-bit integer is mapped into the character pool with `pool[n % pool.length]`. Because 2³² is not divisible by most pool sizes, this introduces a small **modulo bias**: with a 62-character pool, 2³² mod 62 = 4, so four characters are very slightly more likely than the rest. The size of the effect is about 1.4 × 10⁻⁶ percent — far below anything an attacker could exploit, and worth stating precisely rather than either hiding or exaggerating. A rejection-sampling loop would remove it entirely; for a browser utility the current behaviour is a reasonable trade-off, and it is honest to say so.",
+      },
+      {
+        l: [
+          "**Length dominates everything else.** Each extra character multiplies the search space by the pool size. Going from 12 to 20 characters is worth far more than adding symbols to 12.",
+          "**Use a password manager and a unique password per site.** Reuse is a bigger real-world risk than almost any weakness in a single generated string.",
+          "**Do not paste credentials into any page you cannot audit.** These tools run locally with no network call, which is exactly why their source can be read and checked. A live production secret is still the wrong input for a browser text box.",
+          "**Prefer passphrases when a human must type or remember the value.** Four or five randomly chosen uncommon words are both memorable and high-entropy, even though a rule-based meter will call them weak.",
+        ],
+      },
+      { h: "Hashing is a separate question entirely" },
+      {
+        p:
+          "Generating a password and storing a password are different problems. The [[md5-generator|MD5 Generator]] exists so you can verify file checksums and inspect hash behaviour; MD5 is a fast, broken general-purpose hash and must never be used for password storage. Real authentication uses a slow, salted, memory-hard password hash such as Argon2id or scrypt, with a unique salt per credential. A 'strong' password stored as an unsalted fast hash is still exposed the moment the database leaks.",
+      },
+      {
+        p:
+          "It is also worth separating encoding from protection: [[base64-encoder|Base64]] and [[caesar-cipher|Caesar / ROT13]] are reversible transformations with no secret key. They appear in security conversations because tokens are often Base64-encoded, but encoding a password changes its appearance, not its guessability.",
+      },
+      { h: "Frequently asked questions" },
+      {
+        p:
+          "**Should I trust a green strength meter?** Trust it as a format check only. It does not know whether your password is in a breach corpus or built from a common pattern.\n\n**Is a 16-character generated password enough?** If it came from a CSPRNG over a reasonable alphabet, yes for essentially all ordinary accounts. Length and randomness, not symbol variety, do the work.\n\n**Does the generator's modulo bias matter?** Not at this scale — about 1.4 × 10⁻⁶ percent for a 62-character pool. It is a correctness detail, not a practical vulnerability.\n\n**Are four random words really better than `Tr0ub4dor&3`?** Under how crackers actually work, usually yes: they enumerate decorated dictionary words early, while an independently drawn word sequence has a much larger search space.\n\n**Does the password leave my browser?** No. Generation and scoring run in the page using built-in browser APIs; there is no request to a server.",
+      },
+      { h: "The one-line version" },
+      {
+        p:
+          "Stop optimising for the meter. Let a cryptographically secure generator pick a long unique value, keep it in a password manager, and reserve your judgement for the parts the meter cannot see: reuse, phishing, and how the server stores it.",
+      },
+    ],
+  },
+  {
+    slug: "regex-works-in-python-fails-in-javascript",
+    metaTitle: "Why a Regex Works in Python and Fails in JavaScript: Flags, Engines and Backtracking",
+    title: "Why Your Regex Works in Python and Fails in JavaScript",
+    description:
+      "The same pattern can throw, match nothing, or hang a browser tab depending on the engine. A concrete tour of JavaScript RegExp's flag rules, missing PCRE features, Unicode behaviour and backtracking risk, checked against a working browser regex tester.",
+    date: "2026-11-10",
+    updated: "2026-11-10",
+    readingTime: "12 min read",
+    category: "Developer Tools",
+    blocks: [
+      {
+        p:
+          "A pattern copied from a working Python script is pasted into a browser tool and immediately produces `TypeError: String.prototype.matchAll called with a non-global RegExp argument`. Nothing is wrong with the pattern. The failure is an API contract that only exists in JavaScript, and it is the first of several differences that make regexes one of the least portable things developers move between languages.\n\nThe [[regex-tester|Regex Tester]] on this site is small enough to make a good case study. It constructs a regex with `new RegExp(pattern, flags)`, then collects results with `[...text.matchAll(re)]`. Both of those lines carry assumptions worth unpacking.",
+      },
+      { h: "The global flag is not optional here" },
+      {
+        p:
+          "`String.prototype.matchAll` requires a global regex. Pass it `''`, `'i'` or `'m'` and it throws immediately; `'g'`, `'gi'` and `'gu'` work. That is by design: `matchAll` returns an iterator over *all* matches, and the engine needs `lastIndex` to advance, which only happens for global regexes. The tool defaults the flag field to `g` for exactly this reason, and surfaces the engine's error message rather than swallowing it.",
+      },
+      {
+        l: [
+          "**Want case-insensitive matching?** Type `gi`, not `i`. The tool does not add `g` for you, because silently rewriting flags would hide what the engine is doing.",
+          "**Want multiline anchors?** `gm`, not `m`.",
+          "**Want Unicode property escapes?** `gu`, not `u`.",
+        ],
+      },
+      {
+        p:
+          "Related but separate is the statefulness that `g` introduces elsewhere. A global regex has a mutable `lastIndex`: calling `test()` three times on `/a/g` against `'aa'` gives `true, true, false` because the cursor advanced between calls. Reusing a global regex across functions is a classic source of intermittent bugs. `matchAll` clones the regex internally, so it does not mutate the object you passed in — checking `re.lastIndex` afterwards returns 0 — but `test()` and `exec()` absolutely do.",
+      },
+      { h: "Syntax that simply does not exist in JavaScript" },
+      {
+        p:
+          "JavaScript's RegExp is specified by ECMAScript, not by PCRE, and it deliberately omits several constructs that Perl, PHP, Ruby, Java and .NET users reach for. Writing them into a JS pattern produces a `SyntaxError` at construction time, not a failed match:",
+      },
+      {
+        l: [
+          "**Possessive quantifiers** such as `a++` — SyntaxError. There is no way to tell the engine 'never give this back'.",
+          "**Atomic groups** such as `(?>...)` — SyntaxError. Same missing capability.",
+          "**`\\K`** (reset match start) and **`\\A` / `\\z`** (absolute anchors) — not part of the language. Use `^` and `$`, with `m` where needed.",
+          "**Named groups** use `(?<name>...)` and `groups.name`. Python spells it `(?P<name>...)`; .NET accepts `(?<name>...)`. Copying the Python form into JS gives a syntax error.",
+          "**Lookbehind** exists, but only since ES2018. Variable-length lookbehind is allowed in JavaScript (unlike Python, which requires fixed width), while older Safari versions before 16.4 do not support lookbehind at all. A pattern that works in Node can still break in an older browser.",
+        ],
+      },
+      { h: "Unicode needs an explicit flag" },
+      {
+        p:
+          "`\\p{L}` is a Unicode property escape, and in JavaScript it is inert without the `u` flag. Test `\\p{L}` against `é` with no flag and it returns false — the engine reads it as a literal `p` followed by a quantifier on `{L}` in some positions, or as an identity escape depending on the pattern. Add `u` and it correctly matches the letter. Python's standard `re` module does not support `\\p{...}` at all (the third-party `regex` module does), while .NET and Java accept it natively.",
+      },
+      {
+        p:
+          "The same trap applies to `\\d`. In JavaScript it means `[0-9]` only — testing it against the Arabic-Indic digit `٣` returns false. In Python 3, `\\d` matches Unicode decimal digits by default. A validation regex that seems stricter in JS than in Python is often just using a narrower definition of 'digit'. If you mean ASCII, say `[0-9]` and remove the ambiguity.",
+      },
+      { h: "Anchors and dotall are the quiet portability bugs" },
+      {
+        p:
+          "`.` does not match a newline unless you pass the `s` (dotAll) flag; Python needs `re.DOTALL` or an inline `(?s)`. More subtle is `$`. In JavaScript, `/abc$/` does **not** match `'abc\\n'` — verified directly, it returns false. Perl, Python and PCRE-flavoured engines do let `$` match immediately before a trailing newline, so a pattern designed to tolerate a final line ending will silently fail when ported. With the `m` flag, `^` and `$` bind to line boundaries in both families, but the no-flag behaviour differs.",
+      },
+      {
+        p:
+          "Line endings compound this. Files produced on Windows contain `\\r\\n`; a pattern written as `^.*$` with `m` will often leave a trailing `\\r` inside the match. Normalise line endings before testing, or make the pattern explicit about `\\r?\\n`.",
+      },
+      { h: "Backtracking can freeze the whole tab" },
+      {
+        p:
+          "JavaScript's regex engine is a backtracking engine, and it runs synchronously on the main thread. A pattern with nested quantifiers such as `(a+)+$` against a long string of `a`s followed by one `b` can require exponential work. There is no timeout, no match limit and no cancellation: the tab stops painting, stops responding to clicks, and the only remedy is to wait or close it. PCRE has backtrack limits, .NET offers a match timeout, and RE2-based engines guarantee linear time by construction. ECMAScript offers none of these.",
+      },
+      {
+        l: [
+          "**Avoid nested quantifiers** over the same character class. `(a+)+`, `(a|a)*` and `(\\s*)*` are the usual offenders.",
+          "**Rewrite with concrete anchors or a split.** Often `[^,]+` or a simple `String.split` does the job in linear time.",
+          "**Bound the input** in any tool that lets a user supply both the pattern and the text. Short inputs make a bad pattern merely slow rather than fatal.",
+          "**Run untrusted patterns in a Worker** if you are building this into an application, so the UI thread stays responsive — though the Worker itself will still spin.",
+        ],
+      },
+      {
+        p:
+          "This is a real limitation of the browser-based tester, and it is worth stating plainly: it hands the pattern directly to `new RegExp` and calls `matchAll` on the text you supply. It is excellent for checking a pattern you mostly trust against a short sample. It is not a safe sandbox for hostile patterns or megabyte-sized inputs.",
+      },
+      { h: "A porting checklist" },
+      {
+        l: [
+          "**Translate the flags first.** `re.I` → `i`, `re.M` → `m`, `re.S` → `s`, and add `g` if you are using `matchAll`.",
+          "**Add `u`** whenever the pattern uses `\\p{...}`, `\\u{...}` or needs correct surrogate-pair handling.",
+          "**Replace unsupported syntax**: atomic groups and possessive quantifiers have no direct equivalent; simplify the pattern instead.",
+          "**Reconcile named groups** and check `groups` rather than numeric indices when porting from Python.",
+          "**Test with a trailing newline, a CRLF pair, a non-ASCII letter and a non-ASCII digit.** Those four inputs expose most cross-engine surprises.",
+        ],
+      },
+      {
+        p:
+          "For the surrounding workflow, the [[text-trimmer|Text Trimmer]] is useful for normalising whitespace before a match, and the [[duplicate-line-remover|Duplicate Line Remover]] handles the line-oriented cleanup that people often try to force into a single regex. Splitting one clever pattern into two boring steps is usually faster, more portable and easier to debug.",
+      },
+      { h: "Frequently asked questions" },
+      {
+        p:
+          "**Why does the tester throw when I enter `i` as a flag?** `matchAll` requires a global regex. Use `gi` instead.\n\n**Why does `\\p{L}` not match accented letters?** It needs the `u` flag — enter `gu`.\n\n**Can JavaScript do atomic groups or possessive quantifiers?** No. Both raise `SyntaxError`. Rewrite the pattern to avoid ambiguous backtracking.\n\n**Does `$` match before a final newline in JavaScript?** No, unlike Perl and Python. Normalise the input or use `m` with explicit line handling.\n\n**Is it safe to paste a regex from an untrusted source?** Treat it like untrusted code: a catastrophic-backtracking pattern can freeze the tab. Keep the test text short, since everything runs locally in your browser with no server-side timeout.",
+      },
+      { h: "The one-line version" },
+      {
+        p:
+          "A regex is not a portable string — it is a program compiled by a particular engine with particular flags. When one behaves differently, check the flag set and the feature list before you check the pattern.",
+      },
+    ],
+  },
+  {
+    slug: "unit-converter-floating-point",
+    metaTitle: "Why a Unit Converter Disagrees With Itself at the Sixth Decimal",
+    title: "The Unit Converter That Lies at the Sixth Decimal",
+    description:
+      "Unit conversion looks like arithmetic until you read the formatting line. A walkthrough of parseFloat, affine temperature scales, six-decimal rounding and the inputs that quietly turn into zero — with the exact numbers each case produces.",
+    date: "2026-11-10",
+    updated: "2026-11-10",
+    readingTime: "11 min read",
+    category: "Developer Tools",
+    blocks: [
+      {
+        p:
+          "A unit converter is the kind of tool nobody expects to be interesting. Type a number, pick two units, get a number back. Yet the answer you see is the product of three separate decisions — how the input is parsed, how the conversion is composed, and how the result is rounded — and any one of them can change the last digits or, for very small values, erase the answer entirely.\n\nThe [[length-converter|Length Converter]], [[weight-converter|Weight Converter]], [[temperature-converter|Temperature Converter]] and their siblings on this site all share one small component. Reading it closely is a compact lesson in why 'just multiply by a constant' is not quite enough.",
+      },
+      { h: "What the shared converter actually does" },
+      {
+        p:
+          "Each unit supplies two functions: `toBase(v)` converts into a canonical base unit, and `fromBase(v)` converts out of it. The converter parses the input with `parseFloat`, calls `units[from].toBase(v)`, then `units[to].fromBase(base)`. Finally it formats:",
+      },
+      {
+        b:
+          "`out % 1 === 0 ? out.toString() : out.toFixed(6).replace(/0+$/, '').replace(/\\.$/, '')` — an integer check, six decimal places, then two regexes that strip trailing zeros and a dangling decimal point.",
+      },
+      {
+        p:
+          "That last line is doing more work than it appears to. It is the reason `1 mile` displays as `1.609344` instead of `1.609344000`, and also the reason a value of `1e-9` metres converted to kilometres displays as **0** rather than `0.000000001`. Six decimal places is a display decision, and at sufficiently small magnitudes a display decision becomes a data-loss decision.",
+      },
+      { h: "parseFloat is much more permissive than a number field" },
+      {
+        p:
+          "The input is a plain text field passed to `parseFloat`. That function reads the longest numeric prefix and ignores the rest. Feed it `12abc` and the converter computes with **12**, silently. Feed it `1,000` — a perfectly normal way to write a thousand in English — and it computes with **1**, because the comma ends the parse. A leading `+`, surrounding whitespace and exponent notation are all accepted.",
+      },
+      {
+        p:
+          "This is not a defect so much as a contract: `parseFloat` is designed for parsing CSS-like numeric prefixes, not for validating user input. When the value matters, validate before converting — use `Number(value)` with an explicit emptiness check, or a regex that rejects trailing junk and locale separators. The tool's own hint does not claim to validate; it just converts what it can read.",
+      },
+      { h: "Six decimals hide error as often as they reveal it" },
+      {
+        p:
+          "Binary floating point cannot represent most decimal fractions exactly. `0.1 + 0.2` evaluates to `0.30000000000000004`, not `0.3`. Run that sum through the converter's formatting function and the output is `0.3`, because `toFixed(6)` rounds the excess away. The rounding is doing double duty: it presents a sane number of digits *and* accidentally sanitises the artefact of binary arithmetic.",
+      },
+      {
+        p:
+          "That is convenient for a quick conversion and dangerous if you treat the displayed string as an exact value. Consider the opposite end: `123456789.123456` survives `toFixed(6)` intact, so the converter will happily display fifteen significant digits — far more precision than a `double` can meaningfully guarantee, and far more than any physical measurement supports. Six *decimal places* is not six *significant figures*; for large numbers it implies precision that is not there, and for small numbers it throws away precision that was.",
+      },
+      {
+        p:
+          "Very large results take a different path. `1e21` satisfies `out % 1 === 0`, so the integer branch calls `toString()` and the display becomes `1e+21`. That is valid JavaScript number formatting, but a user expecting a unit value may not recognise it as a quantity. Exact integers above `Number.MAX_SAFE_INTEGER` (2⁵³ − 1) cannot be represented reliably at all, regardless of formatting.",
+      },
+      { h: "Temperature is affine, not proportional" },
+      {
+        p:
+          "Length, weight and area conversions are pure scaling: `toBase(v) = v * k`, `fromBase(v) = v / k`. Temperature is different. The [[temperature-converter|Temperature Converter]] uses Celsius as its base and defines Fahrenheit as `toBase(v) = (v - 32) * 5/9`, `fromBase(v) = v * 9/5 + 32`, with Kelvin offset by 273.15. These are affine transforms with a translation, not ratios.",
+      },
+      {
+        p:
+          "That distinction matters the moment anyone tries to reason about *differences*. A difference of 10 °C is 18 °F, but 10 °C as an absolute reading is 50 °F. You cannot convert a temperature interval with the same formula as a temperature point. The shared `toBase`/`fromBase` structure handles point conversions correctly because each unit carries its own offset; it would be wrong to reuse those functions for a delta. Kelvin's offset also means the scale has a hard floor at absolute zero, which the converter does not enforce — a negative Kelvin input will produce a number, not a warning.",
+      },
+      {
+        p:
+          "There is also a pleasing numerical accident worth checking rather than assuming: converting 98.6 °F to Celsius through `(98.6 - 32) * 5/9` yields exactly `37` in IEEE 754 double arithmetic, and converting back gives `98.6`. Most values are not so tidy. Chains of conversions — metres to feet to inches to centimetres — accumulate small errors at every step, because each intermediate result is rounded to 53 bits before the next multiplication.",
+      },
+      { h: "When a browser converter is the wrong instrument" },
+      {
+        l: [
+          "**Financial and legal quantities.** Currency conversion needs decimal arithmetic with an explicit rounding policy, not binary floats and a `toFixed`. Use a decimal library or integer minor units.",
+          "**Scientific or engineering values with stated uncertainty.** Six fixed decimals discard significant digits on small values and invent them on large ones. Preserve the original measurement and its error bound.",
+          "**Very small or very large magnitudes.** Below about `1e-6` in the target unit the current formatter rounds to zero; above `1e21` JavaScript switches to exponent notation. Neither is a conversion error, but both are presentation traps.",
+          "**Anything that must round-trip exactly.** A → B → A is not guaranteed to return the original string. If the pipeline needs that property, use rational or decimal representations throughout.",
+          "**Bulk transformation.** A browser tool is for one value at a time. Converting thousands of rows belongs in a script with an auditable unit library.",
+        ],
+      },
+      {
+        p:
+          "For quick sanity checks the surrounding tools help: the [[file-size-converter|File Size Converter]] deals with the related but distinct confusion between decimal (1000-based) and binary (1024-based) units, and the [[time-converter|Time Converter]] is a reminder that durations and instants are different objects — the same conceptual boundary the [[timestamp-converter|Timestamp Converter]] article covers in more depth.",
+      },
+      { h: "A short checklist for anyone building one" },
+      {
+        l: [
+          "**Validate the input explicitly.** Reject trailing characters and locale separators instead of relying on `parseFloat`.",
+          "**Format with significant digits, not fixed decimals**, and let the user choose the precision.",
+          "**Keep the unrounded value** internally; round only for display.",
+          "**Separate point conversions from interval conversions**, and enforce physical floors such as 0 K where they exist.",
+          "**State the conversion factors.** A mile is exactly 1609.344 metres by international agreement; writing the constant in the source makes the number auditable.",
+        ],
+      },
+      { h: "Frequently asked questions" },
+      {
+        p:
+          "**Why did my tiny value become 0?** The formatter keeps six decimal places, so anything below `0.0000005` in the target unit rounds to zero. Convert to a smaller unit first.\n\n**Why did `1,000` become 1?** `parseFloat` stops at the comma. Enter `1000` without a separator.\n\n**Is the temperature formula wrong for differences?** The formula is for absolute readings. A 10-degree *difference* in Celsius is 18 degrees Fahrenheit; use the scale factor alone, without the 32 offset.\n\n**Why does `0.1 + 0.2` not show as `0.30000000000000004`?** Six-decimal formatting rounds it away. The internal floating-point value is still the long one.\n\n**Can I rely on these numbers for money or regulated measurements?** No. Use decimal arithmetic with an explicit rounding rule, and keep the original value and its uncertainty.",
+      },
+      { h: "The one-line version" },
+      {
+        p:
+          "Conversion factors are exact; the surrounding float arithmetic and six-decimal formatting are not. Know which one you are looking at before you copy the number into anything that matters.",
+      },
+    ],
+  },
 ];
 
 export function getPost(slug: string): Post | undefined {

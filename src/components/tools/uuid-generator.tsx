@@ -3,9 +3,11 @@ import { useState } from "react";
 import { Plus, Trash2 } from "lucide-react";
 import CopyButton from "@/components/copy-button";
 
+import { useI18n } from "@/lib/i18n";
 function generateUUID() { return crypto.randomUUID(); }
 
 export default function UuidGenerator() {
+  const { t } = useI18n();
   const [uuids, setUuids] = useState<string[]>([generateUUID()]);
   const [uppercase, setUppercase] = useState(false);
   const [count, setCount] = useState(1);
@@ -28,12 +30,12 @@ export default function UuidGenerator() {
         </div>
         <label className="flex items-center gap-2 text-sm text-foreground">
           <input type="checkbox" checked={uppercase} onChange={(e) => setUppercase(e.target.checked)} className="rounded" />
-          Uppercase
+          {t("Uppercase")}
         </label>
       </div>
       <div className="flex gap-2">
-        <button onClick={generate} className="tool-btn tool-btn-primary"><Plus className="h-4 w-4" />Generate</button>
-        <button onClick={() => { setUuids([]); }} className="tool-btn tool-btn-secondary"><Trash2 className="h-4 w-4" />Clear</button>
+        <button onClick={generate} className="tool-btn tool-btn-primary"><Plus className="h-4 w-4" />{t("Generate")}</button>
+        <button onClick={() => { setUuids([]); }} className="tool-btn tool-btn-secondary"><Trash2 className="h-4 w-4" />{t("Clear")}</button>
         <CopyButton text={uuids.map((u) => uppercase ? u.toUpperCase() : u).join("\n")} label="Copy All" />
       </div>
       {uuids.length > 0 && (

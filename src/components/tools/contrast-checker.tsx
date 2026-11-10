@@ -2,6 +2,7 @@
 import { useState } from "react";
 import CopyButton from "@/components/copy-button";
 
+import { useI18n } from "@/lib/i18n";
 type Rgb = [number, number, number];
 
 function hexToRgb(hex: string): Rgb | null {
@@ -39,6 +40,7 @@ function verdict(r: number) {
 }
 
 export default function ContrastChecker() {
+  const { t } = useI18n();
   const [fg, setFg] = useState("#1a1a1a");
   const [bg, setBg] = useState("#ffffff");
 
@@ -133,7 +135,7 @@ export default function ContrastChecker() {
             </table>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-foreground">Result</span>
+            <span className="text-sm font-medium text-foreground">{t("Result")}</span>
             <CopyButton text={summary} />
           </div>
           <pre className="tool-result max-h-64 overflow-auto">{summary}</pre>

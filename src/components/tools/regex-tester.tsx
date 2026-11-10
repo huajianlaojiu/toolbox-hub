@@ -2,7 +2,9 @@
 "use client";
 import { useState } from "react";
 import { Search } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 export default function RegexTester() {
+  const { t } = useI18n();
   const [pattern, setPattern] = useState("");
   const [text, setText] = useState("");
   const [flags, setFlags] = useState("g");
@@ -20,8 +22,8 @@ export default function RegexTester() {
   return (
     <div className="space-y-4">
       <div className="flex gap-2">
-        <div className="flex-1"><label className="block text-sm font-medium text-foreground mb-2">Pattern</label><input className="tool-input tool-input-sm font-mono" value={pattern} onChange={e=>setPattern(e.target.value)} placeholder="/[a-z]+/"/></div>
-        <div className="w-20"><label className="block text-sm font-medium text-foreground mb-2">Flags</label><input className="tool-input tool-input-sm font-mono" value={flags} onChange={e=>setFlags(e.target.value)} placeholder="g"/></div>
+        <div className="flex-1"><label className="block text-sm font-medium text-foreground mb-2">{t("Pattern")}</label><input className="tool-input tool-input-sm font-mono" value={pattern} onChange={e=>setPattern(e.target.value)} placeholder="/[a-z]+/"/></div>
+        <div className="w-20"><label className="block text-sm font-medium text-foreground mb-2">{t("Flags")}</label><input className="tool-input tool-input-sm font-mono" value={flags} onChange={e=>setFlags(e.target.value)} placeholder="g"/></div>
       </div>
       <div><label className="block text-sm font-medium text-foreground mb-2">Test Text</label><textarea className="tool-input" value={text} onChange={e=>setText(e.target.value)} placeholder="Enter text to test..." rows={4}/></div>
       <button onClick={test} className="tool-btn tool-btn-primary"><Search className="h-4 w-4"/>Test Regex</button>

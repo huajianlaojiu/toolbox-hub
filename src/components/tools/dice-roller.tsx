@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Dices, RotateCcw } from "lucide-react";
 import CopyButton from "@/components/copy-button";
 
+import { useI18n } from "@/lib/i18n";
 const SIDES = [4, 6, 8, 10, 12, 20, 100];
 
 const PIP_LAYOUT: Record<number, number[][]> = {
@@ -39,6 +40,7 @@ function Face({ value, sides }: { value: number; sides: number }) {
 }
 
 export default function DiceRoller() {
+  const { t } = useI18n();
   const [sides, setSides] = useState(6);
   const [count, setCount] = useState(2);
   const [rolls, setRolls] = useState<number[]>([]);
@@ -102,7 +104,7 @@ export default function DiceRoller() {
           className="tool-btn tool-btn-secondary"
         >
           <RotateCcw className="h-4 w-4" />
-          Clear
+          {t("Clear")}
         </button>
       </div>
 
@@ -114,11 +116,11 @@ export default function DiceRoller() {
             ))}
           </div>
           <div className="flex items-center justify-between rounded-xl border border-border p-4">
-            <span className="text-sm font-medium text-foreground">Total</span>
+            <span className="text-sm font-medium text-foreground">{t("Total")}</span>
             <span className="text-3xl font-bold tabular-nums">{total}</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-foreground">Result</span>
+            <span className="text-sm font-medium text-foreground">{t("Result")}</span>
             <CopyButton text={summary} />
           </div>
           <pre className="tool-result">{summary}</pre>

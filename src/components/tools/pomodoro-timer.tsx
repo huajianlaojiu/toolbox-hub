@@ -2,7 +2,9 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { Play, Pause, RotateCcw, Brain, Coffee } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 export default function PomodoroTimer() {
+  const { t } = useI18n();
   const [time, setTime] = useState(25*60);
   const [running, setRunning] = useState(false);
   const [mode, setMode] = useState<"work"|"break">("work");
@@ -21,7 +23,7 @@ export default function PomodoroTimer() {
       <p className="text-sm text-muted-foreground">{mode==="work"?"Focus time":"Break time"}</p>
       <div className="flex justify-center gap-3">
         <button onClick={()=>setRunning(!running)} className="tool-btn tool-btn-primary">{running?<Pause className="h-4 w-4"/>:<Play className="h-4 w-4"/>}{running?"Pause":"Start"}</button>
-        <button onClick={()=>switchTo(mode,mode==="work"?25*60:5*60)} className="tool-btn tool-btn-secondary"><RotateCcw className="h-4 w-4"/>Reset</button>
+        <button onClick={()=>switchTo(mode,mode==="work"?25*60:5*60)} className="tool-btn tool-btn-secondary"><RotateCcw className="h-4 w-4"/>{t("Reset")}</button>
       </div>
     </div>
   );

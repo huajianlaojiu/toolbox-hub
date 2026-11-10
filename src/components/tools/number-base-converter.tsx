@@ -2,6 +2,7 @@
 import { useState } from "react";
 import CopyButton from "@/components/copy-button";
 
+import { useI18n } from "@/lib/i18n";
 const BASES = [
   { id: "auto", label: "Auto" },
   { id: "2", label: "Binary (2)" },
@@ -36,6 +37,7 @@ function group(value: string, size: number) {
 }
 
 export default function NumberBaseConverter() {
+  const { t } = useI18n();
   const [input, setInput] = useState("255");
   const [base, setBase] = useState<string>("auto");
 
@@ -76,7 +78,7 @@ export default function NumberBaseConverter() {
   return (
     <div className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-foreground mb-2">Value</label>
+        <label className="block text-sm font-medium text-foreground mb-2">{t("Value")}</label>
         <input
           className="tool-input tool-input-sm font-mono"
           value={input}
@@ -125,7 +127,7 @@ export default function NumberBaseConverter() {
             ))}
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-foreground">Result</span>
+            <span className="text-sm font-medium text-foreground">{t("Result")}</span>
             <CopyButton text={out} />
           </div>
           <pre className="tool-result max-h-96 overflow-auto">{out}</pre>

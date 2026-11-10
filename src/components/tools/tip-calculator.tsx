@@ -2,9 +2,11 @@
 import { useState } from "react";
 import CopyButton from "@/components/copy-button";
 
+import { useI18n } from "@/lib/i18n";
 const PRESETS = [10, 15, 18, 20, 25];
 
 export default function TipCalculator() {
+  const { t } = useI18n();
   const [bill, setBill] = useState("50");
   const [tipPct, setTipPct] = useState("15");
   const [people, setPeople] = useState("2");
@@ -106,7 +108,7 @@ export default function TipCalculator() {
             </div>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-foreground">Result</span>
+            <span className="text-sm font-medium text-foreground">{t("Result")}</span>
             <CopyButton text={summary} />
           </div>
           <pre className="tool-result">{summary}</pre>

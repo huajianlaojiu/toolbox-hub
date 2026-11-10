@@ -3,6 +3,7 @@ import { useState, useCallback } from "react";
 import { RefreshCw } from "lucide-react";
 import CopyButton from "@/components/copy-button";
 
+import { useI18n } from "@/lib/i18n";
 function generatePassword(length: number, opts: Record<string, boolean>): string {
   const chars: Record<string, string> = {
     lowercase: "abcdefghijklmnopqrstuvwxyz",
@@ -19,6 +20,7 @@ function generatePassword(length: number, opts: Record<string, boolean>): string
 }
 
 export default function PasswordGenerator() {
+  const { t } = useI18n();
   const [password, setPassword] = useState(generatePassword(16, { lowercase: true, uppercase: true, numbers: true, symbols: false }));
   const [length, setLength] = useState(16);
   const [opts, setOpts] = useState({ lowercase: true, uppercase: true, numbers: true, symbols: false });
@@ -38,7 +40,7 @@ export default function PasswordGenerator() {
       <div className="flex flex-wrap items-center gap-4">
         <div className="flex items-center gap-2">
           <span className="text-sm text-foreground">Length:</span>
-          <input type="range" min={8} max={64} value={length} onChange={(e) => { setLength(Number(e.target.value)); regenerate(); }} className="w-32" />
+          <input type="range" min={8} max={64} value={length} onChange={(e) => { const next = Number(e.target.value); setLength(next); setPassword(generatePassword(next, opts)); }} className="w-32" />
           <span className="text-sm font-mono font-medium">{length}</span>
         </div>
         {Object.entries(opts).map(([k, v]) => (
@@ -51,7 +53,7 @@ export default function PasswordGenerator() {
       <div className="flex items-center gap-2">
         <div className="flex-1 rounded-lg bg-muted px-4 py-3 font-mono text-lg font-medium break-all select-all">{password}</div>
         <CopyButton text={password} />
-        <button onClick={regenerate} className="tool-btn tool-btn-primary"><RefreshCw className="h-4 w-4" />New</button>
+        <button onClick={regenerate} className="tool-btn tool-btn-primary"><RefreshCw className="h-4 w-4" />{t("New")}</button>
       </div>
       <p className="text-xs text-muted-foreground">
         Generated client-side with crypto.getRandomValues. Password never leaves your browser.

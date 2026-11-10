@@ -2,6 +2,7 @@
 
 import { Check, Copy } from "lucide-react";
 import { useState } from "react";
+import { useI18n } from "@/lib/i18n";
 
 interface CopyButtonProps {
   text: string;
@@ -10,6 +11,7 @@ interface CopyButtonProps {
 
 export default function CopyButton({ text, label }: CopyButtonProps) {
   const [copied, setCopied] = useState(false);
+  const { t } = useI18n();
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(text);
@@ -20,7 +22,7 @@ export default function CopyButton({ text, label }: CopyButtonProps) {
   return (
     <button onClick={handleCopy} className={`copy-btn ${copied ? "copied" : ""}`}>
       {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-      {label || (copied ? "Copied" : "Copy")}
+      {label || (copied ? t("Copied") : t("Copy"))}
     </button>
   );
 }

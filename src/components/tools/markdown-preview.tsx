@@ -2,7 +2,9 @@
 import { useState } from "react";
 import { Eye, Pencil } from "lucide-react";
 
+import { useI18n } from "@/lib/i18n";
 export default function MarkdownPreview() {
+  const { t } = useI18n();
   const [text, setText] = useState(`# Welcome to Markdown
 
 **Bold text** and *italic text*.
@@ -48,7 +50,7 @@ console.log("code blocks too");
     <div className="space-y-4">
       <div className="flex gap-2">
         <button onClick={() => setPreview(false)} className={`tool-btn ${!preview ? "tool-btn-primary" : "tool-btn-secondary"}`}><Pencil className="h-4 w-4" />Edit</button>
-        <button onClick={() => setPreview(true)} className={`tool-btn ${preview ? "tool-btn-primary" : "tool-btn-secondary"}`}><Eye className="h-4 w-4" />Preview</button>
+        <button onClick={() => setPreview(true)} className={`tool-btn ${preview ? "tool-btn-primary" : "tool-btn-secondary"}`}><Eye className="h-4 w-4" />{t("Preview")}</button>
       </div>
       {preview ? (
         <div className="rounded-lg border bg-card p-6 prose prose-sm max-w-none dark:prose-invert" dangerouslySetInnerHTML={{ __html: renderMarkdown(text) }} />

@@ -2,6 +2,7 @@
 import { useState } from "react";
 import CopyButton from "@/components/copy-button";
 
+import { useI18n } from "@/lib/i18n";
 const BANDS = [
   { max: 18.5, label: "Underweight" },
   { max: 25, label: "Normal weight" },
@@ -10,6 +11,7 @@ const BANDS = [
 ];
 
 export default function BmiCalculator() {
+  const { t } = useI18n();
   const [unit, setUnit] = useState<"metric" | "imperial">("metric");
   const [kg, setKg] = useState("70");
   const [cm, setCm] = useState("175");
@@ -116,7 +118,7 @@ export default function BmiCalculator() {
             obese
           </p>
           <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-foreground">Result</span>
+            <span className="text-sm font-medium text-foreground">{t("Result")}</span>
             <CopyButton text={summary} />
           </div>
           <pre className="tool-result">{summary}</pre>

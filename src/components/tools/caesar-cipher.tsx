@@ -2,6 +2,7 @@
 import { useState } from "react";
 import CopyButton from "@/components/copy-button";
 
+import { useI18n } from "@/lib/i18n";
 function shiftText(text: string, shift: number, decode: boolean): string {
   const s = decode ? (26 - (shift % 26)) % 26 : ((shift % 26) + 26) % 26;
   return text
@@ -15,6 +16,7 @@ function shiftText(text: string, shift: number, decode: boolean): string {
 }
 
 export default function CaesarCipher() {
+  const { t } = useI18n();
   const [input, setInput] = useState("");
   const [shift, setShift] = useState(3);
   const [decode, setDecode] = useState(false);
@@ -26,7 +28,7 @@ export default function CaesarCipher() {
   return (
     <div className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-foreground mb-2">Text</label>
+        <label className="block text-sm font-medium text-foreground mb-2">{t("Text")}</label>
         <textarea
           className="tool-input"
           value={input}
@@ -42,13 +44,13 @@ export default function CaesarCipher() {
             onClick={() => setDecode(false)}
             className={`tool-btn ${decode ? "tool-btn-secondary" : "tool-btn-primary"}`}
           >
-            Encode
+            {t("Encode")}
           </button>
           <button
             onClick={() => setDecode(true)}
             className={`tool-btn ${decode ? "tool-btn-primary" : "tool-btn-secondary"}`}
           >
-            Decode
+            {t("Decode")}
           </button>
         </div>
         <label className="flex items-center gap-3 text-sm text-foreground">

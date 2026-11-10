@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Hash } from "lucide-react";
 import CopyButton from "@/components/copy-button";
 
+import { useI18n } from "@/lib/i18n";
 function md5(input: string): string {
   function add(x: number, y: number) { return (x + y) >>> 0; }
   function rol(v: number, s: number) { return (v << s) | (v >>> (32 - s)); }
@@ -56,6 +57,7 @@ async function hashText(text: string, algo: string): Promise<string> {
 }
 
 export default function Md5Generator() {
+  const { t } = useI18n();
   const [input, setInput] = useState("");
   const [results, setResults] = useState<Record<string, string>>({});
   const algoMap: Record<string, string> = { "MD5": "MD5 (128-bit)", "SHA-1": "SHA-1 (160-bit)", "SHA-256": "SHA-256", "SHA-512": "SHA-512" };
@@ -74,7 +76,7 @@ export default function Md5Generator() {
       <div><label className="block text-sm font-medium text-foreground mb-2">Input Text</label><textarea className="tool-input" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Enter text to hash..." spellCheck={false} /></div>
       <div className="flex gap-2">
         <button onClick={generate} className="tool-btn tool-btn-primary"><Hash className="h-4 w-4" />Generate Hashes</button>
-        <button onClick={() => { setInput(""); setResults({}); }} className="tool-btn tool-btn-secondary">Clear</button>
+        <button onClick={() => { setInput(""); setResults({}); }} className="tool-btn tool-btn-secondary">{t("Clear")}</button>
       </div>
       {Object.keys(results).length > 0 && (
         <div className="space-y-3">
