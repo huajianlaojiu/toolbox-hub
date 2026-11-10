@@ -1589,6 +1589,263 @@ export const posts: Post[] = [
       },
     ],
   },
+  {
+    slug: "wcag-contrast-ratio-formula",
+    metaTitle: "Why Pure Blue Passes WCAG AA and Pure Green Fails: The Contrast Ratio Formula",
+    title: "Why Pure Blue Passes WCAG AA and Pure Green Fails",
+    description:
+      "Contrast ratio is not about how different two colours look. A line-by-line walkthrough of the sRGB luminance formula, why the green channel carries 71.5% of the answer, where two-decimal rounding lies, and what a checker cannot tell you.",
+    date: "2026-11-10",
+    updated: "2026-11-10",
+    readingTime: "11 min read",
+    category: "Design Tools",
+    blocks: [
+      {
+        p:
+          "Put pure blue text (`#0000ff`) on white and it scores 8.59:1. Put pure green (`#00ff00`) on the same white and it scores 1.37:1. Both are fully saturated primaries at maximum channel value; one clears the 7:1 AAA threshold for normal body text, and the other fails even the 3:1 minimum for large text and UI components.\n\nNothing here is a bug in the checker. It follows directly from three coefficients in the [[contrast-checker|Contrast Checker]] on this site, and the same arithmetic sits behind almost every accessibility audit you will ever run. If you have ever picked a colour that looked crisp but failed an audit, this is the reason.",
+      },
+      { h: "The formula, line by line" },
+      {
+        p:
+          "The checker takes two hex colours and turns each into three 0–255 channel values. Then it does something that trips people up: it does **not** average those channels. It first removes the sRGB gamma curve. Every channel is divided by 255 and passed through a piecewise function:",
+      },
+      {
+        b:
+          "`s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4)` — a linear segment near black, and a 2.4-power curve above it. The result is linear light intensity, not the encoded byte you typed.",
+      },
+      {
+        p:
+          "Linearising matters because screen values are not proportional to emitted light. A channel at 128 is not half as bright as one at 255; after the curve it is roughly 0.216 rather than 0.5. Averaging the raw bytes would give a completely different answer. The three linearised channels are then weighted and summed as `0.2126 * R + 0.7152 * G + 0.0722 * B` to produce relative luminance `L`.",
+      },
+      {
+        p:
+          "Finally the ratio is `(L_lighter + 0.05) / (L_darker + 0.05)`. The 0.05 offset keeps the denominator away from zero for pure black and caps the scale: white against black gives `(1 + 0.05) / (0 + 0.05) = 21`, so **21:1 is the mathematical ceiling**, not a particularly good design choice. The formula takes a max and a min rather than a foreground and a background, which means it is symmetric — swapping the two colours cannot change the score.",
+      },
+      { h: "Why the green channel decides almost everything" },
+      {
+        p:
+          "Those weights come from human photopic vision: the eye is most sensitive to middle wavelengths and least to short ones. Green alone contributes 0.7152 of luminance, red 0.2126, and blue 0.0722 — about ten times less than green. That single fact explains the opening puzzle. Pure green is very bright to the formula, so it sits close to white and the ratio collapses; pure blue is nearly dark, so it sits close to black and the ratio is high.",
+      },
+      {
+        l: [
+          "`#000000` on `#ffffff` → **21.00:1** — the ceiling, AA and AAA for everything.",
+          "`#0000ff` on `#ffffff` → **8.59:1** — blue passes AA and AAA for normal text despite looking vivid.",
+          "`#ff0000` on `#ffffff` → **4.00:1** — red passes large text at 3:1 but misses normal text at 4.5:1.",
+          "`#00ff00` on `#ffffff` → **1.37:1** — green fails every threshold in the table.",
+          "`#777777` on `#ffffff` → **4.48:1** — misses AA by 0.02, the classic almost-passing grey.",
+          "`#767676` on `#ffffff` → **4.54:1** — one hex step darker and it passes.",
+          "`#2563eb` on `#ffffff` → **5.17:1** — a common UI blue that clears AA with modest headroom.",
+        ],
+      },
+      {
+        p:
+          "The practical consequence: **saturation and contrast move in opposite directions**. Adding green to a colour raises its luminance and reduces its ratio against white; adding blue lowers luminance and raises it. Designing by eye optimises for the wrong variable. This is also why a checker reports five separate verdicts rather than one — 4.5:1 for normal AA, 7:1 for normal AAA, 3:1 for large AA, 4.5:1 for large AAA and 3:1 for UI components and graphics. The ratio does not know the font size; the *threshold* does.",
+      },
+      { h: "Two decimals can disagree with the verdict" },
+      {
+        p:
+          "The checker renders its score with `r.toFixed(2)` but evaluates pass/fail against the unrounded `r`. A true ratio of 4.495 displays as **4.50:1** while `r >= 4.5` is false, so the row says Fail underneath a number that appears to meet the requirement. Near the boundary this is easy to hit: `#777777` is genuinely 4.4781:1, shown as 4.48.",
+      },
+      {
+        b:
+          "If you write automated accessibility assertions, compare the raw floating-point ratio, never a string scraped from the UI. A test built on the displayed value will pass a colour that the same tool has just marked as failing.",
+      },
+      { h: "Three-digit hex is not portable" },
+      {
+        p:
+          "CSS allows shorthand hex, and the two tools on this site handle it differently. The [[contrast-checker|Contrast Checker]] expands a three-digit value by duplicating each nibble, so `#f0a` becomes `#ff00aa` and scores 3.60:1. The [[color-converter|Color Converter]] uses a regex that requires exactly three two-digit groups, so the same input produces *Invalid color format. Use #RRGGBB.* Both behaviours are defensible — one follows CSS shorthand, the other validates a strict interchange format — but they are not interchangeable. Expand to six digits before you pass a value between tools, or between a design token and a test.",
+      },
+      { h: "HSL is a lossy projection, not another representation" },
+      {
+        p:
+          "The Color Converter also emits HSL, and its `rgbToHsl` rounds all three outputs: hue to whole degrees, saturation and lightness to whole percentages. `#2563eb` comes out as `hsl(221, 83%, 53%)`. With only 101 possible saturation and lightness values, converting back cannot in general reconstruct the original RGB — the rounding discards information on the way out.",
+      },
+      {
+        l: [
+          "`#808080` → `hsl(0, 0%, 50%)`. When all channels are equal, hue is mathematically undefined and the code assigns 0 (red). Saturation is 0, so the arbitrary hue is invisible — until you use it as a base for generating variants.",
+          "`#ff00ff` → `hsl(300, 100%, 50%)`, which happens to round-trip cleanly. Clean examples are the exception, not the rule.",
+          "Any workflow that reads HSL, adjusts lightness, and writes RGB back is doing a lossy round trip. For accessible palettes, keep the original hex as the source of truth and re-run the contrast calculation on every derived value.",
+        ],
+      },
+      { h: "What a contrast checker cannot tell you" },
+      {
+        l: [
+          "**Semi-transparent colours.** The formula consumes opaque RGB only. An `rgba()` foreground or an 8-digit hex with alpha must be composited over its actual background first; entering the raw channel values gives a meaningless ratio.",
+          "**Colour-vision deficiency and legibility.** Luminance contrast says nothing about whether two hues are distinguishable, whether a thin font weight survives anti-aliasing, or whether a busy background texture destroys readability at the same nominal ratio.",
+          "**Non-text contrast.** Icons, input borders, focus rings and chart series use the 3:1 threshold, which is why the tool lists it separately. A palette can pass all text checks and still have invisible controls.",
+          "**Future perceptual models.** The WCAG 2.x sRGB formula is known to be imperfect, particularly for some dark-mode pairs, and newer proposals use different perception-based maths. Compliance today is still judged against this formula, so an audit result and a perceptual opinion can legitimately disagree.",
+          "**Layout and context.** The score assumes a solid background and a single foreground. Gradients, images behind text, and overlapping translucent layers need to be sampled at their worst point, not their average.",
+        ],
+      },
+      { h: "A workflow that uses these numbers properly" },
+      {
+        l: [
+          "**Normalise first.** Expand shorthand to six digits in the [[color-converter|Color Converter]] and keep the hex, not the rounded HSL, as the canonical token.",
+          "**Test real pairs.** Run the actual foreground/background combination through the [[contrast-checker|Contrast Checker]]. Because the formula is symmetric, order does not matter — but which shade is on which surface does.",
+          "**Leave headroom.** Anything between 4.5 and about 4.8 is one rounding decision away from failing. Treat 5:1 as the working target, not 4.5:1.",
+          "**Re-test variants.** Colours from the [[color-palette|Color Palette]] or [[gradient-generator|Gradient Generator]] need their own measurement; a shadow from the [[text-shadow-generator|Text Shadow Generator]] does not contribute to text contrast.",
+          "**Run dark mode separately.** Inverting the palette does not preserve ratios, because the luminance curve is not symmetric around the midpoint.",
+        ],
+      },
+      { h: "Frequently asked questions" },
+      {
+        p:
+          "**Why does pure green fail so badly?** Because green carries 0.7152 of the luminance weight. `#00ff00` has relative luminance 0.7152, close to white's 1.0, so `(1.05) / (0.7652)` is only about 1.37. Blue carries 0.0722 and behaves almost like a dark colour.\n\n**Is 21:1 the maximum possible?** Yes, for opaque sRGB colours. The 0.05 offset in both numerator and denominator fixes the ceiling at `(1 + 0.05) / (0 + 0.05) = 21`. Pure black on pure white is the only way to reach it.\n\n**Does swapping text and background change the result?** No. The implementation takes `Math.max(L1, L2)` and `Math.min(L1, L2)`, so the ratio is symmetric. The WCAG thresholds are also applied to the ratio, not to either colour individually.\n\n**Why does the display say 4.50:1 while the row says Fail?** Display uses `toFixed(2)`; the verdict uses the unrounded value. A ratio from 4.495 to just under 4.5 rounds up on screen but still fails `r >= 4.5`.\n\n**Can I generate an accessible palette by shifting HSL lightness?** Only as a starting point. HSL output here is rounded to integers, and perceptual lightness is not the same as WCAG luminance. Generate candidates in HSL if you like, then measure the final hex values.\n\n**Does passing 4.5:1 mean my page is WCAG compliant?** It satisfies one success criterion for that text pair. Font size, weight, focus indicators, non-text contrast and semantic structure are separate requirements, and this tool measures none of them.",
+      },
+      { h: "The one-line version" },
+      {
+        p:
+          "Contrast ratio is a measurement of linearised luminance weighted heavily toward green, not a measurement of how different two colours look. Trust the number, but know which decisions — gamma, weights, the 0.05 offset, and two-decimal display — put it there.",
+      },
+    ],
+  },
+  {
+    slug: "url-encoding-percent20-vs-plus",
+    metaTitle: "encodeURIComponent vs URLSearchParams: Why %20 and + Are Not the Same",
+    title: "Your URL Encoder and Your Query String Disagree About Spaces",
+    description:
+      "Three JavaScript encoders give three different answers for a single space. A source-level walkthrough of encodeURIComponent, encodeURI, URLSearchParams, double encoding, UTF-8 bytes, HTML entity boundaries and what new URL() silently rewrites.",
+    date: "2026-11-10",
+    updated: "2026-11-10",
+    readingTime: "12 min read",
+    category: "Developer Tools",
+    blocks: [
+      {
+        p:
+          "Ask three standard JavaScript encoders what a space should be and you get three answers. `encodeURIComponent(' ')` returns `%20`. `new URLSearchParams({ q: 'a b' }).toString()` returns `q=a+b`. `encodeURI` also produces `%20` but leaves the rest of a URL's structure intact. And `decodeURIComponent('a+b')` returns `a+b` — the plus sign is not a space to that function at all.\n\nAll four statements are true at once, and that is the root of most query-string bugs. The [[url-encoder|URL Encoder]], [[url-parser|URL Parser]] and [[html-entity-encoder|HTML Entity Encoder]] on this site are small wrappers around exactly these APIs, so reading their source is a short tour of where escaping goes wrong.",
+      },
+      { h: "Three character sets, one language" },
+      {
+        p:
+          "These are not three settings of the same algorithm. Each one protects a different set of characters, because each is designed for a different position in a URL.",
+      },
+      {
+        l: [
+          "**`encodeURIComponent`** leaves `A-Z a-z 0-9 - _ . ! ~ * ' ( )` untouched and percent-encodes everything else. It is built for a *single component value*: one path segment, one parameter value.",
+          "**`encodeURI`** additionally leaves `; / ? : @ & = + $ , #` alone, because it is built for a *whole URL* and must not destroy the delimiters that make the URL parseable.",
+          "**`URLSearchParams`** follows the HTML form `application/x-www-form-urlencoded` rule. A space becomes `+`, and even characters that `encodeURIComponent` deliberately preserves are escaped: `!` → `%21`, `~` → `%7E`, `'` → `%27`, `(` → `%28`, `)` → `%29`.",
+        ],
+      },
+      {
+        p:
+          "That last row surprises people. A value containing `!` is valid unescaped after `encodeURIComponent`, but becomes `%21` when a form serializer handles it. Both are legal; they are simply not the same encoding. If you compare an encoded string produced by one against a string produced by the other, you will get a false mismatch.",
+      },
+      { h: "encodeURIComponent is not a URL encoder" },
+      {
+        p:
+          "Despite the name, feeding an entire URL to it destroys the URL. For `https://example.com/a b?q=1&x=2#frag` it returns `https%3A%2F%2Fexample.com%2Fa%20b%3Fq%3D1%26x%3D2%23frag` — the scheme colon, every slash, the question mark, the ampersand and the fragment marker are all escaped. The result is no longer a URL; it is a *value* that could be placed inside one. `encodeURI` on the same input returns `https://example.com/a%20b?q=1&x=2#frag`, which stays a URL.",
+      },
+      {
+        b:
+          "The correct pattern is to encode each component separately and join them yourself with the delimiters, or let `URLSearchParams` build the query string for you. Never run `encodeURIComponent` over a fully assembled URL and expect it to survive.",
+      },
+      { h: "The %20 versus + rule, precisely" },
+      {
+        p:
+          "The plus sign is a historical convention from HTML form submission. It means space **only in a form-encoded context**. In a path segment, `+` is a literal plus. `URL.searchParams` knows this: for `?q=a+b` and `?q=a%20b` it returns `a b` in both cases. Plain `decodeURIComponent` does not — it returns `a+b` for the first and `a b` for the second.",
+      },
+      {
+        l: [
+          "**Path segments:** use `%20`. A `+` there will arrive as a plus, not a space.",
+          "**Query strings built with `URLSearchParams`:** either `+` or `%20` is accepted on read; the serializer emits `+` by default.",
+          "**A literal plus sign inside a value:** it must be `%2B`. An unescaped `+` in a form-encoded query will be decoded as a space and corrupt the value — a classic bug with base64 payloads and phone numbers.",
+          "**Fragment identifiers:** the part after `#` is not sent to the server at all, but it still needs percent-encoding; `encodeURIComponent` turns `#` into `%23` while `encodeURI` keeps it as a delimiter.",
+        ],
+      },
+      { h: "Double encoding and the %2520 bug" },
+      {
+        p:
+          "`encodeURIComponent('a b&c')` gives `a%20b%26c`. Encode that result again and you get `a%2520b%2526c`, because `%` itself is escaped to `%25`. Decoding once returns `a%20b%26c`, not the original text. Nothing reports an error — every string involved is well-formed — which is why this bug survives code review.",
+      },
+      {
+        l: [
+          "**Symptoms:** `%2520`, `%252F`, `%253D` appearing in server logs or stored links.",
+          "**Usual cause:** a client encodes a value, then a middleware, redirect builder or template encodes the whole URL again. It also happens when an already-encoded URL is embedded as a parameter of another URL without treating it as an opaque value.",
+          "**Rule:** encoding is not idempotent. Encode exactly once, at the boundary where the value enters the URL, and keep the plain value everywhere else.",
+        ],
+      },
+      { h: "decodeURIComponent throws instead of returning junk" },
+      {
+        p:
+          "Decoding is deliberately strict. A lone `%`, `%ZZ`, a truncated UTF-8 sequence like `%E4%B8`, or a trailing `%` in `abc%` all throw `URIError: URI malformed`. The URL Encoder's decode mode wraps the call in `try/catch` and displays *Invalid URL-encoded string* on failure rather than showing a half-decoded result. That is the right trade-off: silently returning partial text hides data corruption and can turn a broken escape into a security bypass downstream.",
+      },
+      {
+        b:
+          "One reason double encoding is hard to spot: `%2520` decodes cleanly to `%20` with no exception. It looks like a valid, if odd, value. Only decoding a *second* time reveals the space.",
+      },
+      { h: "Percent-encoding is UTF-8 bytes, not characters" },
+      {
+        p:
+          "The `%XX` groups are bytes of the UTF-8 encoding, so the length of the output has nothing to do with how many characters you see on screen.",
+      },
+      {
+        l: [
+          "`中` → 3 bytes → `%E4%B8%AD`.",
+          "`é` → 2 bytes → `%C3%A9` (and a decomposed `e` plus combining accent is a different, longer string).",
+          "`😀` → 4 bytes → `%F0%9F%98%80`.",
+          "The family emoji `👨‍👩‍👧‍👦` → **25 bytes** → eleven percent groups, including three zero-width joiners as `%E2%80%8D`. A single visible glyph can dominate a URL's length.",
+        ],
+      },
+      {
+        p:
+          "The obsolete `escape()` function used UTF-16 code units instead: `escape('中')` returns `%u4E2D`. That syntax is not standard percent-encoding and will not be understood by servers expecting UTF-8 bytes. The [[unicode-converter|Unicode Converter]] is useful for checking what code units and code points a string actually contains before you debug an encoded value.",
+      },
+      { h: "HTML entities are a different escaping context" },
+      {
+        p:
+          "It is tempting to treat HTML entity encoding as the same job done with different punctuation. It is not. The [[html-entity-encoder|HTML Entity Encoder]] here maps exactly five characters: `& → &amp;`, `< → &lt;`, `> → &gt;`, a double quote to `&quot;`, and a single quote to `&#39;`. Its decoder recognises those six forms plus `&apos;`. Everything else is left alone, which produces some sharp edges:",
+      },
+      {
+        l: [
+          "`&nbsp;`, `&copy;`, `&#169;`, `&#x27;` and `&AMP;` all pass through the decoder **unchanged** — only the six listed spellings are recognised. Case matters, and hexadecimal numeric references are not handled.",
+          "`&lt;script&gt;` decodes to `<script>`. Decoding restores the original text; it is not a sanitising filter. Never decode untrusted input and then insert the result into a page.",
+          "Decoding `A &copy; B` leaves it unchanged, and encoding that result gives `A &amp;copy; B`. A decode/encode round trip can therefore double-escape content that was already marked up.",
+        ],
+      },
+      {
+        p:
+          "The important boundary: HTML escaping prevents tag injection **inside a text node or a quoted attribute value**. It does not neutralise a `javascript:` URL, an unquoted attribute, content placed inside a `script` element, or an `on*` event handler. Which characters need escaping depends on where the value lands, not on the value itself. If you render untrusted markup, use a context-aware templating or sanitising library rather than an encode/decode pair; the [[html-preview|HTML Preview]] and [[markdown-preview|Markdown Preview]] are for inspecting known-safe snippets, not for validating hostile input.",
+      },
+      { h: "What new URL() normalises before you see it" },
+      {
+        p:
+          "The [[url-parser|URL Parser]] constructs `new URL(input)` and prints `protocol`, `hostname`, `port`, `pathname`, `search` and `hash`. The constructor does more than split a string — it normalises, so string comparison on raw URLs is unreliable.",
+      },
+      {
+        l: [
+          "`https://EXAMPLE.com:443/a/../b?q=1#top` → hostname lowercased to `example.com`, the default port `443` becomes empty, and `/a/../b` collapses to `/b`.",
+          "`https://工具.com/` → hostname becomes `xn--h6qv61a.com`. Internationalised domain names are converted to punycode.",
+          "`example.com/path` with no scheme → **TypeError**. The tool's hint says to include `http://` or `https://`; relative references need a base URL as the second argument.",
+          "`?q=a%20b&x=1+2` is preserved verbatim in `search`. The constructor does not decode the query for you — that is what `URLSearchParams` or `searchParams.get` is for.",
+        ],
+      },
+      {
+        p:
+          "This also matters for anything that embeds a URL outside the address bar: a link in a [[qr-code-generator|QR Code Generator]], a canonical tag from the [[meta-tag-generator|Meta Tag Generator]], or a `og:url` value from the [[open-graph-generator|Open Graph Generator]] should all use the fully normalised, correctly encoded absolute URL, not the string the user happened to paste.",
+      },
+      { h: "A practical order of operations" },
+      {
+        l: [
+          "**Keep the plain value** as the source of truth throughout your application. Encode only at the last moment, at the exact boundary where it becomes part of a URL.",
+          "**Choose the function by position:** `encodeURIComponent` for one segment or parameter value, `encodeURI` only when you must preserve a whole URL's structure, `URLSearchParams` for building a query string.",
+          "**Use `%2B` for a real plus sign** in any form-encoded value, and `%20` for spaces in paths.",
+          "**Decode once, and handle `URIError` explicitly** instead of assuming every input is well-formed.",
+          "**Parse, do not split.** Use `new URL` and `URLSearchParams` rather than manual `split('&')` logic, which never handles `+`, repeated keys or encoded delimiters correctly.",
+          "**Escape for the output context, separately.** HTML entities, URL percent-encoding and JavaScript string literals are three different grammars. One pass through one encoder cannot satisfy the other two.",
+        ],
+      },
+      { h: "Frequently asked questions" },
+      {
+        p:
+          "**Why did my space turn into `+`?** You used a form-encoded serializer such as `URLSearchParams`. That is correct for query strings; use `%20` if the value belongs in a path segment.\n\n**Should I use `encodeURI` or `encodeURIComponent`?** Almost always `encodeURIComponent`, applied to individual values. `encodeURI` is for the rare case where you have a complete URL string with a few unsafe characters in it and need to keep the delimiters.\n\n**Is `%2520` a browser bug?** No. It is a percent sign that was itself percent-encoded, usually because the same value was encoded twice. Decode it twice to see the space.\n\n**Can I decode an entire URL at once?** Not with `decodeURIComponent` — the delimiters and any literal percent signs make that ambiguous, and malformed sequences throw. Parse with `new URL` first, then decode the individual components you need.\n\n**Does HTML-encoding a value make it safe to insert anywhere?** No. It is safe for text nodes and quoted attributes only. URLs, script contents, unquoted attributes and event handlers each need their own handling.\n\n**Why does `new URL()` reject `example.com`?** Because it parses absolute URLs, not relative references. Pass a base as the second argument, or prepend the scheme. The URL Parser's error hint points at exactly this.",
+      },
+      { h: "The one-line version" },
+      {
+        p:
+          "There is no single URL encoding in JavaScript — there is one per position in a URL, plus a separate grammar for HTML. Encode once at the right boundary with the right function, decode once with error handling, and never assume a `+` means the same thing in a path and in a query string.",
+      },
+    ],
+  },
 ];
 
 export function getPost(slug: string): Post | undefined {
