@@ -4256,6 +4256,18 @@
     <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/blog/everyday-utility-tools/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/blog/everyday-utility-tools/"/>
   </url>
+  <url><loc>https://toolbox-hub.io/blog/base64-is-not-encryption/</loc><lastmod>2026-11-10</lastmod><changefreq>monthly</changefreq><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/blog/base64-is-not-encryption/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/blog/base64-is-not-encryption/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/blog/data-format-conversion-traps/</loc><lastmod>2026-11-10</lastmod><changefreq>monthly</changefreq><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/blog/data-format-conversion-traps/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/blog/data-format-conversion-traps/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/blog/unix-timestamp-traps/</loc><lastmod>2026-11-10</lastmod><changefreq>monthly</changefreq><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/blog/unix-timestamp-traps/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/blog/unix-timestamp-traps/"/>
+  </url>
   <url><loc>https://toolbox-hub.io/tools/base64-encoder/</loc><lastmod>2026-11-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/tools/base64-encoder/"/>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/tools/base64-encoder/"/>
