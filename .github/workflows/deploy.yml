@@ -39,6 +39,9 @@ jobs:
     env:
       # secrets 上下文不能用于 steps.if，先映射到 env 再用 env 判断
       GOOGLE_TRANSLATE_KEY: ${{ secrets.GOOGLE_TRANSLATE_KEY }}
+      # GA4 衡量 ID：配了 Actions secret 就在构建时内联进静态产物（不写进公开仓库）；
+      # 没配则回落到 analytics-config.ts 的 CONFIGURED_ID（当前为空 = 不加载 gtag.js）。
+      NEXT_PUBLIC_GA_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_GA_MEASUREMENT_ID }}
       # 自动翻译默认关闭。此前每次 push 都在无密钥时跑 gtx --langs pl,vi，
       # 端点失败会把英文源串原样写成「译文」并回写 master：既污染字典（永久挡住
       # 补翻），又产生 [skip ci] 提交使远程领先、后续 push 必须先 rebase。
