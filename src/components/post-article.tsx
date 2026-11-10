@@ -101,7 +101,27 @@ export function PostArticle({ slug }: { slug: string }) {
   const post = (base && getPostI18n(lang, slug)) || base;
   if (!post) return null;
 
-  const related = allPosts.filter((p) => p.slug !== slug).slice(0, 2);
+  // Rotate related posts instead of always showing the first two entries.
+  // The previous `.slice(0, 2)` meant the nine in-depth guides had zero
+  // inbound links from any other article page. Now:
+  //  - guides in the newest batch link to the next two in a ring (2 in / 2 out each)
+  //  - older roundup posts each point at a different pair of new guides,
+  //    so every new guide gets an inbound link from the established pages
+  const related = (() => {
+    const latest = allPosts.reduce((max, p) => (p.date > max ? p.date : max), "");
+    const newest = allPosts.filter((p) => p.date === latest);
+    const older = allPosts.filter((p) => p.date !== latest);
+    const isNewest = base?.date === latest;
+    if (isNewest && newest.length > 2) {
+      const i = newest.findIndex((p) => p.slug === slug);
+      return [newest[(i + 1) % newest.length], newest[(i + 2) % newest.length]];
+    }
+    if (newest.length > 0) {
+      const i = Math.max(0, older.findIndex((p) => p.slug === slug));
+      return [newest[(i * 2) % newest.length], newest[(i * 2 + 1) % newest.length]];
+    }
+    return allPosts.filter((p) => p.slug !== slug).slice(0, 2);
+  })();
   const headings = post.blocks.filter((b) => b.h).map((b) => b.h) as string[];
 
   return (

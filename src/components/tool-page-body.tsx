@@ -6,6 +6,7 @@ import { LOCALES, isPublished } from "@/lib/locales";
 import { languageAlternates } from "@/lib/alternates";
 import { getMeta, getContent } from "@/i18n/content";
 import { getToolSeoOverride } from "@/lib/tool-seo";
+import { getRelatedGuides } from "@/lib/related-guides";
 import ToolPageContent from "@/components/tool-page-content";
 
 import AdUnit from "@/components/shared/ad-unit";
@@ -178,6 +179,9 @@ export default async function ToolPageBody({ lang, slug }: { lang: string; slug:
     );
   }
   const relatedTools = tools.filter((t) => t.category === tool.category && t.slug !== tool.slug && !t.redirect).slice(0, 3);
+  // English-only: the in-depth guides are not translated, and English cards on
+  // a localised page would be mixed-language filler.
+  const relatedGuides = lang === "en" ? getRelatedGuides(slug) : [];
   const meta = getMeta(lang, slug);
   const content = getContent(lang, slug);
   const url = lang === "en" ? `/tools/${slug}/` : `/${lang}/tools/${slug}/`;
@@ -325,6 +329,31 @@ export default async function ToolPageBody({ lang, slug }: { lang: string; slug:
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             {relatedTools.map((t) => (<ToolCard key={t.slug} tool={t} />))}
           </div>
+        </section>
+      )}
+
+      {relatedGuides.length > 0 && (
+        <section className="mt-12">
+          <h2 className="text-lg font-semibold mb-4">Related guides</h2>
+          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            {relatedGuides.map((guide) => (
+              <li key={guide.slug}>
+                <a
+                  href={`/blog/${guide.slug}/`}
+                  className="group block h-full rounded-lg border p-4 transition-colors hover:border-primary hover:bg-muted/40"
+                >
+                  <span className="block text-sm font-medium leading-6 group-hover:text-primary">
+                    {guide.title}
+                  </span>
+                  <span className="mt-2 block text-xs leading-5 text-muted-foreground">
+                    {guide.description.length > 118
+                      ? `${guide.description.slice(0, 115)}...`
+                      : guide.description}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
         </section>
       )}
     </div>
