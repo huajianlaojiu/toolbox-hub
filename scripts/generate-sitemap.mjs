@@ -43,22 +43,30 @@ const slugs = [...data.matchAll(/\{ slug: "([^"]+)"([^}]*)\}/g)]
 const postsData = readFileSync(join(ROOT, "src/lib/posts.ts"), "utf8");
 const postSlugs = [...postsData.matchAll(/^\s{4}slug: "([^"]+)"/gm)].map((m) => m[1]);
 
-// 博客文章译文完整度：2026-10 补翻时 CI 回写漏了 src/i18n/posts，导致
-// ar/ja/ko/pl/pt/ru/tr/vi 八种语言的 6 篇博文 title / 正文块全部仍是英文源串。
-// 这些「外语 URL + 全英文正文」页不进 sitemap，也不作为 hreflang 目标。
-// 判定用 title：有译文的语言 0/6 等于英文，英文壳语言 6/6 等于英文。
+// 译文完整度按「语言 × 文章」判断，而不是整语言一刀切。
+// 2026-11 起新增的原创英文指南刻意不做机翻，只发布英文版。若仍按整语言判断，
+// 这些新文章会在 15 种语言里全部进 sitemap，而页面本身却是英文壳 + noindex ——
+// 正是「noindex 却仍在 sitemap」的冲突信号。
+// 判定用 title：有译文的条目 title 不等于任一英文标题；缺该 slug 条目即视为无译文。
 const EN_POST_TITLES = new Set(
   [...postsData.matchAll(/^ {4}title: "([^"]+)"/gm)].map((m) => m[1])
 );
-function hasPostTranslation(code) {
-  if (code === "en") return true;
-  const file = join(ROOT, `src/i18n/posts/${code}.json`);
-  if (!existsSync(file)) return false;
-  const data = JSON.parse(readFileSync(file, "utf8"));
-  const titles = Object.values(data).map((p) => p && p.title);
-  return titles.length > 0 && titles.every((t) => t && !EN_POST_TITLES.has(t));
+const postCache = new Map();
+function langPosts(code) {
+  if (!postCache.has(code)) {
+    const file = join(ROOT, `src/i18n/posts/${code}.json`);
+    postCache.set(code, existsSync(file) ? JSON.parse(readFileSync(file, "utf8")) : {});
+  }
+  return postCache.get(code);
 }
-const BLOG_LANGS = LANGS_PUB.filter((l) => hasPostTranslation(l.code));
+function hasPostTranslation(code, slug) {
+  if (code === "en") return true;
+  const p = langPosts(code)?.[slug];
+  return !!(p && p.title && !EN_POST_TITLES.has(p.title));
+}
+function blogLangsFor(slug) {
+  return LANGS_PUB.filter((l) => hasPostTranslation(l.code, slug));
+}
 
 const STATIC_PAGES = [
   { loc: "/", priority: "1.0", changefreq: "weekly" },
@@ -91,9 +99,10 @@ for (const p of STATIC_PAGES) {
 }
 for (const s of postSlugs) {
   const loc = `/blog/${s}/`;
-  for (const l of BLOG_LANGS) {
+  const langs = blogLangsFor(s);
+  for (const l of langs) {
     urls.push(
-      `  <url><loc>${SITE}${prefix(l.code)}${loc}</loc><lastmod>${LASTMOD}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority>\n${alternateLinks(loc, BLOG_LANGS)}\n  </url>`
+      `  <url><loc>${SITE}${prefix(l.code)}${loc}</loc><lastmod>${LASTMOD}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority>\n${alternateLinks(loc, langs)}\n  </url>`
     );
   }
 }
@@ -113,5 +122,5 @@ ${urls.join("\n")}
 `;
 
 writeFileSync(join(ROOT, "public/sitemap.xml"), xml, "utf8");
-console.log(`sitemap: ${urls.length} urls (${slugs.length} tools × ${LANGS_PUB.length} langs + ${postSlugs.length} posts × ${BLOG_LANGS.length} blog langs + ${STATIC_PAGES.length} static × ${LANGS_PUB.length} langs)`);
-console.log(`blog langs with real translation: ${BLOG_LANGS.map((l) => l.code).join(", ")}`);
+console.log(`sitemap: ${urls.length} urls (${slugs.length} tools × ${LANGS_PUB.length} langs + ${postSlugs.length} posts × per-post translated langs + ${STATIC_PAGES.length} static × ${LANGS_PUB.length} langs)`);
+console.log(`blog langs by post: ${postSlugs.map((s) => `${s}=${blogLangsFor(s).length}`).join(", ")}`);

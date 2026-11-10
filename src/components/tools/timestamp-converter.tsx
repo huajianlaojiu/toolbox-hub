@@ -14,11 +14,21 @@ export default function TimestampConverter() {
     setError("");
     try {
       if (mode === "ts-to-date") {
-        let num = Number(ts);
-        if (num > 9999999999999) num = Math.floor(num / 1000);
+        const raw = Number(ts);
+        if (!Number.isFinite(raw)) { setError("Invalid timestamp."); return; }
+        // 秒戳现在是 10 位（~1.8e9），毫秒戳是 13 位（~1.8e12）。
+        // 旧阈值 9999999999999（13 个 9）会漏判：2026 年的毫秒戳 1.76e12
+        // 小于它，于是被当成秒、乘 1000 后得到公元 5 万年，且不报错。
+        // 1e11 是干净的分界：覆盖 1973 年之后的毫秒戳与公元 5138 年之前的秒戳。
+        const unit: "s" | "ms" = Math.abs(raw) >= 1e11 ? "ms" : "s";
+        const num = unit === "ms" ? Math.floor(raw / 1000) : raw;
         const d = new Date(num * 1000);
         if (isNaN(d.getTime())) { setError("Invalid timestamp."); return; }
-        setResult(d.toISOString().replace("T", " ").slice(0, 19) + " UTC\n" + d.toString() + "\nUnix (s): " + Math.floor(d.getTime() / 1000) + "\nUnix (ms): " + d.getTime());
+        setResult(
+          `Input interpreted as ${unit === "ms" ? "milliseconds" : "seconds"}\n` +
+          d.toISOString().replace("T", " ").slice(0, 19) + " UTC\n" + d.toString() +
+          "\nUnix (s): " + Math.floor(d.getTime() / 1000) + "\nUnix (ms): " + d.getTime()
+        );
       } else {
         const d = new Date(dateStr);
         if (isNaN(d.getTime())) { setError("Invalid date."); return; }

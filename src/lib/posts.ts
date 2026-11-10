@@ -846,6 +846,336 @@ export const posts: Post[] = [
       },
     ],
   },
+  {
+    slug: "base64-is-not-encryption",
+    metaTitle: "Base64 Is Not Encryption: What the Encoder Actually Does",
+    title: "Base64 Is Not Encryption: A Field Guide to What the Encoder Actually Does",
+    description:
+      "Why Base64 is reversible by anyone, why Unicode breaks btoa(), where the 33 percent size increase comes from, and when inlining an image as a data URI is a mistake.",
+    date: "2026-11-10",
+    updated: "2026-11-10",
+    readingTime: "11 min read",
+    category: "Developer Tools",
+    blocks: [
+      {
+        p:
+          "Base64 shows up in certificate files, HTTP headers, data URIs, JSON payloads and debugging logs. It also shows up in security reviews, where somebody has used it to hide a value and is surprised to learn they have hidden nothing at all.\n\nThe confusion is understandable: encoded output looks scrambled. But scrambled is not the same as protected. This guide is about what the transformation actually does, where its edges are, and the specific failure modes you will hit in a browser — including one that only appears when your text contains a character outside Latin-1.",
+      },
+      { h: "What the transformation actually does" },
+      {
+        p:
+          "Base64 takes a stream of bytes and rewrites it using 64 printable ASCII characters: A–Z, a–z, 0–9, plus two more symbols and a padding character. It works in groups of three input bytes (24 bits), splitting them into four 6-bit chunks, each of which maps to one character in that alphabet. Three bytes in, four characters out.\n\nThat four-for-three ratio is the whole explanation for the size increase. Encoded data is almost exactly one third larger than the original, before you account for line wrapping. A 300 KB image becomes roughly 400 KB of text. Nothing is compressed, deduplicated or optimised; the operation is purely representational, and it is completely reversible.",
+      },
+      {
+        l: [
+          "**No key is involved.** There is no secret, no password and no parameter that changes the output. Two people encoding the same bytes get the same string.",
+          "**It is not a hash.** A hash is one-way and fixed length; Base64 preserves every input bit and can be undone by anyone. If you need to verify that two files match, use the [[md5-generator|MD5 / SHA Hash Generator]] instead.",
+          "**It is not compression.** It makes data bigger, always. Its only job is to make binary data safe to carry through a channel that expects text.",
+        ],
+      },
+      { h: "Why 'reversible by anyone' matters in practice" },
+      {
+        p:
+          "The distinction between encoding, hashing and encryption is not academic. Encoding answers 'how do I carry these bytes through a text-only channel'. Hashing answers 'are these two things the same, without storing the thing'. Encryption answers 'who is allowed to read this'. Only the third has an access control story.\n\nA Base64 string in a URL, a cookie or a log file is plaintext with extra steps. `dXNlcjpwYXNzd29yZA==` decodes to `user:password` in any decoder, including the [[base64-encoder|Base64 Encoder / Decoder]] on this site. HTTP Basic authentication uses exactly this pattern and is safe only because TLS protects the transport, not because the header is unreadable. If you ever see Base64 described as a way to protect a secret, the correct response is to ask where the key is. There isn't one.",
+      },
+      {
+        b:
+          "A useful mental test: if you can write down the decoding steps in one sentence without mentioning a password, the value is not protected. Base64 decoding is 'split into four-character groups and map each character back to six bits'. That is the entire algorithm.",
+      },
+      { h: "The Unicode wall: why btoa() throws" },
+      {
+        p:
+          "Here is the browser-specific part that catches people. The built-in `btoa()` function does not accept a JavaScript string in the general sense. It accepts a binary string in which every character code is between 0 and 255 — effectively Latin-1. Pass it 'hello' and it works. Pass it '你好' or an emoji and it throws `InvalidCharacterError: The string to be encoded contains characters outside of the Latin1 range`.\n\nThis is not a bug in `btoa`. JavaScript strings are UTF-16, so a single é, 中 or 🙂 is a code unit (or a surrogate pair) whose numeric value is far above 255. Base64 operates on bytes, and the browser is refusing to guess how you want your characters turned into bytes.",
+      },
+      {
+        p:
+          "The encoder on this site handles it with a three-step bridge: `btoa(unescape(encodeURIComponent(input)))` for encoding, and `decodeURIComponent(escape(atob(input)))` for decoding. `encodeURIComponent` first produces UTF-8 percent-encoded bytes; `unescape` turns each `%XX` into a single character whose code equals that byte; `btoa` then encodes those bytes. Decoding reverses each step. `escape` and `unescape` are deprecated legacy APIs, but they remain the shortest reliable byte-string bridge in a browser; a modern equivalent uses `TextEncoder` and builds a binary string from the resulting `Uint8Array`.",
+      },
+      {
+        b:
+          "The consequence that matters: the output is Base64 of **UTF-8 bytes**, not of some other encoding. If the receiving side decodes with a Latin-1-only decoder, non-ASCII text comes back as mojibake. When a decoded value looks garbled, this is the first thing to check — not the Base64 itself. The [[unicode-converter|Unicode Converter]] and [[hex-text|Hex to Text]] converter help you inspect what the bytes actually say.",
+      },
+      {
+        p:
+          "There is a second, quieter edge: because the encoder catches any exception and reports `Invalid Base64 string.` on decode, a whitespace-corrupted string and a genuinely wrong string produce the same message. Base64 copied out of a PDF, an email with hard line wraps, or a wrapped terminal often contains newlines or spaces. Some decoders tolerate them and some do not. Strip whitespace before decoding and check that the remaining length is a multiple of four; that resolves a large share of 'invalid' reports.",
+      },
+      { h: "Three characters that break URLs" },
+      {
+        p:
+          "The standard Base64 alphabet includes `+`, `/` and `=`. All three are meaningful in URLs. `+` in a query string is commonly interpreted as a space by form decoders, `/` changes path segmentation, and `=` collides with parameter separators. A token that decoded perfectly a moment ago can arrive at your server subtly changed.",
+      },
+      {
+        l: [
+          "**URL-safe variant:** replace `+` with `-`, `/` with `_`, and usually drop the `=` padding. This is the form used by JWTs and many APIs. It is not what a standard encoder emits, so convert deliberately.",
+          "**Or percent-encode it:** running the string through the [[url-encoder|URL Encoder / Decoder]] keeps the standard alphabet intact and makes the intent explicit. This is the safer choice when you do not control the receiver.",
+          "**Never assume the receiver normalises:** if a value crosses a boundary you do not own, write down which variant you used. Most 'token works locally, fails in production' reports are this, not a signing problem.",
+        ],
+      },
+      { h: "When inlining an image is a mistake" },
+      {
+        p:
+          "A data URI such as `data:image/png;base64,...` removes an HTTP request, which sounds like a free performance win. Three costs usually outweigh it: the payload is about 33 percent larger, it cannot be cached independently of the document, and it is re-downloaded every time the HTML changes. Inlining a 2 KB icon used once in a single email template is reasonable. Inlining a 40 KB logo used across a site is a regression.",
+      },
+      {
+        l: [
+          "**Good fit:** a tiny icon under a few kilobytes, used once, on a page where an extra round trip genuinely hurts.",
+          "**Bad fit:** anything repeated across pages, anything the browser should cache, anything large enough to delay HTML parsing.",
+          "**Check the trade:** the [[image-to-base64|Image to Base64]] converter gives you the string; the [[file-size-converter|File Size Converter]] makes the decimal-versus-binary size difference explicit before you argue about a budget.",
+        ],
+      },
+      { h: "A repeatable way to diagnose a mystery Base64 string" },
+      {
+        p:
+          "When an unfamiliar encoded value turns up in a log, resist the urge to paste it into a search engine. Work through it in order — each step rules out a class of causes.",
+      },
+      {
+        l: [
+          "**1. Inspect the shape.** Strip whitespace, check the length is a multiple of four, look for trailing `=` padding, and note whether `-` or `_` appear (URL-safe variant).",
+          "**2. Decode once.** Use the [[base64-encoder|Base64 Encoder / Decoder]]. If it fails, suspect whitespace or a truncated copy before suspecting the data.",
+          "**3. Decide what you are looking at.** Readable UTF-8 text is one thing; arbitrary bytes are another. Feed the result to the [[hex-text|Hex to Text]] converter when the output is not printable — a PNG begins with a recognisable byte signature, and a gzip stream has one too.",
+          "**4. Only then interpret.** A JWT has three dot-separated segments. A PEM block has header and footer lines. A Basic auth header decodes to `user:password`. Identifying the container first stops you from misreading the contents.",
+        ],
+      },
+      { h: "Frequently asked questions" },
+      {
+        p:
+          "**Is Base64 secure for storing passwords in a config file?** No. It is plaintext. Anyone with the file has the value.\n\n**Why is my encoded string longer than the file?** Because three bytes become four characters. That is expected, not a failed compression.\n\n**Why does encoding Chinese text fail in some tools?** Those tools call `btoa()` directly on a UTF-16 string. The encoder here bridges through UTF-8 first, so it handles non-ASCII input.\n\n**Can I safely put the output in a URL?** Not without either switching to the URL-safe alphabet or percent-encoding it. `+`, `/` and `=` are the problem characters.\n\n**Does decoding ever lose data?** No, if the string is intact. Base64 is a bijective mapping over bytes. What it can lose is the *interpretation* of those bytes — whether they were UTF-8, Latin-1 or a binary format — and that information never travelled with the string.",
+      },
+      { h: "The one-line version" },
+      {
+        p:
+          "Base64 is a transport format for bytes, not a security control. It grows data by a third, needs a UTF-8 bridge for non-ASCII text, needs care around URLs, and always decodes back to exactly what went in — which is precisely why you should never put anything secret into it.",
+      },
+    ],
+  },
+  {
+    slug: "data-format-conversion-traps",
+    metaTitle: "JSON, YAML, XML, CSV: Where Conversions Quietly Lose Data",
+    title: "JSON, YAML, XML and CSV: Where Format Conversions Quietly Lose Your Data",
+    description:
+      "A code-level look at what actually changes when data moves between JSON, YAML, XML and CSV: string coercion, nested objects, repeated XML tags, and YAML's boolean surprises.",
+    date: "2026-11-10",
+    updated: "2026-11-10",
+    readingTime: "12 min read",
+    category: "Developer Tools",
+    blocks: [
+      {
+        p:
+          "A format converter looks like a translator: same content, different spelling. That model is wrong in a specific and expensive way. JSON, YAML, XML and CSV do not describe the same kind of thing, so moving between them is not translation — it is a projection, and projections lose information.\n\nThe [[data-converter|Data Converter]] on this site supports all four in every direction. Its implementation is a useful specimen because it is small enough to read in full and honest enough to show exactly where the loss happens. What follows is a map of those seams, so you can predict the result before you paste a customer's spreadsheet into a production import.",
+      },
+      { h: "Four formats, four different data models" },
+      {
+        p:
+          "Before any conversion, it helps to say what each format can natively express. The gaps between these lists are where your data goes missing.",
+      },
+      {
+        l: [
+          "**JSON:** objects, arrays, strings, numbers, booleans and null. Ordered object keys in practice, no comments, no dates as a distinct type.",
+          "**YAML:** a superset in spirit — nested maps, sequences, scalars, plus implicit typing that guesses whether a scalar is a number, a boolean or a timestamp.",
+          "**XML:** an ordered tree of elements with text content and attributes. It has no native concept of an array, a number or a boolean; everything is text until a schema says otherwise.",
+          "**CSV:** a flat table of rows, each row a list of strings. No nesting, no types, no null distinct from empty string, no metadata about what any column means.",
+        ],
+      },
+      {
+        p:
+          "Notice that CSV is the narrowest by a wide margin and YAML is the most ambitious. Converting from a narrow model into a rich one adds nothing back: a value that arrived as text cannot be reconstructed as a number with any confidence. Converting the other way has to throw structure away.",
+      },
+      { h: "CSV: every value becomes a string" },
+      {
+        p:
+          "The CSV reader here builds each row with a line equivalent to `o[header || colN] = cells[i] ?? ''`. There is no type inference at all. Paste `name,age,active` followed by `Ada,42,true` and the resulting objects are `{ name: 'Ada', age: '42', active: 'true' }` — strings, every one of them. Convert that straight to JSON and you get quoted numbers and a quoted boolean. Downstream code that checks `age > 18` may still appear to work because JavaScript coerces, while code that checks `active === true` silently never matches.",
+      },
+      {
+        l: [
+          "**Empty and missing collapse.** An absent trailing cell becomes `''`, and a cell that literally contained an empty string also becomes `''`. You cannot distinguish 'not provided' from 'provided as blank' after the round trip.",
+          "**Blank headers get synthetic names.** An empty column heading becomes `col0`, `col1` and so on, keyed by position. Rename a column in the source and every downstream mapping breaks.",
+          "**Extra cells are dropped.** The row builder iterates over the header array, so a row with more cells than the header quietly loses the surplus.",
+          "**Whitespace-only lines are discarded** before parsing, which is usually helpful and occasionally removes a meaningful blank record.",
+        ],
+      },
+      {
+        b:
+          "One real boundary worth knowing: this reader splits the input on line breaks first, then parses quotes within each line. It correctly handles quoted commas, escaped double quotes (`\"\"` inside a field becomes one `\"`), and quoted delimiters — but a newline **inside** a quoted field will split the row. If your CSV has multi-line addresses or free-text descriptions, use a full RFC 4180 parser or a spreadsheet import instead, and check the row count afterwards.",
+      },
+      {
+        p:
+          "The writer has its own set of decisions. It collects the union of all keys across all rows into a `Set`, so column order follows first appearance and every row is padded to the same width. Values containing a comma, a double quote or a newline get quoted, with internal quotes doubled. Values that are `null` or `undefined` become an empty cell. And because the quoting helper calls `String(x)` on whatever it receives, a nested object serialises as the literal text `[object Object]` and an array such as `[1, 2]` becomes the string `1,2` (then gets quoted because of the comma).",
+      },
+      {
+        l: [
+          "**Flatten before you convert.** Turn nested objects into explicit scalar columns with names like `address_city`. Do not let `String()` make that decision for you.",
+          "**Check the union.** If one row has a key no other row has, the output gains a column that is empty almost everywhere. That is correct behaviour and a common surprise.",
+          "**Re-read the output.** A five-second look at the generated CSV catches `[object Object]` before it reaches an import job.",
+        ],
+      },
+      { h: "XML: attributes disappear, and one child is not the same as two" },
+      {
+        p:
+          "The XML reader here walks child elements and reads `textContent`. It never looks at attributes. `<user id='42'>Ada</user>` becomes `{ user: 'Ada' }` and the identifier is simply gone. If your XML carries ids, statuses, units or language tags as attributes — and most real XML does — a conversion that ignores them is lossy in a way that is easy to miss because the output still looks plausible.",
+      },
+      {
+        p:
+          "The second XML trap is structural. When the reader meets repeated sibling tags, the first occurrence is stored as a scalar and the second causes it to be replaced by an array; a third appends. So a document with one `<item>` produces a single object, while the same document with two `<item>` elements produces an array. Consumer code written against the one-item sample breaks on the two-item real data. This is the single most common XML-to-JSON production bug, and it is not a parser defect — XML has no array type, so every converter has to invent a rule.",
+      },
+      {
+        l: [
+          "**Attributes** are not read. Move them into child elements before converting, or use a schema-aware converter.",
+          "**Mixed content** (text with elements interleaved) collapses into concatenated text; the element boundaries disappear.",
+          "**The root is wrapped:** the result is keyed by the root tag name, adding one level you may not expect.",
+          "**On the way out**, key names are sanitised — invalid characters become `_`, names starting with a digit get a leading `_`, and an empty name becomes `field`. `null` becomes a self-closing element and arrays become repeated sibling tags rather than a wrapping container.",
+        ],
+      },
+      { h: "YAML: implicit typing and the Norway problem" },
+      {
+        p:
+          "YAML readers guess types. That convenience has a famous failure mode: in YAML 1.1, the unquoted scalars `yes`, `no`, `on`, `off`, `y` and `n` are booleans. A country code list containing `NO` for Norway can be parsed as `false`. Quoted values are safe, but you rarely control the file you were handed. Dates are similarly ambiguous — an unquoted `2026-11-10` may become a Date object rather than a string — and values like `0777` or `1e3` can change type on the way in.",
+      },
+      {
+        b:
+          "If a field is a code, an identifier, a version string or a phone number, quote it in YAML. The three minutes this takes is cheaper than explaining why Norway disappeared from a report. When consuming someone else's YAML, inspect the parsed types before trusting the values, not the raw text.",
+      },
+      {
+        p:
+          "On the output side this converter calls `yaml.dump(value, { noRefs: true })`. That option deliberately expands repeated references into full copies instead of emitting anchors and aliases. The result is larger but more portable, because the reader does not need to support alias resolution. It is a good default for data that will be pasted into another tool; it is a poor default if you are round-tripping a large object graph where identity mattered.",
+      },
+      { h: "JSON is the strict one, and that is a feature" },
+      {
+        p:
+          "The JSON path is a bare `JSON.parse` on input and `JSON.stringify(value, null, 2)` on output. `parse` rejects trailing commas, comments, single quotes, `NaN`, `Infinity` and `undefined`. The other three formats are all more permissive, which means YAML → JSON and XML → JSON usually succeed while JSON → YAML is the direction most likely to fail on hand-edited input. That asymmetry is worth remembering when a conversion chain suddenly breaks halfway through.\n\n`stringify` has its own quiet edits: `undefined` properties vanish, `NaN` and `Infinity` become `null`, `Date` objects become ISO strings, and functions are dropped. None of these raise an error. If a field disappears after a round trip, this is where to look first. Use the [[json-validator|JSON Validator]] when you need a strict pass or fail answer rather than a pretty print, and the [[json-formatter|JSON Formatter]] when you only need to read the shape.",
+      },
+      { h: "A round-trip test that actually catches the loss" },
+      {
+        p:
+          "Comparing the converted text to the original text proves nothing — different spacing, key order and quoting will always differ. Compare the **structure** instead, and do it before the data touches anything important.",
+      },
+      {
+        l: [
+          "**1. Convert A → B → A** with the [[data-converter|Data Converter]] and diff the two A representations semantically, not as strings. Types, nulls and array-versus-scalar shape are what matter.",
+          "**2. Include the awkward row.** One nested object, one empty value, one numeric-looking string, one repeated XML tag, one `yes` or `NO` scalar. A sample with only clean flat strings will pass every test and tell you nothing.",
+          "**3. Count the rows and keys.** Silent row loss (extra CSV cells, whitespace-only lines) and silent column gain (the union rule) are both visible in a count.",
+          "**4. Decide the types before importing.** If a column is an integer, cast it explicitly at the boundary. Do not rely on a formatter to have guessed for you.",
+        ],
+      },
+      { h: "Choosing a format on purpose" },
+      {
+        l: [
+          "**Config with nesting and humans editing it:** YAML, with codes quoted and a linter in CI.",
+          "**APIs and storage:** JSON. Strictness is what makes it predictable across languages.",
+          "**Document interchange with an existing schema or attributes:** XML, with a real parser that reads attributes.",
+          "**Spreadsheets, flat exports and bulk imports:** CSV, with an explicit schema describing each column's type and null handling.",
+        ],
+      },
+      { h: "Frequently asked questions" },
+      {
+        p:
+          "**Why did my numbers come back as strings?** CSV has no type system. Every cell is text until you declare otherwise.\n\n**Why is there a column full of blanks?** The CSV writer emits the union of all keys across all rows, so a key present in one row appears as an empty cell in every other row.\n\n**Why did my nested object become `[object Object]`?** The quoting helper converts values with `String()`. Flatten nested structures into scalar columns first.\n\n**Is a round trip lossless?** Between JSON and YAML, usually, for simple data. Any path through CSV or XML is lossy by construction.\n\n**Does the conversion upload my file?** No. The parser and serialiser run in your browser; nothing is sent to a server. That matters most when the spreadsheet contains customer data.",
+      },
+      { h: "The one-line version" },
+      {
+        p:
+          "Treat every conversion as lossy until you have proved otherwise on a deliberately awkward sample. CSV flattens and stringifies, XML drops attributes and invents arrays, YAML guesses types, and JSON quietly discards what it cannot represent. The format you choose is a data model decision, not a file extension.",
+      },
+    ],
+  },
+  {
+    slug: "unix-timestamp-traps",
+    metaTitle: "Unix Timestamps: Seconds, Milliseconds, Timezones and 2038",
+    title: "Unix Timestamps: The Three Bugs Hiding Inside One Number",
+    description:
+      "How a 10-digit and a 13-digit number get confused, why the same date string produces different timestamps on different machines, and what actually happens in 2038.",
+    date: "2026-11-10",
+    updated: "2026-11-10",
+    readingTime: "11 min read",
+    category: "Developer Tools",
+    blocks: [
+      {
+        p:
+          "A Unix timestamp is a single integer with no formatting, no locale and no ambiguous month names. It looks like the safest way to represent a moment in a log line, an API response or a database column. It is also the carrier of three separate bugs that routinely survive code review, because each one produces a plausible-looking answer rather than an error.\n\nThe [[timestamp-converter|Timestamp Converter]] on this site displays UTC and local time side by side and states which unit it detected. Both of those are deliberate responses to the problems below.",
+      },
+      { h: "Bug one: the unit is not in the number" },
+      {
+        p:
+          "Unix time is conventionally a count of seconds since 1970-01-01T00:00:00Z. JavaScript's `Date.now()` returns milliseconds. Both are plain integers, and both appear constantly in the same log files: a backend writes seconds, a frontend writes milliseconds, and the two get aggregated without anyone noticing. Today a seconds value has ten digits and a milliseconds value has thirteen, so the difference looks obvious — until a converter tries to infer it.",
+      },
+      {
+        b:
+          "A concrete failure, found while writing this guide: the converter here previously treated a value as milliseconds only when it exceeded `9999999999999`. A 2026 millisecond timestamp is about `1.76e12`, which is **smaller** than that threshold, so it was interpreted as seconds, multiplied by 1000 again, and rendered as a date in the year 57830 — with no error, because the resulting `Date` was technically valid. The threshold has since been changed to `1e11`, and the result now states 'Input interpreted as seconds' or 'Input interpreted as milliseconds' so a wrong guess is visible instead of silent.",
+      },
+      {
+        l: [
+          "**Choose a magnitude boundary, not a digit-count ceiling.** `1e11` separates today's ten-digit seconds from thirteen-digit milliseconds, and covers millisecond values back to 1973 and second values forward past the year 5000.",
+          "**State the detected unit in the output.** Any heuristic can be wrong at the edges; a silent guess is the actual defect, not the guess itself.",
+          "**Watch for other units.** Microseconds (16 digits) and nanoseconds (19 digits) are common in tracing systems and high-resolution logs. Do not extend a seconds-or-milliseconds heuristic to cover them — read the producer's contract.",
+          "**Put the unit in the field name:** `created_at_ms`, not `created_at`. This single naming habit removes an entire class of incident.",
+        ],
+      },
+      { h: "Bug two: the same date string, two different answers" },
+      {
+        p:
+          "Converting a human date into a timestamp has the opposite problem: the input carries no timezone. A `datetime-local` form field produces something like `2026-11-10T09:30`, with no `Z` and no offset. Passing that to `new Date(...)` makes the browser parse it in its **own local timezone**. On a machine set to UTC+8 the result is 01:30 UTC; on a machine set to UTC+0 it is 09:30 UTC. Same string, same code, timestamps eight hours apart.",
+      },
+      {
+        p:
+          "This is why the converter deliberately prints both `toISOString()` (always UTC) and `toString()` (the browser's local zone). Seeing `2026-11-10 01:30:00 UTC` next to a local rendering of `09:30` makes the gap explicit rather than letting one of them look authoritative on its own. It is also why a stored timestamp should always be UTC and only be converted at the display boundary — the [[world-clock|World Clock]] exists because computing offsets from memory, especially around daylight saving, is the other half of this bug.",
+      },
+      {
+        l: [
+          "**Store UTC, display local.** Never store a local wall-clock time without an offset alongside it.",
+          "**Make the offset explicit** in any string you pass across a boundary: append `Z` or `+08:00`. A bare datetime is ambiguous by definition.",
+          "**Put the timezone in invitations and logs**, not just the hour. '14:00 UTC+8' survives a reader in another country; '2pm' does not.",
+        ],
+      },
+      {
+        b:
+          "One precise detail that surprises people: Unix time does **not** count leap seconds. Every day is treated as exactly 86,400 seconds, so the integer is continuous while UTC occasionally inserts a second. For ordinary application logging the difference is irrelevant; for systems that need true UTC alignment, it is a real distinction between 'seconds since the epoch' and 'elapsed SI seconds'.",
+      },
+      { h: "Bug three: range, negatives and the 2038 line" },
+      {
+        p:
+          "The well-known 2038 problem is an overflow in systems that store `time_t` as a signed 32-bit integer: the largest representable second is 2^31−1, reached at 2038-01-19T03:14:07Z. JavaScript is not affected — `Date` stores milliseconds in a double and covers roughly ±8.64e15 ms, or about 273,790 years either side of the epoch. But a timestamp rarely lives only in JavaScript. It crosses into a C service, a database column typed as `INT`, or an API contract with a 32-bit assumption somewhere downstream, and the failure appears at that boundary rather than in your code.",
+      },
+      {
+        l: [
+          "**Negative values are legal.** `−86400` is 1969-12-31T00:00:00Z. Validators that reject any negative number are wrong, and historical or backfilled data is where this surfaces.",
+          "**Check `isNaN(date.getTime())`, not truthiness.** An invalid `Date` is still an object, so a simple existence check passes while every method returns NaN.",
+          "**Zero is a real value.** 1970-01-01 is not 'unset'; sentinel values and falsy checks collide here more often than people expect.",
+          "**Seconds truncate.** Converting millisecond precision to seconds loses ordering within that second. If log ordering matters, keep the milliseconds or add a sequence number.",
+        ],
+      },
+      { h: "A four-step routine for reading a timestamp from a log" },
+      {
+        p:
+          "When an incident hinges on when something happened, the fastest reliable path is short and boring. The point of each step is to remove one of the three ambiguities above before forming a theory.",
+      },
+      {
+        l: [
+          "**1. Establish the unit from the producer**, not the digits. If that is impossible, use magnitude as a fallback and treat the result as provisional. The [[timestamp-converter|Timestamp Converter]] now names the unit it assumed.",
+          "**2. Read the UTC rendering first.** `2025-11-10 18:40:00 UTC` is unambiguous. Only afterwards look at the local rendering to compare against a colleague's screenshot.",
+          "**3. Align with a known event.** Compare the UTC instant against the deploy window or the alert time. The [[date-difference|Date Difference Calculator]] is useful when the question is an interval rather than an instant.",
+          "**4. Write the conclusion with its zone attached.** 'Created at 01:30 UTC on 11 Nov (09:30 UTC+8)' prevents the same argument from being had again tomorrow.",
+        ],
+      },
+      { h: "How to store and name timestamps" },
+      {
+        l: [
+          "**Prefer integer milliseconds in JavaScript services**, integer seconds elsewhere, and say which in the schema. Do not mix within one field.",
+          "**Always UTC.** Store the zone of the *user* separately if you need it; do not bake it into the instant.",
+          "**Use ISO 8601 strings at human-facing API boundaries** where readability beats compactness, and keep the `Z` on the end.",
+          "**Distinguish an instant from a duration.** A duration in seconds is not a Unix timestamp, and the [[time-converter|Time Converter]] is the right instrument for it.",
+        ],
+      },
+      { h: "Frequently asked questions" },
+      {
+        p:
+          "**Why did a valid-looking timestamp produce a date thousands of years in the future?** It was almost certainly milliseconds interpreted as seconds (or the reverse). Check which unit the converter says it detected.\n\n**Why do two machines disagree on the same date input?** A bare datetime string is parsed in each machine's local timezone. Add an explicit offset.\n\n**Is 2038 a problem in JavaScript?** Not in `Date` itself, but the systems your value passes through may still use 32-bit time.\n\n**Can a timestamp be negative?** Yes, for moments before 1970. It is a normal value.\n\n**Does the converter need my timezone?** It reads it from the browser to show the local rendering alongside UTC. Nothing is sent anywhere; the calculation runs in the page.",
+      },
+      { h: "The one-line version" },
+      {
+        p:
+          "The integer is not self-describing: it does not say what unit it counts, which timezone a human typed it in, or how wide the receiving system is. Name the unit, store UTC, display local, and make any guess visible. Everything else about timestamps is arithmetic.",
+      },
+    ],
+  },
 ];
 
 export function getPost(slug: string): Post | undefined {

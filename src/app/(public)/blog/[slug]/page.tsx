@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { getPost, posts } from "@/lib/posts";
 import { PostArticle } from "@/components/post-article";
 import { languageAlternates } from "@/lib/alternates";
+import { LOCALES } from "@/lib/locales";
+import { isPostTranslated } from "@/i18n/posts";
 
 export const dynamicParams = false;
 
@@ -19,11 +21,18 @@ export async function generateMetadata({
   const post = getPost(slug);
   if (!post) return {};
   const path = `/blog/${post.slug}/`;
+  // 只把「真的有译文」的语言列为 hreflang 目标。新增的原创英文指南刻意不机翻，
+  // 其余语言页是英文壳且 noindex；若仍在这里声明，等于把 noindex 页指成官方版本。
+  // x-default 由 languageAlternates 指向英文，保留不动。
+  const blogAlts = languageAlternates(path);
+  for (const l of LOCALES) {
+    if (l.code !== "en" && !isPostTranslated(l.code, slug)) delete blogAlts[l.hreflang];
+  }
   return {
     title: post.metaTitle,
     description: post.description,
     keywords: post.title.toLowerCase(),
-    alternates: { canonical: path, languages: languageAlternates(path) },
+    alternates: { canonical: path, languages: blogAlts },
     openGraph: {
       title: post.metaTitle,
       description: post.description,
