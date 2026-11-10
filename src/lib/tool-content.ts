@@ -178,22 +178,46 @@ const overrides: Record<string, ToolContent> = {
   },
   "word-counter": {
     intro:
-      "The Word Counter gives you a live count of words, characters, sentences and paragraphs as you type, along with reading time and speaking time estimates. It also surfaces the average word length and the count of unique words, which is what you need when a client specifies a limit and you want to know how far you are from it. Counting happens on every keystroke locally, so a 50,000-word document stays responsive.",
+      "The Word Counter shows seven numbers as you type: words, characters, characters without spaces, sentences, paragraphs, lines, and a reading-time estimate. Every one of them is recomputed on each keystroke from the text in the box, in your browser. There is no upload, no account, and no button to press. That makes it useful for the moment when a client says \"no more than 800 words\" and you need to know what the tool you are both looking at actually means by a word.\n\nThat last point is the reason this page exists. A word count is not a fact about a document; it is the output of a definition. This tool uses a deliberately simple one: trim the text, then split it on runs of whitespace. Concretely, the word count is text.trim().split(/\\s+/).length, or zero when the text is empty or only whitespace. Runs of spaces, tabs, newlines, carriage returns, non-breaking spaces and full-width spaces all collapse into one separator. A zero-width space is not whitespace to JavaScript, so it does not split anything. Hyphens and apostrophes do not split either: well-known, don't and e-mail are each one word. Punctuation stays attached to the word next to it.\n\nThe consequence for Chinese, Japanese and Thai text is worth stating plainly, because it is the single biggest source of disagreement between word counters. A sentence such as 今天天气很好，我们去公园吧。 has no spaces, so this tool reports 1 word and 14 characters. The same sentence with spaces inserted between phrases reports 3 words. Neither number is wrong; they answer different questions. If you are quoting a limit for CJK copy, agree on whether the unit is whitespace-delimited tokens or characters before you start, and use the character count when the limit comes from a platform that counts characters. Our character-counting guide in the blog goes into why code units, code points and grapheme clusters give three different answers for the same emoji.\n\nTwo character figures are shown side by side on purpose. Characters is text.length, which counts UTF-16 code units rather than visible symbols: a plain 😀 counts as 2, and the family emoji 👨‍👩‍👧‍👦 counts as 11 because it is four emoji joined by three zero-width joiners. Characters (no spaces) applies text.replace(/\\s/g, \"\") — it removes whitespace and nothing else, so commas, full stops, emoji and zero-width joiners all remain in the number. A string like \"Hi 😀\" is 5 characters, 4 without spaces, and 2 words. If a form field enforces a byte limit rather than a character limit, note that UTF-8 uses 3 bytes for 中 and 4 for 😀, so a character count will not predict it.\n\nSentences, paragraphs and lines each follow their own rule, and they do not have to agree. Sentences come from splitting on one or more of . ! or ?, so Dr. Smith arrived at 3.14 pm. Really! reports 7 words but 4 sentences: the period in Dr., the decimal point in 3.14, the period after pm, and the exclamation mark all create boundaries. Because the pattern uses a + quantifier, an ellipsis counts as one break, and a trailing piece of text with no final punctuation still counts as a sentence. Full-width punctuation such as 。 is not in the pattern, so a Chinese paragraph is one sentence. Paragraphs require a blank line: text.split(/\\n\\s*\\n/) means a single newline stays inside the same paragraph, while four consecutive newlines still produce just two paragraphs. Lines is a plain split on newline, which is why an empty textarea reports 1 line, not 0.\n\nReading time is Math.ceil(words / 200): a fixed 200 words per minute, rounded up. One word and 200 words both show 1 min; 201 words shows 2 min. It is a rough planning number for a single reader, not a prediction of how long a real audience will spend, and it inherits every quirk of the word definition above — a Chinese article will report a far shorter reading time than the same content translated into English. To be explicit about what this tool does not do: there is no speaking-time estimate, no unique-word count, no average word length, no keyword density and no per-language tokenizer. Those figures appear in some other counters; they are not computed here. Knowing exactly which definition produced a number is more useful than a dashboard of extra metrics.",
     howTo: [
-      { step: "Type or paste your text", detail: "The counts update as you type, with no button to press." },
-      { step: "Read the statistics", detail: "Check words, characters, sentences, paragraphs and the reading and speaking time estimates." },
-      { step: "Use the reading time estimate", detail: "Speaking time is calculated at roughly 130 words per minute, which is close to a normal presentation pace." },
+      { step: "Paste or type your text", detail: "All seven counters update on every keystroke, with no button to press and no server round trip." },
+      { step: "Pick the number that matches your limit", detail: "Use words for an editorial limit, characters for a form field, and characters without spaces when the target explicitly excludes whitespace." },
+      { step: "Check the structural counts", detail: "Sentences need . ! or ?, paragraphs need a blank line, and lines need a single newline. Knowing these rules tells you why pasted text sometimes reports fewer paragraphs than you expect." },
+      { step: "Sanity-check pasted content", detail: "Hidden non-breaking spaces, zero-width characters and multiple blank lines change the counts. If a number looks wrong, strip formatting by pasting as plain text and compare again." },
     ],
     faq: [
-      { q: "How is reading time calculated?", a: "It assumes about 225 words per minute for silent reading and about 130 words per minute for speaking aloud." },
-      { q: "Does it count spaces in the character count?", a: "Yes. The character count includes spaces, and a separate count without spaces is shown alongside it." },
-      { q: "How are sentences counted?", a: "A sentence ends at a period, question mark or exclamation mark. Abbreviations such as e.g. or Dr. are counted as separate sentences." },
+      { q: "What exactly counts as a word here?", a: "The tool trims leading and trailing whitespace, then splits the remaining text on runs of whitespace. Runs collapse, so multiple spaces, tabs and line breaks between two words count as one separator. Hyphenated words, contractions and punctuation-attached words stay whole." },
+      { q: "Why does my Chinese or Japanese text show almost no words?", a: "Because those scripts do not put spaces between words and this counter does not do morphological segmentation. 今天天气很好，我们去公园吧。 is 1 word and 14 characters. Use the character count, or insert spaces deliberately, when working with a CJK limit." },
+      { q: "Does the character count include spaces?", a: "Yes. Characters is the raw string length. The separate Characters (no spaces) figure removes whitespace only — punctuation, emoji and other non-space characters are still counted." },
+      { q: "Why does one emoji add 2 or even 11 characters?", a: "Characters counts UTF-16 code units, not visible glyphs. An emoji outside the basic plane uses a surrogate pair, so 😀 is 2. The family emoji 👨‍👩‍👧‍👦 is four emoji linked by three zero-width joiners, which is 11 code units." },
+      { q: "Is the character count the same as the byte size?", a: "No. UTF-8 uses 1 byte for ASCII, 3 for 中 and 4 for 😀. If a database column or API enforces a byte limit, the character count is only a lower bound." },
+      { q: "Why does Dr. Smith arrived at 3.14 pm. Really! report 4 sentences?", a: "Sentences are produced by splitting on runs of . ! and ?. The abbreviation Dr., the decimal point in 3.14, the period after pm and the final exclamation mark all act as boundaries. There is no abbreviation dictionary." },
+      { q: "Does a sentence need a full stop at the end?", a: "No. Any remaining non-empty fragment after the last separator counts as a sentence, so a single line with no punctuation reports 1 sentence. Consecutive punctuation such as ... counts as one break." },
+      { q: "Why did my pasted text lose its paragraph breaks?", a: "Paragraphs are detected by a blank line, meaning a newline, optional whitespace, then another newline. A single line break between two lines is a new line but the same paragraph. Many editors export soft-wrapped text this way." },
+      { q: "Why does an empty box show 1 line?", a: "Lines is a split on newline characters, and splitting an empty string returns an array with one element. Words, characters and paragraphs correctly show 0 for an empty box." },
+      { q: "How is reading time calculated?", a: "It is the word count divided by 200, rounded up. So 1 to 200 words show 1 min and 201 words show 2 min. It is a fixed pace for a single silent reader, and it scales with the whitespace-based word count." },
+      { q: "Does it show speaking time, unique words or average word length?", a: "No. This tool computes only the seven counters displayed: words, characters, characters without spaces, sentences, paragraphs, lines and reading time. It does not tokenize by language, deduplicate words or estimate a spoken pace." },
+      { q: "Is my text sent to a server?", a: "No. The count function runs on the string held in your browser's textarea, and the page does not submit the text anywhere. Reloading clears it." },
+      { q: "Which number should I quote for a client word limit?", a: "Agree on the definition first. For English prose, words is the usual figure. For CJK copy, social posts, meta descriptions and any field with a hard character cap, quote characters or characters without spaces and say which one you used." },
     ],
     useCases: [
-      "Checking whether an article meets a client word limit.",
-      "Estimating how long a speech or voice-over will take to read.",
-      "Counting characters for a form field with a hard limit.",
-      "Measuring the length of a meta description before publishing.",
+      "Checking whether an article meets a client word limit before handing it over.",
+      "Measuring a meta description or ad headline against a hard character cap.",
+      "Estimating reading time for a newsletter, help article or documentation page.",
+      "Finding out why pasted text from a PDF reports one enormous paragraph.",
+      "Comparing a draft against its edited version by watching words and characters move independently.",
+      "Checking CJK copy by characters rather than whitespace-delimited words.",
+      "Detecting hidden non-breaking spaces or stray blank lines in text copied from a spreadsheet.",
+      "Sanity-checking the output of a script that generates prose or test fixtures.",
+    ],
+    tips: [
+      "Paste as plain text when a number looks wrong: word processors export non-breaking spaces and soft line breaks that change counts invisibly.",
+      "For CJK text, use the character count and say so explicitly when reporting a length.",
+      "Remember that an ellipsis counts as one sentence break, while Dr. and 3.14 each create an extra one.",
+      "A blank line is what creates a new paragraph; a single newline only creates a new line.",
+      "Reading time rounds up at 200 words per minute, so 201 words is 2 min — do not read it as a precise duration.",
+      "Characters (no spaces) still includes punctuation and emoji, which matters for tight form fields.",
+      "If a platform counts UTF-8 bytes, check byte length separately; an emoji costs 4 bytes but only 1 or 2 displayed characters.",
     ],
   },
   "file-size-converter": {
@@ -394,7 +418,7 @@ const overrides: Record<string, ToolContent> = {
   },
   "loan-calculator": {
     intro:
-      "The Loan Calculator works out the fixed monthly payment on an amortising loan, the total interest paid over the whole term, and how each payment splits between interest and principal. That split is the part people underestimate: on a long mortgage the early payments are mostly interest, so the balance barely moves for the first few years, and adding a small extra amount to each payment cuts the term by far more than the extra amount suggests. Entering a different term or rate shows immediately how much a shorter term saves in interest against how much more it costs per month.",
+      "The Loan Calculator works out the fixed monthly payment on an amortising loan, the total amount paid back over the whole term, and the total interest that represents. It applies the standard amortisation formula to the principal, the monthly rate and the number of payments. On a long mortgage the early payments are mostly interest, so the balance barely moves for the first few years, but this tool reports totals rather than a period-by-period amortisation schedule. Changing the term or the rate shows immediately how much a shorter term saves in interest against how much more it costs per month.",
     howTo: [
       { step: "Enter the amount borrowed", detail: "The principal only, not the purchase price. If there is a deposit, subtract it first." },
       { step: "Enter the annual interest rate", detail: "Use the nominal annual rate the lender quotes, before any arrangement fee. A rate quoted as monthly should be multiplied by twelve." },
@@ -413,7 +437,7 @@ const overrides: Record<string, ToolContent> = {
     useCases: [
       "Comparing a 20-year and a 30-year term on the same amount.",
       "Checking whether a refinance offer at a lower rate actually saves money after fees.",
-      "Working out how much of the first year's payments goes to interest rather than principal.",
+      "Seeing the total interest a quoted rate produces over the full term.",
       "Estimating a monthly commitment before applying.",
     ],
     tips: [
@@ -1081,7 +1105,7 @@ const overrides: Record<string, ToolContent> = {
   },
   "discount-calculator": {
     intro:
-      "The Discount Calculator takes a price and a discount percentage and returns what you save and what you pay. It also quietly settles the question that comes up at every sale: whether two successive discounts are the same as one larger one. They are not. Twenty percent off followed by a further ten percent is a total of 28 percent, not 30, because the second discount applies to the already reduced price. The reverse direction is the other trap, where subtracting the percentage back off the sale price does not return you to the original.",
+      "The Discount Calculator takes a price and a discount percentage separated by a comma and returns the original price, what you save and what you pay. It also explains the question that comes up at every sale: whether two successive discounts are the same as one larger one. They are not. Twenty percent off followed by a further ten percent is a total of 28 percent, not 30, because the second discount applies to the already reduced price. To check a real stack, run the tool twice, using the first final price as the second input. The reverse direction is the other trap, where subtracting the percentage back off the sale price does not return you to the original.",
     howTo: [
       { step: "Enter the price and the discount", detail: "Type them as price, then a comma, then the percentage. For example 200, 20 means 200 with 20 percent off." },
       { step: "Read the breakdown", detail: "You get the original price, the discount rate, the amount saved and the final price." },

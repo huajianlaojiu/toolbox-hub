@@ -5,6 +5,7 @@ import ToolRedirect from "@/components/tools/tool-redirect";
 import { LOCALES, isPublished } from "@/lib/locales";
 import { languageAlternates } from "@/lib/alternates";
 import { getMeta, getContent } from "@/i18n/content";
+import { getToolSeoOverride } from "@/lib/tool-seo";
 import ToolPageContent from "@/components/tool-page-content";
 
 import AdUnit from "@/components/shared/ad-unit";
@@ -138,15 +139,19 @@ export function generateToolMetadata(lang: string, slug: string): Metadata {
   }
   const meta = getMeta(lang, slug);
   const content = getContent(lang, slug);
-  const desc = content.intro.slice(0, 158);
+  // 高曝光页（GSC 实证「有展示、零点击」）用定制的绝对 title / description：
+  // 绕开根布局 template，去掉通用英文后缀，并把具体收益写进 SERP 摘要。
+  // 未覆盖的 1700+ 页完全走原逻辑，不触发全站重爬。
+  const seo = getToolSeoOverride(lang, slug);
+  const desc = seo?.description ?? content.intro.slice(0, 158);
   const url = lang === "en" ? `/tools/${slug}/` : `/${lang}/tools/${slug}/`;
   const m: Metadata = {
-    title: `${meta.title} - Free Online Tool`,
+    title: seo ? { absolute: seo.title } : `${meta.title} - Free Online Tool`,
     description: desc,
     keywords: meta.keywords,
     alternates: { canonical: url, languages: hreflangAlternates(slug) },
     openGraph: {
-      title: `${meta.title} - Free Online Tool | Toolbox Hub`,
+      title: seo?.title ?? `${meta.title} - Free Online Tool | Toolbox Hub`,
       description: desc,
       url,
       type: "article",
