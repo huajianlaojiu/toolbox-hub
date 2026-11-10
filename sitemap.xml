@@ -4268,6 +4268,22 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/blog/unix-timestamp-traps/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/blog/unix-timestamp-traps/"/>
   </url>
+  <url><loc>https://toolbox-hub.io/blog/your-character-count-is-wrong/</loc><lastmod>2026-11-10</lastmod><changefreq>monthly</changefreq><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/blog/your-character-count-is-wrong/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/blog/your-character-count-is-wrong/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/blog/password-strength-meters-measure-the-wrong-thing/</loc><lastmod>2026-11-10</lastmod><changefreq>monthly</changefreq><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/blog/password-strength-meters-measure-the-wrong-thing/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/blog/password-strength-meters-measure-the-wrong-thing/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/blog/regex-works-in-python-fails-in-javascript/</loc><lastmod>2026-11-10</lastmod><changefreq>monthly</changefreq><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/blog/regex-works-in-python-fails-in-javascript/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/blog/regex-works-in-python-fails-in-javascript/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/blog/unit-converter-floating-point/</loc><lastmod>2026-11-10</lastmod><changefreq>monthly</changefreq><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/blog/unit-converter-floating-point/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/blog/unit-converter-floating-point/"/>
+  </url>
   <url><loc>https://toolbox-hub.io/tools/base64-encoder/</loc><lastmod>2026-11-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/tools/base64-encoder/"/>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/tools/base64-encoder/"/>
