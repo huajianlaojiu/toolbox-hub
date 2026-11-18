@@ -5,6 +5,7 @@ import { posts, getPost } from "@/lib/posts";
 import { languageAlternates } from "@/lib/alternates";
 import { st } from "@/lib/lang-meta";
 import { getPostI18n, isPostTranslated } from "@/i18n/posts";
+import { OG_IMAGE } from "@/lib/site-meta";
 
 export function generateStaticParams() {
   const langs = LOCALES.filter((l) => l.code !== "en").map((l) => l.code);
@@ -61,6 +62,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       type: "article",
       publishedTime: post.date,
       modifiedTime: post.updated,
+      images: [OG_IMAGE],
     },
   };
   // 未发布语言（译文仍是英文壳）或该文章未翻译，都不当作独立版本收录

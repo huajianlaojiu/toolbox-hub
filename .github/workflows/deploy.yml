@@ -122,6 +122,12 @@ jobs:
           test -f out/ads.txt || (echo "out/ads.txt missing" && exit 1)
           echo "pages: $(find out -name index.html | wc -l) | tools: $(ls -1 out/tools | wc -l)"
 
+      # GitHub Pages（含自定义域名 toolbox-hub.io 前面的 Fastly）对所有响应强制
+      # Cache-Control: max-age=600，忽略仓库里的 _headers、meta http-equiv 和
+      # Next headers()。内容哈希的 /_next/static/* 因此无法在源站设成 immutable。
+      # 能做的是缩小首屏必须下载的体积（见首页不再打包全语言工具文案）。
+      # 若以后在域名前面加 CDN，应对 /_next/static/* 设
+      # Cache-Control: public, max-age=31536000, immutable，HTML 保持短缓存。
       - name: Deploy to gh-pages branch
         uses: peaceiris/actions-gh-pages@v4
         with:

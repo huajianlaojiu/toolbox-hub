@@ -8,103 +8,10 @@ import { getMeta, getContent } from "@/i18n/content";
 import { getToolSeoOverride } from "@/lib/tool-seo";
 import { getRelatedGuides } from "@/lib/related-guides";
 import ToolPageContent from "@/components/tool-page-content";
+import ToolWidget from "@/components/tools/tool-widget";
+import { OG_IMAGE } from "@/lib/site-meta";
 
 import AdUnit from "@/components/shared/ad-unit";
-import PasswordStrength from "@/components/tools/password-strength";
-import HtmlPreview from "@/components/tools/html-preview";
-import ImageFormatConverter from "@/components/tools/image-format-converter";
-import PdfToolkit from "@/components/tools/pdf-toolkit";
-import ArchiveTool from "@/components/tools/archive-tool";
-import DataConverter from "@/components/tools/data-converter";
-import GitignoreGenerator from "@/components/tools/gitignore-generator";
-import MermaidDiagram from "@/components/tools/mermaid-diagram";
-import ImageToText from "@/components/tools/image-to-text";
-import ExcelConverter from "@/components/tools/excel-converter";
-import UnicodeConverter from "@/components/tools/unicode-converter";
-import UrlExtractor from "@/components/tools/url-extractor";
-import PhoneFormatter from "@/components/tools/phone-formatter";
-import Base64Encoder from "@/components/tools/base64-encoder";
-import UrlEncoder from "@/components/tools/url-encoder";
-import QrCodeGenerator from "@/components/tools/qr-code-generator";
-import UuidGenerator from "@/components/tools/uuid-generator";
-import PasswordGenerator from "@/components/tools/password-generator";
-import TimestampConverter from "@/components/tools/timestamp-converter";
-import Md5Generator from "@/components/tools/md5-generator";
-import WordCounter from "@/components/tools/word-counter";
-import ColorConverter from "@/components/tools/color-converter";
-import TextToSlug from "@/components/tools/text-to-slug";
-import HtmlEntityEncoder from "@/components/tools/html-entity-encoder";
-import FileSizeConverter from "@/components/tools/file-size-converter";
-import MarkdownPreview from "@/components/tools/markdown-preview";
-import NumberBaseConverter from "@/components/tools/number-base-converter";
-import RegexTester from "@/components/tools/regex-tester";
-import TextCaseConverter from "@/components/tools/text-case-converter";
-import DuplicateLineRemover from "@/components/tools/duplicate-line-remover";
-import LineNumberAdder from "@/components/tools/line-number-adder";
-import RandomString from "@/components/tools/random-string";
-import ListRandomizer from "@/components/tools/list-randomizer";
-import TextTrimmer from "@/components/tools/text-trimmer";
-import LetterCounter from "@/components/tools/letter-counter";
-import MorseCode from "@/components/tools/morse-code";
-import TextRepeater from "@/components/tools/text-repeater";
-import ListSorter from "@/components/tools/list-sorter";
-import LengthConverter from "@/components/tools/length-converter";
-import WeightConverter from "@/components/tools/weight-converter";
-import TemperatureConverter from "@/components/tools/temperature-converter";
-import SpeedConverter from "@/components/tools/speed-converter";
-import AreaConverter from "@/components/tools/area-converter";
-import VolumeConverter from "@/components/tools/volume-converter";
-import TimeConverter from "@/components/tools/time-converter";
-import DiscountCalculator from "@/components/tools/discount-calculator";
-import TipCalculator from "@/components/tools/tip-calculator";
-import AgeCalculator from "@/components/tools/age-calculator";
-import DateDifference from "@/components/tools/date-difference";
-import DaysUntil from "@/components/tools/days-until";
-import BmiCalculator from "@/components/tools/bmi-calculator";
-import RandomNumber from "@/components/tools/random-number";
-import DiceRoller from "@/components/tools/dice-roller";
-import LoanCalculator from "@/components/tools/loan-calculator";
-import GradientGenerator from "@/components/tools/gradient-generator";
-import BoxShadowGenerator from "@/components/tools/box-shadow-generator";
-import BorderRadiusGenerator from "@/components/tools/border-radius-generator";
-import ColorPalette from "@/components/tools/color-palette";
-import EmojiPicker from "@/components/tools/emoji-picker";
-import TextShadowGenerator from "@/components/tools/text-shadow-generator";
-import ContrastChecker from "@/components/tools/contrast-checker";
-import FaviconGenerator from "@/components/tools/favicon-generator";
-import EmailValidator from "@/components/tools/email-validator";
-import UrlParser from "@/components/tools/url-parser";
-import MetaTagGenerator from "@/components/tools/meta-tag-generator";
-import YoutubeThumbnail from "@/components/tools/youtube-thumbnail";
-import OpenGraphGenerator from "@/components/tools/open-graph-generator";
-import Stopwatch from "@/components/tools/stopwatch";
-import WorldClock from "@/components/tools/world-clock";
-import CaesarCipher from "@/components/tools/caesar-cipher";
-import Rot13Encoder from "@/components/tools/rot13-encoder";
-import BinaryText from "@/components/tools/binary-text";
-import HexText from "@/components/tools/hex-text";
-import PomodoroTimer from "@/components/tools/pomodoro-timer";
-import RomanNumerals from "@/components/tools/roman-numerals";
-import PrimeChecker from "@/components/tools/prime-checker";
-import FactorialCalculator from "@/components/tools/factorial-calculator";
-import ScientificNotation from "@/components/tools/scientific-notation";
-import DecimalFraction from "@/components/tools/decimal-fraction";
-import GcfCalculator from "@/components/tools/gcf-calculator";
-import ImageToBase64 from "@/components/tools/image-to-base64";
-import VideoCompressor from "@/components/tools/video-compressor";
-import VideoConverter from "@/components/tools/video-converter";
-import VideoMerger from "@/components/tools/video-merger";
-import VideoSpeedChanger from "@/components/tools/video-speed-changer";
-import VideoTransformer from "@/components/tools/video-transformer";
-import VideoTrimmer from "@/components/tools/video-trimmer";
-import VideoToGif from "@/components/tools/video-to-gif";
-import VideoToAudio from "@/components/tools/video-to-audio";
-import VideoFrameCapture from "@/components/tools/video-frame-capture";
-import AudioConverter from "@/components/tools/audio-converter";
-import AudioTrimmer from "@/components/tools/audio-trimmer";
-import EmbedFrame from "@/components/tools/embed-frame";
-import Teleprompter from "@/components/tools/teleprompter";
-import SubtitleEditor from "@/components/tools/subtitle-editor";
 import ToolCard from "@/components/tool-card";
 import { I18nText } from "@/components/i18n-text";
 
@@ -156,6 +63,7 @@ export function generateToolMetadata(lang: string, slug: string): Metadata {
       description: desc,
       url,
       type: "article",
+      images: [OG_IMAGE],
     },
   };
   // 未发布语言（译文仍是英文壳）不当作独立版本收录，避免近重复页稀释 SEO
@@ -222,103 +130,7 @@ export default async function ToolPageBody({ lang, slug }: { lang: string; slug:
       {/* 传译文 meta（getMeta），不是英文 tool：否则 15 语言版 H1/副标题恒为英文，与 <title> 语言相反 */}
       <ToolPageContent meta={meta} content={content}>
         <div className="rounded-xl border bg-card p-6 mt-6">
-          {slug === "password-strength" && <PasswordStrength />}
-        {slug === "html-preview" && <HtmlPreview />}
-        {slug === "image-format-converter" && <ImageFormatConverter />}
-        {slug === "pdf-toolkit" && <PdfToolkit />}
-        {slug === "archive-tool" && <ArchiveTool />}
-        {slug === "data-converter" && <DataConverter />}
-        {slug === "gitignore-generator" && <GitignoreGenerator />}
-        {slug === "mermaid-diagram" && <MermaidDiagram />}
-        {slug === "image-to-text" && <ImageToText />}
-        {slug === "excel-converter" && <ExcelConverter />}
-        {slug === "unicode-converter" && <UnicodeConverter />}
-        {slug === "url-extractor" && <UrlExtractor />}
-        {slug === "phone-formatter" && <PhoneFormatter />}
-        {slug === "base64-encoder" && <Base64Encoder />}
-        {slug === "url-encoder" && <UrlEncoder />}
-        {slug === "qr-code-generator" && <QrCodeGenerator />}
-        {slug === "uuid-generator" && <UuidGenerator />}
-        {slug === "password-generator" && <PasswordGenerator />}
-        {slug === "timestamp-converter" && <TimestampConverter />}
-        {slug === "md5-generator" && <Md5Generator />}
-        {slug === "word-counter" && <WordCounter />}
-        {slug === "color-converter" && <ColorConverter />}
-        {slug === "text-to-slug" && <TextToSlug />}
-        {slug === "html-entity-encoder" && <HtmlEntityEncoder />}
-        {slug === "file-size-converter" && <FileSizeConverter />}
-        {slug === "markdown-preview" && <MarkdownPreview />}
-        {slug === "number-base-converter" && <NumberBaseConverter />}
-        {slug === "regex-tester" && <RegexTester />}
-        {slug === "text-case-converter" && <TextCaseConverter />}
-        {slug === "duplicate-line-remover" && <DuplicateLineRemover />}
-        {slug === "line-number-adder" && <LineNumberAdder />}
-        {slug === "random-string" && <RandomString />}
-        {slug === "list-randomizer" && <ListRandomizer />}
-        {slug === "text-trimmer" && <TextTrimmer />}
-        {slug === "letter-counter" && <LetterCounter />}
-        {slug === "morse-code" && <MorseCode />}
-        {slug === "text-repeater" && <TextRepeater />}
-        {slug === "list-sorter" && <ListSorter />}
-        {slug === "length-converter" && <LengthConverter />}
-        {slug === "weight-converter" && <WeightConverter />}
-        {slug === "temperature-converter" && <TemperatureConverter />}
-        {slug === "speed-converter" && <SpeedConverter />}
-        {slug === "area-converter" && <AreaConverter />}
-        {slug === "volume-converter" && <VolumeConverter />}
-        {slug === "time-converter" && <TimeConverter />}
-        {slug === "discount-calculator" && <DiscountCalculator />}
-        {slug === "tip-calculator" && <TipCalculator />}
-        {slug === "age-calculator" && <AgeCalculator />}
-        {slug === "date-difference" && <DateDifference />}
-        {slug === "days-until" && <DaysUntil />}
-        {slug === "bmi-calculator" && <BmiCalculator />}
-        {slug === "random-number" && <RandomNumber />}
-        {slug === "dice-roller" && <DiceRoller />}
-        {slug === "loan-calculator" && <LoanCalculator />}
-        {slug === "gradient-generator" && <GradientGenerator />}
-        {slug === "box-shadow-generator" && <BoxShadowGenerator />}
-        {slug === "border-radius-generator" && <BorderRadiusGenerator />}
-        {slug === "color-palette" && <ColorPalette />}
-        {slug === "emoji-picker" && <EmojiPicker />}
-        {slug === "text-shadow-generator" && <TextShadowGenerator />}
-        {slug === "contrast-checker" && <ContrastChecker />}
-        {slug === "favicon-generator" && <FaviconGenerator />}
-        {slug === "email-validator" && <EmailValidator />}
-        {slug === "url-parser" && <UrlParser />}
-        {slug === "meta-tag-generator" && <MetaTagGenerator />}
-        {slug === "youtube-thumbnail" && <YoutubeThumbnail />}
-        {slug === "open-graph-generator" && <OpenGraphGenerator />}
-        {slug === "stopwatch" && <Stopwatch />}
-        {slug === "world-clock" && <WorldClock />}
-        {slug === "caesar-cipher" && <CaesarCipher />}
-        {slug === "rot13-encoder" && <Rot13Encoder />}
-        {slug === "binary-text" && <BinaryText />}
-        {slug === "hex-text" && <HexText />}
-        {slug === "pomodoro-timer" && <PomodoroTimer />}
-        {slug === "roman-numerals" && <RomanNumerals />}
-        {slug === "prime-checker" && <PrimeChecker />}
-        {slug === "factorial-calculator" && <FactorialCalculator />}
-        {slug === "scientific-notation" && <ScientificNotation />}
-        {slug === "decimal-fraction" && <DecimalFraction />}
-        {slug === "gcf-calculator" && <GcfCalculator />}
-        {slug === "image-to-base64" && <ImageToBase64 />}
-        {slug === "video-compressor" && <VideoCompressor />}
-        {slug === "video-converter" && <VideoConverter />}
-        {slug === "video-merger" && <VideoMerger />}
-        {slug === "video-speed-changer" && <VideoSpeedChanger />}
-        {slug === "video-transformer" && <VideoTransformer />}
-        {slug === "video-trimmer" && <VideoTrimmer />}
-        {slug === "video-to-gif" && <VideoToGif />}
-        {slug === "video-to-audio" && <VideoToAudio />}
-        {slug === "video-frame-capture" && <VideoFrameCapture />}
-        {slug === "audio-converter" && <AudioConverter />}
-        {slug === "audio-trimmer" && <AudioTrimmer />}
-        {slug === "pilko-frame-studio" && <EmbedFrame src="/embed/pilko-frame-studio.html" credit="Pilko Frame Capture Studio" auto={false} height="100dvh" />}
-        {slug === "viral-video-studio" && <EmbedFrame src="/embed/viral-video-studio.html" credit="Viral Video Studio" height="min(90dvh, 1200px)" />}
-        {slug === "teleprompter" && <Teleprompter />}
-        {slug === "subtitle-editor" && <SubtitleEditor />}
-        {slug === "openreel-video-editor" && <EmbedFrame src="/embed/openreel/index.html" credit="OpenReel Video" auto={false} height="100dvh" />}
+          <ToolWidget slug={slug} />
         </div>
         <div className="mx-auto max-w-6xl mt-8"><AdUnit placement="tool" /></div>
       </ToolPageContent>

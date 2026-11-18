@@ -5,6 +5,9 @@ import { LOCALES, getLocale, isPublished } from "./locales";
 /** 语言包：key 是英文原文（source-string），value 是译文 */
 export type Messages = Record<string, string>;
 
+/** 当前语言的工具卡片文案。只含标题和一句话描述，不含长篇 SEO 正文。 */
+export type ToolCardCopy = Record<string, { title: string; description: string }>;
+
 interface I18nCtx {
   lang: string;
   /** 英文原文 → 当前语言译文；查不到就回退英文原文（永远可渲染，不会开天窗） */
@@ -14,6 +17,8 @@ interface I18nCtx {
   /** 带占位符插值的翻译：tl("About the {title}", { title }) → 先翻译模板再注入变量 */
   tl: (tmpl: string, vars: Record<string, string>) => string;
   setLocale: (code: string) => void;
+  /** 英文为空对象，卡片回退 tools-data。其他语言只注入这一门语言的短文案。 */
+  cards: ToolCardCopy;
 }
 
 const Ctx = createContext<I18nCtx>({
@@ -22,6 +27,7 @@ const Ctx = createContext<I18nCtx>({
   t: (s) => s,
   tl: (tmpl, vars) => tmpl.replace(/\{(\w+)\}/g, (_, k) => (vars[k] != null ? vars[k] : `{${k}}`)),
   setLocale: () => {},
+  cards: {},
 });
 
 const STORAGE_KEY = "tb-lang";
@@ -63,10 +69,12 @@ export function intlLocale(code: string): string {
 export function I18nProvider({
   lang,
   dict,
+  cards = {},
   children,
 }: {
   lang: string;
   dict: Messages;
+  cards?: ToolCardCopy;
   children: React.ReactNode;
 }) {
   const lookup = useCallback((s: string) => dict[s] ?? s, [dict]);
@@ -97,7 +105,7 @@ export function I18nProvider({
     }
   }, [lang]);
 
-  const value = useMemo<I18nCtx>(() => ({ lang, L: lookup, t: lookup, tl, setLocale }), [lang, lookup, tl, setLocale]);
+  const value = useMemo<I18nCtx>(() => ({ lang, L: lookup, t: lookup, tl, setLocale, cards }), [lang, lookup, tl, setLocale, cards]);
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }

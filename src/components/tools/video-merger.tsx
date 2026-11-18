@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Upload, Download, Loader2, Combine, X, RotateCcw } from "lucide-react";
-import { loadFFmpeg, downloadBlob, formatBytes } from "@/lib/ffmpeg";
+import { downloadBlob, formatBytes } from "@/lib/bytes";
 import { useI18n } from "@/lib/i18n";
 
 export default function VideoMerger() {
@@ -33,6 +33,7 @@ export default function VideoMerger() {
     setResult(null);
     setStatus(L("Loading engine..."));
     try {
+      const { loadFFmpeg } = await import("@/lib/ffmpeg");
       const { ffmpeg, fetchFile } = await loadFFmpeg();
       const names = files.map((_, i) => `in${i}.mp4`);
       for (let i = 0; i < files.length; i++) {

@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { Upload, Download, Loader2, Scissors, Play, Square, RotateCcw } from "lucide-react";
-import { formatBytes } from "@/lib/ffmpeg";
+import { formatBytes } from "@/lib/bytes";
 import { useI18n } from "@/lib/i18n";
 
 function floatToInt16(f: Float32Array): Int16Array {

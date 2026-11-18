@@ -5,6 +5,7 @@ import { PostArticle } from "@/components/post-article";
 import { languageAlternates } from "@/lib/alternates";
 import { LOCALES } from "@/lib/locales";
 import { isPostTranslated } from "@/i18n/posts";
+import { OG_IMAGE } from "@/lib/site-meta";
 
 export const dynamicParams = false;
 
@@ -40,6 +41,7 @@ export async function generateMetadata({
       type: "article",
       publishedTime: post.date,
       modifiedTime: post.updated,
+      images: [OG_IMAGE],
     },
   };
 }

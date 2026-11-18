@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Upload, Download, Loader2, Repeat, FileAudio, RotateCcw } from "lucide-react";
-import { formatBytes } from "@/lib/ffmpeg";
+import { formatBytes } from "@/lib/bytes";
 import { useI18n } from "@/lib/i18n";
 
 type OutFormat = "wav" | "mp3" | "m4a" | "ogg";

@@ -1,7 +1,7 @@
 "use client";
 import { useRef, useState } from "react";
 import { Upload, Download, Loader2, Camera, Images, Package, RotateCcw } from "lucide-react";
-import { formatBytes } from "@/lib/ffmpeg";
+import { formatBytes } from "@/lib/bytes";
 import { useI18n } from "@/lib/i18n";
 
 interface Frame { time: number; url: string; blob: Blob }

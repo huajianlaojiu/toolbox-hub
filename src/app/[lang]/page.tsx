@@ -1,5 +1,5 @@
-export { default } from "../(public)/page";
 import type { Metadata } from "next";
+import HomePage from "@/components/home-page";
 import { LOCALES } from "@/lib/locales";
 import { langPageMeta } from "@/lib/lang-meta";
 
@@ -15,4 +15,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     "Toolbox Hub - Free Online Tools",
     "Free online tools for developers, designers, and everyday tasks. JSON formatter, Base64 encoder, QR code generator, password generator, and more. No sign-up required."
   );
+}
+
+export default function Page() {
+  return <HomePage englishSeo={false} />;
 }

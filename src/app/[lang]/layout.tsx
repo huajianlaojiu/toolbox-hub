@@ -4,6 +4,7 @@ import Document from "@/components/document";
 import SiteShell from "@/components/site-shell";
 import { LOCALES, getLocale } from "@/lib/locales";
 import { MESSAGES } from "@/i18n/messages";
+import { getCardCopy } from "@/i18n/content";
 import { siteMetadata } from "@/lib/site-meta";
 import type { Messages } from "@/lib/i18n";
 
@@ -28,7 +29,7 @@ export default async function LangLayout({
   const dict: Messages = MESSAGES[lang] ?? {};
   return (
     <Document lang={lang} dir={getLocale(lang).rtl ? "rtl" : "ltr"}>
-      <SiteShell lang={lang} dict={dict}>{children}</SiteShell>
+      <SiteShell lang={lang} dict={dict} cards={getCardCopy(lang)}>{children}</SiteShell>
     </Document>
   );
 }

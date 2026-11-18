@@ -122,6 +122,78 @@ const OVERRIDES: Record<string, Record<string, ToolSeoOverride>> = {
         "Conta in tempo reale parole, caratteri, frasi, paragrafi e righe con stima del tempo di lettura. Mostra come spazi e punteggiatura influiscono sui numeri.",
     },
   },
+  // 英文搜索意图页（2026-11）。只覆盖 en，避免把机翻标题写进其他语言。
+  // json-formatter 已 301/客户端跳到 data-converter，所以「json formatter online」落在这一页。
+  "data-converter": {
+    en: {
+      title: "JSON Formatter Online — Pretty-Print & Validate JSON | Toolbox Hub",
+      description:
+        "Paste JSON to pretty-print it with 2-space indentation, or convert it to YAML, XML, and CSV. Free JSON formatter that runs in your browser.",
+    },
+  },
+  "qr-code-generator": {
+    en: {
+      title: "QR Code Generator — Free QR Code Maker Online | Toolbox Hub",
+      description:
+        "Turn a URL or any text into a QR code and download a PNG. Free QR code generator with no sign-up, no watermark, and no upload.",
+    },
+  },
+  "password-generator": {
+    en: {
+      title: "Password Generator — Strong Random Passwords Online | Toolbox Hub",
+      description:
+        "Create a strong random password with letters, numbers, and symbols. Generated in your browser and never uploaded or stored.",
+    },
+  },
+  "base64-encoder": {
+    en: {
+      title: "Base64 Encoder & Decoder Online | Toolbox Hub",
+      description:
+        "Encode text to Base64 or decode a Base64 string back to text, including Unicode. Free Base64 encoder that runs in your browser.",
+    },
+  },
+  "uuid-generator": {
+    en: {
+      title: "UUID Generator — Random UUID v4 Online | Toolbox Hub",
+      description:
+        "Generate version 4 UUIDs from cryptographically secure random bytes. Copy one or a batch into JSON, SQL, or a spreadsheet.",
+    },
+  },
+  "regex-tester": {
+    en: {
+      title: "Regex Tester — Test Regular Expressions Online | Toolbox Hub",
+      description:
+        "Test a JavaScript regular expression against your own text and see every match and capture group. Free regex tester, nothing uploaded.",
+    },
+  },
+  "timestamp-converter": {
+    en: {
+      title: "Unix Timestamp Converter — Epoch to Date Online | Toolbox Hub",
+      description:
+        "Convert a Unix timestamp to a readable date, or a date to epoch seconds and milliseconds. Free converter with local time and UTC.",
+    },
+  },
+  "url-encoder": {
+    en: {
+      title: "URL Encoder & Decoder Online | Toolbox Hub",
+      description:
+        "URL-encode text for a query string or decode percent-encoding, including Unicode. Free URL encoder using encodeURIComponent in your browser.",
+    },
+  },
+  "md5-generator": {
+    en: {
+      title: "MD5 Hash Generator — MD5, SHA-256 & SHA-512 | Toolbox Hub",
+      description:
+        "Generate MD5, SHA-1, SHA-256, and SHA-512 hashes from text in your browser. Free hash generator with nothing uploaded or stored.",
+    },
+  },
+  "image-format-converter": {
+    en: {
+      title: "Image Converter Online — JPG, PNG, WebP, BMP | Toolbox Hub",
+      description:
+        "Convert images between JPG, PNG, WebP, BMP, and ICO, and resize or rotate them. Free image converter that runs in your browser.",
+    },
+  },
 };
 
 /** 取某 (lang, slug) 的 SEO 覆盖；未覆盖返回 undefined，调用方回退到原拼法 */

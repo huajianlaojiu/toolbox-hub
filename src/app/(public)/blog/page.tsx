@@ -7,6 +7,7 @@ import { visibleTools } from "@/lib/tools-data";
 import { I18nText } from "@/components/i18n-text";
 import { PostCard } from "@/components/post-card";
 import { languageAlternates } from "@/lib/alternates";
+import { OG_IMAGE } from "@/lib/site-meta";
 
 export const metadata: Metadata = {
   title: "Blog — Guides for Using Free Browser Tools",
@@ -19,6 +20,7 @@ export const metadata: Metadata = {
       "Practical guides on using free browser-based tools for development, writing and everyday calculations.",
     url: "/blog/",
     type: "website",
+    images: [OG_IMAGE],
   },
 };
 
