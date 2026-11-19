@@ -42,6 +42,10 @@ jobs:
       # GA4 衡量 ID：配了 Actions secret 就在构建时内联进静态产物（不写进公开仓库）；
       # 没配则回落到 analytics-config.ts 的 CONFIGURED_ID（当前为空 = 不加载 gtag.js）。
       NEXT_PUBLIC_GA_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_GA_MEASUREMENT_ID }}
+      # Pro 结账链接和许可证校验地址。留空则定价页保持未接通，不会扣款。说明见 docs/pro-billing.md。
+      NEXT_PUBLIC_PRO_CHECKOUT_MONTHLY_URL: ${{ secrets.NEXT_PUBLIC_PRO_CHECKOUT_MONTHLY_URL }}
+      NEXT_PUBLIC_PRO_CHECKOUT_YEARLY_URL: ${{ secrets.NEXT_PUBLIC_PRO_CHECKOUT_YEARLY_URL }}
+      NEXT_PUBLIC_LICENSE_VERIFY_URL: ${{ secrets.NEXT_PUBLIC_LICENSE_VERIFY_URL }}
       # 自动翻译默认关闭。此前每次 push 都在无密钥时跑 gtx --langs pl,vi，
       # 端点失败会把英文源串原样写成「译文」并回写 master：既污染字典（永久挡住
       # 补翻），又产生 [skip ci] 提交使远程领先、后续 push 必须先 rebase。

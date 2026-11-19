@@ -29,7 +29,7 @@ export default function AboutPage() {
         <ul className="list-disc pl-5 space-y-2">
           <li><I18nText id="We do not ask for registration, and we do not sell user data." /></li>
           <li>
-            <I18nText id="We do not add watermarks, redirect you to a download page, or gate basic features behind a paywall." />
+            <I18nText id="We do not add watermarks or redirect you to a download page. A single job is not behind a paywall. Optional Pro features are listed on the pricing page." />
           </li>
           <li>
             <I18nText id="We do not guarantee that any output is fit for a specific professional or regulatory purpose. Read the disclaimer before relying on a result." />
@@ -38,7 +38,7 @@ export default function AboutPage() {
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="How it is funded" /></h2>
         <p>
-          <I18nText id="The site is funded by advertising. Ads are shown alongside the tools, and Toolbox Hub does not control which ads appear. We do not accept payment to reorder or favour any tool, and advertising never changes what a tool computes or how it behaves." />
+          <I18nText id="The site is funded by advertising and an optional Pro subscription. Ads may appear alongside the tools unless Pro is active in this browser, and Toolbox Hub does not control which ads appear. We do not accept payment to reorder or favour any tool, and neither ads nor Pro change what a tool computes." />
         </p>
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="Editorial approach" /></h2>

@@ -51,6 +51,11 @@ export default function ContactPage() {
           <I18nText id="For direct advertising enquiries, use the same address with the subject line prefixed &quot;Advertising&quot;. For API access, white-label licensing or embedding the tools in another product, prefix the subject with &quot;API&quot;." />
         </p>
 
+        <h2 className="text-xl font-semibold text-foreground"><I18nText id="Pro" /></h2>
+        <p>
+          <I18nText id="Optional Pro billing is described on the pricing page. A staffed priority queue is not open yet. When it is, prefix the subject with Pro and include the order id from the receipt." />
+        </p>
+
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="Response time" /></h2>
         <p>
           <I18nText id="Bug reports are usually investigated within a few working days. Tool requests are triaged weekly, and new tools ship in batches, so a request may take longer than a bug fix to appear." />

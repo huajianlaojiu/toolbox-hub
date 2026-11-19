@@ -13,6 +13,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     lang,
     "/terms/",
     "Terms of Use - Toolbox Hub",
-    "The terms that govern your use of Toolbox Hub and its free online tools."
+    "The terms that govern your use of Toolbox Hub, its free tools, and the optional Pro subscription."
   );
 }

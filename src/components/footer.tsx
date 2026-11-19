@@ -26,7 +26,8 @@ export default function Footer({ toolCount }: { toolCount: number }) {
           </button>
         </div>
         <p className="mt-4 text-center">
-          &copy; {new Date().getFullYear()} Toolbox Hub. {toolCount} {t("free tools")} {t("All rights reserved.")}
+          &copy; {new Date().getFullYear()} Toolbox Hub. {toolCount} {t("free tools")} {t("All rights reserved.")}{" "}
+          <a href={lp("/pricing/")} className="hover:text-foreground">{t("Pro")}</a>
         </p>
       </div>
     </footer>

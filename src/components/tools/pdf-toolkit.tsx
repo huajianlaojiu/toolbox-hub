@@ -4,6 +4,10 @@ import type { ReactNode } from "react";
 import { Upload, Loader2, Merge, Scissors, Image as ImageIcon, Type, FileDown } from "lucide-react";
 import { PDFDocument } from "pdf-lib";
 import JSZip from "jszip";
+import { BatchNote } from "@/components/billing/batch-note";
+import { usePro } from "@/components/billing/use-pro";
+import { FREE_FILE_BATCH, PRO_FILE_BATCH, decideBatch } from "@/lib/billing";
+import { recordJob } from "@/lib/job-history";
 
 // pdf.js 仅在浏览器端按需加载，避免 SSR 预渲染时在 Node 环境中求值（其依赖 Node 22+ 全局 Iterator）
 async function loadPdfjs() {
@@ -81,6 +85,7 @@ export default function PdfToolkit() {
       const bytes = await out.save();
       downloadBlob(new Blob([new Uint8Array(bytes)], { type: "application/pdf" }), "merged.pdf");
       setMsg(`Merged ${files.length} files → merged.pdf (${fmtBytes(bytes.length)})`);
+      recordJob("pdf-toolkit", `Merged ${files.length} PDFs`);
     });
 
   const split = (file: File, spec: string, allSeparate: boolean) =>
@@ -129,6 +134,7 @@ export default function PdfToolkit() {
       const out = await doc.save();
       downloadBlob(new Blob([new Uint8Array(out)], { type: "application/pdf" }), "images.pdf");
       setMsg(`Combined ${files.length} image(s) → images.pdf (${fmtBytes(out.length)})`);
+      recordJob("pdf-toolkit", `Combined ${files.length} images into a PDF`);
     });
 
   const pdf2img = (file: File, scale: number) =>
@@ -216,11 +222,25 @@ function FileDrop({ accept, multiple, onFiles, label }: { accept: string; multip
 
 function MergePanel({ busy, onRun }: { busy: boolean; onRun: (f: File[]) => void }) {
   const [files, setFiles] = useState<File[]>([]);
+  const [trimmed, setTrimmed] = useState(false);
+  const isPro = usePro();
+  const decision = decideBatch(files.length, isPro, FREE_FILE_BATCH, PRO_FILE_BATCH);
+  const label = decision.status === "ok" ? `Merge ${files.length} PDFs` : `Merge the first ${decision.take} of ${files.length}`;
   return (
     <div className="space-y-3">
-      <FileDrop accept="application/pdf" multiple label="Select two or more PDF files to merge" onFiles={setFiles} />
-      <button disabled={busy} onClick={() => onRun(files)} className="tool-btn tool-btn-primary">
-        {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Merge className="h-4 w-4" />}Merge {files.length} PDFs
+      <FileDrop
+        accept="application/pdf"
+        multiple
+        label="Select two or more PDF files to merge"
+        onFiles={(picked) => {
+          setTrimmed(picked.length > PRO_FILE_BATCH);
+          setFiles(picked.slice(0, PRO_FILE_BATCH));
+        }}
+      />
+      {trimmed && <p className="text-sm text-muted-foreground">Kept the first {PRO_FILE_BATCH} files. That is the maximum for one run.</p>}
+      <BatchNote decision={decision} noun="PDFs" proLimit={PRO_FILE_BATCH} />
+      <button disabled={busy || files.length < 2} onClick={() => onRun(files.slice(0, decision.take))} className="tool-btn tool-btn-primary">
+        {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Merge className="h-4 w-4" />}{label}
       </button>
     </div>
   );
@@ -251,16 +271,30 @@ function SplitPanel({ busy, onRun }: { busy: boolean; onRun: (f: File, spec: str
 
 function Img2PdfPanel({ busy, onRun }: { busy: boolean; onRun: (f: File[], maxW: number) => void }) {
   const [files, setFiles] = useState<File[]>([]);
+  const [trimmed, setTrimmed] = useState(false);
   const [maxW, setMaxW] = useState(1600);
+  const isPro = usePro();
+  const decision = decideBatch(files.length, isPro, FREE_FILE_BATCH, PRO_FILE_BATCH);
+  const label = decision.status === "ok" ? `Build PDF from ${files.length} image(s)` : `Build PDF from the first ${decision.take} of ${files.length}`;
   return (
     <div className="space-y-3">
-      <FileDrop accept="image/*" multiple label="Select images to combine into a PDF" onFiles={setFiles} />
+      <FileDrop
+        accept="image/*"
+        multiple
+        label="Select images to combine into a PDF"
+        onFiles={(picked) => {
+          setTrimmed(picked.length > PRO_FILE_BATCH);
+          setFiles(picked.slice(0, PRO_FILE_BATCH));
+        }}
+      />
+      {trimmed && <p className="text-sm text-muted-foreground">Kept the first {PRO_FILE_BATCH} images. That is the maximum for one run.</p>}
+      <BatchNote decision={decision} noun="images" proLimit={PRO_FILE_BATCH} />
       <div>
         <label className="text-xs text-muted-foreground">Max width (px, for compression; 0 = original)</label>
         <input type="number" value={maxW} onChange={(e) => setMaxW(+e.target.value)} className="tool-input w-full" />
       </div>
-      <button disabled={busy} onClick={() => onRun(files, maxW)} className="tool-btn tool-btn-primary">
-        {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <ImageIcon className="h-4 w-4" />}Build PDF from {files.length} image(s)
+      <button disabled={busy || files.length === 0} onClick={() => onRun(files.slice(0, decision.take), maxW)} className="tool-btn tool-btn-primary">
+        {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <ImageIcon className="h-4 w-4" />}{label}
       </button>
     </div>
   );

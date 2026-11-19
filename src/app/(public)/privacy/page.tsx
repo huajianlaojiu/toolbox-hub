@@ -15,7 +15,7 @@ export default function PrivacyPage() {
     <div className="mx-auto max-w-3xl px-4 py-10">
       <h1 className="text-3xl font-bold tracking-tight"><I18nText id="Privacy Policy" /></h1>
       <p className="mt-2 text-sm text-muted-foreground">
-        <I18nText id="Last updated: 9 November 2026" />
+        <I18nText id="Last updated: 19 November 2026" />
       </p>
 
       <div className="mt-6 space-y-5 text-sm leading-7 text-muted-foreground">
@@ -105,7 +105,7 @@ export default function PrivacyPage() {
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="6. Local storage and cookies" /></h2>
         <p>
-          <I18nText id="The Site uses browser local storage to remember your selected theme, your language preference, the full text you type into the teleprompter tool, and your cookie consent choice. This data stays in your browser and is not sent to us; you can clear it at any time through your browser settings." />
+          <I18nText id="The Site uses browser local storage to remember your selected theme, your language preference, the full text you type into the teleprompter tool, your cookie consent choice, an optional Pro flag, and a short list of job summaries. Tool inputs are not in that list. The license key you paste stays in this browser and is sent only to the license verify endpoint when you activate Pro or when that check is refreshed. You can clear all of it through your browser settings." />
         </p>
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="7. Legal basis" /></h2>

@@ -5,6 +5,10 @@ import { Upload, Download, Loader2, Archive, PackageOpen } from "lucide-react";
 import JSZip from "jszip";
 
 import { useI18n } from "@/lib/i18n";
+import { BatchNote } from "@/components/billing/batch-note";
+import { usePro } from "@/components/billing/use-pro";
+import { FREE_FILE_BATCH, PRO_FILE_BATCH, decideBatch } from "@/lib/billing";
+import { recordJob } from "@/lib/job-history";
 type Entry = { name: string; size: number; blob: Blob };
 
 /* ── TAR 读写（纯 JS，格式固定：512 字节头 + 数据 + 512 对齐填充） ── */
@@ -94,28 +98,32 @@ export default function ArchiveTool() {
   /* 打包 */
   const [fmt, setFmt] = useState<"zip" | "tar">("zip");
   const [src, setSrc] = useState<File[]>([]);
+  const [trimmed, setTrimmed] = useState(false);
+  const isPro = usePro();
+  const decision = decideBatch(src.length, isPro, FREE_FILE_BATCH, PRO_FILE_BATCH);
 
   /* 解包 */
   const [entries, setEntries] = useState<Entry[]>([]);
 
-  const doCreate = async () => {
-    if (src.length === 0) return setMsg("Select files first.");
+  const doCreate = async (chosen: File[]) => {
+    if (chosen.length === 0) return setMsg("Select files first.");
     setBusy(true);
     setMsg("");
     try {
       if (fmt === "zip") {
         const zip = new JSZip();
-        for (const f of src) zip.file(f.name, await f.arrayBuffer());
+        for (const f of chosen) zip.file(f.name, await f.arrayBuffer());
         const blob = await zip.generateAsync({ type: "blob" });
         save(blob, "archive.zip");
-        setMsg(`Created archive.zip with ${src.length} file(s) — ${sizeStr(blob.size)}`);
+        setMsg(`Created archive.zip with ${chosen.length} file(s) — ${sizeStr(blob.size)}`);
       } else {
         const files: { name: string; data: Uint8Array }[] = [];
-        for (const f of src) files.push({ name: f.name, data: new Uint8Array(await f.arrayBuffer()) });
+        for (const f of chosen) files.push({ name: f.name, data: new Uint8Array(await f.arrayBuffer()) });
         const blob = createTar(files);
         save(blob, "archive.tar");
-        setMsg(`Created archive.tar with ${src.length} file(s) — ${sizeStr(blob.size)}`);
+        setMsg(`Created archive.tar with ${chosen.length} file(s) — ${sizeStr(blob.size)}`);
       }
+      recordJob("archive-tool", `Packed ${chosen.length} files into a ${fmt.toUpperCase()}`);
     } catch (e: any) {
       setMsg("Error: " + (e?.message || e));
     } finally {
@@ -165,8 +173,14 @@ export default function ArchiveTool() {
           <label className="flex flex-col items-center gap-3 rounded-xl border-2 border-dashed p-8 cursor-pointer hover:border-primary hover:bg-muted/30 transition-all">
             <Upload className="h-8 w-8 text-muted-foreground" />
             <p className="text-sm text-muted-foreground text-center">Select files to pack (any type, batch supported)</p>
-            <input type="file" multiple className="hidden" onChange={(e) => setSrc(Array.from(e.target.files || []))} />
+            <input type="file" multiple className="hidden" onChange={(e) => {
+              const picked = Array.from(e.target.files || []);
+              setTrimmed(picked.length > PRO_FILE_BATCH);
+              setSrc(picked.slice(0, PRO_FILE_BATCH));
+            }} />
           </label>
+          {trimmed && <p className="text-sm text-muted-foreground">Kept the first {PRO_FILE_BATCH} files. That is the maximum for one archive.</p>}
+          <BatchNote decision={decision} noun="files" proLimit={PRO_FILE_BATCH} />
           <div className="flex items-center gap-3">
             <span className="text-xs text-muted-foreground">{t("Format")}</span>
             <select value={fmt} onChange={(e) => setFmt(e.target.value as "zip" | "tar")} className="tool-input w-32">
@@ -174,8 +188,11 @@ export default function ArchiveTool() {
               <option value="tar">TAR</option>
             </select>
           </div>
-          <button disabled={busy} onClick={doCreate} className="tool-btn tool-btn-primary">
-            {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Archive className="h-4 w-4" />}Create {fmt.toUpperCase()} from {src.length} file(s)
+          <button disabled={busy || src.length === 0} onClick={() => doCreate(src.slice(0, decision.take))} className="tool-btn tool-btn-primary">
+            {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Archive className="h-4 w-4" />}
+            {decision.status === "ok"
+              ? `Create ${fmt.toUpperCase()} from ${src.length} file(s)`
+              : `Create ${fmt.toUpperCase()} from the first ${decision.take} of ${src.length}`}
           </button>
         </div>
       )}

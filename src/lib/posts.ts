@@ -181,7 +181,7 @@ export const posts: Post[] = [
       { h: "Frequently asked questions" },
       {
         p:
-          "**Are these tools free?** Yes, entirely, with no account and no usage limit. There is no paid tier holding back anything basic.\n\n**Do they work offline?** Once a page has loaded, yes — everything runs in your browser. Reloading requires a connection.\n\n**Can I use them for commercial work?** Yes. The output is yours with no attribution requirement.\n\n**Is there an API?** No, and that is deliberate — the value is the interface. Export the output and process it however you like.\n\n**Why not just install a CLI tool instead?** Install one when you need it three times. Use a browser tab for the first two.",
+          "**Are these tools free?** A typical single job is free, with no account. An optional Pro plan raises batch limits, exports the job list saved in this browser, and removes ads. It does not block one-at-a-time use.\n\n**Do they work offline?** Once a page has loaded, yes — everything runs in your browser. Reloading requires a connection.\n\n**Can I use them for commercial work?** Yes. The output is yours with no attribution requirement.\n\n**Is there an API?** No, and that is deliberate — the value is the interface. Export the output and process it however you like.\n\n**Why not just install a CLI tool instead?** Install one when you need it three times. Use a browser tab for the first two.",
       },
     ],
   },

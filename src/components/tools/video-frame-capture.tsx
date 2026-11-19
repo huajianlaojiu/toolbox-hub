@@ -3,6 +3,10 @@ import { useRef, useState } from "react";
 import { Upload, Download, Loader2, Camera, Images, Package, RotateCcw } from "lucide-react";
 import { formatBytes } from "@/lib/bytes";
 import { useI18n } from "@/lib/i18n";
+import { BatchNote } from "@/components/billing/batch-note";
+import { usePro } from "@/components/billing/use-pro";
+import { FREE_FRAME_BATCH, PRO_FRAME_BATCH, decideBatch } from "@/lib/billing";
+import { recordJob } from "@/lib/job-history";
 
 interface Frame { time: number; url: string; blob: Blob }
 
@@ -63,12 +67,16 @@ export default function VideoFrameCapture() {
     }
   };
 
+  const isPro = usePro();
+  const requested = Math.max(1, Math.min(PRO_FRAME_BATCH, batchCount || 1));
+  const decision = decideBatch(requested, isPro, FREE_FRAME_BATCH, PRO_FRAME_BATCH);
+
   const captureBatch = async () => {
     if (!file || duration <= 0) return;
     setProcessing(true);
     setFrames([]);
     try {
-      const n = Math.max(1, Math.min(30, batchCount));
+      const n = decision.take;
       const list: Frame[] = [];
       for (let i = 0; i < n; i++) {
         const t = (duration * (i + 0.5)) / n;
@@ -77,6 +85,7 @@ export default function VideoFrameCapture() {
         if (blob) list.push({ time: t, url: URL.createObjectURL(blob), blob });
       }
       setFrames(list);
+      recordJob("video-frame-capture", `Captured ${list.length} frames`);
     } finally {
       setProcessing(false);
     }
@@ -140,17 +149,19 @@ export default function VideoFrameCapture() {
               <option value="image/jpeg">JPG</option>
               <option value="image/png">PNG</option>
             </select>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <span className="text-xs text-muted-foreground">{L("Batch:")}</span>
-              <input type="number" min={1} max={30} value={batchCount} onChange={(e) => setBatchCount(Number(e.target.value))} className="tool-input w-16" />
+              <input type="number" min={1} max={PRO_FRAME_BATCH} value={batchCount} onChange={(e) => setBatchCount(Number(e.target.value))} className="tool-input w-16" />
               <button onClick={captureBatch} disabled={processing} className="tool-btn tool-btn-secondary">
-                <Images className="h-4 w-4" />{L("Capture N frames").replace("N", String(batchCount))}
+                <Images className="h-4 w-4" />
+                {decision.status === "ok" ? L("Capture N frames").replace("N", String(decision.take)) : `Capture the first ${decision.take} of ${requested}`}
               </button>
             </div>
             <button onClick={() => { setFile(null); setFrames([]); }} className="tool-btn tool-btn-secondary">
               <RotateCcw className="h-4 w-4" />{L("Reset")}
             </button>
           </div>
+          <BatchNote decision={decision} noun="frames" proLimit={PRO_FRAME_BATCH} />
 
           <canvas ref={canvasRef} className="hidden" />
 

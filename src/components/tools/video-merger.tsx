@@ -3,6 +3,10 @@ import { useState } from "react";
 import { Upload, Download, Loader2, Combine, X, RotateCcw } from "lucide-react";
 import { downloadBlob, formatBytes } from "@/lib/bytes";
 import { useI18n } from "@/lib/i18n";
+import { BatchNote } from "@/components/billing/batch-note";
+import { usePro } from "@/components/billing/use-pro";
+import { FREE_FILE_BATCH, PRO_VIDEO_MERGE_BATCH, decideBatch } from "@/lib/billing";
+import { recordJob } from "@/lib/job-history";
 
 export default function VideoMerger() {
   const { L } = useI18n();
@@ -15,7 +19,7 @@ export default function VideoMerger() {
   const addFiles = (list: FileList | null) => {
     if (!list) return;
     const vids = Array.from(list).filter((f) => f.type.startsWith("video/"));
-    setFiles((prev) => [...prev, ...vids].slice(0, 10));
+    setFiles((prev) => [...prev, ...vids].slice(0, PRO_VIDEO_MERGE_BATCH));
     setResult(null);
   };
 
@@ -27,23 +31,27 @@ export default function VideoMerger() {
     setFiles(next);
   };
 
+  const isPro = usePro();
+  const decision = decideBatch(files.length, isPro, FREE_FILE_BATCH, PRO_VIDEO_MERGE_BATCH);
+
   const merge = async () => {
-    if (files.length < 2) return;
+    const chosen = files.slice(0, decision.take);
+    if (chosen.length < 2) return;
     setProcessing(true);
     setResult(null);
     setStatus(L("Loading engine..."));
     try {
       const { loadFFmpeg } = await import("@/lib/ffmpeg");
       const { ffmpeg, fetchFile } = await loadFFmpeg();
-      const names = files.map((_, i) => `in${i}.mp4`);
-      for (let i = 0; i < files.length; i++) {
-        setStatus(L(`Reading ${i + 1}/${files.length}...`));
-        await ffmpeg.writeFile(names[i], await fetchFile(files[i]));
+      const names = chosen.map((_, i) => `in${i}.mp4`);
+      for (let i = 0; i < chosen.length; i++) {
+        setStatus(L(`Reading ${i + 1}/${chosen.length}...`));
+        await ffmpeg.writeFile(names[i], await fetchFile(chosen[i]));
       }
 
       let filter = "";
-      for (let i = 0; i < files.length; i++) filter += `[${i}:v][${i}:a]`;
-      filter += `concat=n=${files.length}:v=1:a=1[outv][outa]`;
+      for (let i = 0; i < chosen.length; i++) filter += `[${i}:v][${i}:a]`;
+      filter += `concat=n=${chosen.length}:v=1:a=1[outv][outa]`;
 
       const args: string[] = [];
       for (const n of names) args.push("-i", n);
@@ -59,6 +67,7 @@ export default function VideoMerger() {
       const data = await ffmpeg.readFile("merged.mp4");
       const blob = new Blob([data], { type: "video/mp4" });
       setResult({ blob, size: blob.size });
+      recordJob("video-merger", `Merged ${chosen.length} videos`);
 
       for (const n of names) await ffmpeg.deleteFile(n).catch(() => {});
       await ffmpeg.deleteFile("merged.mp4").catch(() => {});
@@ -74,7 +83,7 @@ export default function VideoMerger() {
     <div className="space-y-4">
       <label className="flex flex-col items-center gap-4 rounded-xl border-2 border-dashed p-8 cursor-pointer hover:border-primary hover:bg-muted/30 transition-all">
         <Upload className="h-8 w-8 text-muted-foreground" />
-        <p className="text-sm text-muted-foreground">{L("Add videos (2-10, same resolution recommended)")}</p>
+        <p className="text-sm text-muted-foreground">{L("Add videos (2-10, same resolution recommended). Free merges 3 at a time.")}</p>
         <input type="file" accept="video/*" multiple className="hidden" onChange={(e) => addFiles(e.target.files)} />
       </label>
 
@@ -99,10 +108,11 @@ export default function VideoMerger() {
         </div>
       )}
 
+      <BatchNote decision={decision} noun="videos" proLimit={PRO_VIDEO_MERGE_BATCH} />
       <div className="flex gap-2">
         <button onClick={merge} disabled={processing || files.length < 2} className="tool-btn tool-btn-primary">
           {processing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Combine className="h-4 w-4" />}
-          {L(`Merge ${files.length} videos`)}
+          {decision.status === "ok" ? L(`Merge ${files.length} videos`) : `Merge the first ${decision.take} of ${files.length}`}
         </button>
         <button onClick={() => { setFiles([]); setResult(null); }} className="tool-btn tool-btn-secondary">
           <RotateCcw className="h-4 w-4" />{L("Reset")}

@@ -179,3 +179,8 @@ body {
   color: var(--primary-foreground);
   border-color: var(--primary);
 }
+
+/* 首屏脚本在有 Pro 标记时给 html 加上这个 class，广告位在绘制前就收起。 */
+html.tbh-pro .adsbygoogle {
+  display: none !important;
+}
