@@ -60,12 +60,9 @@ export function ToolPageHeader({ meta }: { meta: ToolPageMeta }) {
 
   return (
     <>
-      <h1 className="text-2xl font-bold">{title}</h1>
-      <p className="mt-2 text-sm text-muted-foreground">{desc}</p>
-
-      <div className="mt-6 p-4 rounded-lg bg-muted/50 border">
-        <p className="text-sm text-muted-foreground">{desc} {t("Runs locally in your browser")}</p>
-      </div>
+      <h1 className="text-3xl font-bold leading-tight tracking-tight">{title}</h1>
+      <p className="mt-2 text-sm leading-6 text-muted-foreground">{desc}</p>
+      <p className="mt-1 text-xs leading-5 text-muted-foreground">{t("Runs locally in your browser")}</p>
     </>
   );
 }

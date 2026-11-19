@@ -182,7 +182,7 @@ export function PostArticle({ slug }: { slug: string }) {
                 <h2
                   key={i}
                   id={block.h.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}
-                  className="text-xl font-semibold scroll-mt-20"
+                  className="scroll-mt-32 text-xl font-semibold"
                 >
                   {block.h}
                 </h2>

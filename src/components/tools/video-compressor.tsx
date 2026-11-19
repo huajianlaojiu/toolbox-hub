@@ -84,10 +84,10 @@ export default function VideoCompressor() {
         </label>
       ) : (
         <div className="space-y-4">
-          <div className="flex items-center gap-3">
-            <FileVideo className="h-5 w-5 text-muted-foreground" />
-            <span className="text-sm text-foreground truncate">{file.name}</span>
-            <span className="text-xs text-muted-foreground ml-auto shrink-0">{formatBytes(file.size)}{duration > 0 && ` · ${duration.toFixed(1)}s`}</span>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+            <FileVideo className="h-5 w-5 shrink-0 text-muted-foreground" />
+            <span className="min-w-0 flex-1 truncate text-sm text-foreground">{file.name}</span>
+            <span className="shrink-0 text-xs text-muted-foreground">{formatBytes(file.size)}{duration > 0 && ` · ${duration.toFixed(1)}s`}</span>
           </div>
 
           <video src={videoUrl} controls className="w-full rounded-lg border max-h-64" onLoadedMetadata={(e) => setDuration(e.currentTarget.duration)} />
@@ -104,24 +104,24 @@ export default function VideoCompressor() {
           </div>
 
           {mode === "quality" && (
-            <div className="flex items-center gap-3">
-              <span className="text-sm text-muted-foreground whitespace-nowrap">CRF:</span>
-              <input type="range" min={18} max={32} value={crf} onChange={(e) => setCrf(Number(e.target.value))} className="w-48" />
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+              <span className="text-sm text-muted-foreground">CRF:</span>
+              <input type="range" min={18} max={32} value={crf} onChange={(e) => setCrf(Number(e.target.value))} className="h-11 min-w-0 w-full flex-1 sm:w-48" />
               <span className="text-sm font-mono">{crf}</span>
               <span className="text-xs text-muted-foreground">{L("lower = better quality")}</span>
             </div>
           )}
           {mode === "bitrate" && (
-            <div className="flex items-center gap-3">
-              <span className="text-sm text-muted-foreground whitespace-nowrap">{L("Bitrate:")}</span>
-              <input type="range" min={0.5} max={10} step={0.5} value={bitrate} onChange={(e) => setBitrate(Number(e.target.value))} className="w-48" />
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+              <span className="text-sm text-muted-foreground">{L("Bitrate:")}</span>
+              <input type="range" min={0.5} max={10} step={0.5} value={bitrate} onChange={(e) => setBitrate(Number(e.target.value))} className="h-11 min-w-0 w-full flex-1 sm:w-48" />
               <span className="text-sm font-mono">{bitrate} Mbps</span>
             </div>
           )}
           {mode === "size" && (
-            <div className="flex items-center gap-3">
-              <span className="text-sm text-muted-foreground whitespace-nowrap">{L("Target size:")}</span>
-              <input type="number" min={1} max={500} value={targetMB} onChange={(e) => setTargetMB(Number(e.target.value))} className="tool-input w-24" />
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+              <span className="text-sm text-muted-foreground">{L("Target size:")}</span>
+              <input type="number" min={1} max={500} value={targetMB} onChange={(e) => setTargetMB(Number(e.target.value))} className="tool-input w-full sm:w-24" />
               <span className="text-sm text-muted-foreground">MB</span>
               {duration > 0 && <span className="text-xs text-muted-foreground">{L(`≈ ${Math.round((targetMB * 8 * 1024) / duration)} kbps total`)}</span>}
             </div>

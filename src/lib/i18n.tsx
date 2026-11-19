@@ -144,7 +144,7 @@ export function LangToggle() {
         aria-label="Language"
         aria-haspopup="listbox"
         aria-expanded={open}
-        className="flex h-8 items-center gap-1 rounded-lg border px-2 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-muted"
+        className="flex h-11 w-11 items-center justify-center gap-1 rounded-lg border text-xs font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground sm:h-8 sm:w-auto sm:px-2"
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
           <circle cx="12" cy="12" r="10" />
@@ -152,7 +152,7 @@ export function LangToggle() {
           <path d="M2 12h20" />
         </svg>
         <span className="hidden sm:inline">{current.native}</span>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`h-3 w-3 transition-transform ${open ? "rotate-180" : ""}`}>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`hidden h-3 w-3 transition-transform sm:block ${open ? "rotate-180" : ""}`}>
           <path d="m6 9 6 6 6-6" />
         </svg>
       </button>
@@ -176,7 +176,7 @@ export function LangToggle() {
                   onClick={() => { setLocale(l.code); setOpen(false); }}
                   lang={l.code}
                   dir={l.rtl ? "rtl" : undefined}
-                  className={`flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-left text-[13px] transition-colors hover:bg-muted ${
+                  className={`flex min-h-11 items-center gap-1.5 rounded-lg px-2 py-2 text-left text-[13px] transition-colors hover:bg-muted ${
                     active ? "bg-accent font-semibold text-accent-foreground" : "text-foreground"
                   } ${published ? "" : "opacity-60"}`}
                 >

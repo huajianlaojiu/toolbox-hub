@@ -122,14 +122,14 @@ export default async function ToolPageBody({ lang, slug }: { lang: string; slug:
   };
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8">
+    <div className="mx-auto max-w-6xl px-4 py-4 sm:py-8">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <a href={lang === "en" ? "/tools/" : `/${lang}/tools/`} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6">
+      <a href={lang === "en" ? "/tools/" : `/${lang}/tools/`} className="mb-1 inline-flex min-h-11 items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground sm:mb-6">
         <span aria-hidden>‹</span> <I18nText id="All Tools" />
       </a>
       {/* 传译文 meta（getMeta），不是英文 tool：否则 15 语言版 H1/副标题恒为英文，与 <title> 语言相反 */}
       <ToolPageContent meta={meta} content={content}>
-        <div className="rounded-xl border bg-card p-6 mt-6">
+        <div className="mt-3 rounded-xl border bg-card p-4 sm:mt-6 sm:p-6">
           <ToolWidget slug={slug} />
         </div>
         <div className="mx-auto max-w-6xl mt-8"><AdUnit placement="tool" /></div>
