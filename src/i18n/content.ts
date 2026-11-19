@@ -57,3 +57,25 @@ export function getContent(lang: string, slug: string): ToolContent {
   const meta = getMeta(lang, slug);
   return interpolateContent(tmpl ?? langContent.generic, { title: meta.title, desc: meta.description });
 }
+
+export interface CardCopy {
+  title: string;
+  description: string;
+}
+
+/**
+ * 首页卡片和头部搜索只用得到标题与一句话描述。
+ * 完整 CONTENT（含 intro/faq，15 语言约 4.8MB）只能留在服务端。
+ * 这里按语言抽出短文案，由布局作为 props 注入当前语言，不进共享 JS。
+ */
+export function getCardCopy(lang: string): Record<string, CardCopy> {
+  if (lang === "en" || !CONTENT[lang]) return {};
+  const meta = CONTENT[lang].meta as Record<string, { title?: string; description?: string }> | undefined;
+  if (!meta) return {};
+  const out: Record<string, CardCopy> = {};
+  for (const [slug, m] of Object.entries(meta)) {
+    if (!m?.title && !m?.description) continue;
+    out[slug] = { title: m.title || "", description: m.description || "" };
+  }
+  return out;
+}

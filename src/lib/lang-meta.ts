@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { languageAlternates } from "./alternates";
 import { MESSAGES } from "@/i18n/messages";
 import { isPublished } from "./locales";
+import { OG_IMAGE } from "./site-meta";
 
 /** 服务端取译文：key 是英文原文，查不到回退英文（永远可渲染） */
 export function st(lang: string, en: string): string {
@@ -78,7 +79,7 @@ export function langPageMeta(
     title: t,
     description: d,
     alternates: { canonical: selfPath, languages: languageAlternates(path) },
-    openGraph: { title: t, description: d, url: selfPath, type: "website" },
+    openGraph: { title: t, description: d, url: selfPath, type: "website", images: [OG_IMAGE] },
   };
   // 未发布语言（译文仍是英文壳）不当作独立语言版本被收录，避免近重复页稀释 SEO。
   // 仍保留 follow + 自指 canonical，语言选择器可直达、内部链接不破。

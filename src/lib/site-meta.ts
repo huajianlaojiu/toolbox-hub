@@ -3,39 +3,51 @@ import { visibleTools } from "./tools-data";
 
 export const SITE_URL = "https://toolbox-hub.io";
 
+/** 英文首页（x-default）面向真实搜索意图的标题与摘要。其他语言页不改用这组文案。 */
+export const HOME_TITLE = "JSON Formatter, QR Code & Password Generator | Toolbox Hub";
+export const HOME_DESCRIPTION =
+  "Format JSON, generate QR codes, create strong passwords, and encode Base64 in your browser. Free online tools with no sign-up.";
+export const HOME_H1 = "Free Online JSON Formatter, QR Code & Password Tools";
+export const HOME_INTRO =
+  "Format JSON, make a QR code, generate a password, or encode Base64. These tools run in your browser, free, with no account.";
+
+export const OG_IMAGE = {
+  url: "/og.png",
+  width: 1200,
+  height: 630,
+  alt: "Toolbox Hub: free online JSON formatter, QR code generator, password generator, and Base64 encoder",
+};
+
 /** 站点级 metadata 默认值（标题模板 / OG / robots），两个根布局共用 */
 export const siteMetadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   alternates: { canonical: "/" },
   title: {
-    default: "Toolbox Hub - Free Online Tools",
+    default: HOME_TITLE,
     template: "%s - Toolbox Hub",
   },
-  description:
-    "Free online tools for developers, designers, and everyday tasks. JSON formatter, Base64 encoder, QR code generator, password generator, and more. No sign-up required.",
+  description: HOME_DESCRIPTION,
   keywords: [
-    "online tools",
-    "free tools",
-    "developer tools",
-    "json formatter",
-    "base64",
-    "qr code",
+    "json formatter online",
+    "qr code generator",
     "password generator",
-    "image compressor",
+    "base64 encoder",
+    "free online tools",
+    "developer tools",
   ],
   openGraph: {
-    title: "Toolbox Hub - Free Online Tools",
-    description:
-      "Free online tools for developers, designers, and everyday tasks. No sign-up required.",
+    title: "Toolbox Hub — Free Online Tools",
+    description: HOME_DESCRIPTION,
     type: "website",
     url: SITE_URL,
     siteName: "Toolbox Hub",
+    images: [OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Toolbox Hub - Free Online Tools",
-    description:
-      "Free online tools for developers, designers, and everyday tasks. No sign-up required.",
+    title: "Toolbox Hub — Free Online Tools",
+    description: HOME_DESCRIPTION,
+    images: [OG_IMAGE.url],
   },
   robots: {
     index: true,

@@ -6,12 +6,11 @@ import { tools } from "@/lib/tools-data";
 import { getIcon } from "@/lib/icon-map";
 import { useI18n, LangToggle, localizePath } from "@/lib/i18n";
 import { ThemeToggle } from "@/lib/theme";
-import { CONTENT } from "@/i18n/content/index";
 
 export default function Header() {
   const [search, setSearch] = useState("");
   const pathname = usePathname() ?? "/";
-  const { t, lang } = useI18n();
+  const { t, lang, cards } = useI18n();
 
   const NAV = [
     { href: "/", key: "Home" },
@@ -20,8 +19,9 @@ export default function Header() {
   ];
 
   const meta = (slug: string) => {
-    const m = CONTENT[lang]?.meta?.[slug];
-    return m ?? { title: tools.find((x) => x.slug === slug)?.title ?? slug, description: "" };
+    const m = cards[slug];
+    if (m?.title) return m;
+    return { title: tools.find((x) => x.slug === slug)?.title ?? slug, description: "" };
   };
 
   const filteredTools = search

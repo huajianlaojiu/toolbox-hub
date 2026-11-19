@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Upload, Download, Loader2, FlipHorizontal2, FileVideo, RotateCcw, Rewind } from "lucide-react";
-import { loadFFmpeg, downloadBlob, formatBytes } from "@/lib/ffmpeg";
+import { downloadBlob, formatBytes } from "@/lib/bytes";
 import { useI18n } from "@/lib/i18n";
 
 interface Options { hflip: boolean; vflip: boolean; rotate: number; reverse: boolean }
@@ -30,6 +30,7 @@ export default function VideoTransformer() {
     setProgress(0);
     setResult(null);
     try {
+      const { loadFFmpeg } = await import("@/lib/ffmpeg");
       const { ffmpeg, fetchFile } = await loadFFmpeg();
       const onProg = ({ progress: p }: { progress: number }) => setProgress(Math.min(99, Math.round(p * 100)));
       ffmpeg.on("progress", onProg);

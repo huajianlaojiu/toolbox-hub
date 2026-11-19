@@ -115,7 +115,11 @@ export interface FFmpegBundle {
 
 let cached: Promise<FFmpegBundle> | null = null;
 
-/** 加载（单例）。首次约 7 秒（下载 ~25MB wasm），之后秒开。 */
+/**
+ * 加载（单例）。首次约 7 秒（从 CDN 下载 ~25MB wasm），之后秒开。
+ * 调用方必须 `await import("@/lib/ffmpeg")`，不要静态 import：
+ * 这个模块带有内联 worker 源码，静态引进共享布局或首页会让每个访客都下载它。
+ */
 export function loadFFmpeg(): Promise<FFmpegBundle> {
   if (typeof window === "undefined") return Promise.reject(new Error("ffmpeg.wasm requires a browser"));
   if (cached) return cached;
@@ -130,23 +134,4 @@ export function loadFFmpeg(): Promise<FFmpegBundle> {
   })();
   cached.catch(() => { cached = null; });
   return cached;
-}
-
-/** 文件下载辅助 */
-export function downloadBlob(data: Uint8Array | Blob, filename: string, mime: string) {
-  // TS 5.7+ 把 Uint8Array 变成 Uint8Array<ArrayBufferLike> 泛型，与 BlobPart 要求的
-  // ArrayBufferView<ArrayBuffer> 不兼容；运行时 Uint8Array 本身就是合法 BlobPart。
-  const blob = data instanceof Blob ? data : new Blob([data as unknown as BlobPart], { type: mime });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-export function formatBytes(bytes: number): string {
-  if (bytes < 1024) return bytes + " B";
-  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
-  return (bytes / 1024 / 1024).toFixed(2) + " MB";
 }

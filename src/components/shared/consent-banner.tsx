@@ -92,18 +92,20 @@ export default function ConsentBanner() {
       aria-label={t("Cookie preferences")}
       className="fixed inset-x-0 bottom-0 z-[100] border-t bg-card p-4 shadow-[0_-8px_30px_rgba(0,0,0,0.14)]"
     >
-      <div className="mx-auto flex max-w-6xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="max-w-2xl text-sm leading-6 text-muted-foreground">
+      <div className="mx-auto flex max-w-6xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+        {/* 手机上把说明收成一行：整段法律文案的面积曾大于主标题，Lighthouse 把它当成 LCP。
+            全文仍在 DOM 里（line-clamp 只影响绘制），桌面端完整展示，自定义面板里也能读到。 */}
+        <div className="max-w-[16rem] text-xs leading-4 text-muted-foreground sm:max-w-2xl sm:text-sm sm:leading-6">
           <p className="font-semibold text-foreground">{t("Your privacy choices")}</p>
-          <p className="mt-1">
-            {t("We use Google AdSense to fund this site and Google Analytics 4 to see which tools are useful. Advertising and analytics scripts only load after you agree. You can change your choice at any time from the footer.")}{" "}
-            <a
-              href={localizePath("/privacy/", lang)}
-              className="text-foreground underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-            >
-              {t("Privacy Policy")}
-            </a>
+          <p className="mt-1 line-clamp-1 sm:line-clamp-none">
+            {t("We use Google AdSense to fund this site and Google Analytics 4 to see which tools are useful. Advertising and analytics scripts only load after you agree. You can change your choice at any time from the footer.")}
           </p>
+          <a
+            href={localizePath("/privacy/", lang)}
+            className="mt-1 inline-block text-foreground underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+          >
+            {t("Privacy Policy")}
+          </a>
         </div>
         <div className="flex shrink-0 flex-wrap gap-2">
           <button type="button" className={secondary} onClick={() => save(false, false)}>
@@ -120,6 +122,12 @@ export default function ConsentBanner() {
 
       {customize && (
         <div className="mx-auto mt-4 grid max-w-6xl gap-3 border-t pt-4 sm:grid-cols-2">
+          <p className="text-sm leading-6 text-muted-foreground sm:col-span-2">
+            {t("We use Google AdSense to fund this site and Google Analytics 4 to see which tools are useful. Advertising and analytics scripts only load after you agree. You can change your choice at any time from the footer.")}{" "}
+            <a href={localizePath("/privacy/", lang)} className="text-foreground underline underline-offset-4">
+              {t("Privacy Policy")}
+            </a>
+          </p>
           <label htmlFor="tb-consent-ads" className="flex cursor-pointer items-start gap-3 text-sm text-foreground">
             <input
               id="tb-consent-ads"

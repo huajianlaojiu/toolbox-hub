@@ -1,4 +1,4 @@
-import { I18nProvider, type Messages } from "@/lib/i18n";
+import { I18nProvider, type Messages, type ToolCardCopy } from "@/lib/i18n";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import ConsentBanner from "@/components/shared/consent-banner";
@@ -12,14 +12,16 @@ import { visibleTools } from "@/lib/tools-data";
 export default function SiteShell({
   lang,
   dict,
+  cards = {},
   children,
 }: {
   lang: string;
   dict: Messages;
+  cards?: ToolCardCopy;
   children: React.ReactNode;
 }) {
   return (
-    <I18nProvider lang={lang} dict={dict}>
+    <I18nProvider lang={lang} dict={dict} cards={cards}>
       <Header />
       <main className="flex-1">{children}</main>
       <Footer toolCount={visibleTools.length} />

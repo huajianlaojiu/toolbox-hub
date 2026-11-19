@@ -5,6 +5,7 @@ import ToolCard from "@/components/tool-card";
 import { I18nText } from "@/components/i18n-text";
 import { visibleTools, categories, CATEGORY_BLURBS, type ToolMeta } from "@/lib/tools-data";
 import { languageAlternates } from "@/lib/alternates";
+import { OG_IMAGE } from "@/lib/site-meta";
 
 export const metadata: Metadata = {
   title: `All Tools — ${visibleTools.length} Free Browser-Based Tools`,
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
       `${visibleTools.length} free browser-based tools, grouped by category. No sign-up, no install, most processing happens on your device.`,
     url: "/tools/",
     type: "website",
+    images: [OG_IMAGE],
   },
 };
 

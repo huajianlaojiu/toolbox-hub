@@ -119,7 +119,8 @@ const EXT: Record<Fmt, string> = { json: "json", yaml: "yaml", xml: "xml", csv: 
 export default function DataConverter() {
   const { t: tr } = useI18n();
   const [from, setFrom] = useState<Fmt>("json");
-  const [to, setTo] = useState<Fmt>("yaml");
+  // 默认 JSON → JSON：这一页承接 json formatter 的搜索流量，第一次点击就应该是格式化。
+  const [to, setTo] = useState<Fmt>("json");
   const [input, setInput] = useState(SAMPLE.json);
   const [output, setOutput] = useState("");
   const [err, setErr] = useState("");

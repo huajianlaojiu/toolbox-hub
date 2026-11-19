@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Upload, Download, Loader2, Gauge, FileVideo, RotateCcw } from "lucide-react";
-import { loadFFmpeg, downloadBlob, formatBytes } from "@/lib/ffmpeg";
+import { downloadBlob, formatBytes } from "@/lib/bytes";
 import { useI18n } from "@/lib/i18n";
 
 /** 把倍速拆成 atempo 链（单次 0.5~2.0） */
@@ -45,6 +45,7 @@ export default function VideoSpeedChanger() {
     setProgress(0);
     setResult(null);
     try {
+      const { loadFFmpeg } = await import("@/lib/ffmpeg");
       const { ffmpeg, fetchFile } = await loadFFmpeg();
       const onProg = ({ progress: p }: { progress: number }) => setProgress(Math.min(99, Math.round(p * 100)));
       ffmpeg.on("progress", onProg);
