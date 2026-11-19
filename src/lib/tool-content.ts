@@ -2680,6 +2680,165 @@ const overrides: Record<string, ToolContent> = {
       "Keep projects local: the editor autosaves to browser storage, so use one browser for an edit session.",
     ],
   },
+  "data-converter": {
+    intro:
+      "Paste JSON and pretty-print it with two-space indentation, or move the same data between JSON, YAML, XML, and CSV. Leave both sides set to JSON when you only want a formatter: the page parses the input and writes it back with stable indentation. Switch the output to YAML, XML, or CSV when a config file or a spreadsheet needs a different shape.\n\nInvalid input stops with the parser's error instead of a blank success. CSV output uses the keys of the objects as the header row. The conversion runs in the page, so a payload you would rather not upload can still be cleaned up here.",
+    howTo: [
+      { step: "Choose the formats", detail: "Set From and To. JSON to JSON pretty-prints. Any other pair converts, and the swap button reverses the direction." },
+      { step: "Paste the source", detail: "Replace the sample, or start from it if you want to see the shape the converter expects." },
+      { step: "Convert", detail: "The result appears under the input. A parse error replaces the output until the source is valid." },
+      { step: "Copy or download", detail: "Copy the text, or download it with the extension of the format you chose." },
+    ],
+    faq: generic().faq,
+    useCases: [
+      "Pretty-printing a one-line API response before you read it.",
+      "Turning a JSON array into CSV for a spreadsheet.",
+      "Moving a config between JSON and YAML.",
+    ],
+    tips: [
+      "Encode a whole URL parameter elsewhere; this page converts documents, not query strings.",
+      "Check the error text before reformatting by hand. A trailing comma is a common JSON failure.",
+    ],
+  },
+  "image-format-converter": {
+    intro:
+      "Convert images between JPG, PNG, WebP, BMP, and ICO in the browser. You can also cap the width, rotate by a right angle, turn the picture grayscale, and set a quality level for JPG and WebP. The file is drawn to a canvas on your device and downloaded from there.\n\nPNG, BMP, and ICO ignore the quality slider because those exports are not JPEG-style lossy encodes. A width limit scales the image down and leaves smaller originals alone. Use it when a form wants a specific format, or when a screenshot needs to be a smaller JPG.",
+    howTo: [
+      { step: "Add images", detail: "Drop one or more files. Each is converted on its own." },
+      { step: "Set the output", detail: "Pick JPG, PNG, WebP, BMP, or ICO. Add a max width, a rotation, or grayscale if you need them." },
+      { step: "Set quality for JPG or WebP", detail: "The slider applies only to those two formats. Higher keeps more detail and a larger file." },
+      { step: "Download", detail: "Save each result after the preview appears." },
+    ],
+    faq: generic().faq,
+    useCases: [
+      "Turning a PNG screenshot into a smaller JPG.",
+      "Exporting a WebP for a page that still needs a PNG fallback.",
+      "Rotating a phone photo before you attach it.",
+    ],
+    tips: [
+      "Resize with max width before you rely on the quality slider. Fewer pixels usually saves more than a small quality change.",
+      "Keep the original if you may need transparency. JPG has no alpha channel.",
+    ],
+  },
+  "pdf-toolkit": {
+    intro:
+      "Merge several PDFs into one, split a PDF by page range, build a PDF from images, or export PDF pages as images and plain text. Pick the job from the tabs. Merge needs at least two PDFs and keeps their page order. Split accepts ranges such as 1-3, 5, 8-10, or a checkbox that writes every page as its own file.\n\nPNG or JPG images become one PDF, with an optional maximum width so a camera photo does not land at full sensor size. PDF to images renders each page as a PNG. PDF to text reads the text layer, which is empty on a scan that was never OCR'd. The files stay on your device.",
+    howTo: [
+      { step: "Choose a tab", detail: "Merge, Split, Images to PDF, PDF to Images, or PDF to Text." },
+      { step: "Add the files", detail: "Merge wants two or more PDFs. The other tabs take one PDF, or a set of images." },
+      { step: "Set the options", detail: "Split uses a page range unless you split every page. Images to PDF can cap the width." },
+      { step: "Download the result", detail: "A merge, a page-range extract, or an image PDF downloads as one PDF. Splitting every page, and PDF to images, download as a zip. PDF to text also shows the text on the page." },
+    ],
+    faq: generic().faq,
+    useCases: [
+      "Combining scanned chapters into a single PDF.",
+      "Pulling three pages out of a long report.",
+      "Making a PDF from a set of photos.",
+    ],
+    tips: [
+      "A scanned PDF has no text layer, so PDF to Text will come back empty. Use the image-to-text tool on an exported page if you need OCR.",
+      "Put files in the order you want before merging. The tool follows the order you selected.",
+    ],
+  },
+  "archive-tool": {
+    intro:
+      "Create a ZIP or a TAR from files on your computer, or open a ZIP or TAR and download what is inside. The create tab lets you pick the format before you pack the files. The extract tab reads the archive and lists the entries so you can save them.\n\nZIP is handled by JSZip. TAR is read and written in the page. 7z and RAR are not supported, because those formats need a different decoder. Nothing is uploaded: the archive is built or unpacked in the browser.",
+    howTo: [
+      { step: "Choose create or extract", detail: "Create packs files you select. Extract opens an archive you already have." },
+      { step: "Add the files", detail: "For a new archive, drop the files and choose ZIP or TAR. For an existing archive, drop the ZIP or TAR." },
+      { step: "Run it", detail: "Create downloads the archive. Extract lists the entries inside." },
+      { step: "Save what you need", detail: "Download individual extracted files, or the new archive, from the page." },
+    ],
+    faq: generic().faq,
+    useCases: [
+      "Bundling a few files into a ZIP without installing an archiver.",
+      "Checking what is inside a TAR before you unpack it elsewhere.",
+      "Pulling one file out of a ZIP.",
+    ],
+    tips: [
+      "If an archive will not open, check the extension. 7z and RAR need a different tool.",
+      "TAR here is an uncompressed archive. A .tar.gz still needs to be gunzipped first.",
+    ],
+  },
+  "gitignore-generator": {
+    intro:
+      "Build a .gitignore by picking templates for languages, frameworks, editors, and operating systems. Search for Node, Python, macOS, or any other name in the list, select the ones that match the repo, and the page concatenates them in catalog order with a header for each template.\n\nThe templates follow the GitHub gitignore collection. Copy the result or download it as .gitignore. Generating the file does not need a network call after the page has loaded.",
+    howTo: [
+      { step: "Search the catalog", detail: "Type a language, framework, editor, or OS. The list filters as you type." },
+      { step: "Select templates", detail: "Turn on each stack you use. The count above the list tracks the selection." },
+      { step: "Read the preview", detail: "The combined file appears on the right, with a comment naming each template." },
+      { step: "Copy or download", detail: "Copy it into a repo, or download a file named .gitignore." },
+    ],
+    faq: generic().faq,
+    useCases: [
+      "Starting a Node or Python repo without hand-writing ignore rules.",
+      "Adding macOS and editor junk rules to a project that already ignores build output.",
+      "Checking which paths a known template excludes before you commit them.",
+    ],
+    tips: [
+      "Order is stable: the same selection always produces the same file.",
+      "A template is a starting point. Secrets and local paths that are unique to your repo still belong in the file by hand.",
+    ],
+  },
+  "mermaid-diagram": {
+    intro:
+      "Write a Mermaid diagram and see it render beside the source. The examples cover a flowchart, a sequence diagram, a class diagram, an ER diagram, a Gantt chart, and a pie chart, and you can replace the sample with your own syntax. When the diagram is valid, download it as SVG or PNG.\n\nThe Mermaid library loads when you open the tool and renders in the browser. A syntax error is shown in place of the picture, so you can fix the line and render again. SVG stays sharp when you drop it into a document.",
+    howTo: [
+      { step: "Start from an example or paste your own", detail: "The flowchart sample is loaded first. Switch examples if you want a different diagram type." },
+      { step: "Edit the source", detail: "The preview updates after you pause typing. A syntax error replaces the picture until the source parses." },
+      { step: "Download SVG or PNG", detail: "SVG is the better default for docs. PNG is easier to drop into a slide that does not accept SVG." },
+    ],
+    faq: generic().faq,
+    useCases: [
+      "Drafting a flowchart for a README without opening a drawing app.",
+      "Checking a sequence diagram before you commit the Mermaid block.",
+      "Exporting an ER sketch as SVG for a design doc.",
+    ],
+    tips: [
+      "Keep node IDs short and put the readable name in the label. That makes the source easier to diff.",
+      "If the picture is blank, read the error first. A missing arrow or an unclosed quote is the usual cause.",
+    ],
+  },
+  "image-to-text": {
+    intro:
+      "Extract text from a photo or a screenshot with Tesseract OCR running in your browser. Choose a language, run Extract text, and edit the result before you copy it or download a .txt file. English is the default. Simplified and Traditional Chinese, Japanese, Korean, and several European languages are in the list, plus Arabic and Russian.\n\nThe image itself is not uploaded. The OCR engine and the language data are downloaded from a third-party CDN the first time you use a language, then cached by the browser, so the first run on a new language needs a connection. Handwriting and tiny type are less reliable than a clean screenshot.",
+    howTo: [
+      { step: "Choose an image", detail: "Upload a PNG, JPG, or other picture the browser can display. A preview appears beside the output." },
+      { step: "Pick the language", detail: "Match the script in the image. A Chinese screenshot will not read well with the English model." },
+      { step: "Extract", detail: "The first run for a language downloads the model. Progress stays on the page." },
+      { step: "Edit, copy, or download", detail: "The recognized text is editable. Copy it or save extracted-text.txt." },
+    ],
+    faq: generic().faq,
+    useCases: [
+      "Copying text out of a screenshot that you cannot select.",
+      "Reading a photo of a slide or a printed page.",
+      "Pulling a paragraph out of an image before you translate it yourself.",
+    ],
+    tips: [
+      "Crop to the text if the photo is mostly background. Less clutter gives a cleaner read.",
+      "If the language model has not been used on this browser before, wait for the download to finish.",
+    ],
+  },
+  "excel-converter": {
+    intro:
+      "Open an XLSX, XLS, or CSV file and export it as JSON, CSV, or XLSX. When a workbook has more than one sheet, pick the sheet before you export. JSON is an array of row objects using the header row as keys. CSV is written with a UTF-8 BOM so spreadsheet apps keep non-ASCII characters.\n\nYou can also paste a table or JSON and download an XLSX. Parsing uses SheetJS in the browser. The workbook is not uploaded.",
+    howTo: [
+      { step: "Open a spreadsheet", detail: "Choose an .xlsx, .xls, or .csv file. The first rows show up so you can confirm the sheet." },
+      { step: "Pick the sheet", detail: "If the file has several sheets, the menu lists them. Export uses the one you select." },
+      { step: "Export", detail: "JSON, CSV, or XLSX. The download keeps the original file name with the new extension." },
+      { step: "Or go the other way", detail: "Paste tabular text or JSON when you need a fresh XLSX instead of converting an existing file." },
+    ],
+    faq: generic().faq,
+    useCases: [
+      "Turning an Excel export into JSON for a script.",
+      "Saving one sheet of a workbook as CSV.",
+      "Building a small XLSX from JSON without opening Excel.",
+    ],
+    tips: [
+      "Header names become JSON keys. Rename duplicate headers in the sheet first if two columns would collide.",
+      "CSV from this page includes a BOM. That is intentional for Excel on Windows.",
+    ],
+  },
 };
 
 export function getToolContent(slug: string): ToolContent {
