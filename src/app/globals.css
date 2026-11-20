@@ -180,6 +180,11 @@ body {
   border-color: var(--primary);
 }
 
+/* 首屏脚本在有 Pro 标记时给 html 加上这个 class，广告位在绘制前就收起。 */
+html.tbh-pro .adsbygoogle {
+  display: none !important;
+}
+
 /* 手机：16px 避免 iOS 聚焦时放大页面；按钮至少 44px；长控件换行而不是把页面撑出横向滚动。 */
 @media (max-width: 639px) {
   input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="hidden"]):not([type="color"]):not([type="image"]),

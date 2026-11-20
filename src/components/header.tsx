@@ -16,6 +16,7 @@ export default function Header() {
     { href: "/", key: "Home" },
     { href: "/tools/", key: "Tools" },
     { href: "/blog/", key: "Blog" },
+    { href: "/pricing/", key: "Pro" },
   ];
 
   const meta = (slug: string) => {

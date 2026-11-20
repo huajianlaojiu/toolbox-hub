@@ -141,9 +141,9 @@ export default function ToolsIndex() {
             </p>
           </div>
           <div>
-            <h3 className="font-semibold text-foreground"><I18nText id="No account, no paywall" /></h3>
+            <h3 className="font-semibold text-foreground"><I18nText id="No account required" /></h3>
             <p className="mt-2 text-sm leading-7 text-muted-foreground">
-              <I18nText id="There is no registration and no paid tier holding back basic functions. Open the page and use it." />
+              <I18nText id="There is no registration. A single job stays free. Larger batches, a downloadable history, and an ad-free page are optional on Pro." />
             </p>
           </div>
           <div>

@@ -15,6 +15,7 @@ import {
   GA_ENABLED,
   GA_TRACK_TOOL_VIEWS,
 } from "@/lib/analytics-config";
+import { PRO_STORAGE_KEY } from "@/lib/billing";
 
 /**
  * 同意引导脚本（同步内联，必须排在任何 Google 标签之前）。
@@ -44,6 +45,7 @@ const consentBootstrap = (() => {
     gaId: GA_MEASUREMENT_ID,
     gaEnabled: GA_ENABLED,
     gaToolViews: GA_TRACK_TOOL_VIEWS,
+    proKey: PRO_STORAGE_KEY,
   };
   // 配置里若出现 "<" 会提前闭合内联 <script>，统一转义
   const json = JSON.stringify(cfg).replace(/</g, "\\u003c");
@@ -56,7 +58,8 @@ function pageInfo(){try{var seg=location.pathname.split("/").filter(Boolean);var
 function allowed(){try{var pi=pageInfo();for(var i=0;i<C.excludedPaths.length;i++){if(pi.p.indexOf(C.excludedPaths[i])===0)return false;}for(var j=0;j<C.excludedSlugs.length;j++){if(pi.p==="/tools/"+C.excludedSlugs[j]+"/")return false;}return true;}catch(e){return true;}}
 function appendScript(url,anon){var s=document.createElement("script");s.async=true;if(anon)s.crossOrigin="anonymous";s.src=url;(document.head||document.documentElement).appendChild(s);}
 var adsLoaded=false,gaLoaded=false;
-function loadAds(){if(adsLoaded||!C.scriptEnabled||C.reviewStatic)return;var c=read();if(!c||!c.ad||!allowed())return;adsLoaded=true;appendScript(C.scriptUrl,true);}
+function proOn(){try{var v=JSON.parse(localStorage.getItem(C.proKey)||"null");return !!(v&&v.plan==="pro"&&!(v.expiresAt&&Date.parse(v.expiresAt)<=Date.now()));}catch(e){return false;}}
+function loadAds(){if(adsLoaded||!C.scriptEnabled||C.reviewStatic||proOn())return;var c=read();if(!c||!c.ad||!allowed())return;adsLoaded=true;appendScript(C.scriptUrl,true);}
 function loadGA(){if(gaLoaded||!C.gaEnabled||!C.gaId)return;var c=read();if(!c||!c.an)return;gaLoaded=true;gtag("js",new Date());gtag("config",C.gaId,{anonymize_ip:true});if(C.gaToolViews){var pi=pageInfo();var seg=pi.p.split("/").filter(Boolean);if(seg.length===2&&seg[0]==="tools")gtag("event","tool_view",{tool_slug:seg[1],page_language:pi.lang});}appendScript("https://www.googletagmanager.com/gtag/js?id="+encodeURIComponent(C.gaId),false);}
 function sync(){var c=read();gtag("consent","update",st(!!(c&&c.ad),!!(c&&c.an),false));loadAds();loadGA();}
 sync();w.addEventListener("tb-consent-change",sync);})();`;
@@ -84,6 +87,11 @@ export default function Document({
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var s=localStorage.getItem("tb-theme");var d=s?s==="dark":window.matchMedia("(prefers-color-scheme: dark)").matches;if(d){document.documentElement.classList.add("dark");document.documentElement.style.colorScheme="dark";}}catch(e){}})();`,
+          }}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var v=JSON.parse(localStorage.getItem(${JSON.stringify(PRO_STORAGE_KEY)})||"null");if(v&&v.plan==="pro"&&!(v.expiresAt&&Date.parse(v.expiresAt)<=Date.now()))document.documentElement.classList.add("tbh-pro");}catch(e){}})();`,
           }}
         />
         {/* 同意闸 + 路径闸：默认不加载广告/统计脚本，取得同意后才按需注入 */}

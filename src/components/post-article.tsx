@@ -230,9 +230,9 @@ export function PostArticle({ slug }: { slug: string }) {
         </div>
 
         <section className="mt-14 rounded-xl border bg-muted/40 p-6">
-          <h2 className="text-lg font-semibold"><I18nText id="All tools are free and private" /></h2>
+          <h2 className="text-lg font-semibold"><I18nText id="Tools run privately in your browser" /></h2>
           <p className="mt-2 text-sm text-muted-foreground leading-7">
-            <I18nText id="Every tool referenced in this guide processes your input in the browser rather than uploading it to a server we operate, requires no account, and has no usage limit. A few tools load a processing engine from a CDN on first use; see the privacy policy for details." />{" "}
+            <I18nText id="Every tool referenced in this guide processes your input in the browser rather than uploading it to a server we operate, and requires no account. A typical single job stays free. Larger batches, history export, and an ad-free page are optional on Pro. A few tools load a processing engine from a CDN on first use; see the privacy policy for details." />{" "}
             <a href={localizePath("/", lang)} className="text-primary hover:underline">
               <I18nText id="Browse the full toolbox →" />
             </a>

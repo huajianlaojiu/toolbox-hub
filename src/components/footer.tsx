@@ -16,6 +16,7 @@ export default function Footer({ toolCount }: { toolCount: number }) {
           <a href={lp("/terms/")} className="inline-flex min-h-11 items-center px-1.5 hover:text-foreground">{t("Terms")}</a>
           <a href={lp("/disclaimer/")} className="inline-flex min-h-11 items-center px-1.5 hover:text-foreground">{t("Disclaimer")}</a>
           <a href="/sitemap.xml" className="inline-flex min-h-11 items-center px-1.5 hover:text-foreground">{t("Sitemap")}</a>
+          <a href={lp("/pricing/")} className="inline-flex min-h-11 items-center px-1.5 hover:text-foreground">{t("Pro")}</a>
           {/* 随时重开同意面板（GDPR：撤回/变更同意必须与给予同意一样容易） */}
           <button
             type="button"

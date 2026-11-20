@@ -83,7 +83,7 @@ export function siteJsonLd(lang: string) {
     {
       question: "Is Toolbox Hub really free?",
       answer:
-        "Yes. Every tool on Toolbox Hub is free to use with no account, no trial and no paywall. You do not need to sign up or enter an email address to use any of the tools.",
+        "A typical single job is free: one file, one conversion, or one calculation, with no account. An optional Pro plan ($6 per month or $48 per year) raises batch limits, lets you download the job list saved in this browser, and removes ads. Pro does not block that single-job path.",
     },
     {
       question: "Is my data uploaded to a server?",

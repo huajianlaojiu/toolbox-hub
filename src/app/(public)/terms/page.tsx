@@ -5,7 +5,7 @@ import { languageAlternates } from "@/lib/alternates";
 export const metadata: Metadata = {
   title: "Terms of Use - Toolbox Hub",
   description:
-    "The terms that govern your use of Toolbox Hub and its free online tools.",
+    "The terms that govern your use of Toolbox Hub, its free tools, and the optional Pro subscription.",
   alternates: { canonical: "/terms/", languages: languageAlternates("/terms/") },
 };
 
@@ -14,7 +14,7 @@ export default function TermsPage() {
     <div className="mx-auto max-w-3xl px-4 py-10">
       <h1 className="text-3xl font-bold tracking-tight"><I18nText id="Terms of Use" /></h1>
       <p className="mt-2 text-sm text-muted-foreground">
-        <I18nText id="Last updated: 20 October 2026" />
+        <I18nText id="Last updated: 19 November 2026" />
       </p>
 
       <div className="mt-6 space-y-5 text-sm leading-7 text-muted-foreground">
@@ -24,7 +24,7 @@ export default function TermsPage() {
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="1. The service" /></h2>
         <p>
-          <I18nText id="Toolbox Hub provides free browser-based utilities. We may add, change, or remove tools and features at any time. A tool may be changed or withdrawn if it becomes unmaintainable, insecure, or subject to a third-party limitation." />
+          <I18nText id="Toolbox Hub provides browser-based utilities. A typical single job is free. An optional Pro subscription is billed in US dollars by a merchant of record once checkout is connected, and it can be cancelled with that merchant. We may add, change, or remove tools and features at any time. A tool may be changed or withdrawn if it becomes unmaintainable, insecure, or subject to a third-party limitation." />
         </p>
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="2. Acceptable use" /></h2>
@@ -57,7 +57,7 @@ export default function TermsPage() {
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="5. Limitation of liability" /></h2>
         <p>
-          <I18nText id="To the maximum extent permitted by law, we are not liable for any indirect, incidental, special, consequential, or punitive damages, nor for any loss of data, profits, or goodwill, arising from your use of the Site. Where liability cannot be excluded, our total aggregate liability is limited to the greater of the amount you paid us, which is zero, or the minimum amount required by applicable law." />
+          <I18nText id="To the maximum extent permitted by law, we are not liable for any indirect, incidental, special, consequential, or punitive damages, nor for any loss of data, profits, or goodwill, arising from your use of the Site. Where liability cannot be excluded, our total aggregate liability is limited to the greater of the amount you paid us in the twelve months before the claim, or the minimum amount required by applicable law." />
         </p>
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="6. Advertising" /></h2>

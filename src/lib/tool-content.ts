@@ -29,7 +29,7 @@ const generic = (): ToolContent => ({
     { step: "Verify and reuse", detail: "Spot-check the result against your own expectations. The tool stays on this page, so you can run it again with new input as often as you need." },
   ],
   faq: [
-    { q: `Is this {title} free to use?`, a: "Yes. It is completely free, with no sign-up, no trial period, no usage limit and no watermark. There is also no paid tier that holds back basic functionality." },
+    { q: `Is this {title} free to use?`, a: "Yes for a typical single use. There is no account and no watermark. An optional Pro plan raises batch limits, lets you export the job list saved in this browser, and removes ads. A one-at-a-time job is not held back by the paid plan." },
     { q: "Is my data uploaded to a server?", a: "For most tools, no — the computation runs in your browser and your input is not sent to a server we operate. Some tools download a processing engine or language model from a third-party CDN on first use. See the privacy policy for the full list of third-party services." },
     { q: "Does it work on a phone or tablet?", a: "Yes. The layout is responsive and adapts to phones, tablets and desktops. On a small screen the controls stack vertically so the input stays readable." },
     { q: "Do I need to create an account?", a: "No. There is no registration, no email confirmation and no login. Bookmark the page instead, and it will behave like any other utility you use daily." },

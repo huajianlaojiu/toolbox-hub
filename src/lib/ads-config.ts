@@ -59,6 +59,7 @@ export const AD_EXCLUDED_PATHS = [
   "/privacy/",
   "/terms/",
   "/disclaimer/",
+  "/pricing/",
   "/404/",
   "/404.html/",
 ];
