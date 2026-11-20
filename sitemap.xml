@@ -912,6 +912,918 @@
     <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/tools/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/tools/"/>
   </url>
+  <url><loc>https://toolbox-hub.io/pdf/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/pdf/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/zh/pdf/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/pdf/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/zh-TW/pdf/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/pdf/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/ja/pdf/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/pdf/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/ko/pdf/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/pdf/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/es/pdf/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/pdf/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/fr/pdf/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/pdf/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/de/pdf/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/pdf/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/pt/pdf/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/pdf/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/ru/pdf/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/pdf/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/ar/pdf/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/pdf/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/it/pdf/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/pdf/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/nl/pdf/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/pdf/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/tr/pdf/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/pdf/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/pl/pdf/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/pdf/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/vi/pdf/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/pdf/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/pdf/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/images/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/images/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/images/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/images/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/images/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/images/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/images/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/images/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/images/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/images/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/images/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/images/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/images/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/images/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/images/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/images/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/zh/images/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/images/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/images/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/images/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/images/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/images/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/images/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/images/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/images/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/images/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/images/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/images/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/images/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/images/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/images/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/images/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/zh-TW/images/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/images/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/images/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/images/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/images/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/images/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/images/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/images/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/images/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/images/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/images/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/images/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/images/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/images/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/images/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/images/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/ja/images/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/images/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/images/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/images/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/images/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/images/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/images/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/images/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/images/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/images/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/images/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/images/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/images/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/images/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/images/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/images/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/ko/images/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/images/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/images/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/images/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/images/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/images/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/images/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/images/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/images/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/images/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/images/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/images/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/images/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/images/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/images/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/images/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/es/images/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/images/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/images/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/images/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/images/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/images/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/images/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/images/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/images/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/images/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/images/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/images/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/images/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/images/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/images/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/images/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/fr/images/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/images/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/images/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/images/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/images/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/images/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/images/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/images/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/images/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/images/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/images/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/images/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/images/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/images/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/images/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/images/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/de/images/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/images/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/images/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/images/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/images/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/images/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/images/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/images/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/images/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/images/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/images/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/images/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/images/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/images/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/images/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/images/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/pt/images/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/images/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/images/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/images/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/images/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/images/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/images/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/images/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/images/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/images/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/images/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/images/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/images/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/images/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/images/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/images/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/ru/images/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/images/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/images/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/images/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/images/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/images/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/images/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/images/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/images/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/images/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/images/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/images/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/images/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/images/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/images/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/images/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/ar/images/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/images/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/images/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/images/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/images/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/images/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/images/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/images/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/images/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/images/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/images/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/images/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/images/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/images/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/images/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/images/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/it/images/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/images/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/images/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/images/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/images/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/images/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/images/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/images/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/images/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/images/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/images/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/images/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/images/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/images/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/images/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/images/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/nl/images/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/images/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/images/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/images/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/images/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/images/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/images/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/images/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/images/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/images/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/images/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/images/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/images/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/images/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/images/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/images/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/tr/images/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/images/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/images/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/images/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/images/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/images/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/images/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/images/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/images/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/images/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/images/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/images/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/images/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/images/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/images/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/images/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/pl/images/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/images/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/images/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/images/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/images/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/images/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/images/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/images/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/images/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/images/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/images/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/images/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/images/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/images/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/images/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/images/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/vi/images/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/images/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/images/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/images/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/images/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/images/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/images/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/images/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/images/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/images/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/images/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/images/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/images/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/images/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/images/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/images/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/images/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/video/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/video/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/video/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/video/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/video/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/video/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/video/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/video/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/video/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/video/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/video/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/video/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/video/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/video/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/video/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/video/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/zh/video/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/video/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/video/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/video/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/video/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/video/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/video/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/video/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/video/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/video/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/video/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/video/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/video/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/video/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/video/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/video/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/zh-TW/video/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/video/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/video/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/video/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/video/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/video/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/video/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/video/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/video/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/video/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/video/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/video/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/video/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/video/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/video/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/video/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/ja/video/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/video/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/video/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/video/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/video/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/video/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/video/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/video/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/video/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/video/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/video/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/video/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/video/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/video/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/video/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/video/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/ko/video/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/video/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/video/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/video/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/video/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/video/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/video/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/video/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/video/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/video/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/video/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/video/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/video/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/video/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/video/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/video/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/es/video/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/video/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/video/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/video/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/video/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/video/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/video/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/video/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/video/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/video/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/video/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/video/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/video/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/video/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/video/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/video/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/fr/video/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/video/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/video/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/video/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/video/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/video/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/video/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/video/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/video/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/video/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/video/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/video/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/video/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/video/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/video/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/video/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/de/video/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/video/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/video/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/video/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/video/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/video/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/video/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/video/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/video/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/video/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/video/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/video/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/video/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/video/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/video/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/video/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/pt/video/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/video/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/video/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/video/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/video/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/video/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/video/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/video/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/video/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/video/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/video/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/video/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/video/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/video/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/video/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/video/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/ru/video/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/video/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/video/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/video/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/video/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/video/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/video/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/video/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/video/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/video/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/video/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/video/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/video/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/video/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/video/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/video/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/ar/video/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/video/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/video/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/video/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/video/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/video/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/video/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/video/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/video/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/video/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/video/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/video/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/video/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/video/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/video/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/video/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/it/video/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/video/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/video/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/video/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/video/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/video/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/video/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/video/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/video/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/video/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/video/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/video/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/video/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/video/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/video/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/video/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/nl/video/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/video/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/video/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/video/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/video/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/video/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/video/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/video/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/video/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/video/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/video/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/video/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/video/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/video/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/video/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/video/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/tr/video/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/video/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/video/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/video/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/video/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/video/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/video/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/video/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/video/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/video/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/video/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/video/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/video/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/video/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/video/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/video/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/pl/video/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/video/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/video/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/video/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/video/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/video/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/video/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/video/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/video/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/video/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/video/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/video/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/video/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/video/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/video/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/video/"/>
+  </url>
+  <url><loc>https://toolbox-hub.io/vi/video/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/video/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://toolbox-hub.io/zh-TW/video/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://toolbox-hub.io/ja/video/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://toolbox-hub.io/ko/video/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://toolbox-hub.io/es/video/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://toolbox-hub.io/fr/video/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://toolbox-hub.io/de/video/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://toolbox-hub.io/pt/video/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://toolbox-hub.io/ru/video/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://toolbox-hub.io/ar/video/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://toolbox-hub.io/it/video/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://toolbox-hub.io/nl/video/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://toolbox-hub.io/tr/video/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://toolbox-hub.io/pl/video/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://toolbox-hub.io/vi/video/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://toolbox-hub.io/video/"/>
+  </url>
   <url><loc>https://toolbox-hub.io/blog/</loc><lastmod>2026-11-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://toolbox-hub.io/blog/"/>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://toolbox-hub.io/zh/blog/"/>
