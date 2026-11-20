@@ -3,19 +3,18 @@ import { visibleTools } from "./tools-data";
 
 export const SITE_URL = "https://toolbox-hub.io";
 
-/** 英文首页（x-default）面向真实搜索意图的标题与摘要。其他语言页不改用这组文案。 */
-export const HOME_TITLE = "JSON Formatter, QR Code & Password Generator | Toolbox Hub";
+/** 英文首页（x-default）。H1 / 介绍同时是 i18n key，其他语言有译文就用译文。 */
+export const HOME_TITLE = "Merge a PDF, Convert an Image, or Trim a Video | Toolbox Hub";
 export const HOME_DESCRIPTION =
-  "Format JSON, generate QR codes, create strong passwords, and encode Base64 in your browser. Free online tools with no sign-up.";
-export const HOME_H1 = "Free Online JSON Formatter, QR Code & Password Tools";
-export const HOME_INTRO =
-  "Format JSON, make a QR code, generate a password, or encode Base64. These tools run in your browser, free, with no account.";
+  "Free browser tools for PDFs, images, and videos. Files stay on your device. No account needed.";
+export const HOME_H1 = "Merge a PDF, convert an image, or trim a video";
+export const HOME_INTRO = HOME_DESCRIPTION;
 
 export const OG_IMAGE = {
   url: "/og.png",
   width: 1200,
   height: 630,
-  alt: "Toolbox Hub: free online JSON formatter, QR code generator, password generator, and Base64 encoder",
+  alt: "Toolbox Hub: free browser tools for PDFs, images, and videos",
 };
 
 /** 站点级 metadata 默认值（标题模板 / OG / robots），两个根布局共用 */
@@ -28,15 +27,15 @@ export const siteMetadata: Metadata = {
   },
   description: HOME_DESCRIPTION,
   keywords: [
-    "json formatter online",
-    "qr code generator",
-    "password generator",
-    "base64 encoder",
+    "merge pdf",
+    "split pdf",
+    "image converter",
+    "video trimmer",
     "free online tools",
-    "developer tools",
+    "browser tools",
   ],
   openGraph: {
-    title: "Toolbox Hub — Free Online Tools",
+    title: "Toolbox Hub — Free Browser Tools for PDFs, Images, and Videos",
     description: HOME_DESCRIPTION,
     type: "website",
     url: SITE_URL,
@@ -45,7 +44,7 @@ export const siteMetadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Toolbox Hub — Free Online Tools",
+    title: "Toolbox Hub — Free Browser Tools for PDFs, Images, and Videos",
     description: HOME_DESCRIPTION,
     images: [OG_IMAGE.url],
   },
@@ -65,7 +64,7 @@ export function siteJsonLd(lang: string) {
     alternateName: "Toolbox Hub Free Online Tools",
     url: SITE_URL,
     description:
-      "Free browser-based tools for developers, designers, and everyday tasks. No sign-up; most tools process your input locally in the browser.",
+      "Free browser tools for PDFs, images, and videos, plus formatters, calculators, and everyday utilities. No sign-up; files and other input stay on your device.",
     inLanguage: lang,
     publisher: {
       "@type": "Organization",
@@ -93,11 +92,11 @@ export function siteJsonLd(lang: string) {
     {
       question: "Can I use these tools on mobile?",
       answer:
-        "Yes. Every tool is responsive and works on phones, tablets and desktops. Some tools, such as the image compressor, work best on a larger screen.",
+        "Yes. Every tool is responsive and works on phones, tablets and desktops. Some tools, such as the video trimmer, are easier on a larger screen.",
     },
     {
       question: "Which tools are included?",
-      answer: `Toolbox Hub currently ships ${visibleTools.length} free tools across developer, text, design, image, calculator, converter, utility, math and web categories, including a JSON formatter, Base64 encoder, QR code generator, password generator, image compressor and unit converters.`,
+      answer: `Toolbox Hub currently ships ${visibleTools.length} free tools. The homepage leads with PDF, image, and video tools. The full directory also includes developer utilities, text tools, calculators, converters, and more.`,
     },
     {
       question: "How do I report a bug or suggest a tool?",
