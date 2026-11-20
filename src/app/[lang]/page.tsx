@@ -12,11 +12,11 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return langPageMeta(
     lang,
     "/",
-    "Toolbox Hub - Free Online Tools",
-    "Free online tools for developers, designers, and everyday tasks. JSON formatter, Base64 encoder, QR code generator, password generator, and more. No sign-up required."
+    "Merge a PDF, convert an image, or trim a video",
+    "Free browser tools for PDFs, images, and videos. Files stay on your device. No account needed."
   );
 }
 
 export default function Page() {
-  return <HomePage englishSeo={false} />;
+  return <HomePage />;
 }

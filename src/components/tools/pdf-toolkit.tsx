@@ -1,6 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
+import { PDF_MODE_IDS, isPdfModeId, type PdfModeId } from "@/lib/pdf-modes";
 import { Upload, Loader2, Merge, Scissors, Image as ImageIcon, Type, FileDown } from "lucide-react";
 import { BatchNote } from "@/components/billing/batch-note";
 import { usePro } from "@/components/billing/use-pro";
@@ -26,7 +27,7 @@ async function loadPdfjs() {
   return mod;
 }
 
-type Mode = "merge" | "split" | "img2pdf" | "pdf2img" | "pdf2text";
+type Mode = PdfModeId;
 
 function fmtBytes(n: number): string {
   if (n < 1024) return n + " B";
@@ -57,16 +58,48 @@ function downloadBlob(blob: Blob, name: string) {
   setTimeout(() => URL.revokeObjectURL(url), 4000);
 }
 
-const MODES: { id: Mode; label: string; icon: ReactNode }[] = [
-  { id: "merge", label: "Merge", icon: <Merge className="h-4 w-4" /> },
-  { id: "split", label: "Split", icon: <Scissors className="h-4 w-4" /> },
-  { id: "img2pdf", label: "Images → PDF", icon: <ImageIcon className="h-4 w-4" /> },
-  { id: "pdf2img", label: "PDF → Images", icon: <FileDown className="h-4 w-4" /> },
-  { id: "pdf2text", label: "PDF → Text", icon: <Type className="h-4 w-4" /> },
-];
+const MODE_META: Record<Mode, { label: string; icon: ReactNode }> = {
+  merge: { label: "Merge", icon: <Merge className="h-4 w-4" /> },
+  split: { label: "Split", icon: <Scissors className="h-4 w-4" /> },
+  img2pdf: { label: "Images → PDF", icon: <ImageIcon className="h-4 w-4" /> },
+  pdf2img: { label: "PDF → Images", icon: <FileDown className="h-4 w-4" /> },
+  pdf2text: { label: "PDF → Text", icon: <Type className="h-4 w-4" /> },
+};
+
+const MODES: { id: Mode; label: string; icon: ReactNode }[] = PDF_MODE_IDS.map((id) => ({
+  id,
+  ...MODE_META[id],
+}));
+
+function modeFromLocation(): Mode | null {
+  const id = window.location.hash.replace(/^#/, "");
+  return isPdfModeId(id) ? id : null;
+}
 
 export default function PdfToolkit() {
-  const [mode, setMode] = useState<Mode>("merge");
+  // 先空着，等读到 hash 再画出标签。否则深链会先闪成 Merge，测试也会读到错误的选中态。
+  const [mode, setMode] = useState<Mode | null>(null);
+
+  // /tools/pdf-toolkit/#split 这类链接直接打开对应操作，而不是总停在合并。
+  useEffect(() => {
+    const apply = () => {
+      const next = modeFromLocation() ?? "merge";
+      setMode(next);
+      requestAnimationFrame(() => {
+        document.getElementById(`pdf-mode-${next}`)?.scrollIntoView({ block: "nearest" });
+      });
+    };
+    apply();
+    window.addEventListener("hashchange", apply);
+    return () => window.removeEventListener("hashchange", apply);
+  }, []);
+
+  const selectMode = (id: Mode) => {
+    setMode(id);
+    const nextHash = `#${id}`;
+    if (window.location.hash === nextHash) return;
+    window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}${nextHash}`);
+  };
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<string>("");
   const [text, setText] = useState("");
@@ -188,11 +221,13 @@ export default function PdfToolkit() {
       setMsg(`Extracted text from ${doc.numPages} page(s).`);
     });
 
+  if (!mode) return <div className="min-h-40" />;
+
   return (
     <div className="space-y-5">
       <div className="flex gap-2 overflow-x-auto pb-1 min-[380px]:flex-wrap min-[380px]:overflow-visible">
         {MODES.map((m) => (
-          <button key={m.id} onClick={() => setMode(m.id)} className={`tool-btn shrink-0 ${mode === m.id ? "tool-btn-primary" : "tool-btn-secondary"}`}>
+          <button key={m.id} id={`pdf-mode-${m.id}`} type="button" aria-pressed={mode === m.id} onClick={() => selectMode(m.id)} className={`tool-btn scroll-mt-28 shrink-0 ${mode === m.id ? "tool-btn-primary" : "tool-btn-secondary"}`}>
             {m.icon}{m.label}
           </button>
         ))}
