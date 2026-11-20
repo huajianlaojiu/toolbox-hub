@@ -4,9 +4,8 @@ import ToolCard from "@/components/tool-card";
 import { FileText } from "lucide-react";
 import {
   IMAGE_BLURB,
-  PDF_ACTIONS,
   PDF_BLURB,
-  PDF_TOOL_PATH,
+  PDF_LISTINGS,
   VIDEO_BLURB,
   imageTools,
   videoTools,
@@ -21,7 +20,7 @@ const COPY: Record<
   pdf: {
     title: "PDF Tools",
     blurb: PDF_BLURB,
-    note: "Each action opens the PDF toolkit on that tab.",
+    note: "Merge, split, images, and text open the PDF toolkit. Compress, rotate, organize, watermark, page numbers, and password protection each have their own page.",
   },
   images: {
     title: "Image Tools",
@@ -67,11 +66,11 @@ export default function FileCategoryPage({ category }: { category: FileCategory 
 
       {category === "pdf" ? (
         <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {PDF_ACTIONS.map((action) => (
+          {PDF_LISTINGS.map((action) => (
             <li key={action.id}>
               <I18nLink
-                href={PDF_TOOL_PATH}
-                hash={action.id}
+                href={action.href}
+                hash={action.hash}
                 className="group flex h-full items-start gap-4 rounded-xl border bg-card p-5 transition-all hover:border-primary/30 hover:shadow-sm"
               >
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors group-hover:bg-primary group-hover:text-primary-foreground">

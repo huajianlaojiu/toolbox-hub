@@ -5,9 +5,8 @@ import { I18nText } from "@/components/i18n-text";
 import {
   IMAGE_BLURB,
   MORE_LINKS,
-  PDF_ACTIONS,
   PDF_BLURB,
-  PDF_TOOL_PATH,
+  PDF_LISTINGS,
   START_ITEMS,
   VIDEO_BLURB,
   featuredImageLinks,
@@ -109,13 +108,13 @@ export default function HomePage() {
           <CategoryCard
             icon="file-text"
             title="PDF Tools"
-            count={PDF_ACTIONS.length}
+            count={PDF_LISTINGS.length}
             blurb={PDF_BLURB}
             seeAllHref="/pdf/"
             seeAllLabel="See all PDF tools"
           >
-            {PDF_ACTIONS.map((action) => (
-              <I18nLink key={action.id} href={PDF_TOOL_PATH} hash={action.id} className={rowClass}>
+            {PDF_LISTINGS.map((action) => (
+              <I18nLink key={action.id} href={action.href} hash={action.hash} className={rowClass}>
                 <span className="font-medium text-foreground">
                   <I18nText id={action.label} />
                 </span>

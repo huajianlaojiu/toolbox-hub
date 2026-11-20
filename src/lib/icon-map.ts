@@ -1,4 +1,4 @@
-import { Wrench, Film, Music, Scissors, Camera, Combine, Gauge, Repeat, Minimize2, FlipHorizontal2, FileAudio, Video, Code2, Archive, FileCode, GitBranch, ScanText, Table2 } from "lucide-react";
+import { Wrench, Film, Music, Scissors, Camera, Combine, Gauge, Repeat, Minimize2, FlipHorizontal2, FileAudio, Video, Code2, Archive, FileCode, GitBranch, ScanText, Table2, FileText, RotateCw, ListOrdered, Stamp, Hash, Lock } from "lucide-react";
 import type { ComponentType } from "react";
 
 /** tools-data 里的 icon 字符串 → lucide 组件（client 组件安全传递） */
@@ -21,6 +21,12 @@ export const iconMap: Record<string, ComponentType<{ className?: string }>> = {
   "git-branch": GitBranch,
   "scan-text": ScanText,
   table: Table2,
+  "file-text": FileText,
+  rotate: RotateCw,
+  list: ListOrdered,
+  stamp: Stamp,
+  hash: Hash,
+  lock: Lock,
 };
 
 export function getIcon(name: string): ComponentType<{ className?: string }> {
