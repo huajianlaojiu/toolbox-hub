@@ -137,17 +137,18 @@ const overrides: Record<string, ToolContent> = {
   },
   "image-compressor": {
     intro:
-      "The Image Compressor reduces the file size of JPEG, PNG and WebP images directly in your browser using the Canvas API. Nothing is uploaded, so you can compress a photo of an ID document without it ever leaving your device. You choose the quality level and see the exact before-and-after size, which makes it easy to hit a specific limit such as a 2 MB email attachment cap or a 1 MB upload requirement on a job application portal.",
+      "Compress Image re-encodes a JPEG, PNG, WebP, BMP, or GIF in your browser and shows the original size next to the new size. Nothing is uploaded. JPEG and WebP have a quality control. Keeping PNG uses the browser's lossless encoder, which often saves little or nothing and can make the file larger. It is not TinyPNG or pngquant. If you want a smaller PNG photo, choose JPEG or WebP yourself. That choice is on the page, and it is the only way the format changes.\n\nGIF animation is not recompressed. You pick a still JPEG, WebP, or PNG of the first frame. A very large photo can be slow or run out of memory, especially on a phone.",
     howTo: [
-      { step: "Select an image", detail: "Drop a file onto the tool or click to browse. JPG, PNG and WebP are supported." },
-      { step: "Set the quality", detail: "Around 80 is visually lossless for most photos. Drop to 60 or below when you need a much smaller file." },
-      { step: "Compare and download", detail: "Review the size difference, then download the compressed image." },
+      { step: "Choose an image", detail: "JPEG, PNG, WebP, BMP, and GIF open in the page. The original size is shown before you run anything." },
+      { step: "Pick the output", detail: "Keep the original format, or choose JPEG or WebP when you want a smaller file. GIF has no keep-original option, because animation is not preserved." },
+      { step: "Set quality when it applies", detail: "JPEG and WebP use the quality slider. PNG, BMP, and ICO do not, because those encodings are not quality-based here." },
+      { step: "Compare and download", detail: "The page shows the original size, the new size, and whether the file got smaller. Download the result even if you only wanted to check." },
     ],
     faq: [
-      { q: "Are my images uploaded to a server?", a: "No. Compression runs locally via the browser Canvas API. This is why there is no file size cap and why it works offline." },
-      { q: "How much smaller will the file get?", a: "A typical photo shrinks by 60 to 80 percent at quality 80. Screenshots with large flat colour areas can compress even further." },
-      { q: "Does compressing a photo reduce its resolution?", a: "No. The dimensions stay exactly the same; only the encoding quality changes. Use the Image Resizer when you need to change dimensions." },
-      { q: "Why is my PNG bigger after compression?", a: "PNG is already lossless. Re-encoding it rarely helps, so convert it to JPEG or WebP instead, both of which the tool supports." },
+      { q: "Are images uploaded?", a: "No. Encoding uses the canvas in this browser." },
+      { q: "How much smaller will a photo get?", a: "A high-quality JPEG often shrinks when you lower the quality. The page shows the real sizes. There is no fixed percentage." },
+      { q: "Will a PNG get as small as TinyPNG?", a: "No. Keeping PNG is lossless and often barely shrinks. Choose JPEG or WebP if you need a smaller file and can give up PNG." },
+      { q: "Does this change the pixel size?", a: "No. Use Resize Image for dimensions and Crop Image for a region." },
     ],
     useCases: [
       "Getting a photo under an upload limit on a form or job portal.",
@@ -301,33 +302,81 @@ const overrides: Record<string, ToolContent> = {
   },
   "image-resizer": {
     intro:
-      "The Image Resizer changes the pixel dimensions of an image by drawing it onto a canvas at the new size and exporting the result. Because the work happens in your browser, the file never leaves your machine, which makes it usable for screenshots and photos you would not upload to an unfamiliar server. Resizing down throws pixels away and generally makes a file smaller; resizing up invents pixels by interpolation and cannot add detail that was never captured, so a 400 pixel logo scaled to 1600 will look soft no matter which setting you choose.",
+      "Resize Image changes the pixel size of one picture in your browser and downloads it. Width presets are 1920, 1280, 1080, 800, and 640, and you can type a custom width and height. Keep aspect ratio is on by default, so the other side follows the original shape. A larger size does not add detail. The page says so when the output is bigger than the source.\n\nJPEG, PNG, WebP, and BMP are written back in the same format when the browser can. GIF becomes a still PNG, and the page says the animation is not kept. Nothing is uploaded. A very large photo can be slow or run out of memory on a phone.",
     howTo: [
-      { step: "Choose an image", detail: "Drop a PNG, JPEG, WebP or GIF file onto the page. Each image is processed separately, so you can work through a batch one file at a time." },
-      { step: "Set the target width or height", detail: "Enter one dimension and the other follows if the aspect ratio lock is on. Turning the lock off lets you force an exact box, which stretches the image." },
-      { step: "Choose the output format", detail: "JPEG for photographs and anything where a small file matters, PNG when you need transparency or lossless edges, WebP for the best size-to-quality ratio on the modern web." },
-      { step: "Adjust quality for lossy formats", detail: "For JPEG and WebP, somewhere between 75 and 85 is usually indistinguishable from the original at normal viewing size while cutting the file size dramatically." },
-      { step: "Download the result", detail: "The resized file downloads with its original name and the new dimensions appended, so you can compare it against the source." },
+      { step: "Choose an image", detail: "The page reads the source width and height." },
+      { step: "Pick a width or type both sides", detail: "1920, 1280, 1080, 800, and 640 set the width. With aspect ratio on, the height follows. Turn the lock off to stretch to an exact box." },
+      { step: "Read the output line", detail: "That is the size that will be written. If it is larger than the source, the note says upscaling will not add real detail." },
+      { step: "Resize and download", detail: "The result preview shows the new picture. JPEG and WebP are re-encoded at a high quality, not a heavy compression pass." },
     ],
     faq: [
-      { q: "Is my image uploaded to a server?", a: "No. The file is read with the browser's FileReader API and drawn to a canvas element in memory. Nothing is transmitted, which is why the tool works on a plane and why there is no upload size limit beyond your available memory." },
-      { q: "Why did my photo come out rotated?", a: "Cameras record orientation in an EXIF tag rather than rotating the pixels. Some viewers honour the tag and some ignore it. Modern browsers apply it when drawing to a canvas, so the output is usually upright, but if yours is not, the source file has an unusual orientation flag." },
-      { q: "What size should an image be for a website?", a: "Roughly the largest size it will ever be displayed at, multiplied by two for high-density screens. A hero image displayed at 1200 pixels wide should be about 2400 pixels wide. Anything larger is bytes the visitor downloads and never sees." },
-      { q: "Does resizing always reduce the file size?", a: "Almost always when shrinking, because there are fewer pixels to encode. It is not guaranteed: a resized PNG can grow if the new dimensions interact badly with its compression. Convert to WebP or lower the JPEG quality if the output is unexpectedly large." },
-      { q: "Can I keep transparency?", a: "Yes, with PNG or WebP output. JPEG has no alpha channel, so transparent areas are filled with white and the edges become visible." },
-      { q: "Why does the resized image look softer than the original?", a: "Because downscaling averages neighbouring pixels, which blurs fine detail slightly. That is normal and usually invisible at the intended display size. Only upscaling produces the obvious softness that cannot be fixed." },
+      { q: "Will a bigger size look sharper?", a: "No. Upscaling only stretches the pixels you already have. The page warns you when the output is larger than the source." },
+      { q: "Is the file uploaded?", a: "No. The picture is drawn on a canvas in this browser." },
+      { q: "Does the format stay the same?", a: "JPEG, PNG, WebP, and BMP do, when the browser can write them. GIF is a still PNG. A format this browser cannot write comes back as PNG, and the page says so." },
+      { q: "Can I crop or compress here?", a: "No. Crop Image changes the region. Compress Image changes the encoding without changing the pixel size." },
     ],
     useCases: [
       "Shrinking a 4000 pixel camera photo before attaching it to an email.",
       "Producing a 1200 pixel wide version of a screenshot for documentation.",
       "Cutting product images down to a consistent size for a store listing.",
-      "Reducing a heavy PNG to WebP so a page loads faster.",
+      "Checking a custom width and height without installing an editor.",
     ],
     tips: [
       "Resize before compressing rather than after; there is no point spending quality on pixels you are about to discard.",
       "Keep the original. Every save of a lossy format loses a little more, so re-edit from the source, not from the export.",
-      "Match the aspect ratio to the slot the image will occupy, so the browser does not have to crop it.",
+      "Turn keep aspect ratio off only when you mean to stretch the picture.",
     ],
+  },
+  "image-cropper": {
+    intro:
+      "Crop Image keeps the region you set on the preview and downloads that region. Presets cover 1:1, 4:5, 16:9, and 9:16, plus a freeform box and a custom ratio. Drag the box or type the x, y, width, and height. The highlighted rectangle is the crop, in pixels, so the file matches the preview.\n\nJPEG, PNG, WebP, and BMP stay in the same format when the browser can write them. GIF becomes a still PNG, and the page says so. Nothing is uploaded.",
+    howTo: [
+      { step: "Choose an image", detail: "A crop box appears once the width and height are known." },
+      { step: "Set the region", detail: "Drag the box or a handle, or type X, Y, width, and height. Free is any shape. 1:1, 4:5, 16:9, and 9:16 lock the shape." },
+      { step: "Read the pixel line", detail: "The output line is the rectangle the download will keep." },
+      { step: "Crop and download", detail: "The result preview is the cropped picture." },
+    ],
+    faq: [
+      { q: "Does the file match the box?", a: "Yes. The box and the download use the same pixel rectangle." },
+      { q: "Is the image uploaded?", a: "No. Cropping runs in this browser." },
+      { q: "Can I rotate here?", a: "No. Rotate Image turns the whole picture. This page only keeps a region." },
+    ],
+    useCases: ["Cutting a photo to a square.", "Keeping a 16:9 frame from a taller picture.", "Removing empty space at the edge of a screenshot."],
+    tips: ["Scrub the box onto the subject before you download.", "The readout under the preview is the size you will get."],
+  },
+  "image-rotator": {
+    intro:
+      "Rotate Image turns one picture left or right in 90° steps, or flips it horizontally or vertically. The preview updates as you click, and that preview is the file you download. JPEG, PNG, WebP, and BMP keep their format when the browser can write it. GIF becomes a still PNG. Nothing is uploaded. One picture at a time.",
+    howTo: [
+      { step: "Choose an image", detail: "The original appears in the preview." },
+      { step: "Rotate or flip", detail: "Rotate left, rotate right, flip horizontal, or flip vertical. You can combine a turn and a flip." },
+      { step: "Check the output size", detail: "A 90° turn swaps width and height." },
+      { step: "Download", detail: "The file matches the preview." },
+    ],
+    faq: [
+      { q: "Can I rotate by 15 degrees?", a: "No. This page only turns in 90° steps, plus flips. A free angle would add empty corners and is not offered." },
+      { q: "Is the picture uploaded?", a: "No." },
+      { q: "Does GIF animation survive?", a: "No. The download is a still PNG of the first frame, and the page says so." },
+    ],
+    useCases: ["Turning a phone photo that landed on its side.", "Mirroring a screenshot.", "Flipping a scan that came in upside down."],
+    tips: ["Rotate before you crop if the subject is sideways.", "Each download is a new encode. Keep the original if you might rotate again."],
+  },
+  "image-watermark": {
+    intro:
+      "Watermark Image stamps text, another picture, or both onto a photo in your browser. You set the font, size, color, opacity, rotation, and position. An optional PNG, JPEG, or WebP stamp uses a width you choose. Text and the image stamp share one position, so they overlap when you use both. The preview is the file you download.\n\nLetters use a font already on this device. A character that font cannot draw will be missing. A long line is scaled down so it stays on the picture. Nothing is uploaded.",
+    howTo: [
+      { step: "Choose the picture", detail: "The preview appears as soon as the file is read." },
+      { step: "Set the text", detail: "Type the words, then pick sans, serif, or mono, a color, a size, and an opacity." },
+      { step: "Place it", detail: "Center, a corner, and a rotation from -180° to 180°. Add an image stamp if you want a logo." },
+      { step: "Download", detail: "The download is the preview. JPEG, PNG, WebP, and BMP keep their format when they can." },
+    ],
+    faq: [
+      { q: "Will every language render?", a: "Only if this device already has a font for those characters. The page does not bundle a CJK or Arabic font for watermarks." },
+      { q: "Do the text and the logo sit in different places?", a: "No. They share the position, opacity, and rotation. If you use both, they overlap. The preview shows that before you download." },
+      { q: "Is the file uploaded?", a: "No." },
+    ],
+    useCases: ["Marking a draft photo before you send it.", "Adding a small logo to a product picture.", "Putting a name in the corner of a screenshot."],
+    tips: ["Lower the opacity if the stamp hides the subject.", "White text with the built-in outline is easier to see on a busy photo."],
   },
   "color-converter": {
     intro:
@@ -2691,7 +2740,7 @@ const overrides: Record<string, ToolContent> = {
     faq: [
       { q: "Which formats can it convert between?", a: "It reads SRT, VTT, ASS, SSA and SBV, and writes SRT, VTT and ASS. That covers every platform you are likely to publish to." },
       { q: "How do I fix subtitles that are consistently early or late?", a: "Enter the offset in seconds (negative for earlier) and click Shift all. Positive values push the track later." },
-      { q: "Can it burn subtitles into video?", a: "No, this is a text editor only. Export the fixed subtitle file and burn it with a video tool." },
+      { q: "Can it burn subtitles into video?", a: "No. This page only edits the subtitle file. Add Subtitles burns SRT, VTT, or ASS cues into the picture and downloads an MP4." },
       { q: "Is my file uploaded?", a: "No. The file is read with the browser's file reader and never leaves your device." },
     ],
     useCases: [
@@ -2703,6 +2752,24 @@ const overrides: Record<string, ToolContent> = {
       "Shift in small increments and preview against the video each time.",
       "Export ASS when you need styling; SRT when you need compatibility.",
     ],
+  },
+  "add-subtitles": {
+    intro:
+      "Add Subtitles burns captions into the picture and downloads an MP4. You provide a video plus an SRT, VTT, ASS, SSA, or SBV file. The preview shows roughly when each line appears, with the size, color, and position you picked. The export is not a sidecar subtitle file.\n\nThe download uses the bundled Noto Sans font. Latin, common accented European letters, Greek, and Cyrillic are covered. Chinese, Japanese, Korean, Arabic, Hebrew, Thai, and emoji are not in that font. The preview can still show those characters with a font on your device, and they can be missing or drawn as boxes in the MP4. The page lists the characters it cannot draw.\n\nNothing is uploaded. The first run downloads the ffmpeg engine, about 25 MB. A long video can be slow, and a phone may run out of memory. Styling is one size, one color, and top, center, or bottom. It will not match a professional captioning suite. Subtitle Editor still only edits the text file.",
+    howTo: [
+      { step: "Add a video and a subtitle file", detail: "SRT, VTT, ASS, SSA, and SBV are read in the browser. The cue count is shown when the file parses." },
+      { step: "Set size, color, and position", detail: "Bottom, center, or top. Play the preview to see roughly when each line appears." },
+      { step: "Read the font warning", detail: "If the file contains characters outside Noto Sans, the page lists them before you export." },
+      { step: "Burn and download", detail: "Keep the tab open. The result is an MP4 with the words drawn into the frames." },
+    ],
+    faq: [
+      { q: "Is this the subtitle editor?", a: "No. Subtitle Editor changes the SRT, VTT, or ASS file. This page burns those cues into the video." },
+      { q: "Will Chinese or Arabic show up in the MP4?", a: "Not reliably. The bundled font does not include those scripts. The preview may still show them from your device, and the export can miss them." },
+      { q: "Is the video uploaded?", a: "No. ffmpeg runs in this browser. The first run downloads the engine, about 25 MB." },
+      { q: "Can a phone burn a long video?", a: "Sometimes. Large or long videos can be slow or run out of memory. A short clip on a desktop is the comfortable case." },
+    ],
+    useCases: ["Hardcoding English captions onto a short clip.", "Burning a VTT file when a player will not load a sidecar.", "Checking that a cue lands near the right moment before you export."],
+    tips: ["Edit timing in Subtitle Editor first if the cues are early or late.", "White text at the bottom is the most readable default."],
   },
   "openreel-video-editor": {
     intro:

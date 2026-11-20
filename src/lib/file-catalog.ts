@@ -103,13 +103,23 @@ export const PDF_LISTINGS: PdfListing[] = [
     href: item.href,
   })),
 ];
-export const IMAGE_BLURB = "Convert, resize, or rotate a picture, or read text from a photo.";
-export const VIDEO_BLURB = "Merge, trim, resize, crop, convert, or compress a video. The file stays on your device.";
+export const IMAGE_BLURB =
+  "Convert, compress, resize, crop, rotate, or watermark a picture, or read text from a photo. Files stay on your device.";
+export const VIDEO_BLURB =
+  "Merge, trim, resize, crop, convert, compress, or burn subtitles into a video. The file stays on your device.";
 
-/** 首页主卡片只放这两个。Image to Base64 是开发向工具，不进主卡片。 */
-export const IMAGE_FEATURED_SLUGS = ["image-format-converter", "image-to-text"] as const;
+/** 首页主卡片只放真正可用的图片工具。Image to Base64 是开发向工具，不进主卡片。 */
+export const IMAGE_FEATURED_SLUGS = [
+  "image-format-converter",
+  "image-compressor",
+  "image-resizer",
+  "image-cropper",
+  "image-rotator",
+  "image-watermark",
+  "image-to-text",
+] as const;
 
-/** 首页视频卡片展示的高频工具，含调整大小和裁剪。分类页仍列出全部视频工具。 */
+/** 首页视频卡片展示的高频工具。分类页仍列出全部视频工具。 */
 export const VIDEO_FEATURED_SLUGS = [
   "video-merger",
   "video-trimmer",
@@ -117,10 +127,16 @@ export const VIDEO_FEATURED_SLUGS = [
   "video-compressor",
   "video-resizer",
   "video-cropper",
+  "add-subtitles",
 ] as const;
 
 const HOME_LABELS: Record<string, string> = {
   "image-format-converter": "Image Converter",
+  "image-compressor": "Compress Image",
+  "image-resizer": "Resize Image",
+  "image-cropper": "Crop Image",
+  "image-rotator": "Rotate Image",
+  "image-watermark": "Watermark Image",
   "image-to-text": "Image to Text OCR",
   "video-merger": "Video Merger",
   "video-trimmer": "Video Trimmer",
@@ -128,6 +144,7 @@ const HOME_LABELS: Record<string, string> = {
   "video-compressor": "Video Compressor",
   "video-resizer": "Resize Video",
   "video-cropper": "Crop Video",
+  "add-subtitles": "Add Subtitles",
   "data-converter": "JSON Formatter",
   "qr-code-generator": "QR Code Generator",
   "password-generator": "Password Generator",
@@ -138,6 +155,12 @@ const HOME_LABELS: Record<string, string> = {
 
 const HOME_DESCRIPTIONS: Record<string, string> = {
   "image-format-converter": "Convert between JPG, PNG, WebP, BMP, and ICO, and resize or rotate.",
+  "image-compressor": "Shrink a JPEG, PNG, or WebP and compare the sizes. PNG savings are often modest.",
+  "image-resizer": "Change the width and height. Upscaling does not add real detail.",
+  "image-cropper": "Crop to 1:1, 4:5, 16:9, 9:16, or the box you drag.",
+  "image-rotator": "Rotate in 90° steps or flip, then download.",
+  "image-watermark": "Stamp text or a picture, with size, opacity, and position.",
+  "add-subtitles": "Burn captions into the picture and download an MP4.",
   "video-merger": "Join two to ten clips into one MP4, in the order you add them.",
   "video-trimmer": "Cut a clip to a start and end time, then keep only that part.",
   "video-compressor": "Shrink a video into a smaller MP4 file.",

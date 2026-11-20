@@ -17,7 +17,7 @@ export const tools: ToolMeta[] = [
   { slug: "html-entity-encoder", title: "HTML Entity Encoder and Decoder", description: "Encode < > & and quotes, or decode entities", category: "Developer", icon: "wrench", keywords: ["html entity encoder", "html entities"], isPureFrontend: true },
   { slug: "file-size-converter", title: "File Size Converter", description: "Bytes, KB, MB, and GB in binary and decimal", category: "Utility", icon: "wrench", keywords: ["file size converter", "bytes to mb"], isPureFrontend: true },
   { slug: "markdown-preview", title: "Markdown Preview", description: "Side-by-side CommonMark preview, including tables", category: "Text", icon: "wrench", keywords: ["markdown preview", "markdown editor"], isPureFrontend: true },
-  { slug: "image-compressor", title: "Image Compressor", description: "Compress images", category: "Image", icon: "wrench", keywords: ["image compressor", "compress image"], isPureFrontend: true, redirect: "image-format-converter" },
+  { slug: "image-compressor", title: "Compress Image", description: "Shrink a JPEG, PNG, or WebP in the browser and compare the file size. PNG savings are often modest", category: "Image", icon: "minimize", keywords: ["compress image", "image compressor", "reduce image size", "jpeg compressor", "png compressor"], isPureFrontend: true },
   { slug: "json-to-yaml", title: "JSON to YAML", description: "Convert JSON to YAML", category: "Developer", icon: "wrench", keywords: ["json to yaml", "json yaml"], isPureFrontend: true, redirect: "data-converter" },
   { slug: "json-to-csv", title: "JSON to CSV", description: "Convert JSON to CSV", category: "Developer", icon: "wrench", keywords: ["json to csv", "json csv"], isPureFrontend: true, redirect: "data-converter" },
   { slug: "xml-formatter", title: "XML Formatter", description: "Format XML", category: "Developer", icon: "wrench", keywords: ["xml formatter", "xml beautifier"], isPureFrontend: true, redirect: "data-converter" },
@@ -79,8 +79,11 @@ export const tools: ToolMeta[] = [
   { slug: "password-strength", title: "Password Strength Checker", description: "A score out of seven, with the rules you met", category: "Utility", icon: "wrench", keywords: ["password strength", "password checker", "password test"], isPureFrontend: true },
   { slug: "html-preview", title: "HTML Preview", description: "Render an HTML fragment without saving a file", category: "Developer", icon: "wrench", keywords: ["html preview", "html viewer", "html tester"], isPureFrontend: true },
   { slug: "json-validator", title: "JSON Validator", description: "Validate JSON", category: "Developer", icon: "wrench", keywords: ["json validator", "json checker", "validate json"], isPureFrontend: true, redirect: "data-converter" },
-  { slug: "image-resizer", title: "Image Resizer", description: "Resize images", category: "Image", icon: "wrench", keywords: ["image resizer", "resize image", "image resize"], isPureFrontend: true, redirect: "image-format-converter" },
+  { slug: "image-resizer", title: "Resize Image", description: "Change width and height. Upscaling does not add real detail", category: "Image", icon: "resize", keywords: ["resize image", "image resizer", "change image size", "scale image"], isPureFrontend: true },
   { slug: "image-format-converter", title: "Image Converter Online", description: "Convert JPG, PNG, WebP, BMP, and ICO, with resize and rotate", category: "Image", icon: "image", keywords: ["image format converter", "convert image", "jpg to png", "png to webp", "bmp to png", "image converter online"], isPureFrontend: true },
+  { slug: "image-cropper", title: "Crop Image", description: "Crop a picture to 1:1, 4:5, 16:9, 9:16, or a freeform box", category: "Image", icon: "crop", keywords: ["crop image", "image cropper", "crop photo", "aspect ratio crop"], isPureFrontend: true },
+  { slug: "image-rotator", title: "Rotate Image", description: "Rotate a picture in 90° steps or flip it, and download the same format when possible", category: "Image", icon: "rotate", keywords: ["rotate image", "flip image", "turn photo", "rotate jpg"], isPureFrontend: true },
+  { slug: "image-watermark", title: "Watermark Image", description: "Stamp text or a picture on an image, with size, opacity, and position", category: "Image", icon: "stamp", keywords: ["watermark image", "add watermark to photo", "stamp image", "image watermark"], isPureFrontend: true },
   { slug: "pdf-toolkit", title: "Merge and Split PDF", description: "Merge, split, images to PDF, and PDF to text or images", category: "Document", icon: "file-text", keywords: ["pdf toolkit", "merge pdf", "split pdf", "images to pdf", "pdf to images", "pdf to text"], isPureFrontend: true },
   { slug: "compress-pdf", title: "Compress PDF Online", description: "Recompress embedded images and see the original size, new size, and savings", category: "Document", icon: "minimize", keywords: ["compress pdf", "compress pdf online", "reduce pdf size", "shrink pdf", "pdf compressor"], isPureFrontend: true },
   { slug: "rotate-pdf", title: "Rotate PDF Online", description: "Rotate every page, or only the pages you pick, by 90, 180, or 270 degrees", category: "Document", icon: "rotate", keywords: ["rotate pdf", "rotate pdf online", "turn pdf pages", "rotate pdf pages"], isPureFrontend: true },
@@ -115,6 +118,7 @@ export const tools: ToolMeta[] = [
   { slug: "viral-video-studio", title: "Viral Video Script Studio", description: "Hook, storyboard, and caption templates for a short video", category: "Video", icon: "film", keywords: ["short video script", "viral video script", "video hook template", "storyboard generator"], isPureFrontend: true },
   { slug: "teleprompter", title: "Teleprompter", description: "Auto-scrolling script with mirror and fullscreen", category: "Video", icon: "gauge", keywords: ["teleprompter", "online teleprompter", "prompter", "speech prompter"], isPureFrontend: true },
   { slug: "subtitle-editor", title: "Subtitle Editor", description: "Edit SRT, VTT, and ASS cues, then export another format", category: "Video", icon: "scissors", keywords: ["subtitle editor", "srt editor", "vtt editor", "ass editor", "subtitle converter"], isPureFrontend: true },
+  { slug: "add-subtitles", title: "Add Subtitles", description: "Burn SRT, VTT, or ASS captions into a video and download an MP4", category: "Video", icon: "captions", keywords: ["add subtitles", "burn subtitles", "hardcode subtitles", "srt to video", "burn captions into video"], isPureFrontend: true },
   { slug: "openreel-video-editor", title: "OpenReel Video Editor", description: "Multi-track timeline editor that runs in the browser", category: "Video", icon: "video", keywords: ["online video editor", "browser video editor", "free video editor no watermark", "capcut alternative", "timeline video editor"], isPureFrontend: true },
 ];
 export const categories = Array.from(new Set(tools.map((t) => t.category)));
@@ -130,7 +134,8 @@ export const CATEGORY_BLURBS: Record<string, string> = {
   Text: "Cleaning, counting, sorting and reshaping text: case conversion, duplicate removal, slugs, trimming, sorting and letter frequency.",
   Design:
     "Colour and CSS work: palettes, gradients, shadows, contrast checks against WCAG, border radius and an emoji picker.",
-  Image: "Compress, resize and convert images locally, without a file ever leaving your device.",
+  Image:
+    "Compress, resize, crop, rotate, watermark, and convert images locally, or read text from a photo. The file stays on your device.",
   Converter:
     "Unit conversions across length, weight, temperature, speed, area, volume, time and file size, calculated through a single reference unit so no precision is lost.",
   Calculator:
@@ -138,7 +143,7 @@ export const CATEGORY_BLURBS: Record<string, string> = {
   Web: "Page-level helpers: meta tags, Open Graph tags, favicons, URL parsing, email syntax checks and YouTube thumbnails.",
   Math: "Number work: primes, factorials, scientific notation, fractions, greatest common factor and least common multiple, and Roman numerals.",
   Video:
-    "Short-video work that runs locally: compress, convert, resize, crop, merge, trim, speed up, flip and rotate clips, pull frames or GIFs, rip audio, and assemble covers and scripts — all processed in your browser with nothing uploaded.",
+    "Short-video work that runs locally: compress, convert, resize, crop, merge, trim, speed up, flip and rotate clips, burn in subtitles, pull frames or GIFs, rip audio, and assemble covers and scripts — all processed in your browser with nothing uploaded.",
   Audio:
     "Convert between audio formats and trim tracks with a waveform, entirely on your device.",
   Document:

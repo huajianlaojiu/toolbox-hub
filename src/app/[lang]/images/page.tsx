@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return langPageMeta(
     lang,
     "/images/",
-    "Image Tools: Convert, Resize, and OCR",
-    "Convert, resize, or rotate a picture, read text from a photo, or encode an image as Base64. The work stays in your browser."
+    "Image Tools: Compress, Resize, Crop, Rotate, and Watermark",
+    "Compress, resize, crop, rotate, watermark, or convert a picture, or read text from a photo. PNG compression is often modest. Files stay in your browser."
   );
 }

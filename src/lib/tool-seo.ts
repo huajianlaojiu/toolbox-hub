@@ -194,6 +194,41 @@ const OVERRIDES: Record<string, Record<string, ToolSeoOverride>> = {
         "Convert images between JPG, PNG, WebP, BMP, and ICO, and resize or rotate them. Free image converter that runs in your browser.",
     },
   },
+  "image-compressor": {
+    en: {
+      title: "Compress Image Online — JPEG, PNG, and WebP | Toolbox Hub",
+      description:
+        "Shrink a JPEG, PNG, or WebP in the browser and compare the original size with the new file. PNG savings are often modest. Nothing is uploaded.",
+    },
+  },
+  "image-resizer": {
+    en: {
+      title: "Resize Image Online — Presets and Custom Size | Toolbox Hub",
+      description:
+        "Change an image's width and height, with common widths and a locked aspect ratio. Upscaling does not add real detail. The file stays on your device.",
+    },
+  },
+  "image-cropper": {
+    en: {
+      title: "Crop Image Online — 1:1, 16:9, and Custom | Toolbox Hub",
+      description:
+        "Crop a picture to 1:1, 4:5, 16:9, 9:16, or the box you drag. The download matches the preview. The file stays in your browser.",
+    },
+  },
+  "image-rotator": {
+    en: {
+      title: "Rotate Image Online — 90° and Flip | Toolbox Hub",
+      description:
+        "Rotate a picture left or right in 90° steps, or flip it horizontally or vertically. The download keeps the format when it can.",
+    },
+  },
+  "image-watermark": {
+    en: {
+      title: "Watermark Image Online — Text or Picture | Toolbox Hub",
+      description:
+        "Stamp text or another picture on an image, with size, color, opacity, rotation, and position. The preview is the file you download.",
+    },
+  },
 
   // Remaining English tool pages (2026-11). en only, so other locales keep their translations.
   // Absolute titles skip the shared "- Free Online Tool - Toolbox Hub" suffix.
@@ -825,6 +860,13 @@ const OVERRIDES: Record<string, Record<string, ToolSeoOverride>> = {
       title: "SRT Editor — Convert VTT, ASS & Subtitles | Toolbox Hub",
       description:
         "Open an SRT, VTT, ASS, SSA, or SBV file, edit the cues and timing, and export SRT, VTT, or ASS. The file is not uploaded.",
+    },
+  },
+  "add-subtitles": {
+    en: {
+      title: "Add Subtitles to a Video — Burn In SRT or VTT | Toolbox Hub",
+      description:
+        "Burn SRT, VTT, or ASS captions into a video and download an MP4. The bundled font covers Latin, Greek, and Cyrillic, not Chinese, Japanese, or Korean.",
     },
   },
   "openreel-video-editor": {
