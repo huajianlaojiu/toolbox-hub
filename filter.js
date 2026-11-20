@@ -12,8 +12,8 @@
     btn.addEventListener("click", function(e){
       e.preventDefault();
       var filter = this.getAttribute("data-filter");
-      buttons.forEach(function(b){ b.className = "filter-btn rounded-full border px-4 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:border-foreground/30"; });
-      this.className = "filter-btn rounded-full bg-primary text-primary-foreground px-4 py-1.5 text-sm font-medium";
+      buttons.forEach(function(b){ b.className = "filter-btn min-h-11 rounded-full border px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:border-foreground/30"; });
+      this.className = "filter-btn min-h-11 rounded-full bg-primary text-primary-foreground px-4 py-2 text-sm font-medium";
       // #filter-label 只有历史页面有，首页没有——null 时跳过，
       // 否则这里抛错会把下面的显示/隐藏逻辑整段中断（按钮看起来“没作用”）。
       if (label) label.textContent = this.textContent.trim();
