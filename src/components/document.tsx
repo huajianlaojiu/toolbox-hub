@@ -125,7 +125,6 @@ export default function Document({
         <ThemeProvider>
           {children}
         </ThemeProvider>
-        <script src="/filter.js" defer />
       </body>
     </html>
   );

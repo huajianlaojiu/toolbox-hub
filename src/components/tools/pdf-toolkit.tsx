@@ -2,12 +2,22 @@
 import { useState } from "react";
 import type { ReactNode } from "react";
 import { Upload, Loader2, Merge, Scissors, Image as ImageIcon, Type, FileDown } from "lucide-react";
-import { PDFDocument } from "pdf-lib";
-import JSZip from "jszip";
 import { BatchNote } from "@/components/billing/batch-note";
 import { usePro } from "@/components/billing/use-pro";
 import { FREE_FILE_BATCH, PRO_FILE_BATCH, decideBatch } from "@/lib/billing";
 import { recordJob } from "@/lib/job-history";
+
+// pdf-lib / jszip / pdf.js 都等用户真正执行时再加载。
+// 静态 import 会在打开 PDF 页时就下载约 200KB（gzip），而合并或拆分之前用不到。
+async function loadPdfLib() {
+  const { PDFDocument } = await import("pdf-lib");
+  return PDFDocument;
+}
+
+async function loadJSZip() {
+  const { default: JSZip } = await import("jszip");
+  return JSZip;
+}
 
 // pdf.js 仅在浏览器端按需加载，避免 SSR 预渲染时在 Node 环境中求值（其依赖 Node 22+ 全局 Iterator）
 async function loadPdfjs() {
@@ -76,6 +86,7 @@ export default function PdfToolkit() {
   const merge = (files: File[]) =>
     run(async () => {
       if (files.length < 2) return setMsg("Select at least two PDF files.");
+      const PDFDocument = await loadPdfLib();
       const out = await PDFDocument.create();
       for (const f of files) {
         const src = await PDFDocument.load(await f.arrayBuffer());
@@ -90,9 +101,11 @@ export default function PdfToolkit() {
 
   const split = (file: File, spec: string, allSeparate: boolean) =>
     run(async () => {
+      const PDFDocument = await loadPdfLib();
       const src = await PDFDocument.load(await file.arrayBuffer());
       const total = src.getPageCount();
       if (allSeparate) {
+        const JSZip = await loadJSZip();
         const zip = new JSZip();
         for (let i = 1; i <= total; i++) {
           const d = await PDFDocument.create();
@@ -117,6 +130,7 @@ export default function PdfToolkit() {
   const img2pdf = (files: File[], maxW: number) =>
     run(async () => {
       if (files.length === 0) return setMsg("Select image files.");
+      const PDFDocument = await loadPdfLib();
       const doc = await PDFDocument.create();
       for (const f of files) {
         const bytes = await f.arrayBuffer();
@@ -140,6 +154,7 @@ export default function PdfToolkit() {
   const pdf2img = (file: File, scale: number) =>
     run(async () => {
       const pdfjsLib = await loadPdfjs();
+      const JSZip = await loadJSZip();
       const buf = await file.arrayBuffer();
       const doc = await pdfjsLib.getDocument({ data: new Uint8Array(buf) }).promise;
       const zip = new JSZip();
@@ -175,9 +190,9 @@ export default function PdfToolkit() {
 
   return (
     <div className="space-y-5">
-      <div className="flex flex-wrap gap-2">
+      <div className="flex gap-2 overflow-x-auto pb-1 min-[380px]:flex-wrap min-[380px]:overflow-visible">
         {MODES.map((m) => (
-          <button key={m.id} onClick={() => setMode(m.id)} className={`tool-btn ${mode === m.id ? "tool-btn-primary" : "tool-btn-secondary"}`}>
+          <button key={m.id} onClick={() => setMode(m.id)} className={`tool-btn shrink-0 ${mode === m.id ? "tool-btn-primary" : "tool-btn-secondary"}`}>
             {m.icon}{m.label}
           </button>
         ))}

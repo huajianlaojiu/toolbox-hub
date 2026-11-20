@@ -95,7 +95,7 @@ export default function ToolsIndex() {
             <li key={g.category}>
               <a
                 href={`#${anchor(g.category)}`}
-                className="inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm text-muted-foreground transition-colors hover:border-foreground/30 hover:text-foreground"
+                className="inline-flex min-h-11 items-center gap-2 rounded-full border px-4 py-2 text-sm text-muted-foreground transition-colors hover:border-foreground/30 hover:text-foreground"
               >
                 <I18nText id={g.category} />
                 <span className="text-xs">{g.items.length}</span>
@@ -106,7 +106,7 @@ export default function ToolsIndex() {
       </nav>
 
       {groups.map((g, gi) => (
-        <section key={g.category} id={anchor(g.category)} className="mb-12 scroll-mt-20">
+        <section key={g.category} id={anchor(g.category)} className="mb-12 scroll-mt-32">
           <h2 className="text-xl font-semibold text-foreground">
             <I18nText id={g.category} /> <I18nText id="tools" />{" "}
             <span className="text-sm font-normal text-muted-foreground">

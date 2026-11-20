@@ -11,8 +11,9 @@ import { HOME_H1, HOME_INTRO } from "@/lib/site-meta";
  */
 export default function HomePage({ englishSeo }: { englishSeo: boolean }) {
   return (
-    <div className="mx-auto max-w-6xl px-4 py-12">
-      <section className="mb-12 text-center">
+    <div className="mx-auto max-w-6xl px-4 py-8 sm:py-12">
+      <script src="/filter.js" defer />
+      <section className="mb-8 text-center sm:mb-12">
         <h1 className="mx-auto max-w-3xl text-4xl font-bold leading-[1.15] tracking-tight text-foreground sm:text-5xl">
           {englishSeo ? HOME_H1 : <I18nText id="Free Online Tools" />}
         </h1>
@@ -24,11 +25,11 @@ export default function HomePage({ englishSeo }: { englishSeo: boolean }) {
           )}
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-2" id="filter-buttons">
-          <button data-filter="All Tools" className="filter-btn rounded-full bg-primary text-primary-foreground px-4 py-1.5 text-sm font-medium">
+          <button data-filter="All Tools" className="filter-btn min-h-11 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground">
             <I18nText id="All Tools" />
           </button>
           {categories.map((cat) => (
-            <button key={cat} data-filter={cat} className="filter-btn rounded-full border px-4 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:border-foreground/30">
+            <button key={cat} data-filter={cat} className="filter-btn min-h-11 rounded-full border px-4 py-2 text-sm font-medium text-muted-foreground hover:border-foreground/30 hover:text-foreground">
               <I18nText id={cat} />
             </button>
           ))}
@@ -55,7 +56,7 @@ export default function HomePage({ englishSeo }: { englishSeo: boolean }) {
 
       <div className="mx-auto max-w-6xl mb-8"><AdUnit placement="home" /></div>
 
-      <section className="rounded-2xl border bg-card p-8 text-center">
+      <section className="rounded-2xl border bg-card p-5 text-center sm:p-8">
         <h2 className="text-2xl font-bold text-foreground">
           <I18nText id="Why Toolbox Hub?" />
         </h2>
