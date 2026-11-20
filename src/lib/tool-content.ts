@@ -2429,6 +2429,56 @@ const overrides: Record<string, ToolContent> = {
       "Cut a little wide on both sides; you can always trim again but you cannot un-crop.",
     ],
   },
+  "video-resizer": {
+    intro:
+      "Resize Video changes a clip's resolution in your browser and downloads an MP4. Presets cover 1080p, 720p, 480p, and 360p, and you can type a custom width and height. Keep aspect ratio is on by default, so the picture is scaled to fit that frame instead of being stretched. A portrait clip uses a portrait frame for those presets.\n\nA larger frame does not add detail. When the output is bigger than the original, the page says the upscale will not add real detail. Encoding uses ffmpeg in this tab. Nothing is uploaded. A long video, or a phone with little free memory, can be slow or fail. The first run downloads the ffmpeg engine, about 25 MB, and later runs reuse it.",
+    howTo: [
+      { step: "Add a video", detail: "Choose a file. It stays on this device. The page reads the source width and height from the preview." },
+      { step: "Pick a size", detail: "Use 1080p, 720p, 480p, or 360p, or type a width and height. Keep aspect ratio locks the other side to the original shape." },
+      { step: "Check the output line", detail: "The output line is the even size that will be encoded. If it is larger than the source, the note says upscaling will not add real detail." },
+      { step: "Resize and download", detail: "The MP4 is encoded locally. Keep the tab open. Download it when the preview of the result appears." },
+    ],
+    faq: [
+      { q: "Will a bigger preset make a soft video look sharp?", a: "No. Upscaling only stretches the frames you already have. It does not recover detail. The page warns you when the output is larger than the source." },
+      { q: "Is the file uploaded?", a: "No. ffmpeg runs in your browser. The only download is the ffmpeg engine itself, the first time you use a video tool in this browser." },
+      { q: "Why is the size slightly different from what I typed?", a: "The H.264 encoder needs even width and height. The output line shows the size that will actually be written." },
+      { q: "Can a phone resize a long video?", a: "Sometimes. Large or long videos can be slow or run out of memory, especially on a phone. A short clip on a desktop is the comfortable case." },
+    ],
+    useCases: [
+      "Making a 1080p clip into 720p before sending it.",
+      "Fitting a landscape video into a smaller 16:9 frame.",
+      "Checking a custom width and height without installing an editor.",
+    ],
+    tips: [
+      "Leave keep aspect ratio on unless you mean to stretch the picture.",
+      "If you need a smaller file as well as a smaller frame, compress the result afterwards.",
+    ],
+  },
+  "video-cropper": {
+    intro:
+      "Crop Video keeps the region you set on the preview and downloads that region as an MP4. Presets cover 16:9, 9:16, 1:1, and 4:5, plus a freeform box and a custom ratio. Drag the box or type the x, y, width, and height. The highlighted rectangle is the crop that is encoded, in pixels, so the file matches the preview.\n\nThe preview player is muted so you can line up the frame. The exported MP4 keeps the soundtrack when the file has one. Nothing is uploaded. Large or long videos can be slow, and a phone may run out of memory. The first run downloads the ffmpeg engine.",
+    howTo: [
+      { step: "Add a video", detail: "Choose a file. A crop box appears on the preview once the dimensions are known." },
+      { step: "Set the region", detail: "Drag the box, drag a handle, or type X, Y, width, and height. Free is any shape. 16:9, 9:16, 1:1, and 4:5 lock the shape. Custom takes a ratio of your own." },
+      { step: "Read the pixel line", detail: "The line under the preview is the exact rectangle the encoder will keep. The box on the picture uses those same pixels." },
+      { step: "Crop and download", detail: "Encoding runs locally. The result preview shows the cropped MP4, and you can download it." },
+    ],
+    faq: [
+      { q: "Does the file match the box I see?", a: "Yes. The box and the encoder use the same pixel rectangle. Width and height are even because the encoder uses 4:2:0." },
+      { q: "Is the video uploaded?", a: "No. The crop runs in your browser. The preview is muted; the download still includes the audio track when there is one." },
+      { q: "What if the clip is long?", a: "The whole duration is cropped, not just one frame. A long video can take a while, and a phone can run out of memory. Keep the tab open until the result appears." },
+      { q: "Can I crop to a vertical frame?", a: "Yes. 9:16 and 4:5 are built in, and Custom takes any ratio. Free lets you drag any rectangle." },
+    ],
+    useCases: [
+      "Cutting a landscape clip down to a 9:16 frame.",
+      "Keeping a square region for a thumbnail-style loop.",
+      "Removing empty space at the edge of a screen recording.",
+    ],
+    tips: [
+      "Scrub the preview to a frame where the subject is in the box before you export.",
+      "If the box jumps by a pixel, that is the even-size snap. The readout is what you will download.",
+    ],
+  },
   "video-to-gif": {
     intro:
       "The Video to GIF converter turns a video segment into a high-quality GIF, entirely in your browser. It uses ffmpeg's two-pass method: a custom palette is generated from your clip first, then the GIF is rendered against that palette, which is what separates a clean GIF from the banded, muddy output of naive converters.\n\nYou control the segment, frame rate and width. Shorter clips at 15 fps and 480 px wide hit the sweet spot for file size and compatibility; the tool warns above 30 seconds because GIFs grow fast.\n\nEverything runs locally with ffmpeg compiled to WebAssembly. No upload, no watermark, no queue.",

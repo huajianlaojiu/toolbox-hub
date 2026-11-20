@@ -750,6 +750,20 @@ const OVERRIDES: Record<string, Record<string, ToolSeoOverride>> = {
         "Keep only the part of a video between two times. The cut happens in the browser and does not re-encode the kept segment.",
     },
   },
+  "video-resizer": {
+    en: {
+      title: "Resize Video Online — 1080p, 720p, or Custom | Toolbox Hub",
+      description:
+        "Change a video's resolution in the browser and download an MP4. Presets include 1080p, 720p, 480p, and 360p. Upscaling does not add real detail.",
+    },
+  },
+  "video-cropper": {
+    en: {
+      title: "Crop Video Online — Match the Preview | Toolbox Hub",
+      description:
+        "Crop a video to 16:9, 9:16, 1:1, 4:5, or a custom region. The MP4 matches the box on the preview. The file stays on your device.",
+    },
+  },
   "video-to-gif": {
     en: {
       title: "Video to GIF Converter Online | Toolbox Hub",

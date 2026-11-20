@@ -104,6 +104,8 @@ export const tools: ToolMeta[] = [
   { slug: "video-speed-changer", title: "Video Speed Changer", description: "Play a video from 0.25× to 4× speed", category: "Video", icon: "gauge", keywords: ["video speed changer", "speed up video", "slow down video", "change video speed"], isPureFrontend: true },
   { slug: "video-transformer", title: "Flip, Rotate and Reverse Video", description: "Flip, rotate, or play a video backwards", category: "Video", icon: "flip", keywords: ["flip video", "rotate video", "reverse video", "video transformer"], isPureFrontend: true },
   { slug: "video-trimmer", title: "Video Trimmer", description: "Cut a clip to a start and end time", category: "Video", icon: "scissors", keywords: ["video trimmer", "trim video", "cut video", "video cutter"], isPureFrontend: true },
+  { slug: "video-resizer", title: "Resize Video", description: "Change a video's resolution and download an MP4", category: "Video", icon: "resize", keywords: ["resize video", "video resizer", "change video resolution", "1080p", "720p", "scale video"], isPureFrontend: true },
+  { slug: "video-cropper", title: "Crop Video", description: "Crop a region of a video and download an MP4", category: "Video", icon: "crop", keywords: ["crop video", "video cropper", "crop video online", "aspect ratio crop"], isPureFrontend: true },
   { slug: "video-to-gif", title: "Video to GIF", description: "Turn a video segment into a GIF", category: "Video", icon: "film", keywords: ["video to gif", "convert video to gif", "gif maker", "mp4 to gif"], isPureFrontend: true },
   { slug: "video-to-audio", title: "Video to Audio", description: "Save a video's soundtrack as MP3, WAV, or FLAC", category: "Video", icon: "music", keywords: ["video to audio", "extract audio from video", "video to mp3", "mp3 extractor"], isPureFrontend: true },
   { slug: "video-frame-capture", title: "Video Frame Capture", description: "Save still frames from a video as images", category: "Video", icon: "camera", keywords: ["video frame capture", "video screenshot", "extract frames from video", "video thumbnail"], isPureFrontend: true },
@@ -136,7 +138,7 @@ export const CATEGORY_BLURBS: Record<string, string> = {
   Web: "Page-level helpers: meta tags, Open Graph tags, favicons, URL parsing, email syntax checks and YouTube thumbnails.",
   Math: "Number work: primes, factorials, scientific notation, fractions, greatest common factor and least common multiple, and Roman numerals.",
   Video:
-    "Short-video work that runs locally: compress, convert, merge, trim, speed up, flip and rotate clips, pull frames or GIFs, rip audio, and assemble covers and scripts — all processed in your browser with nothing uploaded.",
+    "Short-video work that runs locally: compress, convert, resize, crop, merge, trim, speed up, flip and rotate clips, pull frames or GIFs, rip audio, and assemble covers and scripts — all processed in your browser with nothing uploaded.",
   Audio:
     "Convert between audio formats and trim tracks with a waveform, entirely on your device.",
   Document:
