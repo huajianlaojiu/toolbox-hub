@@ -82,32 +82,40 @@ export default function ConsentBanner() {
   if (!visible) return null;
 
   const secondary =
-    "rounded-lg border px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground";
+    "inline-flex min-h-11 items-center justify-center rounded-lg border px-2 py-2 text-center text-xs font-medium leading-tight text-foreground transition-colors hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground sm:px-4 sm:text-sm sm:leading-5";
   const primary =
-    "rounded-lg bg-foreground px-4 py-2 text-sm font-medium text-background transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground";
+    "inline-flex min-h-11 items-center justify-center rounded-lg bg-foreground px-2 py-2 text-center text-xs font-medium leading-tight text-background transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground sm:px-4 sm:text-sm sm:leading-5";
+  const notice = t("We use Google AdSense to fund this site and Google Analytics 4 to see which tools are useful. Advertising and analytics scripts only load after you agree. You can change your choice at any time from the footer.");
 
   return (
     <div
       role="region"
       aria-label={t("Cookie preferences")}
-      className="fixed inset-x-0 bottom-0 z-[100] border-t bg-card p-4 shadow-[0_-8px_30px_rgba(0,0,0,0.14)]"
+      className="fixed inset-x-0 bottom-0 z-[100] max-h-[85vh] overflow-y-auto border-t bg-card p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-8px_30px_rgba(0,0,0,0.14)] sm:p-4"
     >
-      <div className="mx-auto flex max-w-6xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-        {/* 手机上把说明收成一行：整段法律文案的面积曾大于主标题，Lighthouse 把它当成 LCP。
-            全文仍在 DOM 里（line-clamp 只影响绘制），桌面端完整展示，自定义面板里也能读到。 */}
-        <div className="max-w-[16rem] text-xs leading-4 text-muted-foreground sm:max-w-2xl sm:text-sm sm:leading-6">
-          <p className="font-semibold text-foreground">{t("Your privacy choices")}</p>
-          <p className="mt-1 line-clamp-1 sm:line-clamp-none">
-            {t("We use Google AdSense to fund this site and Google Analytics 4 to see which tools are useful. Advertising and analytics scripts only load after you agree. You can change your choice at any time from the footer.")}
-          </p>
+      <div className="mx-auto flex max-w-6xl flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+        {/* 手机上说明仍收成一行，避免同意条再次大过主标题变成 LCP。
+            三个按钮并排且至少 44px，不再折成三行盖住工具操作区。
+            全文仍在 DOM 里，桌面完整展示，点 Customize 也能读到。 */}
+        <div className="min-w-0 text-xs leading-4 text-muted-foreground sm:max-w-2xl sm:text-sm sm:leading-6">
+          <div className="flex items-baseline justify-between gap-3">
+            <p className="font-semibold text-foreground">{t("Your privacy choices")}</p>
+            <a
+              href={localizePath("/privacy/", lang)}
+              className="shrink-0 text-foreground underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 sm:hidden"
+            >
+              {t("Privacy Policy")}
+            </a>
+          </div>
+          <p className="consent-summary mt-1 line-clamp-1 sm:line-clamp-none">{notice}</p>
           <a
             href={localizePath("/privacy/", lang)}
-            className="mt-1 inline-block text-foreground underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+            className="mt-1 hidden text-foreground underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 sm:inline-block"
           >
             {t("Privacy Policy")}
           </a>
         </div>
-        <div className="flex shrink-0 flex-wrap gap-2">
+        <div className="grid shrink-0 grid-cols-3 gap-2 sm:flex sm:flex-wrap">
           <button type="button" className={secondary} onClick={() => save(false, false)}>
             {t("Reject non-essential")}
           </button>
