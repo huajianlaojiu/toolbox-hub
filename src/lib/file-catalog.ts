@@ -104,17 +104,19 @@ export const PDF_LISTINGS: PdfListing[] = [
   })),
 ];
 export const IMAGE_BLURB = "Convert, resize, or rotate a picture, or read text from a photo.";
-export const VIDEO_BLURB = "Merge clips, trim a section, convert a format, or compress a file.";
+export const VIDEO_BLURB = "Merge, trim, resize, crop, convert, or compress a video. The file stays on your device.";
 
 /** 首页主卡片只放这两个。Image to Base64 是开发向工具，不进主卡片。 */
 export const IMAGE_FEATURED_SLUGS = ["image-format-converter", "image-to-text"] as const;
 
-/** 首页视频卡片展示的四个高频工具。分类页仍列出全部视频工具。 */
+/** 首页视频卡片展示的高频工具，含调整大小和裁剪。分类页仍列出全部视频工具。 */
 export const VIDEO_FEATURED_SLUGS = [
   "video-merger",
   "video-trimmer",
   "video-converter",
   "video-compressor",
+  "video-resizer",
+  "video-cropper",
 ] as const;
 
 const HOME_LABELS: Record<string, string> = {
@@ -124,6 +126,8 @@ const HOME_LABELS: Record<string, string> = {
   "video-trimmer": "Video Trimmer",
   "video-converter": "Video Converter",
   "video-compressor": "Video Compressor",
+  "video-resizer": "Resize Video",
+  "video-cropper": "Crop Video",
   "data-converter": "JSON Formatter",
   "qr-code-generator": "QR Code Generator",
   "password-generator": "Password Generator",
@@ -137,6 +141,8 @@ const HOME_DESCRIPTIONS: Record<string, string> = {
   "video-merger": "Join two to ten clips into one MP4, in the order you add them.",
   "video-trimmer": "Cut a clip to a start and end time, then keep only that part.",
   "video-compressor": "Shrink a video into a smaller MP4 file.",
+  "video-resizer": "Change the resolution. Upscaling does not add real detail.",
+  "video-cropper": "Crop the region shown on the preview and download an MP4.",
 };
 
 export type StartIcon = "file-text" | "image" | "combine" | "clock" | "minimize";

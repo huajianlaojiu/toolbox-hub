@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return langPageMeta(
     lang,
     "/video/",
-    "Video Tools: Merge, Trim, Convert, and Compress",
-    "Merge, trim, convert, and compress video in the browser, plus the other video tools on Toolbox Hub. Files stay on your device."
+    "Video Tools: Merge, Trim, Resize, Crop, and Compress",
+    "Merge, trim, resize, crop, convert, and compress video in the browser. Files stay on your device. Large videos can be slow or run out of memory."
   );
 }
