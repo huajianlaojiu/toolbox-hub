@@ -1,6 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
+import I18nLink from "@/components/i18n-link";
+import { PDF_STANDALONE } from "@/lib/file-catalog";
+import { useI18n } from "@/lib/i18n";
 import { PDF_MODE_IDS, isPdfModeId, type PdfModeId } from "@/lib/pdf-modes";
 import { Upload, Loader2, Merge, Scissors, Image as ImageIcon, Type, FileDown } from "lucide-react";
 import { BatchNote } from "@/components/billing/batch-note";
@@ -77,6 +80,7 @@ function modeFromLocation(): Mode | null {
 }
 
 export default function PdfToolkit() {
+  const { t } = useI18n();
   // 先空着，等读到 hash 再画出标签。否则深链会先闪成 Merge，测试也会读到错误的选中态。
   const [mode, setMode] = useState<Mode | null>(null);
 
@@ -225,6 +229,13 @@ export default function PdfToolkit() {
 
   return (
     <div className="space-y-5">
+      <nav aria-label={t("Other PDF tools")} className="flex gap-2 overflow-x-auto pb-1">
+        {PDF_STANDALONE.map((item) => (
+          <I18nLink key={item.href} href={item.href} className="inline-flex min-h-11 shrink-0 items-center rounded-full border px-3 text-sm text-foreground hover:border-primary/40">
+            {t(item.label)}
+          </I18nLink>
+        ))}
+      </nav>
       <div className="flex gap-2 overflow-x-auto pb-1 min-[380px]:flex-wrap min-[380px]:overflow-visible">
         {MODES.map((m) => (
           <button key={m.id} id={`pdf-mode-${m.id}`} type="button" aria-pressed={mode === m.id} onClick={() => selectMode(m.id)} className={`tool-btn scroll-mt-28 shrink-0 ${mode === m.id ? "tool-btn-primary" : "tool-btn-secondary"}`}>

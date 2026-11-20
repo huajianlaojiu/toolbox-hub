@@ -624,6 +624,48 @@ const OVERRIDES: Record<string, Record<string, ToolSeoOverride>> = {
         "Combine PDFs, pull out page ranges, turn PNG or JPG images into a PDF, or export pages as PNG images and text. Files stay in the browser.",
     },
   },
+  "compress-pdf": {
+    en: {
+      title: "Compress PDF Online — Smaller Files in Your Browser | Toolbox Hub",
+      description:
+        "Recompress embedded images and compare the original size, new size, and savings. Text-only PDFs often barely shrink. Nothing is uploaded.",
+    },
+  },
+  "rotate-pdf": {
+    en: {
+      title: "Rotate PDF Online — 90, 180, or 270 Degrees | Toolbox Hub",
+      description:
+        "Rotate every page, or only the pages you pick, by 90, 180, or 270 degrees. The new PDF downloads from your browser.",
+    },
+  },
+  "organize-pdf": {
+    en: {
+      title: "Organize PDF Online — Reorder and Delete Pages | Toolbox Hub",
+      description:
+        "Reorder PDF pages, delete the ones you do not need, and download the new document. Large buttons work on a phone. Files stay on your device.",
+    },
+  },
+  "watermark-pdf": {
+    en: {
+      title: "Watermark PDF Online — Text or Image Stamp | Toolbox Hub",
+      description:
+        "Stamp text or a PNG or JPG on every page. Position, opacity, rotation, and size are written into the PDF. The file is not uploaded.",
+    },
+  },
+  "pdf-page-numbers": {
+    en: {
+      title: "Add Page Numbers to PDF Online | Toolbox Hub",
+      description:
+        "Number PDF pages with a position, font size, typeface, and starting number. Choose a plain number, Page 1, or 1 of 4. Runs in the browser.",
+    },
+  },
+  "protect-pdf": {
+    en: {
+      title: "Protect PDF Online — Password to Open | Toolbox Hub",
+      description:
+        "Encrypt a PDF so opening it requires a password you choose. Standard PDF protection, not a promise the file cannot be broken. Nothing is uploaded.",
+    },
+  },
   "roman-numerals": {
     en: {
       title: "Roman Numeral Converter — Numbers Both Ways | Toolbox Hub",

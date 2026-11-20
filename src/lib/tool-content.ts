@@ -2740,6 +2740,130 @@ const overrides: Record<string, ToolContent> = {
       "Put files in the order you want before merging. The tool follows the order you selected.",
     ],
   },
+  "compress-pdf": {
+    intro:
+      "Compress PDF Online recompresses the images embedded in a PDF and, on the Strong setting, downsamples them. You see the original size, the new size, and the percentage saved before you rely on the download. The work happens in your browser. The file is not uploaded.\n\nThis is an honest limit, not a slogan. A text-only PDF often barely shrinks, because there are no pictures to recompress. Fax images, JPEG 2000, and some CMYK pictures are left as they are when the browser cannot decode them. A server-side compressor can sometimes go further by rewriting fonts and content streams. If the rewritten file is not smaller, the download is the file you started with.",
+    howTo: [
+      { step: "Choose a PDF", detail: "Drop one PDF. The original size is shown next to the file name." },
+      { step: "Pick Regular or Strong", detail: "Regular keeps pictures closer to the original. Strong uses a lower JPEG quality and a smaller maximum edge." },
+      { step: "Compress", detail: "The page reports the new size and the percentage saved, then downloads the PDF." },
+    ],
+    faq: [
+      { q: "Will every PDF get smaller?", a: "No. Text-only files and pictures that are already compressed often stay about the same size. The page says so when the savings are under 5 percent." },
+      { q: "Is this as small as a desktop compressor?", a: "Not always. This tool recompresses embedded images. It does not subset fonts or rebuild content streams the way a server-side compressor can." },
+      { q: "Does the text stay selectable?", a: "Yes, when the original had a text layer. The tool does not flatten pages into pictures. It only replaces embedded images it can decode." },
+      { q: "Is the file uploaded?", a: "No. Compression runs in your browser. A very large PDF can still run out of memory, especially on a phone." },
+    ],
+    useCases: [
+      "Shrinking a photo-heavy PDF before emailing it.",
+      "Checking whether a report is mostly text and will not get much smaller.",
+      "Making a scan of ordinary JPEG pages lighter without sending it to a server.",
+    ],
+    tips: [
+      "Try Regular first. Use Strong when the file still needs to be smaller and softer pictures are acceptable.",
+      "If the savings are tiny, the pictures were probably already compressed. Keeping the original is the right outcome.",
+    ],
+  },
+  "rotate-pdf": {
+    intro:
+      "Rotate PDF Online turns pages by 90, 180, or 270 degrees. You can rotate the whole document or only the pages you select. The turn is added to any rotation already stored in the file, then the new PDF downloads. Nothing is uploaded.",
+    howTo: [
+      { step: "Choose a PDF", detail: "The page count appears after the file loads." },
+      { step: "Pick a turn", detail: "Choose 90, 180, or 270 degrees." },
+      { step: "Choose the pages", detail: "Leave All pages on, or turn it off and tap the page numbers. Long documents use a page range such as 1-3, 5." },
+      { step: "Download", detail: "The rotated PDF downloads when the job finishes." },
+    ],
+    faq: [
+      { q: "Can I rotate a single page?", a: "Yes. Turn off All pages and select that page." },
+      { q: "Does this flatten the PDF?", a: "No. It changes the page rotation flag and keeps the existing text and images." },
+      { q: "Is the file uploaded?", a: "No. The rotation is applied in your browser." },
+    ],
+    useCases: [
+      "Fixing a scan that came out sideways.",
+      "Turning one landscape page inside a portrait document.",
+    ],
+    tips: ["If a page was already rotated, the new angle is added to that rotation."],
+  },
+  "organize-pdf": {
+    intro:
+      "Organize PDF Online lets you reorder pages and delete the ones you do not want. Each page is a large card with Up, Down, and Remove buttons, so the same controls work with a thumb on a phone. Download builds a new PDF in the order you left on screen. The file stays in your browser.",
+    howTo: [
+      { step: "Choose a PDF", detail: "Thumbnails appear as each page is drawn. A long file can take a moment." },
+      { step: "Move or remove pages", detail: "Up and Down change the order. Remove drops a page. At least one page has to stay." },
+      { step: "Download", detail: "The new document uses the order on screen." },
+    ],
+    faq: [
+      { q: "Can I delete every page?", a: "No. A PDF needs at least one page, so the last remaining page cannot be removed." },
+      { q: "Will thumbnails use a lot of memory?", a: "They are small JPEG previews, but a very long PDF can still be heavy on a phone. The download itself does not need the pictures." },
+      { q: "Is the file uploaded?", a: "No." },
+    ],
+    useCases: [
+      "Pulling a cover page to the front.",
+      "Dropping a blank page from a scan.",
+    ],
+    tips: ["The small line under a moved card shows the page number it had in the original file."],
+  },
+  "watermark-pdf": {
+    intro:
+      "Watermark PDF Online stamps text, a PNG or JPG, or both, on every page. You set the position, the opacity, the rotation, the text size, and, for an image, how wide it is relative to the page. Those controls are written into the downloaded PDF. The file is not uploaded.",
+    howTo: [
+      { step: "Choose a PDF", detail: "One PDF per run." },
+      { step: "Set the stamp", detail: "Type the text, add a PNG or JPG if you want one, then set position, opacity, and rotation." },
+      { step: "Download", detail: "Open the result in a viewer to confirm the stamp landed where you expected." },
+    ],
+    faq: [
+      { q: "Can I use a transparent PNG?", a: "Yes. PNG and JPG are the image formats this tool embeds. WebP is not." },
+      { q: "Does opacity actually change the file?", a: "Yes. The opacity, rotation, size, and position are applied when the PDF is written, not only in a preview." },
+      { q: "Is the file uploaded?", a: "No." },
+    ],
+    useCases: [
+      "Marking a draft before you send it.",
+      "Adding a small logo to the corner of each page.",
+    ],
+    tips: ["Start with a low opacity if the stamp should sit behind the reading, not cover it."],
+  },
+  "pdf-page-numbers": {
+    intro:
+      "Add Page Numbers to PDF Online writes a number on every page. You choose the corner or the center of the top or bottom edge, the typeface, the font size, the number the first page starts at, and whether the label is the number alone, “Page 5”, or “5 of 12”. The file stays in your browser.",
+    howTo: [
+      { step: "Choose a PDF", detail: "One file is numbered in a single pass." },
+      { step: "Set the style", detail: "Pick a position, Helvetica, Times, or Courier, a size, a starting number, and a format." },
+      { step: "Download", detail: "The numbered PDF downloads when the job finishes." },
+    ],
+    faq: [
+      { q: "Can the first page be something other than 1?", a: "Yes. Set Start at to the number the first page should show. Later pages count up from there." },
+      { q: "Will this cover existing footer text?", a: "It can. The number sits in the margin you choose. Check a page that already has a footer." },
+      { q: "Is the file uploaded?", a: "No." },
+    ],
+    useCases: [
+      "Numbering a packet that was merged from several files.",
+      "Starting at page 12 because the PDF is a section of a longer document.",
+    ],
+    tips: ["Bottom center at 12 points is the usual choice for a report."],
+  },
+  "protect-pdf": {
+    intro:
+      "Protect PDF Online encrypts a PDF with a password you choose, using the standard PDF security handler. A normal viewer then asks for that password before it opens the file. This is not a claim that the file is unbreakable: the protection stops casual opening, and a determined attacker can still attack a password offline. The page cannot unlock a PDF, and it cannot recover a password you forget. The file is encrypted in your browser and is not uploaded.\n\nUse letters, numbers, and symbols. Only the first 32 characters are stored. Accented characters and emoji may not match what another PDF reader types back.",
+    howTo: [
+      { step: "Choose a PDF", detail: "The file must not already be password-protected. This tool does not remove an existing password." },
+      { step: "Enter the password twice", detail: "The two fields have to match. A short password still works, with a warning that it is easy to guess." },
+      { step: "Download", detail: "Open the download in a PDF viewer and confirm it asks for the password. Keep the password somewhere else. This site does not store it." },
+    ],
+    faq: [
+      { q: "Does this make the PDF impossible to crack?", a: "No. It uses standard PDF password protection so a viewer asks before opening. It is not modern disk encryption, and a weak password can be guessed." },
+      { q: "Can I remove the password later on this site?", a: "No. This page does not unlock PDFs." },
+      { q: "What if the file is already protected?", a: "The tool stops and tells you. It will not replace or strip an existing password." },
+      { q: "Is the file uploaded?", a: "No. The password and the PDF stay in your browser." },
+    ],
+    useCases: [
+      "Sending a PDF that should not open for someone who does not have the password.",
+      "Keeping a local copy that a casual viewer cannot read.",
+    ],
+    tips: [
+      "Write the password down before you close the tab. The site never sees it and cannot email it back.",
+      "Prefer a long password made of words you can type on another computer.",
+    ],
+  },
   "archive-tool": {
     intro:
       "Create a ZIP or a TAR from files on your computer, or open a ZIP or TAR and download what is inside. The create tab lets you pick the format before you pack the files. The extract tab reads the archive and lists the entries so you can save them.\n\nZIP is handled by JSZip. TAR is read and written in the page. 7z and RAR are not supported, because those formats need a different decoder. Nothing is uploaded: the archive is built or unpacked in the browser.",

@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import FileCategoryPage from "@/components/file-category-page";
 import { languageAlternates } from "@/lib/alternates";
+import { PDF_PAGE_DESCRIPTION, PDF_PAGE_TITLE } from "@/lib/file-catalog";
 import { OG_IMAGE } from "@/lib/site-meta";
 
-const TITLE = "PDF Tools: Merge, Split, and Convert";
-const DESCRIPTION =
-  "Merge PDFs, split out a page range, turn images into a PDF, or export pages as images and text. The work stays in your browser.";
+const TITLE = PDF_PAGE_TITLE;
+const DESCRIPTION = PDF_PAGE_DESCRIPTION;
 
 export const metadata: Metadata = {
   title: TITLE,

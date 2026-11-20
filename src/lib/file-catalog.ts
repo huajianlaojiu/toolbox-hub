@@ -38,7 +38,71 @@ export const PDF_ACTIONS: PdfAction[] = [
   },
 ];
 
-export const PDF_BLURB = "Merge, split, or turn pages and images into a PDF. Work stays in your browser.";
+export const PDF_BLURB =
+  "Merge, split, compress, rotate, reorder, watermark, number, or password-protect a PDF. The file stays in your browser.";
+
+export const PDF_PAGE_TITLE = "PDF Tools Online: Merge, Compress, Rotate, Protect";
+export const PDF_PAGE_DESCRIPTION =
+  "Merge, split, compress, rotate, reorder, watermark, number, or password-protect a PDF. The file stays in your browser and is not uploaded.";
+
+/** Standalone PDF jobs. Each one is a real tool with its own page. */
+export const PDF_STANDALONE: HomeLink[] = [
+  {
+    label: "Compress PDF",
+    description: "Recompress embedded images and show the original size, the new size, and what you saved.",
+    href: `/tools/${toolOrThrow("compress-pdf").slug}/`,
+  },
+  {
+    label: "Rotate PDF",
+    description: "Turn every page, or only the pages you pick, by 90, 180, or 270 degrees.",
+    href: `/tools/${toolOrThrow("rotate-pdf").slug}/`,
+  },
+  {
+    label: "Organize PDF",
+    description: "Reorder pages, delete the ones you do not need, and download the new document.",
+    href: `/tools/${toolOrThrow("organize-pdf").slug}/`,
+  },
+  {
+    label: "Watermark PDF",
+    description: "Stamp text or an image on each page, with position, opacity, and rotation.",
+    href: `/tools/${toolOrThrow("watermark-pdf").slug}/`,
+  },
+  {
+    label: "Page Numbers",
+    description: "Add page numbers with a position, a font size, and a starting number.",
+    href: `/tools/${toolOrThrow("pdf-page-numbers").slug}/`,
+  },
+  {
+    label: "Protect PDF",
+    description: "Require a password to open a PDF. Standard protection, not a claim that it cannot be broken.",
+    href: `/tools/${toolOrThrow("protect-pdf").slug}/`,
+  },
+];
+
+export interface PdfListing {
+  id: string;
+  label: string;
+  description: string;
+  href: string;
+  hash?: string;
+}
+
+/** Every PDF job that actually runs. Toolkit tabs keep their hash links. */
+export const PDF_LISTINGS: PdfListing[] = [
+  ...PDF_ACTIONS.map((action) => ({
+    id: action.id,
+    label: action.label,
+    description: action.description,
+    href: PDF_TOOL_PATH,
+    hash: action.id,
+  })),
+  ...PDF_STANDALONE.map((item) => ({
+    id: item.href,
+    label: item.label,
+    description: item.description ?? "",
+    href: item.href,
+  })),
+];
 export const IMAGE_BLURB = "Convert, resize, or rotate a picture, or read text from a photo.";
 export const VIDEO_BLURB = "Merge clips, trim a section, convert a format, or compress a file.";
 
@@ -133,6 +197,12 @@ export function featuredVideoLinks(): HomeLink[] {
 }
 
 export const START_ITEMS: HomeLink[] = [
+  {
+    label: "Compress PDF",
+    description: "Recompress embedded images and show the original size, the new size, and what you saved.",
+    icon: "minimize",
+    href: `/tools/${toolOrThrow("compress-pdf").slug}/`,
+  },
   {
     label: "Merge PDF",
     description: "Combine PDFs in the order you add them, in your browser.",

@@ -1,6 +1,7 @@
 export { default } from "../../(public)/pdf/page";
 import type { Metadata } from "next";
 import { LOCALES } from "@/lib/locales";
+import { PDF_PAGE_DESCRIPTION, PDF_PAGE_TITLE } from "@/lib/file-catalog";
 import { langPageMeta } from "@/lib/lang-meta";
 
 export function generateStaticParams() {
@@ -12,7 +13,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return langPageMeta(
     lang,
     "/pdf/",
-    "PDF Tools: Merge, Split, and Convert",
-    "Merge PDFs, split out a page range, turn images into a PDF, or export pages as images and text. The work stays in your browser."
+    PDF_PAGE_TITLE,
+    PDF_PAGE_DESCRIPTION
   );
 }
