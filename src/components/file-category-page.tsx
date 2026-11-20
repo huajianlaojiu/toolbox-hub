@@ -25,7 +25,7 @@ const COPY: Record<
   images: {
     title: "Image Tools",
     blurb: IMAGE_BLURB,
-    note: "Image to Base64 is listed here as well.",
+    note: "Image to Base64 is listed here as well. Compress, resize, crop, rotate, and watermark each have their own page.",
   },
   video: {
     title: "Video Tools",

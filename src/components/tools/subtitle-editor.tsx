@@ -1,7 +1,7 @@
 "use client";
 import { useRef, useState } from "react";
 import { Upload, Download, Plus, Trash2, Play, Pause, Clock, FileText } from "lucide-react";
-import { useI18n } from "@/lib/i18n";
+import { localizePath, useI18n } from "@/lib/i18n";
 
 interface Cue { id: number; start: number; end: number; text: string }
 
@@ -73,7 +73,7 @@ function toAss(cues: Cue[]): string {
 }
 
 export default function SubtitleEditor() {
-  const { L } = useI18n();
+  const { L, lang } = useI18n();
 
   const [cues, setCues] = useState<Cue[]>([]);
   const [selected, setSelected] = useState(0);
@@ -130,6 +130,13 @@ export default function SubtitleEditor() {
 
   return (
     <div className="space-y-4">
+      <p className="text-sm leading-6 text-muted-foreground">
+        {L("This editor changes the subtitle file only. To burn captions into the picture, use")}{" "}
+        <a href={localizePath("/tools/add-subtitles/", lang)} className="font-medium text-primary hover:underline">
+          {L("Add Subtitles")}
+        </a>
+        .
+      </p>
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="flex flex-col items-center gap-3 rounded-xl border-2 border-dashed p-6 cursor-pointer hover:border-primary hover:bg-muted/30 transition-all">
           <FileText className="h-7 w-7 text-muted-foreground" />

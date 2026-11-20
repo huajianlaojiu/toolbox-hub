@@ -20,6 +20,7 @@ function lazyTool(loader: () => Promise<{ default: ComponentType }>) {
 }
 
 const TOOLS: Record<string, ComponentType> = {
+  "add-subtitles": lazyTool(() => import("./add-subtitles")),
   "age-calculator": lazyTool(() => import("./age-calculator")),
   "archive-tool": lazyTool(() => import("./archive-tool")),
   "area-converter": lazyTool(() => import("./area-converter")),
@@ -54,7 +55,12 @@ const TOOLS: Record<string, ComponentType> = {
   "hex-text": lazyTool(() => import("./hex-text")),
   "html-entity-encoder": lazyTool(() => import("./html-entity-encoder")),
   "html-preview": lazyTool(() => import("./html-preview")),
+  "image-compressor": lazyTool(() => import("./image-compressor")),
+  "image-cropper": lazyTool(() => import("./image-cropper")),
   "image-format-converter": lazyTool(() => import("./image-format-converter")),
+  "image-resizer": lazyTool(() => import("./image-resizer")),
+  "image-rotator": lazyTool(() => import("./image-rotator")),
+  "image-watermark": lazyTool(() => import("./image-watermark")),
   "image-to-base64": lazyTool(() => import("./image-to-base64")),
   "image-to-text": lazyTool(() => import("./image-to-text")),
   "length-converter": lazyTool(() => import("./length-converter")),
