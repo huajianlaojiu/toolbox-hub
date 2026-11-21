@@ -5,6 +5,7 @@ import ToolCard from "@/components/tool-card";
 import { I18nText } from "@/components/i18n-text";
 import { visibleTools, categories, CATEGORY_BLURBS, type ToolMeta } from "@/lib/tools-data";
 import { languageAlternates } from "@/lib/alternates";
+import { pageWrap } from "@/components/page-wrap";
 import { OG_IMAGE } from "@/lib/site-meta";
 
 export const metadata: Metadata = {
@@ -63,7 +64,7 @@ export default function ToolsIndex() {
   const groups = groupByCategory();
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10">
+    <div className={`${pageWrap} py-10`}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

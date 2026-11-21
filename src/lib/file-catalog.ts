@@ -108,27 +108,96 @@ export const IMAGE_BLURB =
 export const VIDEO_BLURB =
   "Merge, trim, resize, crop, convert, compress, or burn subtitles into a video. The file stays on your device.";
 
-/** 首页主卡片只放真正可用的图片工具。Image to Base64 是开发向工具，不进主卡片。 */
+/** 首页图片区按预览稿的顺序排这 7 个日常工具。Image to Base64 仍在图片分类页和总目录里。 */
 export const IMAGE_FEATURED_SLUGS = [
-  "image-format-converter",
   "image-compressor",
   "image-resizer",
   "image-cropper",
   "image-rotator",
+  "image-format-converter",
   "image-watermark",
   "image-to-text",
 ] as const;
 
-/** 首页视频卡片展示的高频工具。分类页仍列出全部视频工具。 */
+/** 首页视频区展示的高频工具，顺序跟预览稿一致。分类页仍列出全部视频工具。 */
 export const VIDEO_FEATURED_SLUGS = [
   "video-merger",
   "video-trimmer",
-  "video-converter",
   "video-compressor",
   "video-resizer",
   "video-cropper",
   "add-subtitles",
+  "video-converter",
 ] as const;
+
+/** 首页和分类页磁贴用的短句。更长的说明仍留在工具页。 */
+const TILE_LABELS: Record<string, string> = {
+  "image-to-text": "Image to Text",
+};
+
+const TILE_DESCRIPTIONS: Record<string, string> = {
+  merge: "Join files into one PDF",
+  split: "Cut out the pages you need",
+  "/tools/compress-pdf/": "Shrink the file, keep the pages",
+  img2pdf: "Turn pictures into a document",
+  pdf2img: "Save each page as a picture",
+  "/tools/rotate-pdf/": "Turn pages the right way",
+  "/tools/organize-pdf/": "Reorder or drop pages",
+  "/tools/watermark-pdf/": "Stamp text across the pages",
+  "/tools/pdf-page-numbers/": "Add numbers where you want",
+  "/tools/protect-pdf/": "Lock a file with a password",
+  pdf2text: "Extract the words from a file",
+  "image-compressor": "Make a smaller file",
+  "image-resizer": "Change the width and height",
+  "image-cropper": "Keep only the part you want",
+  "image-rotator": "Turn or flip a picture",
+  "image-format-converter": "JPG, PNG, WebP, BMP, ICO",
+  "image-watermark": "Stamp text or a logo",
+  "image-to-text": "Read text out of a photo",
+  "video-merger": "Join clips into one MP4",
+  "video-trimmer": "Keep a start and end time",
+  "video-compressor": "Shrink a file, still an MP4",
+  "video-resizer": "Change the resolution",
+  "video-cropper": "Cut to a frame you choose",
+  "add-subtitles": "Burn captions into the video",
+  "video-converter": "MP4, WebM, MOV, MKV, AVI",
+};
+
+const PDF_TILE_ORDER = [
+  "merge",
+  "split",
+  "/tools/compress-pdf/",
+  "img2pdf",
+  "pdf2img",
+  "/tools/rotate-pdf/",
+  "/tools/organize-pdf/",
+  "/tools/watermark-pdf/",
+  "/tools/pdf-page-numbers/",
+  "/tools/protect-pdf/",
+  "pdf2text",
+] as const;
+
+export function tileLabel(key: string, fallback: string): string {
+  return TILE_LABELS[key] ?? fallback;
+}
+
+export function tileDescription(key: string, fallback: string): string {
+  return TILE_DESCRIPTIONS[key] ?? fallback;
+}
+
+/** 预览稿的 PDF 顺序。漏掉或写错一个工具会在构建时直接抛错。 */
+export function orderedPdfListings(): PdfListing[] {
+  const byId = new Map(PDF_LISTINGS.map((item) => [item.id, item]));
+  const ordered = PDF_TILE_ORDER.map((id) => {
+    const item = byId.get(id);
+    if (!item) throw new Error(`PDF tile order names a missing listing: ${id}`);
+    return item;
+  });
+  if (ordered.length !== PDF_LISTINGS.length) {
+    throw new Error("PDF tile order does not cover every PDF listing");
+  }
+  return ordered;
+}
 
 const HOME_LABELS: Record<string, string> = {
   "image-format-converter": "Image Converter",
@@ -224,6 +293,30 @@ export function featuredVideoLinks(): HomeLink[] {
     };
   });
 }
+
+export type HomeTone = "pdf" | "image" | "video";
+
+/** 首屏三个快捷入口，都指向已经上线的工具。 */
+export const HOME_SHORTCUTS: { label: string; href: string; tone: HomeTone; glyph: string }[] = [
+  {
+    label: "Compress PDF",
+    href: `/tools/${toolOrThrow("compress-pdf").slug}/`,
+    tone: "pdf",
+    glyph: "pdf-file",
+  },
+  {
+    label: "Compress Image",
+    href: `/tools/${toolOrThrow("image-compressor").slug}/`,
+    tone: "image",
+    glyph: "img-photo",
+  },
+  {
+    label: "Trim a video",
+    href: `/tools/${toolOrThrow("video-trimmer").slug}/`,
+    tone: "video",
+    glyph: "vid-play",
+  },
+];
 
 export const START_ITEMS: HomeLink[] = [
   {

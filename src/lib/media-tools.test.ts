@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { unsupportedCaptionGlyphs } from "./caption-font.ts";
-import { featuredImageLinks, featuredVideoLinks, imageTools, videoTools } from "./file-catalog.ts";
+import { HOME_SHORTCUTS, featuredImageLinks, featuredVideoLinks, imageTools, orderedPdfListings, tileLabel, videoTools } from "./file-catalog.ts";
 import {
   compressEncoding,
   extensionFor,
@@ -104,11 +104,11 @@ test("the new tools are real catalog entries", () => {
   assert.equal(getTool("subtitle-editor")?.redirect, undefined);
   const imageLabels = featuredImageLinks().map((item) => item.label);
   assert.deepEqual(imageLabels, [
-    "Image Converter",
     "Compress Image",
     "Resize Image",
     "Crop Image",
     "Rotate Image",
+    "Image Converter",
     "Watermark Image",
     "Image to Text OCR",
   ]);
@@ -118,4 +118,32 @@ test("the new tools are real catalog entries", () => {
   assert.equal(imageTools().some((item) => item.slug === "image-to-base64"), true);
   assert.equal(videoTools().some((item) => item.slug === "subtitle-editor"), true);
   assert.equal(videoTools().some((item) => item.slug === "add-subtitles"), true);
+  assert.equal(videoTools().length, 17);
+  assert.equal(imageTools().length, 8);
+  assert.equal(featuredImageLinks().length, 7);
+  assert.deepEqual(
+    featuredVideoLinks().map((item) => item.label),
+    ["Video Merger", "Video Trimmer", "Video Compressor", "Resize Video", "Crop Video", "Add Subtitles", "Video Converter"]
+  );
+  assert.deepEqual(
+    orderedPdfListings().map((item) => item.label),
+    [
+      "Merge PDF",
+      "Split PDF",
+      "Compress PDF",
+      "Images to PDF",
+      "PDF to Images",
+      "Rotate PDF",
+      "Organize PDF",
+      "Watermark PDF",
+      "Page Numbers",
+      "Protect PDF",
+      "PDF to Text",
+    ]
+  );
+  assert.equal(tileLabel("image-to-text", "Image to Text OCR"), "Image to Text");
+  assert.deepEqual(
+    HOME_SHORTCUTS.map((item) => item.href),
+    ["/tools/compress-pdf/", "/tools/image-compressor/", "/tools/video-trimmer/"]
+  );
 });

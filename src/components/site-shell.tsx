@@ -2,7 +2,6 @@ import { I18nProvider, type Messages, type ToolCardCopy } from "@/lib/i18n";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import ConsentBanner from "@/components/shared/consent-banner";
-import { visibleTools } from "@/lib/tools-data";
 
 /**
  * 站点外壳：在 I18nProvider（含目标语言字典）内渲染Header/main/Footer。
@@ -24,7 +23,7 @@ export default function SiteShell({
     <I18nProvider lang={lang} dict={dict} cards={cards}>
       <Header />
       <main className="flex-1">{children}</main>
-      <Footer toolCount={visibleTools.length} />
+      <Footer />
       {/* 同意管理横幅放在 Provider 内，文案可随当前语言字典翻译 */}
       <ConsentBanner />
     </I18nProvider>
