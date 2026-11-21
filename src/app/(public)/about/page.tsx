@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { visibleTools } from "@/lib/tools-data";
 import { I18nText } from "@/components/i18n-text";
 import { languageAlternates } from "@/lib/alternates";
+import { purchaseAvailable } from "@/lib/billing";
 
 export const metadata: Metadata = {
   title: "About Toolbox Hub",
@@ -38,7 +39,9 @@ export default function AboutPage() {
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="How it is funded" /></h2>
         <p>
-          <I18nText id="The site is funded by advertising and an optional Pro subscription. Ads may appear alongside the tools unless Pro is active in this browser, and Toolbox Hub does not control which ads appear. We do not accept payment to reorder or favour any tool, and neither ads nor Pro change what a tool computes." />
+            <I18nText id={purchaseAvailable()
+              ? "The site is funded by advertising and an optional Pro subscription. Ads may appear alongside the tools unless Pro is active in this browser, and Toolbox Hub does not control which ads appear. We do not accept payment to reorder or favour any tool, and neither ads nor Pro change what a tool computes."
+              : "The site is funded by advertising. Pro is described on the pricing page, and purchase is not available yet. Ads may appear alongside the tools unless Pro is active in this browser, and Toolbox Hub does not control which ads appear. We do not accept payment to reorder or favour any tool, and neither ads nor Pro change what a tool computes."} />
         </p>
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="Editorial approach" /></h2>

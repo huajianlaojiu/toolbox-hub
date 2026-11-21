@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { purchaseAvailable } from "./billing";
 import { visibleTools } from "./tools-data";
 
 export const SITE_URL = "https://toolbox-hub.io";
@@ -81,8 +82,9 @@ export function siteJsonLd(lang: string) {
   const siteFaq = [
     {
       question: "Is Toolbox Hub really free?",
-      answer:
-        "A typical single job is free: one file, one conversion, or one calculation, with no account. An optional Pro plan ($6 per month or $48 per year) raises batch limits, lets you download the job list saved in this browser, and removes ads. Pro does not block that single-job path.",
+      answer: purchaseAvailable()
+        ? "A typical single job is free: one file, one conversion, or one calculation, with no account. An optional Pro plan ($6 per month or $48 per year) raises batch limits, lets you download the job list saved in this browser, and removes ads. Pro does not block that single-job path."
+        : "A typical single job is free: one file, one conversion, or one calculation, with no account. An optional Pro plan is described on the pricing page. Purchase is not available yet. Pro does not block that single-job path.",
     },
     {
       question: "Is my data uploaded to a server?",

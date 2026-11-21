@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { BrandMark } from "@/components/category-glyph";
 import { pageWrap } from "@/components/page-wrap";
+import { purchaseAvailable } from "@/lib/billing";
 import { tools } from "@/lib/tools-data";
 import { getIcon } from "@/lib/icon-map";
 import { useI18n, LangToggle, localizePath } from "@/lib/i18n";
@@ -103,8 +104,12 @@ export default function Header() {
       active ? "bg-card text-foreground shadow-[0_1px_2px_rgba(16,18,28,0.04)]" : "text-muted-foreground hover:bg-card hover:text-foreground"
     }`;
 
+  const navItems = NAV.map((item) =>
+    item.href === "/pricing/" && !purchaseAvailable() ? { ...item, key: "Plans" } : item,
+  );
+
   const renderNav = (block: boolean) =>
-    NAV.map((item) => {
+    navItems.map((item) => {
       const active = navIsActive(pathname, item.href, lang);
       return (
         <a

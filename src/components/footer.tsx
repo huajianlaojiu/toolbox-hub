@@ -1,4 +1,5 @@
 "use client";
+import { purchaseAvailable } from "@/lib/billing";
 import { useI18n, localizePath } from "@/lib/i18n";
 import { pageWrap } from "@/components/page-wrap";
 
@@ -23,7 +24,7 @@ export default function Footer() {
           <a href={lp("/contact/")} className={link}>{t("Contact")}</a>
           <a href={lp("/disclaimer/")} className={link}>{t("Disclaimer")}</a>
           <a href="/sitemap.xml" className={link}>{t("Sitemap")}</a>
-          <a href={lp("/pricing/")} className={link}>{t("Pro")}</a>
+          <a href={lp("/pricing/")} className={link}>{t(purchaseAvailable() ? "Pro" : "Plans")}</a>
           <button
             type="button"
             onClick={() => window.dispatchEvent(new Event("tb-consent-open"))}
