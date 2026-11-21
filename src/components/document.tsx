@@ -1,3 +1,4 @@
+import { jakarta } from "@/lib/fonts";
 import { ThemeProvider } from "@/lib/theme";
 import { siteJsonLd } from "@/lib/site-meta";
 import {
@@ -81,7 +82,7 @@ export default function Document({
 }) {
   const { siteSchema, siteFaq } = siteJsonLd(lang);
   return (
-    <html lang={lang} dir={dir} className="h-full antialiased" suppressHydrationWarning>
+    <html lang={lang} dir={dir} className={`${jakarta.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
         {/* 暗色模式防闪烁：首帧绘制前同步确定主题 */}
         <script

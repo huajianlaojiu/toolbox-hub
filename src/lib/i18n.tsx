@@ -144,17 +144,9 @@ export function LangToggle() {
         aria-label="Language"
         aria-haspopup="listbox"
         aria-expanded={open}
-        className="flex h-11 w-11 items-center justify-center gap-1 rounded-lg border text-xs font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground sm:h-8 sm:w-auto sm:px-2"
+        className="inline-flex h-9 max-w-[11rem] items-center rounded-full border bg-card px-3 text-[13px] font-medium text-muted-foreground transition-colors hover:text-foreground"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
-          <circle cx="12" cy="12" r="10" />
-          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-          <path d="M2 12h20" />
-        </svg>
-        <span className="hidden sm:inline">{current.native}</span>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`hidden h-3 w-3 transition-transform sm:block ${open ? "rotate-180" : ""}`}>
-          <path d="m6 9 6 6 6-6" />
-        </svg>
+        <span className="truncate">{current.native}</span>
       </button>
 
       {open && (

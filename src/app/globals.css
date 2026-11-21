@@ -17,8 +17,8 @@
   --color-popover-foreground: var(--popover-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --animate-fade-in: fade-in 0.2s ease-out;
   --animate-slide-up: slide-up 0.3s ease-out;
 }
@@ -34,42 +34,80 @@
 }
 
 :root {
-  --background: #fafafa;
-  --foreground: #171717;
+  --background: #eef1f6;
+  --foreground: #12141a;
   --card: #ffffff;
-  --card-foreground: #171717;
-  --primary: #2563eb;
+  --card-foreground: #12141a;
+  --primary: #1e3a8a;
   --primary-foreground: #ffffff;
-  --muted: #f5f5f5;
-  --muted-foreground: #737373;
-  --border: #e5e5e5;
+  --muted: #e4e8f0;
+  --muted-foreground: #5c6370;
+  --border: #e3e7ee;
   --popover: #ffffff;
-  --popover-foreground: #171717;
-  --accent: #f0f7ff;
-  --accent-foreground: #1d4ed8;
+  --popover-foreground: #12141a;
+  --accent: #f3f5f9;
+  --accent-foreground: #12141a;
+  --tone-pdf: #c2410c;
+  --tone-pdf-bg: #fff1e8;
+  --tone-image: #0f766e;
+  --tone-image-bg: #e7f6f3;
+  --tone-video: #5b3cc4;
+  --tone-video-bg: #efeaff;
 }
 
 /* 手动切换暗色（class 由 ThemeProvider / 防闪烁脚本控制） */
 :root.dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-  --card: #171717;
-  --card-foreground: #ededed;
+  --background: #12141a;
+  --foreground: #f4f6fb;
+  --card: #1c1f29;
+  --card-foreground: #f4f6fb;
   --primary: #3b82f6;
   --primary-foreground: #ffffff;
-  --muted: #1a1a1a;
-  --muted-foreground: #a3a3a3;
-  --border: #262626;
-  --popover: #1c1c1c;
-  --popover-foreground: #ededed;
-  --accent: #1e293b;
-  --accent-foreground: #93c5fd;
+  --muted: #262a36;
+  --muted-foreground: #a3a9b6;
+  --border: #2c3140;
+  --popover: #1c1f29;
+  --popover-foreground: #f4f6fb;
+  --accent: #262a36;
+  --accent-foreground: #f4f6fb;
+  --tone-pdf: #fdba74;
+  --tone-pdf-bg: #3a241c;
+  --tone-image: #5eead4;
+  --tone-image-bg: #132e2b;
+  --tone-video: #c4b5fd;
+  --tone-video-bg: #2a2348;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+}
+
+.tool-tile {
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 2px rgba(16, 18, 28, 0.04), 0 8px 24px rgba(16, 18, 28, 0.04);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.tool-tile:hover {
+  border-color: #cfd6e2;
+  transform: translateY(-1px);
+}
+
+:root.dark .tool-tile {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.28), 0 8px 24px rgba(0, 0, 0, 0.22);
+}
+
+:root.dark .tool-tile:hover {
+  border-color: #3a4050;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tool-tile:hover {
+    transform: none;
+  }
 }
 
 * {
