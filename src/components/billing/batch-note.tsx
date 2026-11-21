@@ -1,7 +1,7 @@
 "use client";
 
 import { localizePath, useI18n } from "@/lib/i18n";
-import type { BatchDecision } from "@/lib/billing";
+import { purchaseAvailable, type BatchDecision } from "@/lib/billing";
 
 /**
  * 撞到上限时跟在文件列表下面，不是弹窗。
@@ -35,7 +35,7 @@ export function BatchNote({
       </p>
       <p className="mt-3">
         <a href={localizePath("/pricing/", lang)} className="font-medium text-foreground underline underline-offset-4">
-          See Pro
+          {purchaseAvailable() ? "See Pro" : "See the plans"}
         </a>
         <span className="text-muted-foreground"> — optional. The free run stays on this page.</span>
       </p>

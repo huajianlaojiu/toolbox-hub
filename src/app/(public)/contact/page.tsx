@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { I18nText } from "@/components/i18n-text";
 import { languageAlternates } from "@/lib/alternates";
+import { purchaseAvailable } from "@/lib/billing";
 
 export const metadata: Metadata = {
   title: "Contact Toolbox Hub",
@@ -51,9 +52,11 @@ export default function ContactPage() {
           <I18nText id="For direct advertising enquiries, use the same address with the subject line prefixed &quot;Advertising&quot;. For API access, white-label licensing or embedding the tools in another product, prefix the subject with &quot;API&quot;." />
         </p>
 
-        <h2 className="text-xl font-semibold text-foreground"><I18nText id="Pro" /></h2>
+        <h2 className="text-xl font-semibold text-foreground"><I18nText id={purchaseAvailable() ? "Pro" : "Plans"} /></h2>
         <p>
-          <I18nText id="Optional Pro billing is described on the pricing page. A staffed priority queue is not open yet. When it is, prefix the subject with Pro and include the order id from the receipt." />
+          <I18nText id={purchaseAvailable()
+            ? "Optional Pro billing is described on the pricing page. A staffed priority queue is not open yet. When it is, prefix the subject with Pro and include the order id from the receipt."
+            : "What Pro will include is on the pricing page. Purchase is not available yet, so there is no order id to send. A staffed priority queue is not open."} />
         </p>
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="Response time" /></h2>

@@ -1,8 +1,9 @@
 // 服务端运行时：按语言读取构建期生成的译文并插值。
 // 仅被 Server Component 引入（不进入客户端 bundle 的“全语言内容”）。
 import type { ToolContent } from "@/lib/tool-content";
-import { getToolContent } from "@/lib/tool-content";
+import { contentOverrides, getToolContent } from "@/lib/tool-content";
 import { tools } from "@/lib/tools-data";
+import { pickLocalizedToolContent } from "./pick-content";
 import { CONTENT } from "./content/index";
 
 const toolMap = new Map(tools.map((t) => [t.slug, t]));
@@ -43,19 +44,22 @@ export function getMeta(lang: string, slug: string): ToolMetaI18n {
   };
 }
 
+export { pickLocalizedToolContent } from "./pick-content";
+
 /** 取某语言下的工具 SEO 内容（已插值 {title}/{desc}），缺译文回退英文 */
 export function getContent(lang: string, slug: string): ToolContent {
   const base = toolMap.get(slug);
   const title = base?.title ?? slug;
   const desc = base?.description ?? "";
-  if (lang === "en" || !CONTENT[lang]) {
-    return interpolateContent(getToolContent(slug), { title, desc });
-  }
+  const english = interpolateContent(getToolContent(slug), { title, desc });
+  if (lang === "en" || !CONTENT[lang]) return english;
+
   const langContent = CONTENT[lang];
-  const override = langContent.overrides?.[slug];
-  const tmpl = override ?? langContent.generic;
+  const override = langContent.overrides?.[slug] as ToolContent | undefined;
+  const chosen = pickLocalizedToolContent(english, slug in contentOverrides, override, langContent.generic);
+  if (chosen === english) return english;
   const meta = getMeta(lang, slug);
-  return interpolateContent(tmpl ?? langContent.generic, { title: meta.title, desc: meta.description });
+  return interpolateContent(chosen, { title: meta.title, desc: meta.description });
 }
 
 export interface CardCopy {

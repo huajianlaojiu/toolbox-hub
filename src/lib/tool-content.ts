@@ -2680,16 +2680,16 @@ const overrides: Record<string, ToolContent> = {
   },
   "viral-video-studio": {
     intro:
-      "Viral Video Studio is a short-video script workshop that runs entirely in your browser with no AI and no accounts. It matches your topic to a content track, generates hook lines, a shot-by-shot storyboard and caption copy from built-in templates, and previews the result in a vertical 9:16 frame you can export as a cover image.\n\nEverything is template-driven and deterministic: the same inputs give the same script, which makes it useful as a starting skeleton you then rewrite in your own voice. Nothing you type is uploaded.\n\nIt is built on the open-source Viral Video Studio (MIT License) and embedded here so the workshop runs without leaving Toolbox Hub. The interface is in Chinese, reflecting the short-video ecosystem it was built for.",
+      "Viral Video Studio is a short-video script workshop that runs entirely in your browser with no AI and no accounts. It matches your topic to a content track, generates hook lines, a shot-by-shot storyboard and caption copy from built-in templates, and previews the result in a vertical 9:16 frame you can export as a cover image.\n\nEverything is template-driven and deterministic: the same inputs give the same script, which makes it useful as a starting skeleton you then rewrite in your own voice. Nothing you type is uploaded.\n\nIt is built on the open-source Viral Video Studio (MIT License) and embedded here so the workshop runs without leaving Toolbox Hub. The workshop on this page is in English.",
     howTo: [
       { step: "Pick your track", detail: "Choose a content category that matches your video topic." },
       { step: "Fill the brief", detail: "Enter the topic and key points. Templates generate hooks, storyboard and copy." },
-      { step: "Preview vertically", detail: "The 9:16 preview shows how the script reads as an actual short video." },
+      { step: "Preview vertically", detail: "The 9:16 frame cycles the storyboard lines so you can read the pacing. It is not a rendered video." },
       { step: "Export", detail: "Copy the script or export the cover image for your post." },
     ],
     faq: [
       { q: "Does it use AI?", a: "No. It is entirely template-based, which is why it is instant, free and works offline. Treat the output as a structured draft, not finished copy." },
-      { q: "Why is the interface in Chinese?", a: "The upstream open-source project was built for the Chinese short-video ecosystem (Douyin, Kuaishou, Xiaohongshu). We kept the original interface to respect its design." },
+      { q: "Does the phone preview export a video file?", a: "No. It cycles the storyboard lines inside a 9:16 frame so you can read the pacing. Export gives a cover image or a storyboard card, not a rendered video." },
       { q: "Is my input uploaded?", a: "No. Everything runs locally in your browser." },
       { q: "Can I use the output commercially?", a: "Yes. The output is yours; the tool adds no watermark and claims no rights." },
     ],

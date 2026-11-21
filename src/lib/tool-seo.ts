@@ -845,7 +845,7 @@ const OVERRIDES: Record<string, Record<string, ToolSeoOverride>> = {
     en: {
       title: "Short Video Script Template with Hooks | Toolbox Hub",
       description:
-        "Enter a topic and get a hook, a shot list, and caption copy from templates, previewed in a 9:16 frame. The workshop interface is in Chinese.",
+        "Enter a topic and get a hook, a shot list, and caption copy from templates, previewed in a 9:16 frame. Nothing you type is uploaded.",
     },
   },
   "teleprompter": {

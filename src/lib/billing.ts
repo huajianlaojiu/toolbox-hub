@@ -49,6 +49,31 @@ export function checkoutUrl(kind: "monthly" | "yearly"): string | null {
   return isHttpsUrl(raw) ? raw : null;
 }
 
+/** 至少一个结账链接是 https 时，定价页才可以呈现购买。未配置时不得看起来能付款。 */
+export function purchaseAvailable(): boolean {
+  return checkoutUrl("monthly") != null || checkoutUrl("yearly") != null;
+}
+
+/** 许可证校验地址是 https 时，激活表单才可以提交。 */
+export function licenseActivationAvailable(): boolean {
+  return isHttpsUrl(LICENSE_VERIFY_URL);
+}
+
+export const PRICING_TITLE_READY = `Toolbox Hub Pro — $${PRO_MONTHLY_USD}/month or $${PRO_YEARLY_USD}/year`;
+export const PRICING_TITLE_PLANNED = "Toolbox Hub Pro — purchase not available yet";
+export const PRICING_DESCRIPTION_READY =
+  "Optional Pro plan for larger file batches, a JSON export of the job list kept in this browser, and no ads. Single-job use of every tool stays free.";
+export const PRICING_DESCRIPTION_PLANNED =
+  "Free and Pro plans. A typical single job stays free. Buying Pro is not available yet. When purchase opens, the planned prices are $6 a month or $48 a year.";
+
+export function pricingTitle(): string {
+  return purchaseAvailable() ? PRICING_TITLE_READY : PRICING_TITLE_PLANNED;
+}
+
+export function pricingDescription(): string {
+  return purchaseAvailable() ? PRICING_DESCRIPTION_READY : PRICING_DESCRIPTION_PLANNED;
+}
+
 /**
  * 选出本次真正处理的数量。
  * 超过免费上限时 take 仍是免费额度，调用方用它继续跑，而不是停掉整个工具。

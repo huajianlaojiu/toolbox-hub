@@ -2,13 +2,20 @@ import type { Metadata } from "next";
 import { I18nText } from "@/components/i18n-text";
 import I18nLink from "@/components/i18n-link";
 import PricingAccount from "@/components/billing/pricing-account";
-import { checkoutUrl, PRO_MONTHLY_USD, PRO_YEARLY_USD } from "@/lib/billing";
+import {
+  checkoutUrl,
+  pricingDescription,
+  pricingTitle,
+  PRO_MONTHLY_USD,
+  PRO_YEARLY_USD,
+  purchaseAvailable,
+} from "@/lib/billing";
 import { languageAlternates } from "@/lib/alternates";
 import { OG_IMAGE, SITE_URL } from "@/lib/site-meta";
 
-const TITLE = "Toolbox Hub Pro — $6/month or $48/year";
-const DESCRIPTION =
-  "Optional Pro plan for larger file batches, a JSON export of the job list kept in this browser, and no ads. Single-job use of every tool stays free.";
+const TITLE = pricingTitle();
+const DESCRIPTION = pricingDescription();
+const ready = purchaseAvailable();
 
 export const metadata: Metadata = {
   title: { absolute: TITLE },
@@ -23,7 +30,7 @@ export const metadata: Metadata = {
   },
 };
 
-const faqs = [
+const sharedFaqs = [
   {
     q: "Do I have to pay to use a tool?",
     a: "No. A typical single job stays free: one file, one conversion, or one calculation, with no account. Pro is optional and does not sit in front of that path.",
@@ -36,15 +43,31 @@ const faqs = [
     q: "What does Pro add?",
     a: "Pro raises those batches to 50 files for PDFs, images, and archives, and to 10 videos. Frame batches go up to 30. You can download the job list as JSON, and ads stay off on this browser. Priority email support is marked as coming next and is not a staffed queue yet.",
   },
-  {
-    q: "Where do my files go?",
-    a: "They stay in this browser, the same as before. Checkout happens on the merchant's hosted page. The license check sends only the key you paste. The job list stores a one-line summary, not the file.",
-  },
-  {
-    q: "Why is checkout not taking a card here?",
-    a: "This site is a static export. Card numbers are never entered on Toolbox Hub. When the Lemon Squeezy checkout links are set at build time, the buttons go to that hosted page. Until then there is nothing to pay and nothing to cancel.",
-  },
 ];
+
+const faqs = ready
+  ? [
+      ...sharedFaqs,
+      {
+        q: "Where do my files go?",
+        a: "They stay in this browser. Checkout happens on the merchant's hosted page. The license check sends only the key you paste. The job list stores a one-line summary, not the file.",
+      },
+      {
+        q: "Why does checkout leave this site?",
+        a: "Card numbers are not entered on Toolbox Hub. The button opens the merchant's hosted page. They add any applicable tax. Cancel or update the card from the receipt they email.",
+      },
+    ]
+  : [
+      ...sharedFaqs,
+      {
+        q: "Where do my files go?",
+        a: "They stay in this browser. The job list stores a one-line summary, not the file.",
+      },
+      {
+        q: "Can I buy Pro today?",
+        a: "No. The plans are listed so you can see what Pro will include. Purchase is not available yet. Nothing on this page charges a card, and a license cannot be activated.",
+      },
+    ];
 
 function priceJsonLd() {
   return {
@@ -62,7 +85,7 @@ function priceJsonLd() {
             price: String(PRO_MONTHLY_USD),
             priceCurrency: "USD",
             url: `${SITE_URL}/pricing/`,
-            availability: "https://schema.org/OnlineOnly",
+            availability: ready ? "https://schema.org/OnlineOnly" : "https://schema.org/OutOfStock",
           },
           {
             "@type": "Offer",
@@ -70,7 +93,7 @@ function priceJsonLd() {
             price: String(PRO_YEARLY_USD),
             priceCurrency: "USD",
             url: `${SITE_URL}/pricing/`,
-            availability: "https://schema.org/OnlineOnly",
+            availability: ready ? "https://schema.org/OnlineOnly" : "https://schema.org/OutOfStock",
           },
         ],
       },
@@ -86,25 +109,6 @@ function priceJsonLd() {
   };
 }
 
-function CheckoutLink({ href, label }: { href: string | null; label: string }) {
-  if (!href) {
-    return (
-      <p className="text-sm leading-6 text-muted-foreground">
-        <I18nText id={label} />
-      </p>
-    );
-  }
-  return (
-    <a
-      href={href}
-      rel="noopener noreferrer"
-      className="inline-flex min-h-11 items-center justify-center rounded-lg bg-primary px-4 text-sm font-medium text-primary-foreground"
-    >
-      <I18nText id={label} />
-    </a>
-  );
-}
-
 export default function PricingPage() {
   const monthly = checkoutUrl("monthly");
   const yearly = checkoutUrl("yearly");
@@ -116,7 +120,11 @@ export default function PricingPage() {
         <I18nText id="Toolbox Hub Pro" />
       </h1>
       <p className="mt-3 text-sm leading-7 text-muted-foreground">
-        <I18nText id="Keep using every tool for a typical single job. Pro is there when you want a larger batch, a file of the job list this browser already keeps, and no ads. Prices are in US dollars." />
+        {ready ? (
+          <I18nText id="Keep using every tool for a typical single job. Pro is there when you want a larger batch, a file of the job list this browser already keeps, and no ads. Prices are in US dollars." />
+        ) : (
+          <I18nText id="These are the free and Pro plans. A typical single job stays free. Purchase is not available yet, so this page cannot take a payment or turn Pro on. Prices are in US dollars and show what Pro will cost when purchase opens." />
+        )}
       </p>
 
       <div id="plans" className="mt-8 grid gap-4 sm:grid-cols-2 scroll-mt-24">
@@ -177,22 +185,29 @@ export default function PricingPage() {
             </li>
           </ul>
           <div className="mt-5 space-y-3">
-            <CheckoutLink
-              href={monthly}
-              label={
-                monthly
-                  ? "Continue to monthly checkout"
-                  : "Monthly checkout is not connected. Set NEXT_PUBLIC_PRO_CHECKOUT_MONTHLY_URL and rebuild. This page cannot charge a card."
-              }
-            />
-            <CheckoutLink
-              href={yearly}
-              label={
-                yearly
-                  ? "Continue to yearly checkout"
-                  : "Yearly checkout is not connected. Set NEXT_PUBLIC_PRO_CHECKOUT_YEARLY_URL and rebuild."
-              }
-            />
+            {monthly ? (
+              <a
+                href={monthly}
+                rel="noopener noreferrer"
+                className="inline-flex min-h-11 items-center justify-center rounded-lg bg-primary px-4 text-sm font-medium text-primary-foreground"
+              >
+                <I18nText id="Continue to monthly checkout" />
+              </a>
+            ) : null}
+            {yearly ? (
+              <a
+                href={yearly}
+                rel="noopener noreferrer"
+                className="inline-flex min-h-11 items-center justify-center rounded-lg bg-primary px-4 text-sm font-medium text-primary-foreground"
+              >
+                <I18nText id="Continue to yearly checkout" />
+              </a>
+            ) : null}
+            {!ready && (
+              <p className="text-sm font-medium leading-6 text-foreground">
+                <I18nText id="Purchase is not available yet." />
+              </p>
+            )}
           </div>
         </section>
       </div>
@@ -201,12 +216,15 @@ export default function PricingPage() {
         <p>
           <I18nText id="Not included, on either plan: cloud storage, an account, server-side processing, an API, or team seats. Files keep being processed in your browser." />
         </p>
-        <p>
-          <I18nText id="Checkout, once connected, is a Lemon Squeezy hosted page. They are the merchant of record and add any applicable tax. Cancel or update the card from the receipt they email. Toolbox Hub never sees the card number." />
-        </p>
-        <p>
-          <I18nText id="The steps to connect checkout, the verify endpoint, and the success URL are in the repository file docs/pro-billing.md." />
-        </p>
+        {ready ? (
+          <p>
+            <I18nText id="Checkout is a hosted page run by the merchant. They add any applicable tax. Cancel or update the card from the receipt they email. Toolbox Hub never sees the card number." />
+          </p>
+        ) : (
+          <p>
+            <I18nText id="There is nothing to pay and nothing to cancel. The free tools keep working." />
+          </p>
+        )}
       </div>
 
       <div className="mt-10">

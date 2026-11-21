@@ -2,10 +2,10 @@ export { default } from "../../(public)/pricing/page";
 import type { Metadata } from "next";
 import { LOCALES } from "@/lib/locales";
 import { langPageMeta } from "@/lib/lang-meta";
+import { pricingDescription, pricingTitle } from "@/lib/billing";
 
-const TITLE = "Toolbox Hub Pro — $6/month or $48/year";
-const DESCRIPTION =
-  "Optional Pro plan for larger file batches, a JSON export of the job list kept in this browser, and no ads. Single-job use of every tool stays free.";
+const TITLE = pricingTitle();
+const DESCRIPTION = pricingDescription();
 
 export function generateStaticParams() {
   return LOCALES.filter((l) => l.code !== "en").map((l) => ({ lang: l.code }));

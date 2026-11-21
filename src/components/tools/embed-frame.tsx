@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ExternalLink, Maximize2 } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 
@@ -18,6 +18,22 @@ import { useI18n } from "@/lib/i18n";
  *    给满屏高度，应用按设计布局，挤压/重叠消失。
  *  - 全屏按钮保留：让容器进入浏览器 Fullscreen 拿完整视口；不支持时降级新标签页。
  */
+
+/** 同源文档已经是目标页时返回它。about:blank 不算加载完成。 */
+function completedEmbedDocument(iframe: HTMLIFrameElement, src: string): Document | null {
+  try {
+    const doc = iframe.contentDocument;
+    if (!doc || doc.readyState !== "complete") return null;
+    const href = doc.URL;
+    if (!href || href === "about:blank") return null;
+    const actual = new URL(href);
+    const expected = new URL(src, window.location.href);
+    return actual.pathname === expected.pathname ? doc : null;
+  } catch {
+    return null;
+  }
+}
+
 export default function EmbedFrame({
   src,
   credit,
@@ -37,11 +53,6 @@ export default function EmbedFrame({
   const wrapRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
-  useEffect(() => {
-    setLoaded(false);
-    setAutoH(null);
-  }, [src]);
-
   // 跟踪全屏状态——全屏时容器必须撑满，否则仍只有那一小块
   useEffect(() => {
     const onChange = () => setIsFs(document.fullscreenElement === wrapRef.current);
@@ -49,23 +60,28 @@ export default function EmbedFrame({
     return () => document.removeEventListener("fullscreenchange", onChange);
   }, []);
 
-  // 同源读取嵌入页真实内容高度，自动撑开 iframe（避免固定高度截断底部）
-  useEffect(() => {
-    if (!auto) return;
+  // 同源 iframe 经常在 React 挂上 onLoad 之前就 load 完（服务端 HTML 里已经带 src）。
+  // 若这时仍把 loaded 留在 false，白色遮罩会一直盖住已经画出来的工具。
+  useLayoutEffect(() => {
     const iframe = iframeRef.current;
     if (!iframe) return;
     let ro: ResizeObserver | null = null;
+    let stopped = false;
+
     const measure = () => {
+      if (!auto || stopped) return;
       try {
         const doc = iframe.contentDocument;
-        if (!doc || !doc.documentElement) return;
-        const h = doc.documentElement.scrollHeight;
-        if (h > 0) setAutoH((prev) => (prev === null ? h : Math.max(prev, Math.min(h, 3000))));
-        if (!ro && window.ResizeObserver) {
+        if (!doc?.documentElement || !doc.URL || doc.URL === "about:blank") return;
+        const h = Math.max(doc.documentElement.scrollHeight, doc.body?.scrollHeight ?? 0);
+        if (h > 80) setAutoH((prev) => (prev === null ? h : Math.max(prev, Math.min(h, 3000))));
+        if (!ro && typeof ResizeObserver !== "undefined") {
           ro = new ResizeObserver(() => {
             try {
-              const hh = iframe.contentDocument?.documentElement.scrollHeight ?? 0;
-              if (hh > 0) setAutoH((prev) => (prev === null ? hh : Math.max(prev, Math.min(hh, 3000))));
+              const current = iframe.contentDocument;
+              if (!current?.documentElement || current.URL === "about:blank") return;
+              const hh = Math.max(current.documentElement.scrollHeight, current.body?.scrollHeight ?? 0);
+              if (hh > 80) setAutoH((prev) => (prev === null ? hh : Math.max(prev, Math.min(hh, 3000))));
             } catch {
               /* cross-origin */
             }
@@ -76,10 +92,23 @@ export default function EmbedFrame({
         /* 跨域或尚未就绪：保持 fallback 高度 */
       }
     };
-    iframe.addEventListener("load", measure);
-    measure();
+
+    const onLoad = () => {
+      if (stopped || !completedEmbedDocument(iframe, src)) return;
+      setLoaded(true);
+      measure();
+    };
+
+    iframe.addEventListener("load", onLoad);
+    if (completedEmbedDocument(iframe, src)) onLoad();
+    else {
+      setLoaded(false);
+      setAutoH(null);
+    }
+
     return () => {
-      iframe.removeEventListener("load", measure);
+      stopped = true;
+      iframe.removeEventListener("load", onLoad);
       ro?.disconnect();
     };
   }, [src, auto]);
