@@ -118,7 +118,10 @@ test("the new tools are real catalog entries", () => {
   assert.equal(imageTools().some((item) => item.slug === "image-to-base64"), true);
   assert.equal(videoTools().some((item) => item.slug === "subtitle-editor"), true);
   assert.equal(videoTools().some((item) => item.slug === "add-subtitles"), true);
-  assert.equal(videoTools().length, 17);
+  assert.equal(videoTools().length, 19);
+  assert.deepEqual(videoTools().slice(-2).map((item) => item.slug), ["audio-trimmer", "audio-converter"]);
+  assert.equal(getTool("audio-trimmer")?.category, "Video");
+  assert.equal(getTool("audio-converter")?.category, "Video");
   assert.equal(imageTools().length, 8);
   assert.equal(featuredImageLinks().length, 7);
   assert.deepEqual(
