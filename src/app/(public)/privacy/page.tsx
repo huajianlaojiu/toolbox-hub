@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import { I18nText } from "@/components/i18n-text";
 import I18nLink from "@/components/i18n-link";
 import { languageAlternates } from "@/lib/alternates";
+import { pageTitle } from "@/lib/site-meta";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy - Toolbox Hub",
+  title: pageTitle("Privacy Policy - Toolbox Hub"),
   description:
     "How Toolbox Hub handles data: browser-based processing, advertising cookies, third-party vendors, and your rights.",
   alternates: { canonical: "/privacy/", languages: languageAlternates("/privacy/") },

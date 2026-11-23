@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { I18nText } from "@/components/i18n-text";
 import { languageAlternates } from "@/lib/alternates";
+import { pageTitle } from "@/lib/site-meta";
 
 export const metadata: Metadata = {
-  title: "Terms of Use - Toolbox Hub",
+  title: pageTitle("Terms of Use - Toolbox Hub"),
   description:
     "The terms that govern your use of Toolbox Hub, its free tools, and the optional Pro subscription.",
   alternates: { canonical: "/terms/", languages: languageAlternates("/terms/") },

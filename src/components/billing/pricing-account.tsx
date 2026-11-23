@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useSyncExternalStore, type FormEvent } from "react";
 import { licenseActivationAvailable } from "@/lib/billing";
-import { exportJobsJson, getJobsServerSnapshot, listJobs, subscribeJobs } from "@/lib/job-history";
+import { exportJobsJson, getJobsClientSnapshot, getJobsServerSnapshot, subscribeJobs } from "@/lib/job-history";
 import {
   activateLicense,
   clearEntitlement,
@@ -23,7 +23,7 @@ function message(result: ActivateResult): string {
 
 export default function PricingAccount() {
   const entitlement = useSyncExternalStore(subscribePro, getEntitlementSnapshot, getEntitlementServerSnapshot);
-  const jobs = useSyncExternalStore(subscribeJobs, listJobs, getJobsServerSnapshot);
+  const jobs = useSyncExternalStore(subscribeJobs, getJobsClientSnapshot, getJobsServerSnapshot);
   const isPro = entitlement != null;
   const [key, setKey] = useState("");
   const [status, setStatus] = useState("");
@@ -117,7 +117,7 @@ export default function PricingAccount() {
         </section>
       )}
 
-      <section id="history" className="scroll-mt-24">
+      <section id="history" className="scroll-mt-24" aria-busy={jobs == null}>
         <h2 className="text-xl font-semibold text-foreground">Job list on this browser</h2>
         <p className="mt-2 text-sm leading-7 text-muted-foreground">
           Batch tools leave a short summary here: tool name, time, and what ran. File names and file contents are not
@@ -126,7 +126,9 @@ export default function PricingAccount() {
             ? " Downloading the JSON file is available because Pro is on for this browser."
             : " A downloadable copy is part of Pro. Purchase is not available yet, so there is no download button."}
         </p>
-        {jobs.length === 0 ? (
+        {jobs == null ? (
+          <div className="mt-4 min-h-16" />
+        ) : jobs.length === 0 ? (
           <p className="mt-4 text-sm leading-7 text-muted-foreground">
             No jobs yet. Merge a PDF, pack an archive, merge videos, or capture frames, then come back.
           </p>
@@ -142,7 +144,7 @@ export default function PricingAccount() {
             ))}
           </ul>
         )}
-        {isPro && jobs.length > 0 && (
+        {isPro && jobs != null && jobs.length > 0 && (
           <button
             type="button"
             onClick={onExport}

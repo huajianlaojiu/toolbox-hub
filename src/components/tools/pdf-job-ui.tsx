@@ -69,8 +69,8 @@ export function PdfDrop({
 
 export function PdfField({ label, htmlFor, children }: { label: string; htmlFor?: string; children: ReactNode }) {
   return (
-    <div>
-      <label htmlFor={htmlFor} className="text-xs text-muted-foreground">
+    <div className="space-y-1.5">
+      <label htmlFor={htmlFor} className="block text-xs leading-5 text-muted-foreground">
         {label}
       </label>
       {children}

@@ -10,6 +10,8 @@ import {
   isHttpsUrl,
   parseVerifyResponse,
 } from "./billing.ts";
+import { getJobsServerSnapshot } from "./job-history.ts";
+import { pageTitle } from "./site-meta.ts";
 
 test("a single file and a 3-file batch stay on the free path", () => {
   assert.equal(decideBatch(1, false, FREE_FILE_BATCH, PRO_FILE_BATCH).status, "ok");
@@ -51,4 +53,14 @@ test("entitlement expiry and verify payload", () => {
   assert.equal(entitlementActive({ plan: "free" }, now), false);
   assert.deepEqual(parseVerifyResponse({ active: true, expiresAt: null }), { active: true, expiresAt: null });
   assert.equal(parseVerifyResponse({ valid: true, meta: { customer_email: "a@b.c" } }), null);
+});
+
+test("a title that already names the brand is not given the site suffix again", () => {
+  assert.deepEqual(pageTitle("Privacy Policy - Toolbox Hub"), { absolute: "Privacy Policy - Toolbox Hub" });
+  assert.deepEqual(pageTitle("About Toolbox Hub"), { absolute: "About Toolbox Hub" });
+  assert.equal(pageTitle("Plans"), "Plans");
+});
+
+test("job history does not claim the list is empty before the browser store is read", () => {
+  assert.equal(getJobsServerSnapshot(), null);
 });

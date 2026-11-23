@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import { I18nText } from "@/components/i18n-text";
 import I18nLink from "@/components/i18n-link";
 import { languageAlternates } from "@/lib/alternates";
+import { pageTitle } from "@/lib/site-meta";
 
 export const metadata: Metadata = {
-  title: "Disclaimer - Toolbox Hub",
+  title: pageTitle("Disclaimer - Toolbox Hub"),
   description:
     "Important limitations on the results produced by the Toolbox Hub free online tools.",
   alternates: { canonical: "/disclaimer/", languages: languageAlternates("/disclaimer/") },

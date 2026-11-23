@@ -218,6 +218,45 @@ body {
   border-color: var(--primary);
 }
 
+/* PDF 工具包在脚本跑起来之前就画出全部操作。
+   地址栏 hash 决定看见哪一个，避免先空白再闪成 Merge。 */
+.pdf-mode-anchor {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  scroll-margin-top: 6rem;
+}
+
+.pdf-hash-pending [data-pdf-panel] {
+  display: none;
+}
+
+.pdf-hash-pending:not(:has(.pdf-mode-anchor:target)) [data-pdf-panel="merge"],
+.pdf-hash-pending:has(#merge:target) [data-pdf-panel="merge"],
+.pdf-hash-pending:has(#split:target) [data-pdf-panel="split"],
+.pdf-hash-pending:has(#img2pdf:target) [data-pdf-panel="img2pdf"],
+.pdf-hash-pending:has(#pdf2img:target) [data-pdf-panel="pdf2img"],
+.pdf-hash-pending:has(#pdf2text:target) [data-pdf-panel="pdf2text"] {
+  display: block;
+}
+
+.pdf-hash-pending:has(.pdf-mode-anchor:target) [data-pdf-tab] {
+  background: var(--muted);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+}
+
+.pdf-hash-pending:has(#merge:target) [data-pdf-tab="merge"],
+.pdf-hash-pending:has(#split:target) [data-pdf-tab="split"],
+.pdf-hash-pending:has(#img2pdf:target) [data-pdf-tab="img2pdf"],
+.pdf-hash-pending:has(#pdf2img:target) [data-pdf-tab="pdf2img"],
+.pdf-hash-pending:has(#pdf2text:target) [data-pdf-tab="pdf2text"] {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border-color: transparent;
+}
+
 /* 首屏脚本在有 Pro 标记时给 html 加上这个 class，广告位在绘制前就收起。 */
 html.tbh-pro .adsbygoogle {
   display: none !important;

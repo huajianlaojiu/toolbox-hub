@@ -119,11 +119,11 @@ export default function PricingPage() {
       <h1 className="text-3xl font-bold tracking-tight">
         <I18nText id="Toolbox Hub Pro" />
       </h1>
-      <p className="mt-3 text-sm leading-7 text-muted-foreground">
+      <p className="mt-3 text-sm leading-7 text-muted-foreground hyphens-none">
         {ready ? (
           <I18nText id="Keep using every tool for a typical single job. Pro is there when you want a larger batch, a file of the job list this browser already keeps, and no ads. Prices are in US dollars." />
         ) : (
-          <I18nText id="These are the free and Pro plans. A typical single job stays free. Purchase is not available yet, so this page cannot take a payment or turn Pro on. Prices are in US dollars and show what Pro will cost when purchase opens." />
+          <I18nText id={"These are the free and Pro plans. A typical single job stays free. Purchase is not available yet, so this page cannot take a payment or turn Pro\u00A0on. Prices are in US dollars and show what Pro will cost when purchase opens."} />
         )}
       </p>
 
