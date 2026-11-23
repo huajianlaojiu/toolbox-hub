@@ -108,7 +108,7 @@ export const IMAGE_BLURB =
 export const VIDEO_BLURB =
   "Merge, trim, resize, crop, convert, compress, or burn subtitles into a video. The file stays on your device.";
 
-/** 首页图片区按预览稿的顺序排这 7 个日常工具。Image to Base64 仍在图片分类页和总目录里。 */
+/** 首页图片区与图片分类页是同一份清单。前 7 个保持原来的日常工具顺序，Image to Base64 放在最后。 */
 export const IMAGE_FEATURED_SLUGS = [
   "image-compressor",
   "image-resizer",
@@ -117,6 +117,7 @@ export const IMAGE_FEATURED_SLUGS = [
   "image-format-converter",
   "image-watermark",
   "image-to-text",
+  "image-to-base64",
 ] as const;
 
 /** 首页视频区展示的高频工具，顺序跟预览稿一致。分类页仍列出全部视频工具。 */

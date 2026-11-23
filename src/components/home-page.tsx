@@ -115,7 +115,7 @@ export default function HomePage() {
           href="/images/"
           linkLabel="All image tools"
         />
-        <div className="grid grid-cols-2 gap-2.5 min-[720px]:grid-cols-3 min-[1100px]:grid-cols-7">
+        <div className="grid grid-cols-2 gap-2.5 min-[720px]:grid-cols-3 min-[1100px]:grid-cols-4">
           {images.map((item) => {
             const slug = item.href.split("/").filter(Boolean).pop() ?? "";
             return (

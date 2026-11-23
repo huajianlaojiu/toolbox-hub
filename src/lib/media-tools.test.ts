@@ -111,6 +111,7 @@ test("the new tools are real catalog entries", () => {
     "Image Converter",
     "Watermark Image",
     "Image to Text OCR",
+    "Image to Base64",
   ]);
   assert.equal(featuredVideoLinks().some((item) => item.label === "Add Subtitles"), true);
   assert.equal(featuredVideoLinks().some((item) => item.label === "Resize Video"), true);
@@ -120,7 +121,8 @@ test("the new tools are real catalog entries", () => {
   assert.equal(videoTools().some((item) => item.slug === "add-subtitles"), true);
   assert.equal(videoTools().length, 17);
   assert.equal(imageTools().length, 8);
-  assert.equal(featuredImageLinks().length, 7);
+  assert.equal(featuredImageLinks().length, 8);
+  assert.equal(featuredImageLinks().length, imageTools().length);
   assert.deepEqual(
     featuredVideoLinks().map((item) => item.label),
     ["Video Merger", "Video Trimmer", "Video Compressor", "Resize Video", "Crop Video", "Add Subtitles", "Video Converter"]
