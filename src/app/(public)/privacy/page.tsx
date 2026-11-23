@@ -16,7 +16,7 @@ export default function PrivacyPage() {
     <div className="mx-auto max-w-3xl px-4 py-10">
       <h1 className="text-3xl font-bold tracking-tight"><I18nText id="Privacy Policy" /></h1>
       <p className="mt-2 text-sm text-muted-foreground">
-        <I18nText id="Last updated: 19 November 2026" />
+        <I18nText id="Last updated: 23 November 2026" />
       </p>
 
       <div className="mt-6 space-y-5 text-sm leading-7 text-muted-foreground">
@@ -26,7 +26,7 @@ export default function PrivacyPage() {
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="1. The short version" /></h2>
         <p>
-          <I18nText id="Most tools process your input inside your browser and do not upload it to a server. The Site itself does, however, load third-party resources: advertising and audience measurement (only after you consent), JavaScript engines and language models from a CDN for some tools, and a small number of embedded third-party applications that make their own network requests. These are described in sections 4 and 5 below." />
+          <I18nText id="Most tools process your input inside your browser and do not upload it to a server. The Site can still load third-party resources: an advertising script only after you consent, JavaScript engines and language models from a CDN for some tools, and a small number of embedded third-party applications that make their own network requests. Visible ad slots are currently empty, and Google Analytics is not configured. These points are described in sections 4 and 5 below." />
         </p>
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="2. Information you provide" /></h2>
@@ -36,12 +36,12 @@ export default function PrivacyPage() {
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="3. Files you select" /></h2>
         <p>
-          <I18nText id="When you use a tool such as the image compressor, the image resizer or the watermark remover, the file is read by JavaScript running in your browser. For these tools the file is not transmitted to a server we operate and is discarded when you close or refresh the page. Some tools need to download a processing engine or language model from a third-party CDN before they can work, so they require an internet connection on first use. A few embedded third-party applications handle data inside an iframe under their own policies." />
+          <I18nText id="When you use a tool such as the image compressor, the PDF merger, or the video trimmer, the file is read by JavaScript running in your browser. For these tools the file is not transmitted to a server we operate and is discarded when you close or refresh the page. Some tools need to download a processing engine or language model from a third-party CDN before they can work, so they require an internet connection on first use. A few embedded third-party applications handle data inside an iframe under their own policies." />
         </p>
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="4. Advertising and cookies" /></h2>
         <p>
-          <I18nText id="This Site displays advertising provided by Google AdSense. Google and its partners may use cookies or similar technologies to serve ads and to measure their performance." />
+          <I18nText id="A Google AdSense account is connected to this Site, and ads.txt is published for the domain. The visible ad slots are empty, so the pages do not currently show an ad unit. If you accept advertising cookies, the Site may request the AdSense script. When that script runs, Google and its partners may use cookies to serve and measure ads." />
         </p>
         <ul className="list-disc pl-5 space-y-2">
           <li>
@@ -90,10 +90,10 @@ export default function PrivacyPage() {
 
         <h3 className="mt-4 text-base font-semibold text-foreground"><I18nText id="Third-party services and external requests" /></h3>
         <p className="mt-2">
-          <I18nText id="To be precise about what this Site loads: advertising is served by Google AdSense and its script is only requested after you accept advertising cookies; some tools download processing engines and language models (FFmpeg WebAssembly, Tesseract.js, JSZip, lamejs) from the unpkg CDN on first use; and a small number of embedded third-party applications run in an iframe and may contact their own APIs and services. Those third parties have their own privacy policies. Fonts are self-hosted from this domain." />
+          <I18nText id="To be precise about what this Site loads: the AdSense script is requested only after you accept advertising cookies, and the visible ad slots are empty so that request does not place an ad unit on the page; some tools download processing engines and language models (FFmpeg WebAssembly, Tesseract.js, JSZip, lamejs) from the unpkg CDN on first use; and a small number of embedded third-party applications run in an iframe and may contact their own APIs and services. Those third parties have their own privacy policies. Fonts are self-hosted from this domain." />
         </p>
         <p className="mt-2">
-          <I18nText id="The Site is hosted on GitHub Pages. Standard access logs (IP address, browser type, referring page and request time) are collected by the hosting provider under its own policy; we do not have access to a user-level analytics dataset from those logs. The only audience measurement we receive is the consent-based Google Analytics 4 data described in section 5." />
+          <I18nText id="The Site is hosted on GitHub Pages. Standard access logs (IP address, browser type, referring page and request time) are collected by the hosting provider under its own policy; we do not have access to a user-level analytics dataset from those logs. Google Analytics is not configured, so this Site does not receive a GA4 dataset." />
         </p>
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="5. Analytics and server logs" /></h2>
@@ -101,7 +101,7 @@ export default function PrivacyPage() {
           <I18nText id="Like almost every website, the hosting provider records standard access logs such as IP address, browser type, referring page, and the time of the request. These logs are used to keep the Site available, to diagnose errors, and to detect abuse. They are not used to build a profile of you." />
         </p>
         <p>
-          <I18nText id="If you allow analytics cookies, the Site also uses Google Analytics 4 (GA4) to measure which pages and tools are visited. GA4 receives the page URL, browser and device information, a cookie or device identifier, and an approximate location derived from your IP address; it does not receive the text or files you enter into a tool, and raw IP addresses are not made available to us. If you do not allow analytics cookies, the GA4 script is never loaded. You can withdraw consent at any time using the Cookie settings link in the footer." />
+          <I18nText id="Google Analytics is not configured. The measurement ID is empty, so the GA4 script is not loaded, whether or not you allow analytics cookies. The consent control remains on the page so the choice is explicit if measurement is turned on later. It would not receive the text or files you enter into a tool." />
         </p>
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="6. Local storage and cookies" /></h2>

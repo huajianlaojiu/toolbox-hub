@@ -18,6 +18,9 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-3 flex flex-wrap gap-x-3.5 gap-y-1">
+          <a href={lp("/pdf/")} className={link}>{t("PDF")}</a>
+          <a href={lp("/images/")} className={link}>{t("Images")}</a>
+          <a href={lp("/video/")} className={link}>{t("Video")}</a>
           <a href={lp("/tools/")} className={link}>{t("Tools")}</a>
           <a href={lp("/about/")} className={link}>{t("About")}</a>
           <a href={lp("/blog/")} className={link}>{t("Blog")}</a>

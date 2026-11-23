@@ -13,6 +13,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     lang,
     "/contact/",
     "Contact Toolbox Hub",
-    "Report a bug, request a new tool, or send feedback about Toolbox Hub. We read every message."
+    "Email hello@toolbox-hub.io to report a bug, request a tool, or send a correction. Include the tool name and your browser."
   );
 }

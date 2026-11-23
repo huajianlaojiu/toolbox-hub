@@ -1,3 +1,4 @@
+import { localePathIndexable } from "./locale-index";
 import { LOCALES, isPublished } from "./locales";
 
 /**
@@ -11,6 +12,7 @@ export function languageAlternates(path: string): Record<string, string> {
   for (const l of LOCALES) {
     if (l.code === "en") continue;
     if (!isPublished(l.code)) continue; // 未发布语言不当作 hreflang 目标
+    if (!localePathIndexable(l.code, path)) continue; // 译文不完整或不是当前英文的对应版本
     map[l.hreflang] = `/${l.code}${path}`;
   }
   return map;

@@ -189,9 +189,9 @@ const OVERRIDES: Record<string, Record<string, ToolSeoOverride>> = {
   },
   "image-format-converter": {
     en: {
-      title: "Image Converter Online — JPG, PNG, WebP, BMP | Toolbox Hub",
+      title: "Image Converter — JPG, PNG, WebP, BMP, and ICO | Toolbox Hub",
       description:
-        "Convert images between JPG, PNG, WebP, BMP, and ICO, and resize or rotate them. Free image converter that runs in your browser.",
+        "Convert a picture between JPG, PNG, WebP, BMP, and ICO. The quality slider applies to JPG and WebP only. The file stays in the browser.",
     },
   },
   "image-compressor": {
@@ -437,9 +437,9 @@ const OVERRIDES: Record<string, Record<string, ToolSeoOverride>> = {
   },
   "image-to-text": {
     en: {
-      title: "Image to Text OCR — Extract Text from a Photo | Toolbox Hub",
+      title: "Image to Text — OCR a Photo in the Browser | Toolbox Hub",
       description:
-        "Read text from a screenshot or photo with Tesseract in your browser. Pick a language, then copy or download the result.",
+        "Read printed text from a screenshot or photo with Tesseract in your browser. Handwriting is less reliable. The image is not uploaded.",
     },
   },
   "file-size-converter": {
@@ -563,9 +563,9 @@ const OVERRIDES: Record<string, Record<string, ToolSeoOverride>> = {
   },
   "youtube-thumbnail": {
     en: {
-      title: "YouTube Thumbnail Downloader — Full Resolution | Toolbox Hub",
+      title: "YouTube Thumbnail URLs — Image Links Only | Toolbox Hub",
       description:
-        "Paste a YouTube link and copy the direct image URLs for that video's thumbnails, including the highest-resolution still.",
+        "Paste a YouTube link and copy the image URLs for that video's thumbnails. This page does not download the video or the audio.",
     },
   },
   "open-graph-generator": {
@@ -654,9 +654,9 @@ const OVERRIDES: Record<string, Record<string, ToolSeoOverride>> = {
   },
   "pdf-toolkit": {
     en: {
-      title: "Merge PDF, Split PDF & Convert Pages | Toolbox Hub",
+      title: "Merge, Split, and Convert a PDF in the Browser | Toolbox Hub",
       description:
-        "Combine PDFs, pull out page ranges, turn PNG or JPG images into a PDF, or export pages as PNG images and text. Files stay in the browser.",
+        "Merge PDFs, extract page ranges, turn PNG or JPG files into a PDF, or export pages as PNG and text. No Word conversion. Files stay in the browser.",
     },
   },
   "compress-pdf": {
@@ -843,9 +843,9 @@ const OVERRIDES: Record<string, Record<string, ToolSeoOverride>> = {
   },
   "viral-video-studio": {
     en: {
-      title: "Short Video Script Template with Hooks | Toolbox Hub",
+      title: "Short Video Script Workshop — Hooks and a Shot List | Toolbox Hub",
       description:
-        "Enter a topic and get a hook, a shot list, and caption copy from templates, previewed in a 9:16 frame. Nothing you type is uploaded.",
+        "Fill a topic and get a hook, a shot list, and caption lines from templates. The 9:16 frame is a reading preview, not a rendered video.",
     },
   },
   "teleprompter": {
@@ -871,9 +871,9 @@ const OVERRIDES: Record<string, Record<string, ToolSeoOverride>> = {
   },
   "openreel-video-editor": {
     en: {
-      title: "Browser Video Editor with a Timeline | Toolbox Hub",
+      title: "OpenReel Video Editor — Timeline in the Browser | Toolbox Hub",
       description:
-        "Cut on a multi-track timeline, add text, transitions, and audio, then export. OpenReel edits in the browser and does not upload footage.",
+        "Cut on a multi-track timeline, add text, transitions, and audio, then export. Footage stays on your device. A current Chromium browser is the comfortable case.",
     },
   },
 };

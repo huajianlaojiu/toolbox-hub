@@ -1,5 +1,6 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { localePathIndexable } from "../src/lib/locale-index.ts";
 
 const ROOT = process.cwd();
 const SITE = "https://toolbox-hub.io";
@@ -85,7 +86,11 @@ const STATIC_PAGES = [
 
 const LASTMOD = new Date().toISOString().slice(0, 10);
 
-function alternateLinks(loc, langs = LANGS_PUB) {
+function indexableLangs(loc, langs = LANGS_PUB) {
+  return langs.filter((l) => localePathIndexable(l.code, loc));
+}
+
+function alternateLinks(loc, langs) {
   const links = langs.map(
     (l) => `    <xhtml:link rel="alternate" hreflang="${l.hreflang}" href="${SITE}${prefix(l.code)}${loc}"/>`
   );
@@ -95,9 +100,10 @@ function alternateLinks(loc, langs = LANGS_PUB) {
 
 const urls = [];
 for (const p of STATIC_PAGES) {
-  for (const l of LANGS_PUB) {
+  const langs = indexableLangs(p.loc);
+  for (const l of langs) {
     urls.push(
-      `  <url><loc>${SITE}${prefix(l.code)}${p.loc}</loc><lastmod>${LASTMOD}</lastmod><changefreq>${p.changefreq}</changefreq><priority>${p.priority}</priority>\n${alternateLinks(p.loc)}\n  </url>`
+      `  <url><loc>${SITE}${prefix(l.code)}${p.loc}</loc><lastmod>${LASTMOD}</lastmod><changefreq>${p.changefreq}</changefreq><priority>${p.priority}</priority>\n${alternateLinks(p.loc, langs)}\n  </url>`
     );
   }
 }
@@ -110,11 +116,14 @@ for (const s of postSlugs) {
     );
   }
 }
+let indexableToolUrls = 0;
 for (const s of slugs) {
   const loc = `/tools/${s}/`;
-  for (const l of LANGS_PUB) {
+  const langs = indexableLangs(loc);
+  indexableToolUrls += langs.length;
+  for (const l of langs) {
     urls.push(
-      `  <url><loc>${SITE}${prefix(l.code)}${loc}</loc><lastmod>${LASTMOD}</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>\n${alternateLinks(loc)}\n  </url>`
+      `  <url><loc>${SITE}${prefix(l.code)}${loc}</loc><lastmod>${LASTMOD}</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>\n${alternateLinks(loc, langs)}\n  </url>`
     );
   }
 }
@@ -126,5 +135,5 @@ ${urls.join("\n")}
 `;
 
 writeFileSync(join(ROOT, "public/sitemap.xml"), xml, "utf8");
-console.log(`sitemap: ${urls.length} urls (${slugs.length} tools × ${LANGS_PUB.length} langs + ${postSlugs.length} posts × per-post translated langs + ${STATIC_PAGES.length} static × ${LANGS_PUB.length} langs)`);
+console.log(`sitemap: ${urls.length} urls (${indexableToolUrls} indexable tool urls across langs, ${slugs.length} tools; posts by translation; static pages only where the locale text matches)`);
 console.log(`blog langs by post: ${postSlugs.map((s) => `${s}=${blogLangsFor(s).length}`).join(", ")}`);

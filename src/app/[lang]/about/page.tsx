@@ -13,6 +13,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     lang,
     "/about/",
     "About Toolbox Hub",
-    "Toolbox Hub is a free collection of browser-based utilities for developers, designers and everyday tasks. Learn who builds it and how it works."
+    "Toolbox Hub is a browser workshop for PDFs, images, and videos, plus other utilities. Files are processed on your device. Write to hello@toolbox-hub.io."
   );
 }

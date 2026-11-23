@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getTool, tools } from "@/lib/tools-data";
 import ToolRedirect from "@/components/tools/tool-redirect";
+import { toolTranslationIndexable } from "@/lib/locale-index";
 import { LOCALES, isPublished } from "@/lib/locales";
 import { languageAlternates } from "@/lib/alternates";
 import { getMeta, getContent } from "@/i18n/content";
@@ -51,24 +52,25 @@ export function generateToolMetadata(lang: string, slug: string): Metadata {
   // 高曝光页（GSC 实证「有展示、零点击」）用定制的绝对 title / description：
   // 绕开根布局 template，去掉通用英文后缀，并把具体收益写进 SERP 摘要。
   // 未覆盖的 1700+ 页完全走原逻辑，不触发全站重爬。
-  const seo = getToolSeoOverride(lang, slug);
-  const desc = seo?.description ?? content.intro.slice(0, 158);
-  const url = lang === "en" ? `/tools/${slug}/` : `/${lang}/tools/${slug}/`;
+  const indexable = lang === "en" || (isPublished(lang) && toolTranslationIndexable(lang, slug));
+  const seoForPage = getToolSeoOverride(indexable ? lang : "en", slug);
+  const descForPage = seoForPage?.description ?? content.intro.slice(0, 158);
+  const url = indexable && lang !== "en" ? `/${lang}/tools/${slug}/` : `/tools/${slug}/`;
   const m: Metadata = {
-    title: seo ? { absolute: seo.title } : `${meta.title} - Free Online Tool`,
-    description: desc,
+    title: seoForPage ? { absolute: seoForPage.title } : `${meta.title} - Free Online Tool`,
+    description: descForPage,
     keywords: meta.keywords,
     alternates: { canonical: url, languages: hreflangAlternates(slug) },
     openGraph: {
-      title: seo?.title ?? `${meta.title} - Free Online Tool | Toolbox Hub`,
-      description: desc,
+      title: seoForPage?.title ?? `${meta.title} - Free Online Tool | Toolbox Hub`,
+      description: descForPage,
       url,
       type: "article",
       images: [OG_IMAGE],
     },
   };
-  // 未发布语言（译文仍是英文壳）不当作独立版本收录，避免近重复页稀释 SEO
-  if (!isPublished(lang)) m.robots = { index: false, follow: true };
+  // 未发布语言，以及译文对不上当前英文的工具页，都不收录。英文规范地址仍可索引。
+  if (!indexable) m.robots = { index: false, follow: true };
   return m;
 }
 
