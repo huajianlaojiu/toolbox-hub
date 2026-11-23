@@ -3,9 +3,10 @@ import { visibleTools } from "@/lib/tools-data";
 import { I18nText } from "@/components/i18n-text";
 import { languageAlternates } from "@/lib/alternates";
 import { purchaseAvailable } from "@/lib/billing";
+import { pageTitle } from "@/lib/site-meta";
 
 export const metadata: Metadata = {
-  title: "About Toolbox Hub",
+  title: pageTitle("About Toolbox Hub"),
   description:
     "Toolbox Hub is a free collection of browser-based utilities for developers, designers and everyday tasks. Learn who builds it and how it works.",
   alternates: { canonical: "/about/", languages: languageAlternates("/about/") },

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { languageAlternates } from "./alternates";
 import { MESSAGES } from "@/i18n/messages";
 import { isPublished } from "./locales";
-import { OG_IMAGE } from "./site-meta";
+import { OG_IMAGE, pageTitle } from "./site-meta";
 
 /** 服务端取译文：key 是英文原文，查不到回退英文（永远可渲染） */
 export function st(lang: string, en: string): string {
@@ -76,7 +76,7 @@ export function langPageMeta(
   // 不能用英文版的——否则 /zh/ 会被当成 / 的重复页而不收录。
   const selfPath = lang === "en" ? path : `/${lang}${path}`;
   const meta: Metadata = {
-    title: t,
+    title: pageTitle(t),
     description: d,
     alternates: { canonical: selfPath, languages: languageAlternates(path) },
     openGraph: { title: t, description: d, url: selfPath, type: "website", images: [OG_IMAGE] },

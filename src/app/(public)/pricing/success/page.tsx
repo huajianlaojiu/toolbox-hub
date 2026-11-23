@@ -43,7 +43,7 @@ export default function PricingSuccessPage() {
       </h1>
       <div className="mt-4 space-y-4 text-sm leading-7 text-muted-foreground">
         <p>
-          <I18nText id="If a payment went through, the receipt and license key arrive by email from the merchant. This page does not charge a card and does not turn Pro on by itself." />
+          <I18nText id={"If a payment went through, the receipt and license key arrive by email from the merchant. This page does not charge a card and does not turn Pro\u00A0on by itself."} />
         </p>
         {canActivate ? (
           <p>

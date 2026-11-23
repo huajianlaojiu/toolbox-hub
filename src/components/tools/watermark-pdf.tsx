@@ -100,10 +100,9 @@ export default function WatermarkPdf() {
           id="watermark-image"
           type="file"
           accept="image/png,image/jpeg,.png,.jpg,.jpeg"
-          className="text-sm"
+          className="block w-full cursor-pointer text-sm text-foreground file:mr-3 file:inline-flex file:min-h-11 file:cursor-pointer file:items-center file:rounded-lg file:border file:border-border file:bg-muted file:px-3 file:py-2 file:text-sm file:font-medium file:text-foreground"
           onChange={(event) => setImage(event.target.files?.[0] ?? null)}
         />
-        {image ? <p className="mt-1 text-xs text-muted-foreground">{image.name}</p> : null}
       </PdfField>
       <PdfField label={t("Position")} htmlFor="watermark-position">
         <select id="watermark-position" value={anchor} onChange={(event) => setAnchor(event.target.value as WatermarkInput["anchor"])} className="tool-input tool-input-sm">

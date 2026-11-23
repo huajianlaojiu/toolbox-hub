@@ -81,14 +81,17 @@ function modeFromLocation(): Mode | null {
 
 export default function PdfToolkit() {
   const { t } = useI18n();
-  // 先空着，等读到 hash 再画出标签。否则深链会先闪成 Merge，测试也会读到错误的选中态。
-  const [mode, setMode] = useState<Mode | null>(null);
+  // 静态 HTML 里就要有表单。mode 先按 merge 输出，hash 由样式选中，
+  // 水合之后再收成当前操作。不要先渲染一块空白卡片。
+  const [mode, setMode] = useState<Mode>("merge");
+  const [hashReady, setHashReady] = useState(false);
 
   // /tools/pdf-toolkit/#split 这类链接直接打开对应操作，而不是总停在合并。
   useEffect(() => {
     const apply = () => {
       const next = modeFromLocation() ?? "merge";
       setMode(next);
+      setHashReady(true);
       requestAnimationFrame(() => {
         document.getElementById(`pdf-mode-${next}`)?.scrollIntoView({ block: "nearest" });
       });
@@ -100,29 +103,36 @@ export default function PdfToolkit() {
 
   const selectMode = (id: Mode) => {
     setMode(id);
+    setHashReady(true);
     const nextHash = `#${id}`;
     if (window.location.hash === nextHash) return;
     window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}${nextHash}`);
   };
-  const [busy, setBusy] = useState(false);
-  const [msg, setMsg] = useState<string>("");
+  const [busyMode, setBusyMode] = useState<Mode | null>(null);
+  const [statusByMode, setStatusByMode] = useState<Partial<Record<Mode, string>>>({});
   const [text, setText] = useState("");
 
-  const run = async (fn: () => Promise<void>) => {
-    setBusy(true);
-    setMsg("");
-    try {
-      await fn();
-    } catch (e: any) {
-      setMsg("Error: " + (e?.message || e));
-    } finally {
-      setBusy(false);
-    }
+  const run = (jobMode: Mode, fn: (report: (message: string) => void) => Promise<void>) => {
+    const report = (message: string) => {
+      setStatusByMode((prev) => ({ ...prev, [jobMode]: message }));
+    };
+    setBusyMode(jobMode);
+    report("");
+    void (async () => {
+      try {
+        await fn(report);
+      } catch (e: unknown) {
+        const message = e instanceof Error ? e.message : String(e);
+        report("Error: " + message);
+      } finally {
+        setBusyMode((current) => (current === jobMode ? null : current));
+      }
+    })();
   };
 
   const merge = (files: File[]) =>
-    run(async () => {
-      if (files.length < 2) return setMsg("Select at least two PDF files.");
+    run("merge", async (report) => {
+      if (files.length < 2) return report("Select at least two PDF files.");
       const PDFDocument = await loadPdfLib();
       const out = await PDFDocument.create();
       for (const f of files) {
@@ -132,12 +142,12 @@ export default function PdfToolkit() {
       }
       const bytes = await out.save();
       downloadBlob(new Blob([new Uint8Array(bytes)], { type: "application/pdf" }), "merged.pdf");
-      setMsg(`Merged ${files.length} files → merged.pdf (${fmtBytes(bytes.length)})`);
+      report(`Merged ${files.length} files → merged.pdf (${fmtBytes(bytes.length)})`);
       recordJob("pdf-toolkit", `Merged ${files.length} PDFs`);
     });
 
   const split = (file: File, spec: string, allSeparate: boolean) =>
-    run(async () => {
+    run("split", async (report) => {
       const PDFDocument = await loadPdfLib();
       const src = await PDFDocument.load(await file.arrayBuffer());
       const total = src.getPageCount();
@@ -151,22 +161,22 @@ export default function PdfToolkit() {
           zip.file(`page-${i}.pdf`, await d.save());
         }
         downloadBlob(await zip.generateAsync({ type: "blob" }), "split-pages.zip");
-        setMsg(`Split into ${total} separate pages.`);
+        report(`Split into ${total} separate pages.`);
       } else {
         const idx = parsePages(spec, total).map((n) => n - 1);
-        if (idx.length === 0) return setMsg("No valid pages selected.");
+        if (idx.length === 0) return report("No valid pages selected.");
         const d = await PDFDocument.create();
         const ps = await d.copyPages(src, idx);
         ps.forEach((p) => d.addPage(p));
         const bytes = await d.save();
         downloadBlob(new Blob([new Uint8Array(bytes)], { type: "application/pdf" }), "split.pdf");
-        setMsg(`Extracted ${idx.length} page(s) → split.pdf`);
+        report(`Extracted ${idx.length} page(s) → split.pdf`);
       }
     });
 
   const img2pdf = (files: File[], maxW: number) =>
-    run(async () => {
-      if (files.length === 0) return setMsg("Select image files.");
+    run("img2pdf", async (report) => {
+      if (files.length === 0) return report("Select image files.");
       const PDFDocument = await loadPdfLib();
       const doc = await PDFDocument.create();
       for (const f of files) {
@@ -184,12 +194,12 @@ export default function PdfToolkit() {
       }
       const out = await doc.save();
       downloadBlob(new Blob([new Uint8Array(out)], { type: "application/pdf" }), "images.pdf");
-      setMsg(`Combined ${files.length} image(s) → images.pdf (${fmtBytes(out.length)})`);
+      report(`Combined ${files.length} image(s) → images.pdf (${fmtBytes(out.length)})`);
       recordJob("pdf-toolkit", `Combined ${files.length} images into a PDF`);
     });
 
   const pdf2img = (file: File, scale: number) =>
-    run(async () => {
+    run("pdf2img", async (report) => {
       const pdfjsLib = await loadPdfjs();
       const JSZip = await loadJSZip();
       const buf = await file.arrayBuffer();
@@ -206,11 +216,11 @@ export default function PdfToolkit() {
         zip.file(`page-${i}.png`, blob);
       }
       downloadBlob(await zip.generateAsync({ type: "blob" }), "pdf-pages.zip");
-      setMsg(`Rendered ${doc.numPages} page(s) to PNG → pdf-pages.zip`);
+      report(`Rendered ${doc.numPages} page(s) to PNG → pdf-pages.zip`);
     });
 
   const pdf2text = (file: File) =>
-    run(async () => {
+    run("pdf2text", async (report) => {
       const pdfjsLib = await loadPdfjs();
       const buf = await file.arrayBuffer();
       const doc = await pdfjsLib.getDocument({ data: new Uint8Array(buf) }).promise;
@@ -222,13 +232,17 @@ export default function PdfToolkit() {
       }
       setText(full);
       downloadBlob(new Blob([full], { type: "text/plain;charset=utf-8" }), "extracted.txt");
-      setMsg(`Extracted text from ${doc.numPages} page(s).`);
+      report(`Extracted text from ${doc.numPages} page(s).`);
     });
 
-  if (!mode) return <div className="min-h-40" />;
+  const msg = statusByMode[mode] ?? "";
+  const showPanel = (id: Mode) => !hashReady || mode === id;
 
   return (
-    <div className="space-y-5">
+    <div className={hashReady ? "relative space-y-5" : "pdf-hash-pending relative space-y-5"}>
+      {PDF_MODE_IDS.map((id) => (
+        <span key={id} id={id} className="pdf-mode-anchor" />
+      ))}
       <nav aria-label={t("Other PDF tools")} className="flex gap-2 overflow-x-auto pb-1">
         {PDF_STANDALONE.map((item) => (
           <I18nLink key={item.href} href={item.href} className="inline-flex min-h-11 shrink-0 items-center rounded-full border px-3 text-sm text-foreground hover:border-primary/40">
@@ -238,17 +252,17 @@ export default function PdfToolkit() {
       </nav>
       <div className="flex gap-2 overflow-x-auto pb-1 min-[380px]:flex-wrap min-[380px]:overflow-visible">
         {MODES.map((m) => (
-          <button key={m.id} id={`pdf-mode-${m.id}`} type="button" aria-pressed={mode === m.id} onClick={() => selectMode(m.id)} className={`tool-btn scroll-mt-28 shrink-0 ${mode === m.id ? "tool-btn-primary" : "tool-btn-secondary"}`}>
+          <button key={m.id} id={`pdf-mode-${m.id}`} type="button" data-pdf-tab={m.id} aria-pressed={mode === m.id} onClick={() => selectMode(m.id)} className={`tool-btn scroll-mt-28 shrink-0 ${mode === m.id ? "tool-btn-primary" : "tool-btn-secondary"}`}>
             {m.icon}{m.label}
           </button>
         ))}
       </div>
 
-      {mode === "merge" && <MergePanel busy={busy} onRun={merge} />}
-      {mode === "split" && <SplitPanel busy={busy} onRun={split} />}
-      {mode === "img2pdf" && <Img2PdfPanel busy={busy} onRun={img2pdf} />}
-      {mode === "pdf2img" && <Pdf2ImgPanel busy={busy} onRun={pdf2img} />}
-      {mode === "pdf2text" && <Pdf2TextPanel busy={busy} onRun={pdf2text} />}
+      {showPanel("merge") && <div data-pdf-panel="merge"><MergePanel busy={busyMode === "merge"} onRun={merge} /></div>}
+      {showPanel("split") && <div data-pdf-panel="split"><SplitPanel busy={busyMode === "split"} onRun={split} /></div>}
+      {showPanel("img2pdf") && <div data-pdf-panel="img2pdf"><Img2PdfPanel busy={busyMode === "img2pdf"} onRun={img2pdf} /></div>}
+      {showPanel("pdf2img") && <div data-pdf-panel="pdf2img"><Pdf2ImgPanel busy={busyMode === "pdf2img"} onRun={pdf2img} /></div>}
+      {showPanel("pdf2text") && <div data-pdf-panel="pdf2text"><Pdf2TextPanel busy={busyMode === "pdf2text"} onRun={pdf2text} /></div>}
 
       {msg && <p className="text-sm text-muted-foreground">{msg}</p>}
       {mode === "pdf2text" && text && (

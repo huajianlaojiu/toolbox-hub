@@ -53,8 +53,13 @@ export function subscribeJobs(onChange: () => void): () => void {
   };
 }
 
-export function getJobsServerSnapshot(): JobRecord[] {
-  return EMPTY_JOBS;
+/**
+ * 服务端和水合第一帧还没读到 localStorage。
+ * 返回 null，而不是空数组，这样「还没读」和「确实没有任务」可以分开，
+ * 定价页不会先画出 “No jobs yet” 再换成已有记录。
+ */
+export function getJobsServerSnapshot(): JobRecord[] | null {
+  return null;
 }
 
 /** 只记工具名、时间和一句摘要。不记文件名或文件内容。 */
@@ -72,6 +77,11 @@ export function recordJob(tool: string, summary: string) {
 }
 
 export function listJobs(): JobRecord[] {
+  return readRaw();
+}
+
+/** 与 getJobsServerSnapshot 同一快照类型，供 useSyncExternalStore 在浏览器里读取。 */
+export function getJobsClientSnapshot(): JobRecord[] | null {
   return readRaw();
 }
 

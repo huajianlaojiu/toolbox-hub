@@ -256,6 +256,20 @@ export function cropFilter(crop: CropRect): string {
   return `crop=${crop.width}:${crop.height}:${crop.x}:${crop.y},setsar=1`;
 }
 
+/**
+ * A stream-copied trim can report a playhead past the duration, so a player
+ * shows 0:03 / 0:02. Keep the displayed time inside the clip.
+ */
+export function clampTrimClock(currentTime: number, duration: number): { current: number; seekTo: number | null } {
+  if (!Number.isFinite(duration) || duration <= 0) return { current: 0, seekTo: null };
+  const current = Number.isFinite(currentTime) ? currentTime : 0;
+  if (current > duration + 0.04) {
+    const seekTo = Math.max(0, duration - 0.001);
+    return { current: seekTo, seekTo };
+  }
+  return { current: Math.min(Math.max(0, current), duration), seekTo: null };
+}
+
 export function mp4Args(inputName: string, videoFilter: string, outputName = "output.mp4", withAudio = true): string[] {
   const args = ["-i", inputName, "-vf", videoFilter, "-map", "0:v:0"];
   if (withAudio) args.push("-map", "0:a:0?");

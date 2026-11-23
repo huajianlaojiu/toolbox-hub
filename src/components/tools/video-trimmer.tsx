@@ -1,13 +1,52 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Upload, Download, Loader2, Scissors, FileVideo, RotateCcw } from "lucide-react";
 import { downloadBlob, formatBytes } from "@/lib/bytes";
 import { useI18n } from "@/lib/i18n";
+import { clampTrimClock } from "@/lib/video-geometry";
 
 function fmtTime(s: number): string {
   const m = Math.floor(s / 60);
   const sec = (s % 60).toFixed(1);
   return `${m}:${sec.padStart(4, "0")}`;
+}
+
+function TrimResult({ url }: { url: string }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  const [clock, setClock] = useState({ current: 0, duration: 0 });
+
+  const sync = () => {
+    const video = ref.current;
+    if (!video) return;
+    const duration = Number.isFinite(video.duration) ? video.duration : 0;
+    const next = clampTrimClock(video.currentTime, duration);
+    if (next.seekTo != null && Math.abs(video.currentTime - next.seekTo) > 0.02) {
+      video.currentTime = next.seekTo;
+    }
+    setClock({ current: next.current, duration });
+  };
+
+  return (
+    <>
+      <video
+        ref={ref}
+        src={url}
+        controls
+        preload="metadata"
+        className="w-full rounded-lg border max-h-48"
+        onLoadedMetadata={sync}
+        onDurationChange={sync}
+        onTimeUpdate={sync}
+        onSeeked={sync}
+        onEnded={sync}
+      />
+      {clock.duration > 0 && (
+        <p className="font-mono text-xs text-muted-foreground">
+          {fmtTime(clock.current)} / {fmtTime(clock.duration)}
+        </p>
+      )}
+    </>
+  );
 }
 
 export default function VideoTrimmer() {
@@ -56,7 +95,10 @@ export default function VideoTrimmer() {
       await ffmpeg.exec(args);
 
       const data = await ffmpeg.readFile("output.mp4");
-      const blob = new Blob([data], { type: "video/mp4" });
+      // Copy out of the wasm heap. A view into that buffer can change before the
+      // browser finishes reading it, which makes the preview duration wrong.
+      const bytes = data instanceof Uint8Array ? new Uint8Array(data) : new Uint8Array();
+      const blob = new Blob([bytes], { type: "video/mp4" });
       setResult({ url: URL.createObjectURL(blob), blob, size: blob.size });
       setProgress(100);
       await ffmpeg.deleteFile(inputName);
@@ -124,7 +166,7 @@ export default function VideoTrimmer() {
           {result && (
             <div className="rounded-lg border bg-muted/30 p-4 space-y-3">
               <p className="text-sm font-medium">{L("Done — ")}{formatBytes(result.size)}</p>
-              <video src={result.url} controls className="w-full rounded-lg border max-h-48" />
+              <TrimResult url={result.url} />
               <button onClick={() => downloadBlob(result.blob, `trimmed-${file.name.replace(/\.[^.]+$/, "")}.mp4`, "video/mp4")} className="tool-btn tool-btn-primary">
                 <Download className="h-4 w-4" />{L("Download MP4")}
               </button>

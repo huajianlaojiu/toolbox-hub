@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import {
   centeredCrop,
+  clampTrimClock,
   cropFilter,
   dragCrop,
   evenFloor,
@@ -116,6 +117,15 @@ test("dragging moves and resizes using the same pixel box the encoder gets", () 
   const square = dragCrop(start, 80, 10, "se", frame, 1);
   assert.equal(square.width, square.height);
   assert.equal(cropFilter(square), `crop=${square.width}:${square.height}:${square.x}:${square.y},setsar=1`);
+});
+
+test("a trim preview playhead past the duration is pulled back inside the clip", () => {
+  const stuck = clampTrimClock(3, 2.07);
+  assert.ok(stuck.seekTo != null && stuck.seekTo <= 2.07);
+  assert.ok(stuck.current <= 2.07);
+  const start = clampTrimClock(0, 2.07);
+  assert.equal(start.seekTo, null);
+  assert.equal(start.current, 0);
 });
 
 test("scale filter uses the planned even size", () => {

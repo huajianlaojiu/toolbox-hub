@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import { I18nText } from "@/components/i18n-text";
 import { languageAlternates } from "@/lib/alternates";
 import { purchaseAvailable } from "@/lib/billing";
+import { pageTitle } from "@/lib/site-meta";
 
 export const metadata: Metadata = {
-  title: "Contact Toolbox Hub",
+  title: pageTitle("Contact Toolbox Hub"),
   description:
     "Report a bug, request a new tool, or send feedback about Toolbox Hub. We read every message.",
   alternates: { canonical: "/contact/", languages: languageAlternates("/contact/") },

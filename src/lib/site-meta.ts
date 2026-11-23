@@ -18,6 +18,16 @@ export const OG_IMAGE = {
   alt: "Toolbox Hub: free browser tools for PDFs, images, and videos",
 };
 
+/**
+ * 根布局模板是 `%s - Toolbox Hub`。
+ * 标题里已经写了品牌时必须用 absolute，否则会变成
+ * “Privacy Policy - Toolbox Hub - Toolbox Hub”。
+ */
+export function pageTitle(title: string): Metadata["title"] {
+  if (title.includes("Toolbox Hub")) return { absolute: title };
+  return title;
+}
+
 /** 站点级 metadata 默认值（标题模板 / OG / robots），两个根布局共用 */
 export const siteMetadata: Metadata = {
   metadataBase: new URL(SITE_URL),
