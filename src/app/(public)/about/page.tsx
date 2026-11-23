@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import { visibleTools } from "@/lib/tools-data";
 import { I18nText } from "@/components/i18n-text";
+import I18nLink from "@/components/i18n-link";
 import { languageAlternates } from "@/lib/alternates";
-import { purchaseAvailable } from "@/lib/billing";
 import { pageTitle } from "@/lib/site-meta";
 
 export const metadata: Metadata = {
   title: pageTitle("About Toolbox Hub"),
   description:
-    "Toolbox Hub is a free collection of browser-based utilities for developers, designers and everyday tasks. Learn who builds it and how it works.",
+    "Toolbox Hub is a browser workshop for PDFs, images, and videos, plus other utilities. Files are processed on your device. Write to hello@toolbox-hub.io.",
   alternates: { canonical: "/about/", languages: languageAlternates("/about/") },
 };
 
@@ -19,59 +19,43 @@ export default function AboutPage() {
 
       <div className="mt-6 space-y-5 text-sm leading-7 text-muted-foreground">
         <p>
-          <I18nText id="Toolbox Hub is a collection of {count} free online tools for developers, designers, and everyday tasks. It exists for one reason: most quick tasks do not deserve an account, a download, or an upload. You should be able to format a JSON payload, compress an image, or generate a password in under five seconds without handing your data to a stranger." vars={{ count: String(visibleTools.length) }} />
+          <I18nText id="Toolbox Hub is a workshop of {count} browser tools. The front door is PDF, images, and video: merge or compress a PDF, convert or crop a picture, trim or caption a video. Calculators, text tools, and developer utilities stay in the full directory under More tools. The site is not a PDF-only product, and it does not replace a desktop suite." vars={{ count: String(visibleTools.length) }} />
         </p>
 
-        <h2 className="text-xl font-semibold text-foreground"><I18nText id="How it works" /></h2>
+        <h2 className="text-xl font-semibold text-foreground"><I18nText id="Where the work happens" /></h2>
         <p>
-          <I18nText id="Most tools process your input in your own browser using JavaScript: when you paste text or select a file, the computation happens on your device rather than on a server we operate, and there is no account to create. A few tools download a processing engine from a third-party CDN on first use, and the Site loads advertising scripts only after you consent. The privacy policy lists every third-party service." />
+          <I18nText id="File tools run in your browser. You choose a PDF, a picture, or a video on this device, and the page builds the download there. The file is not uploaded to a server we operate. No account is required. Closing the tab drops the file from the tool." />
+        </p>
+        <p>
+          <I18nText id="Some jobs still need a network request, and it is not a copy of your file. The first video tool in a browser downloads an ffmpeg engine from a third-party CDN. Image to Text downloads an OCR language model the first time you use that language. A few embedded editors load their own code. The privacy policy names those requests." />
         </p>
 
-        <h2 className="text-xl font-semibold text-foreground"><I18nText id="What we do not do" /></h2>
-        <ul className="list-disc pl-5 space-y-2">
-          <li><I18nText id="We do not ask for registration, and we do not sell user data." /></li>
-          <li>
-            <I18nText id="We do not add watermarks or redirect you to a download page. A single job is not behind a paywall. Optional Pro features are listed on the pricing page." />
-          </li>
-          <li>
-            <I18nText id="We do not guarantee that any output is fit for a specific professional or regulatory purpose. Read the disclaimer before relying on a result." />
-          </li>
-        </ul>
-
-        <h2 className="text-xl font-semibold text-foreground"><I18nText id="How it is funded" /></h2>
+        <h2 className="text-xl font-semibold text-foreground"><I18nText id="What the file tools will not do" /></h2>
         <p>
-            <I18nText id={purchaseAvailable()
-              ? "The site is funded by advertising and an optional Pro subscription. Ads may appear alongside the tools unless Pro is active in this browser, and Toolbox Hub does not control which ads appear. We do not accept payment to reorder or favour any tool, and neither ads nor Pro change what a tool computes."
-              : "The site is funded by advertising. Pro is described on the pricing page, and purchase is not available yet. Ads may appear alongside the tools unless Pro is active in this browser, and Toolbox Hub does not control which ads appear. We do not accept payment to reorder or favour any tool, and neither ads nor Pro change what a tool computes."} />
+          <I18nText id="The pages describe the job they actually run. There is no PDF-to-Word conversion, no tool that removes a PDF password, and no editor for rewriting the text already on a PDF page. PNG compression often saves little or nothing. GIF animation is not kept. Making a picture or a video larger does not add real detail. Protect PDF is standard 128-bit RC4 protection and stores only the first 32 characters of the password. Add Subtitles draws with Noto Sans Regular, which does not cover Chinese, Japanese, Korean, Arabic, Hebrew, Thai, or emoji. A long video can run out of memory on a phone." />
         </p>
 
-        <h2 className="text-xl font-semibold text-foreground"><I18nText id="Editorial approach" /></h2>
+        <h2 className="text-xl font-semibold text-foreground"><I18nText id="How the site is funded" /></h2>
         <p>
-          <I18nText id="Tool pages are written to answer real questions that searchers actually ask: what the tool does, when to use it, how to use it, and what commonly goes wrong. Explanations are checked against the behaviour of the tool in a browser, and known limitations are stated plainly rather than hidden. When a tool is inaccurate, the contact page is the fastest route to a fix." />
+          <I18nText id="A Google AdSense account is connected, and ads.txt is published for toolbox-hub.io. The visible ad slots are empty, so the pages do not currently show an ad unit. Google Analytics is not configured, so no measurement tag is loaded. Pro is described on the pricing page. Purchase is not available yet, and a single job is not behind a paywall." />
         </p>
 
-        <h2 className="text-xl font-semibold text-foreground"><I18nText id="Editorial standards" /></h2>
-        <ul className="list-disc pl-5 space-y-2">
-          <li><I18nText id="Descriptions reflect what the tool actually does, including its limits." /></li>
-          <li>
-            <I18nText id="No fabricated statistics, no invented expert credentials, and no copied text from competing sites." />
-          </li>
-          <li>
-            <I18nText id="Security and privacy claims are verified in code before they are published." />
-          </li>
-          <li>
-            <I18nText id="Corrections are made promptly and the page is updated rather than quietly replaced." />
-          </li>
-        </ul>
-
-        <h2 className="text-xl font-semibold text-foreground"><I18nText id="Who is behind it" /></h2>
+        <h2 className="text-xl font-semibold text-foreground"><I18nText id="How the pages are written" /></h2>
         <p>
-          <I18nText id="Toolbox Hub is an independent project run by a small team of developers. We publish corrections, changelogs and new tool announcements, and we read every message that arrives through the contact page." />
+          <I18nText id="A tool page states what that one tool does, when it is the right job, how to run it, and where it stops. Limits on the page match the code. The site does not publish invented user counts, reviews, or awards. If a result is wrong, the contact address below is the way to report it." />
         </p>
 
-        <h2 className="text-xl font-semibold text-foreground"><I18nText id="Get in touch" /></h2>
+        <h2 className="text-xl font-semibold text-foreground"><I18nText id="Contact" /></h2>
         <p>
-          <I18nText id="Bug reports, tool requests and corrections are all welcome. Use the contact page, and include the tool name, your browser, and what you expected to happen." />
+          <I18nText id="Toolbox Hub is an independent project. For a bug, a correction, or a tool request, email" />{" "}
+          <a href="mailto:hello@toolbox-hub.io" className="font-medium text-foreground underline underline-offset-4">
+            hello@toolbox-hub.io
+          </a>
+          .{" "}
+          <I18nText id="The contact page lists what to include: the tool name, your browser, and what you expected to happen." />{" "}
+          <I18nLink href="/contact/" className="font-medium text-foreground underline underline-offset-4">
+            <I18nText id="Contact page" />
+          </I18nLink>
         </p>
       </div>
     </div>

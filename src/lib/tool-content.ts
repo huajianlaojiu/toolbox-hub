@@ -137,7 +137,7 @@ const overrides: Record<string, ToolContent> = {
   },
   "image-compressor": {
     intro:
-      "Compress Image re-encodes a JPEG, PNG, WebP, BMP, or GIF in your browser and shows the original size next to the new size. Nothing is uploaded. JPEG and WebP have a quality control. Keeping PNG uses the browser's lossless encoder, which often saves little or nothing and can make the file larger. It is not TinyPNG or pngquant. If you want a smaller PNG photo, choose JPEG or WebP yourself. That choice is on the page, and it is the only way the format changes.\n\nGIF animation is not recompressed. You pick a still JPEG, WebP, or PNG of the first frame. A very large photo can be slow or run out of memory, especially on a phone.",
+      "Open Compress Image when a form, an email, or a page rejects the file for size and you still have the original picture. It re-encodes a JPEG, PNG, WebP, BMP, or GIF in this browser and shows the original size next to the new size before you rely on the download. Nothing is uploaded, and no account is required.\n\nJPEG and WebP have a quality control. Keeping PNG uses the browser's lossless encoder, which often saves little or nothing and can make the file larger. This is not a PNG quantizer. If a photo needs to be smaller and PNG is optional, choose JPEG or WebP yourself. That choice is on the page, and it is the only way the format changes. GIF animation is not recompressed: you get a still JPEG, WebP, or PNG of the first frame. A very large photo can be slow or run out of memory, especially on a phone.",
     howTo: [
       { step: "Choose an image", detail: "JPEG, PNG, WebP, BMP, and GIF open in the page. The original size is shown before you run anything." },
       { step: "Pick the output", detail: "Keep the original format, or choose JPEG or WebP when you want a smaller file. GIF has no keep-original option, because animation is not preserved." },
@@ -302,7 +302,7 @@ const overrides: Record<string, ToolContent> = {
   },
   "image-resizer": {
     intro:
-      "Resize Image changes the pixel size of one picture in your browser and downloads it. Width presets are 1920, 1280, 1080, 800, and 640, and you can type a custom width and height. Keep aspect ratio is on by default, so the other side follows the original shape. A larger size does not add detail. The page says so when the output is bigger than the source.\n\nJPEG, PNG, WebP, and BMP are written back in the same format when the browser can. GIF becomes a still PNG, and the page says the animation is not kept. Nothing is uploaded. A very large photo can be slow or run out of memory on a phone.",
+      "Resize Image is the page for pixel dimensions, not for file size. Use it when a photo is 4000 pixels wide and the destination asked for something closer to 1200, or when a set of pictures should share one width. Presets are 1920, 1280, 1080, 800, and 640. You can also type both sides. Keep aspect ratio is on by default, so the other side follows the original shape. Turn it off only when you mean to stretch the picture into an exact box.\n\nA larger size does not add detail. The page says so when the output is bigger than the source. JPEG, PNG, WebP, and BMP are written back in the same format when the browser can. GIF becomes a still PNG of the first frame, and the page says the animation is not kept. The picture is not uploaded. A very large photo can be slow or run out of memory on a phone. Compress Image is the separate page if the pixels are already right and only the encoding is too heavy.",
     howTo: [
       { step: "Choose an image", detail: "The page reads the source width and height." },
       { step: "Pick a width or type both sides", detail: "1920, 1280, 1080, 800, and 640 set the width. With aspect ratio on, the height follows. Turn the lock off to stretch to an exact box." },
@@ -329,7 +329,7 @@ const overrides: Record<string, ToolContent> = {
   },
   "image-cropper": {
     intro:
-      "Crop Image keeps the region you set on the preview and downloads that region. Presets cover 1:1, 4:5, 16:9, and 9:16, plus a freeform box and a custom ratio. Drag the box or type the x, y, width, and height. The highlighted rectangle is the crop, in pixels, so the file matches the preview.\n\nJPEG, PNG, WebP, and BMP stay in the same format when the browser can write them. GIF becomes a still PNG, and the page says so. Nothing is uploaded.",
+      "Crop Image throws away everything outside one rectangle. Use it for a square avatar, a 16:9 frame from a taller photo, or the empty margin of a screenshot. Presets lock the shape to 1:1, 4:5, 16:9, or 9:16. Freeform and a custom ratio leave the shape to you. Drag the box or type x, y, width, and height. The highlighted rectangle is the crop, in pixels, so the download matches the preview rather than a separate guess.\n\nJPEG, PNG, WebP, and BMP stay in the same format when the browser can write them. GIF becomes a still PNG of the first frame, and the page says so. The picture is not uploaded, and no account is required. Rotate Image turns the whole picture. This page does not.",
     howTo: [
       { step: "Choose an image", detail: "A crop box appears once the width and height are known." },
       { step: "Set the region", detail: "Drag the box or a handle, or type X, Y, width, and height. Free is any shape. 1:1, 4:5, 16:9, and 9:16 lock the shape." },
@@ -346,7 +346,7 @@ const overrides: Record<string, ToolContent> = {
   },
   "image-rotator": {
     intro:
-      "Rotate Image turns one picture left or right in 90° steps, or flips it horizontally or vertically. The preview updates as you click, and that preview is the file you download. JPEG, PNG, WebP, and BMP keep their format when the browser can write it. GIF becomes a still PNG. Nothing is uploaded. One picture at a time.",
+      "Rotate Image is for a picture that landed on its side, upside down, or mirrored. Each click turns it left or right by 90 degrees, or flips it horizontally or vertically, and you can combine a turn and a flip. The preview updates as you click, and that preview is the file you download. It does not offer 15 degrees or any other free angle, because a partial turn would add empty corners.\n\nJPEG, PNG, WebP, and BMP keep their format when the browser can write it. GIF becomes a still PNG of the first frame. One picture at a time. Nothing is uploaded, and no account is required. A 90 degree turn swaps width and height. Crop after you rotate if the subject is sideways and you also need a region.",
     howTo: [
       { step: "Choose an image", detail: "The original appears in the preview." },
       { step: "Rotate or flip", detail: "Rotate left, rotate right, flip horizontal, or flip vertical. You can combine a turn and a flip." },
@@ -363,7 +363,7 @@ const overrides: Record<string, ToolContent> = {
   },
   "image-watermark": {
     intro:
-      "Watermark Image stamps text, another picture, or both onto a photo in your browser. You set the font, size, color, opacity, rotation, and position. An optional PNG, JPEG, or WebP stamp uses a width you choose. Text and the image stamp share one position, so they overlap when you use both. The preview is the file you download.\n\nLetters use a font already on this device. A character that font cannot draw will be missing. A long line is scaled down so it stays on the picture. Nothing is uploaded.",
+      "Watermark Image is for marking a photo before you send it: a draft line, a name in the corner, or a small logo. It stamps text, another picture, or both, in this browser. You set the font, size, color, opacity, rotation, and position. An optional PNG, JPEG, or WebP stamp uses a width you choose. Text and the image stamp share one position, so they overlap when you use both. The preview is the file you download, which is the check before you rely on it.\n\nLetters use a font already on this device. A character that font cannot draw will be missing. The page does not bundle a CJK or Arabic font for watermarks. A long line is scaled down so it stays on the picture. Nothing is uploaded, and no account is required.",
     howTo: [
       { step: "Choose the picture", detail: "The preview appears as soon as the file is read." },
       { step: "Set the text", detail: "Type the words, then pick sans, serif, or mono, a color, a size, and an opacity." },
@@ -2326,7 +2326,7 @@ const overrides: Record<string, ToolContent> = {
   },
   "video-compressor": {
     intro:
-      "The Video Compressor shrinks video files directly in your browser using ffmpeg compiled to WebAssembly. No file ever leaves your device, which matters when the video is client work or personal footage you would rather not upload to a stranger's server.\n\nThree compression modes cover the common cases: quality mode uses CRF encoding so you pick a visual quality and let the encoder find the smallest file; bitrate mode pins the output to a number you choose, which is what you need when a platform caps uploads at a fixed size; target-size mode works backwards from a megabyte budget and calculates the bitrate from your video's real duration.\n\nThe engine is the same ffmpeg that professionals use on the command line, running H.264 encoding locally. A typical 100 MB phone video compresses to 10-20 MB in about a minute on a desktop, with no watermark and no sign-up.",
+      "Video Compressor is for a clip that will not fit an email, a form, or an upload limit, when you would rather not send the original to someone else's server. It re-encodes to H.264 in an MP4, in this browser, with ffmpeg. No account is required, and the file is not uploaded.\n\nThree modes match three different constraints. Quality uses a CRF slider from 18 to 32. A lower number keeps more detail and a larger file. The control starts at 28. Bitrate pins the video to a megabit rate you choose, from 0.5 to 10. Target size starts from a megabyte budget and derives a bitrate from the clip's real duration, so wait until that duration is known. Audio is AAC at 128 kbps in each mode. Compression always spends some picture quality. Check the preview. The page does not promise a savings percentage before the encode finishes.\n\nThe first run in a browser downloads the ffmpeg engine from a CDN and later runs reuse it. A long video, or a phone with little free memory, can be slow or fail. Keep the tab open.",
     howTo: [
       { step: "Drop in your video", detail: "Select or drag an MP4, MOV, WebM or MKV file. The tool reads the duration from the video itself, which the target-size mode needs." },
       { step: "Pick a mode", detail: "Quality mode: drag the CRF slider (lower is better). Bitrate mode: choose a Mbps value. Target-size mode: enter the megabyte budget." },
@@ -2335,8 +2335,8 @@ const overrides: Record<string, ToolContent> = {
     ],
     faq: [
       { q: "Is there a file size limit?", a: "The practical limit is your device's memory, not a server quota. Videos up to about 500 MB work comfortably on a desktop; phones handle smaller files better. There is no artificial cap and nothing is uploaded." },
-      { q: "Why is the first compression slow?", a: "The first run downloads the ffmpeg WebAssembly engine (about 25 MB) from a CDN. After that it is cached and later compressions start in about a second." },
-      { q: "Does compression lose quality?", a: "Always some, by design. CRF 23-28 is the usual sweet spot: visually near-identical at a fraction of the size. Target-size mode pushes harder, so check the preview before downloading." },
+      { q: "Why is the first compression slow to start?", a: "The first video job in this browser downloads the ffmpeg engine from a CDN. Later runs reuse that download. The encode itself still takes time, because the whole clip is re-encoded." },
+      { q: "Does compression lose quality?", a: "Yes. Quality mode lets you choose how hard to push, from CRF 18 to 32. Target-size mode spends whatever quality is required to approach the megabyte budget. Watch the preview before you replace the original." },
       { q: "Can I compress for a specific platform?", a: "Yes. Bitrate mode with 8 Mbps suits most HD uploads; target-size mode is for hard caps like email attachments or form uploads." },
       { q: "Does it work on mobile?", a: "It runs in mobile browsers, but large videos can exhaust phone memory. For files over roughly 100 MB, a desktop is strongly recommended." },
     ],
@@ -2347,14 +2347,14 @@ const overrides: Record<string, ToolContent> = {
       "Freeing storage on a camera roll before a trip.",
     ],
     tips: [
-      "Start with CRF 28 and only go lower if the preview looks soft.",
-      "Target-size mode needs the real duration; wait for the video to finish loading before compressing.",
-      "For screen recordings, CRF 30 or higher usually still looks clean.",
+      "Start at the default CRF of 28 and move toward 18 only if the preview is too soft and you can accept a larger file.",
+      "Target-size mode needs the real duration. Wait until the player has loaded it.",
+      "A screen recording often tolerates a higher CRF than a detailed camera clip. The preview is the check, not a rule of thumb.",
     ],
   },
   "video-converter": {
     intro:
-      "The Video Converter moves videos between MP4, WebM, MOV, MKV and AVI without uploading anything. Re-encoding runs locally through ffmpeg compiled to WebAssembly, so the same codecs that power desktop conversion software are doing the work inside your browser tab.\n\nConversions pick the right codec per container: H.264 for MP4 and MOV for maximum device compatibility, VP9 and Opus for WebM for the web, and stream copy for MKV and AVI where the video stream can pass through untouched and finish in seconds.\n\nUse it when a camera produces MOV your editor will not take, when a platform wants WebM, or when you need an MKV that plays everywhere.",
+      "Video Converter changes the container when a player or an editor refuses the file you have. The choices are MP4, WebM, MOV, MKV, and AVI. The work runs in this browser with ffmpeg. The video is not uploaded, and no account is required.\n\nMP4 and MOV are re-encoded to H.264 with AAC audio. WebM is re-encoded to VP9 with Opus, at a 1 Mbps video target, and that mode is the slow one. MKV copies the video stream and the audio stream when it can, so that path does not recompress the picture. AVI copies the video and re-encodes the audio as MP3. Copying a stream can fail when the source codec does not belong in that container. Re-encoding spends some quality, and converting the same file twice spends it again. Start from the original.\n\nThe first run downloads the ffmpeg engine. A long or very large file can run out of memory, especially on a phone.",
     howTo: [
       { step: "Add your video", detail: "Drop in any common video file. The source format does not matter; ffmpeg reads almost everything." },
       { step: "Choose the target", detail: "Pick MP4, WebM, MOV, MKV or AVI. H.264 targets re-encode; MKV and AVI copy the video stream when possible." },
@@ -2363,7 +2363,7 @@ const overrides: Record<string, ToolContent> = {
     ],
     faq: [
       { q: "Which format should I choose?", a: "MP4 for sharing and phones, WebM for websites, MOV if something in the Apple ecosystem demands it, MKV to keep multiple audio tracks and subtitles, AVI only for legacy tools." },
-      { q: "Does converting lose quality?", a: "Re-encoding does, slightly. MKV and AVI use stream copy where possible, which is mathematically lossless. For MP4/WebM the default settings are visually transparent." },
+      { q: "Does converting lose quality?", a: "MP4, MOV, and WebM are re-encoded, so yes, some. MKV copies the video stream when the copy succeeds, which does not recompress that picture. AVI copies the video and re-encodes the audio. Convert from the original if you need another pass." },
       { q: "Can it convert 4K video?", a: "Technically yes, but browser memory is the limit. 1080p is comfortable on desktop; 4K may fail on phones or low-memory machines." },
       { q: "Is my video uploaded anywhere?", a: "No. The entire pipeline runs in your browser. The only network traffic is the ffmpeg engine download on first use." },
     ],
@@ -2380,7 +2380,7 @@ const overrides: Record<string, ToolContent> = {
   },
   "video-merger": {
     intro:
-      "The Video Merger joins two to ten clips into a single MP4, entirely in your browser. It uses ffmpeg's concat filter to align video and audio streams from every input, then re-encodes once so the result plays everywhere.\n\nBecause the merge re-encodes, it also normalises small differences between clips. For the cleanest result, feed it files from the same source: same camera, same resolution, same frame rate. Drag the list to reorder clips before merging.\n\nEverything is local: nothing is uploaded, there is no queue, and no watermark is added to the output.",
+      "Video Merger is for two or more clips that should play as one file: an intro in front of a talk, or several takes from the same camera. It joins them in the order you set, re-encodes once to H.264, and downloads an MP4. You can add up to ten clips. If you add more than three, the free run uses the first three. A higher batch is described on the pricing page, and purchase is not available yet.\n\nRe-encoding can absorb small differences, but mixed resolutions, codecs, or a clip with no audio track are the usual reasons a merge fails. Same camera, same frame size, and same frame rate is the reliable case. Reorder with the arrows before you run it. The clips stay on this device. No account is required. The first run downloads the ffmpeg engine. Keep the tab open, because the encode lasts about as long as the combined clips take to compress.",
     howTo: [
       { step: "Add clips in order", detail: "Select multiple videos. They appear in a numbered list; use the arrows to reorder before merging." },
       { step: "Check compatibility", detail: "Best results come from clips with the same resolution and codec. Mixed sources may fail or show artefacts." },
@@ -2389,9 +2389,9 @@ const overrides: Record<string, ToolContent> = {
     ],
     faq: [
       { q: "Why did my merge fail?", a: "The concat filter needs matching streams. Different resolutions, codecs or missing audio tracks are the usual causes. Convert clips to MP4/H.264 first with the Video Converter." },
-      { q: "Is there a limit on how many clips?", a: "Ten clips, which is the practical limit for browser memory and encoding time." },
+      { q: "Is there a limit on how many clips?", a: "The list accepts up to ten. Without Pro, the run uses the first three. Purchase of a larger batch is not available yet. Ten is also a practical limit for memory and encoding time." },
       { q: "How long does it take?", a: "Roughly the combined duration of all clips at encoding speed, plus a few seconds of setup. Ten short clips merge in well under a minute." },
-      { q: "Does merging lose quality?", a: "The output is re-encoded to H.264 at a high-quality preset, so there is minor generation loss. For same-source clips the result is effectively transparent." },
+      { q: "Does merging lose quality?", a: "Yes, some. The clips are re-encoded once to H.264. It is one generation of loss, not a lossless join. Keep the source clips if you may need to cut again." },
     ],
     useCases: [
       "Stitching several takes into one continuous video.",
@@ -2405,7 +2405,7 @@ const overrides: Record<string, ToolContent> = {
   },
   "video-speed-changer": {
     intro:
-      "The Video Speed Changer speeds up or slows down video from 0.25x to 4x, running locally in your browser with ffmpeg. Video frames are retimed with setpts while audio is stretched with a chained atempo filter, so pitch stays natural instead of turning into a chipmunk.\n\nSpeed presets cover the everyday cases: 2x and 4x for condensing lectures, screen recordings and travel footage; 0.5x and 0.75x for slow-motion analysis of a sports move or a tutorial step.\n\nYou can drop the audio entirely for silent memes and GIF-style loops, or keep it with pitch preserved. Everything is processed on your device; nothing is uploaded.",
+      "Video Speed Changer retimes a clip from 0.25× to 4× and downloads an MP4. Use 2× or 4× when a lecture or a screen recording is longer than you want to watch, and 0.5× or 0.75× when you want to look at a motion that is already in the file. The presets are 0.25, 0.5, 0.75, 1.5, 2, 3, and 4. The page shows the new duration before you run it.\n\nVideo frames are retimed. Audio, if you keep it, is stretched in steps so the pitch stays put rather than rising with the speed. You can drop the audio instead. Slow motion here only repeats or stretches frames that were recorded. It does not invent the in-between frames of footage shot at a high frame rate, so an extreme speed can look stepped. The encode runs in this browser. The file is not uploaded, and no account is required.",
     howTo: [
       { step: "Add a video", detail: "Drop in a clip. The tool reads its duration so it can show the new runtime before you commit." },
       { step: "Pick a speed", detail: "Choose from 0.25x to 4x presets. The new duration updates instantly." },
@@ -2413,9 +2413,9 @@ const overrides: Record<string, ToolContent> = {
       { step: "Apply and download", detail: "The retimed MP4 is encoded locally and offered for download." },
     ],
     faq: [
-      { q: "Does the audio pitch change?", a: "No. The atempo filter chain stretches time without altering pitch, which is what separates it from simply changing playback rate." },
-      { q: "What is the fastest speed?", a: "4x with presets, and the same machinery handles 0.25x slow motion. Extreme speeds may look choppy because frames are duplicated, not synthesised." },
-      { q: "Can I make true slow motion?", a: "This tool retimes existing frames. For buttery slow motion you need source footage shot at a high frame rate; the tool can only stretch what exists." },
+      { q: "Does the audio pitch change?", a: "Not when you keep the audio. Time is stretched without shifting pitch. Dropping the audio removes the track entirely." },
+      { q: "What speeds are available?", a: "Presets run from 0.25× to 4×. Speeds far from 1× can look stepped, because frames are retimed rather than newly drawn." },
+      { q: "Can it create slow motion from ordinary footage?", a: "It can only stretch frames that are already in the file. Footage that was not shot at a high frame rate will not gain new in-between frames." },
       { q: "How long does processing take?", a: "About the video's duration at encoding speed. A one-minute clip typically takes under a minute on desktop." },
     ],
     useCases: [
@@ -2430,7 +2430,7 @@ const overrides: Record<string, ToolContent> = {
   },
   "video-transformer": {
     intro:
-      "The Video Transformer flips, rotates and reverses video in your browser. Horizontal and vertical mirroring fixes footage shot through a mirror or upside-down action cams; 90/180/270-degree rotation saves videos recorded in portrait; reverse plays the clip backwards with audio reversed to match.\n\nAll transforms are combined into a single ffmpeg filter chain and encoded once, so applying several effects does not degrade the video repeatedly. Processing is fully local.\n\nThis is the tool for fixing orientation before posting, creating a mirror effect for a dance or transition edit, or producing the classic reverse-footage look.",
+      "Flip, Rotate and Reverse Video fixes orientation, or plays a clip backwards, in one encode. Horizontal and vertical flips mirror the picture. Each rotate click adds 90 degrees, so 90 and 270 swap width and height and 180 keeps the frame size. Reverse plays the pictures backwards and reverses the audio with them, so speech runs backwards in sync.\n\nStack the transforms you need and export once. A second encode is not applied on top of the first inside this run, so you do not pay the quality cost twice for combining a flip and a rotate. The result is still one H.264 MP4, so there is a single re-encode. The file stays on this device. No account is required. The first run downloads the ffmpeg engine.",
     howTo: [
       { step: "Add a video", detail: "Drop in a clip and preview it in the player." },
       { step: "Stack transforms", detail: "Toggle flip H, flip V, rotate (each click adds 90 degrees) and reverse. Combine as many as you need." },
@@ -2441,7 +2441,7 @@ const overrides: Record<string, ToolContent> = {
       { q: "Can I combine several transforms?", a: "Yes. Flip plus rotate plus reverse all apply in one pass, with a single encode." },
       { q: "Does reverse work with audio?", a: "Yes, the audio track is reversed too, so speech and effects play backwards in sync." },
       { q: "Why does rotate change the dimensions?", a: "A 90 or 270-degree rotation swaps width and height; that is expected. 180 keeps the frame size." },
-      { q: "Is quality lost?", a: "Only the single re-encode to H.264 at a high-quality preset. No repeated generation loss." },
+      { q: "Is quality lost?", a: "Once. The whole chain is encoded to H.264 in a single pass. Combining flip, rotate, and reverse does not encode the file three times." },
     ],
     useCases: [
       "Fixing portrait or upside-down footage before posting.",
@@ -2455,7 +2455,7 @@ const overrides: Record<string, ToolContent> = {
   },
   "video-trimmer": {
     intro:
-      "The Video Trimmer cuts a clip down to the part you need, in the browser, without re-encoding. It uses ffmpeg's stream copy mode with input-side seeking, so a trim finishes in seconds and the kept frames are bit-for-bit identical to the source.\n\nDrag the start and end sliders to frame your cut; the player previews at the selected point. Stream copy cuts on keyframes, so the result is lossless and instant. If the output misbehaves in a specific player, the Video Converter can re-encode it for maximum compatibility.\n\nNothing is uploaded. The file you select stays on your machine, which is what you want when trimming client footage or personal video.",
+      "Video Trimmer keeps the part of a clip between a start time and an end time, and downloads that span as an MP4. Use it to drop the silence at the head of a recording, or to lift one section out of a long file, when you do not need a frame-exact cut.\n\nThe trim copies the audio and video streams instead of re-encoding them. The kept frames are the source frames, which is why a trim is quick and does not add another generation of compression. A stream copy can only start on a keyframe, so the cut can land a fraction of a second, sometimes longer, away from the slider. If a player stutters on the result, re-encode that file once with Video Converter. The minimum span is a tenth of a second. The file stays on this device. No account is required. The first run still downloads the ffmpeg engine.",
     howTo: [
       { step: "Add a video", detail: "Drop in a clip; its duration is read automatically and the sliders are set to the full range." },
       { step: "Set start and end", detail: "Drag the two sliders. The selected length is shown live." },
@@ -2463,8 +2463,8 @@ const overrides: Record<string, ToolContent> = {
       { step: "Download", detail: "Preview and download the trimmed MP4. No watermark, no upload." },
     ],
     faq: [
-      { q: "Why is trimming so fast?", a: "Stream copy skips re-encoding entirely. Only the container is rewritten; video and audio frames are copied byte-for-byte." },
-      { q: "The cut point is a second or two off. Why?", a: "Stream copy can only cut on keyframes. For frame-exact cuts, trim with a small margin and use the Video Converter to re-encode the result." },
+      { q: "Why is trimming so fast?", a: "The streams are copied. The picture is not re-encoded. Only the container around the kept span is rewritten." },
+      { q: "The cut point is off the time I set. Why?", a: "A stream copy can only begin on a keyframe. Trim a little wide, or run the result through Video Converter when the cut has to land on a specific frame." },
       { q: "Does it work with any format?", a: "Anything ffmpeg can read: MP4, MOV, MKV, WebM and more. The output is always MP4." },
       { q: "Is my video uploaded?", a: "No. The whole process runs locally in your browser." },
     ],
@@ -2480,7 +2480,7 @@ const overrides: Record<string, ToolContent> = {
   },
   "video-resizer": {
     intro:
-      "Resize Video changes a clip's resolution in your browser and downloads an MP4. Presets cover 1080p, 720p, 480p, and 360p, and you can type a custom width and height. Keep aspect ratio is on by default, so the picture is scaled to fit that frame instead of being stretched. A portrait clip uses a portrait frame for those presets.\n\nA larger frame does not add detail. When the output is bigger than the original, the page says the upscale will not add real detail. Encoding uses ffmpeg in this tab. Nothing is uploaded. A long video, or a phone with little free memory, can be slow or fail. The first run downloads the ffmpeg engine, about 25 MB, and later runs reuse it.",
+      "Resize Video changes the frame size and downloads an MP4. Use it when a 1080p clip should be 720p before you send it, or when you need a specific width and height. Presets are 1080p, 720p, 480p, and 360p. You can type a custom size. Keep aspect ratio is on by default, so the picture is scaled to fit instead of stretched. A portrait clip uses a portrait frame for those presets.\n\nA larger frame does not add detail. When the output is bigger than the original, the page says the upscale will not add real detail. The H.264 encoder needs even width and height, so the output line can differ by a pixel from what you typed. A very long side is capped so the tab is less likely to run out of memory. Encoding uses ffmpeg in this tab. Nothing is uploaded, and no account is required. A long video, or a phone with little free memory, can be slow or fail. The first run downloads the ffmpeg engine, and later runs reuse it.",
     howTo: [
       { step: "Add a video", detail: "Choose a file. It stays on this device. The page reads the source width and height from the preview." },
       { step: "Pick a size", detail: "Use 1080p, 720p, 480p, or 360p, or type a width and height. Keep aspect ratio locks the other side to the original shape." },
@@ -2505,7 +2505,7 @@ const overrides: Record<string, ToolContent> = {
   },
   "video-cropper": {
     intro:
-      "Crop Video keeps the region you set on the preview and downloads that region as an MP4. Presets cover 16:9, 9:16, 1:1, and 4:5, plus a freeform box and a custom ratio. Drag the box or type the x, y, width, and height. The highlighted rectangle is the crop that is encoded, in pixels, so the file matches the preview.\n\nThe preview player is muted so you can line up the frame. The exported MP4 keeps the soundtrack when the file has one. Nothing is uploaded. Large or long videos can be slow, and a phone may run out of memory. The first run downloads the ffmpeg engine.",
+      "Crop Video keeps one rectangle for the whole duration and downloads that region as an MP4. Use 9:16 or 4:5 when a landscape clip needs a vertical frame, 1:1 for a square, or 16:9 to drop empty bars. Freeform is any shape. Custom takes a ratio you type. Drag the box, drag a handle, or type x, y, width, and height. The highlighted rectangle is the crop, in pixels, so the file matches the preview.\n\nThe preview player is muted so you can line the frame up. The exported MP4 keeps the soundtrack when the file has one. Width and height are even because the encoder uses 4:2:0. The whole duration is cropped, not a single frame. Nothing is uploaded, and no account is required. A long video can be slow, and a phone may run out of memory. The first run downloads the ffmpeg engine.",
     howTo: [
       { step: "Add a video", detail: "Choose a file. A crop box appears on the preview once the dimensions are known." },
       { step: "Set the region", detail: "Drag the box, drag a handle, or type X, Y, width, and height. Free is any shape. 16:9, 9:16, 1:1, and 4:5 lock the shape. Custom takes a ratio of your own." },
@@ -2530,7 +2530,7 @@ const overrides: Record<string, ToolContent> = {
   },
   "video-to-gif": {
     intro:
-      "The Video to GIF converter turns a video segment into a high-quality GIF, entirely in your browser. It uses ffmpeg's two-pass method: a custom palette is generated from your clip first, then the GIF is rendered against that palette, which is what separates a clean GIF from the banded, muddy output of naive converters.\n\nYou control the segment, frame rate and width. Shorter clips at 15 fps and 480 px wide hit the sweet spot for file size and compatibility; the tool warns above 30 seconds because GIFs grow fast.\n\nEverything runs locally with ffmpeg compiled to WebAssembly. No upload, no watermark, no queue.",
+      "Video to GIF turns a short span of a video into an animated GIF you can drop into a README, a chat, or a slide that will not play MP4. You set the start, the length, the frame rate, and the width. The default is 15 frames per second and 480 pixels wide. Length is capped at 30 seconds, because a GIF stores a palette frame for every tick and the file grows quickly.\n\nThe encode is two passes in this browser. The first builds a palette from the colors in your clip. The second draws the GIF with that palette, which keeps the colors closer to the source than a single fixed web palette would. It is still a GIF: fast motion and a wide frame make a large file, and the result has no audio. The input has to be a video the page can read, not an existing GIF. Nothing is uploaded, and no account is required. The first run downloads the ffmpeg engine.",
     howTo: [
       { step: "Add a video", detail: "Drop in a clip. Duration is read for validation." },
       { step: "Set the segment", detail: "Choose the start time and length in seconds, the frame rate and the output width." },
@@ -2539,7 +2539,7 @@ const overrides: Record<string, ToolContent> = {
     ],
     faq: [
       { q: "Why is my GIF so large?", a: "GIF stores every frame uncompressed-ish. Lower the width, drop the frame rate to 12, and shorten the clip. Under 30 seconds is strongly recommended." },
-      { q: "Why does it look better than other converters?", a: "The two-pass palette method samples colours from your actual clip instead of using a fixed 256-colour web palette." },
+      { q: "Why are there two passes?", a: "The first pass builds a 256-color palette from this clip. The second draws the GIF with that palette, so the colors come from the footage rather than from one fixed web palette." },
       { q: "Can I make a GIF from a GIF?", a: "No, the input must be a video file. Use a video source." },
       { q: "Is there a length limit?", a: "30 seconds per clip, enforced to keep output sizes and memory use sane." },
     ],
@@ -2555,7 +2555,7 @@ const overrides: Record<string, ToolContent> = {
   },
   "video-to-audio": {
     intro:
-      "The Video to Audio extractor pulls the soundtrack out of any video and saves it as MP3, AAC/M4A, WAV, OGG, Opus or FLAC. Everything runs locally with ffmpeg compiled to WebAssembly, so the video never leaves your device.\n\nOptional start time and length fields turn it into a ringtone maker: skip the intro, grab thirty seconds, export. Bitrate and lossless formats are both available, so you can pick a small file for sharing or a FLAC for archive.\n\nUse it to save a song from a clip, lift a voice memo from a screen recording, or prepare audio for a podcast edit.",
+      "Video to Audio saves the soundtrack of a file you already have. The formats are MP3, AAC/M4A, WAV, OGG, Opus, and FLAC. Use MP3 or M4A when you need a small file another device will play, WAV or FLAC when the next step is an editor and you do not want another lossy pass, and Opus when size matters more than old-player support. A start time and a length are optional, so you can keep thirty seconds instead of the whole track.\n\nIf the file has no audio track, the extract fails instead of writing a silent file. Decoding the source is not where the loss happens. Re-encoding to a lossy format is. The video stays on this device. No account is required. The first run downloads the ffmpeg engine.",
     howTo: [
       { step: "Add a video", detail: "Drop in any video file. Its duration is read for the trim fields." },
       { step: "Pick format and quality", detail: "Choose the output format; set bitrate for lossy formats. WAV and FLAC are lossless." },
@@ -2580,7 +2580,7 @@ const overrides: Record<string, ToolContent> = {
   },
   "video-frame-capture": {
     intro:
-      "The Video Frame Capture grabs still images from any video, right in your browser. Scrub to the exact moment and capture a single frame as JPG or PNG, or sample the whole video at even intervals and download every frame as a ZIP.\n\nIt is the quickest way to pull a cover image, a thumbnail, a reaction still or a reference frame without installing anything. Frames are captured at the video's native resolution through a canvas, so what you see in the player is what you get in the file.\n\nBatch mode takes 1 to 30 frames spread evenly across the duration, which is handy for storyboarding, contact sheets or picking the best moment out of a long clip. Everything is local; no video is uploaded.",
+      "Video Frame Capture saves stills from a video the browser can play. Scrub to one moment and grab that frame as JPG or PNG, or ask for 1 to 30 frames spread evenly across the duration and download them as a zip. Use a single frame for a cover image. Use the even spread when you want a contact sheet and do not already know the timestamp.\n\nFrames come from the decoded picture at the video's own resolution. A 1080p file gives a 1080p still. The even spread is not a scene detector: the frames land on the clock, not on the cuts. Video Frame Studio is the separate page for scene changes and subtitle timestamps. The video is read by the player in this tab. It is not uploaded, and no account is required. This page does not download the ffmpeg engine.",
     howTo: [
       { step: "Add a video", detail: "Drop in a clip. The player and timeline slider appear." },
       { step: "Capture a single frame", detail: "Drag the timestamp slider, choose JPG or PNG, and capture. The frame appears in the grid below." },
@@ -2655,7 +2655,7 @@ const overrides: Record<string, ToolContent> = {
   },
   "pilko-frame-studio": {
     intro:
-      "Video Frame Studio is a complete screenshot workstation for video, running entirely in your browser. Beyond manual frame grabbing, it detects scene changes automatically so you can sample every cut in a clip, builds contact sheets in a grid, stamps timecode watermarks, and can even capture frames at the exact timestamps listed in an SRT file.\n\nEverything runs locally through the browser's own video decoding. Nothing is uploaded, which matters when the footage is client work or unreleased material. Captured frames come out at the video's native resolution and can be downloaded individually or as a ZIP.\n\nIt is built on the open-source Pilko Frame Capture Studio (MIT License) and embedded here so you get the full workstation without leaving Toolbox Hub.",
+      "Video Frame Studio is the stills page for a cut you want to review, not a one-off screenshot. It can grab a frame by hand, sample a frame at each scene change, lay the stills out as a contact sheet, stamp a timecode, or capture the timestamps listed in an SRT file. Scene detection looks for a hard change from one frame to the next, so it fits edited footage with cuts better than a slow dissolve.\n\nDecoding uses the browser's own video element and a canvas. The file is not uploaded, and no account is required. Stills come out at the video's resolution, up to what this device can decode, and you can save them one by one or as a zip. The studio is the open-source Pilko Frame Capture Studio, MIT licensed, embedded on this page. It is a larger app than Video Frame Capture, so the first open takes longer.",
     howTo: [
       { step: "Drop in a video", detail: "Any format your browser can play. The studio loads it locally and shows the duration." },
       { step: "Choose a capture mode", detail: "Manual: scrub and grab. Auto: scene detection samples every cut. Contact sheet: grid layout. SRT: capture at subtitle timestamps." },
@@ -2680,7 +2680,7 @@ const overrides: Record<string, ToolContent> = {
   },
   "viral-video-studio": {
     intro:
-      "Viral Video Studio is a short-video script workshop that runs entirely in your browser with no AI and no accounts. It matches your topic to a content track, generates hook lines, a shot-by-shot storyboard and caption copy from built-in templates, and previews the result in a vertical 9:16 frame you can export as a cover image.\n\nEverything is template-driven and deterministic: the same inputs give the same script, which makes it useful as a starting skeleton you then rewrite in your own voice. Nothing you type is uploaded.\n\nIt is built on the open-source Viral Video Studio (MIT License) and embedded here so the workshop runs without leaving Toolbox Hub. The workshop on this page is in English.",
+      "Short Video Script Workshop helps you draft a short script before you film. You pick a track, type a topic and the points you want to cover, and the page fills a hook, a shot list, and caption lines from built-in templates. The same inputs produce the same draft. Treat that draft as a skeleton and rewrite it. The page does not call a language model, and it does not upload what you type. No account is required.\n\nThe 9:16 frame cycles the storyboard lines so you can read the pacing. It is not a rendered video, and export is a cover image or the text, not an MP4. The workshop on this page is in English. It is the open-source Viral Video Studio, MIT licensed, embedded here.",
     howTo: [
       { step: "Pick your track", detail: "Choose a content category that matches your video topic." },
       { step: "Fill the brief", detail: "Enter the topic and key points. Templates generate hooks, storyboard and copy." },
@@ -2699,13 +2699,13 @@ const overrides: Record<string, ToolContent> = {
       "Exporting a vertical cover image for a post.",
     ],
     tips: [
-      "The template gives structure; your specific examples make it viral.",
+      "The template only supplies a structure. Replace the sample lines with the specific example you actually mean to say.",
       "Run it once per track and compare which skeleton fits your topic.",
     ],
   },
   "teleprompter": {
     intro:
-      "This online teleprompter turns any device with a browser into a prompting screen. Paste a script or import a .txt or .srt file, and the text auto-scrolls at a speed you set. Adjust font size and line height for your reading distance, mirror the text for beam-splitter rigs, and go fullscreen so the script fills the screen while you record.\n\nKeyboard shortcuts make it usable mid-take: Space plays or pauses, arrow keys change speed, R restarts. Your script is remembered in this browser, so reopening the page brings it back.\n\nEverything runs locally. No script is uploaded, no account is needed, and it works offline once the page has loaded.",
+      "The teleprompter is a scrolling script for a recording, not a video editor. Paste the words, or import a .txt or .srt file. Subtitle timecodes are stripped, leaving the narration. The text then scrolls at a speed you set. Font size and line height are there for the distance between you and the screen. Mirror flips the line for a beam-splitter rig. Fullscreen fills the display while you record.\n\nSpace plays or pauses, the arrow keys change speed, and R restarts. The script is stored in this browser, so reopening the page brings it back. It is not uploaded, and no account is required. After the page has loaded, scrolling works without another network request.",
     howTo: [
       { step: "Add your script", detail: "Paste text or import a .txt / .srt file. Subtitle files are stripped to plain text automatically." },
       { step: "Set your comfort", detail: "Adjust speed, font size and line height. The reading line marks your focal point." },
@@ -2730,7 +2730,7 @@ const overrides: Record<string, ToolContent> = {
   },
   "subtitle-editor": {
     intro:
-      "The Subtitle Editor loads, edits and converts subtitle files entirely in your browser. It reads SRT, VTT, ASS, SSA and SBV, shows every cue with editable timestamps and text, and writes back out in SRT, VTT or ASS with correct timecode formatting for each.\n\nLoad the matching video and the editor highlights the cue at the current playback position, so you can spot drift and fix timing against the picture. A one-click shift moves the whole track earlier or later when subtitles run consistently fast or slow.\n\nNothing is uploaded: parsing, editing and export all happen locally. It covers the everyday jobs — fixing an offset, tweaking a line, converting for a platform — without installing anything.",
+      "Subtitle Editor changes the subtitle file, not the video. Open it when a line is wrong, a cue is early or late by the same amount throughout, or a player wants VTT and you have SRT. It reads SRT, VTT, ASS, SSA, and SBV, lists every cue with editable text and timestamps, and writes SRT, VTT, or ASS.\n\nLoad the matching video if you want the current cue highlighted against the picture. A shift moves the whole track earlier or later by the number of seconds you enter. Negative is earlier. This page does not burn the words into the frames. Add Subtitles is the page that does that and downloads an MP4. The subtitle file is read in this browser. It is not uploaded, and no account is required.",
     howTo: [
       { step: "Import a subtitle file", detail: "Drop in SRT, VTT, ASS, SSA or SBV. Every cue is parsed into an editable list." },
       { step: "Edit cues", detail: "Click a cue to edit its text and timestamps. Delete cues you do not need, or add new ones." },
@@ -2755,7 +2755,7 @@ const overrides: Record<string, ToolContent> = {
   },
   "add-subtitles": {
     intro:
-      "Add Subtitles burns captions into the picture and downloads an MP4. You provide a video plus an SRT, VTT, ASS, SSA, or SBV file. The preview shows roughly when each line appears, with the size, color, and position you picked. The export is not a sidecar subtitle file.\n\nThe download uses the bundled Noto Sans font. Latin, common accented European letters, Greek, and Cyrillic are covered. Chinese, Japanese, Korean, Arabic, Hebrew, Thai, and emoji are not in that font. The preview can still show those characters with a font on your device, and they can be missing or drawn as boxes in the MP4. The page lists the characters it cannot draw.\n\nNothing is uploaded. The first run downloads the ffmpeg engine, about 25 MB. A long video can be slow, and a phone may run out of memory. Styling is one size, one color, and top, center, or bottom. It will not match a professional captioning suite. Subtitle Editor still only edits the text file.",
+      "Add Subtitles is for a player that will not load a separate caption file. It burns the cues into the picture and downloads an MP4. You provide a video plus an SRT, VTT, ASS, SSA, or SBV file. The preview shows roughly when each line appears, with the size, color, and position you picked: top, center, or bottom. The export is not a sidecar subtitle. Subtitle Editor is the page that only changes the text file.\n\nThe download uses the bundled Noto Sans Regular font. Latin, common accented European letters, Greek, and Cyrillic are covered. Chinese, Japanese, Korean, Arabic, Hebrew, Thai, and emoji are not in that font. The preview can still show those characters with a font on your device, and they can be missing or drawn as boxes in the MP4. The page lists the characters it cannot draw before you export.\n\nNothing is uploaded, and no account is required. The first run downloads the ffmpeg engine. A long video can be slow, and a phone may run out of memory. Styling is one size, one color, and one position. It will not match a captioning suite that styles each cue differently.",
     howTo: [
       { step: "Add a video and a subtitle file", detail: "SRT, VTT, ASS, SSA, and SBV are read in the browser. The cue count is shown when the file parses." },
       { step: "Set size, color, and position", detail: "Bottom, center, or top. Play the preview to see roughly when each line appears." },
@@ -2773,7 +2773,7 @@ const overrides: Record<string, ToolContent> = {
   },
   "openreel-video-editor": {
     intro:
-      "OpenReel Video Editor is a full timeline editor that runs entirely in your browser — a genuine alternative to desktop editors and to CapCut. It gives you multi-track cutting, transitions, effects, colour grading, audio mixing, text and subtitle layers, and final export, all without uploading a single frame.\n\nEditing happens through the browser's own WebCodecs pipeline and WebAssembly, so the heavy work stays on your machine. There is no account to create, no cloud render queue, and no watermark on the output.\n\nIt is built from the open-source OpenReel Video project (MIT License) and embedded here so you can edit without leaving Toolbox Hub. Because the editor is a complete application rather than a single-purpose tool, it takes a moment to load the first time.",
+      "OpenReel is the timeline, for a cut that is more than one trim. Import video, audio, and images from this device, place them on tracks, trim them, and add transitions, text, effects, color adjustments, and an audio mix, then export. The start screen asks for a frame: vertical 1080×1920, horizontal 1920×1080, or square 1080×1080. Pick the frame you will actually deliver, because that choice sets the composition.\n\nDecoding and export use WebCodecs and WebAssembly in this browser. Footage is not uploaded, and no account is required. The export does not add a Toolbox Hub watermark. A current Chrome, Edge, or other Chromium browser is the comfortable case, because the editor depends on WebCodecs. Safari depends on that browser's WebCodecs support. The editor is the open-source OpenReel Video project, MIT licensed, embedded here. It is a full application, so the first load is slower than a single-purpose tool. Later visits use the browser cache. The project is kept in this browser.",
     howTo: [
       { step: "Pick an aspect ratio", detail: "Choose vertical (1080×1920), horizontal (1920×1080) or square (1080×1080) on the start screen." },
       { step: "Import your clips", detail: "Use the Media panel to import video, audio and images from your device. Nothing is uploaded." },
@@ -2781,7 +2781,7 @@ const overrides: Record<string, ToolContent> = {
       { step: "Preview and export", detail: "Scrub the preview to check the cut, then use Export to render the final video." },
     ],
     faq: [
-      { q: "Is this a real editor or just a trimmer?", a: "A real editor: multi-track timeline, transitions, effects, colour grading, audio mixing, text layers and export. It is built on the open-source OpenReel Video project." },
+      { q: "Is this the trimmer?", a: "No. Video Trimmer only keeps a start and end time. This page is a multi-track timeline with transitions, effects, color controls, audio mixing, text, and export. It is the open-source OpenReel Video project." },
       { q: "Is my footage uploaded?", a: "No. Decoding and rendering run locally through WebCodecs and WebAssembly. Your files never leave the device." },
       { q: "Does the export have a watermark?", a: "No. The project is open source and free, and the export is clean." },
       { q: "Why is the first load slow?", a: "The editor is a complete application — several megabytes of code and WebAssembly engines. After the first visit your browser caches it and later loads are much faster." },
@@ -2819,47 +2819,60 @@ const overrides: Record<string, ToolContent> = {
   },
   "image-format-converter": {
     intro:
-      "Convert images between JPG, PNG, WebP, BMP, and ICO in the browser. You can also cap the width, rotate by a right angle, turn the picture grayscale, and set a quality level for JPG and WebP. The file is drawn to a canvas on your device and downloaded from there.\n\nPNG, BMP, and ICO ignore the quality slider because those exports are not JPEG-style lossy encodes. A width limit scales the image down and leaves smaller originals alone. Use it when a form wants a specific format, or when a screenshot needs to be a smaller JPG.",
+      "Image Converter is the page for a file that is in the wrong format. It writes JPG, PNG, WebP, BMP, or ICO from a picture you already have, and it can cap the width, turn the picture by 90 degrees, or make it grayscale in the same pass. Each file is drawn to a canvas in this browser and downloaded from there. Nothing is uploaded, and no account is required.\n\nOpen it when a form rejects a PNG, when a screenshot should be a smaller JPG, or when a site still wants an ICO. The quality slider applies only to JPG and WebP. PNG, BMP, and ICO ignore it, because those exports are not JPEG-style lossy encodes. A max width scales a larger picture down and leaves a smaller original alone. JPG has no transparency, so a logo with a clear background should stay PNG if that background matters. GIF animation is not kept.",
     howTo: [
-      { step: "Add images", detail: "Drop one or more files. Each is converted on its own." },
-      { step: "Set the output", detail: "Pick JPG, PNG, WebP, BMP, or ICO. Add a max width, a rotation, or grayscale if you need them." },
-      { step: "Set quality for JPG or WebP", detail: "The slider applies only to those two formats. Higher keeps more detail and a larger file." },
-      { step: "Download", detail: "Save each result after the preview appears." },
+      { step: "Add the pictures", detail: "Drop one or more files. Each is converted on its own, so a mixed set of screenshots does not have to share one output name." },
+      { step: "Choose the format the destination asked for", detail: "JPG, PNG, WebP, BMP, or ICO. Add a max width, a right-angle rotation, or grayscale only if that job needs them." },
+      { step: "Set quality when the format uses it", detail: "The slider moves the JPG or WebP encode. It does nothing useful for PNG, BMP, or ICO." },
+      { step: "Download each result", detail: "Save the file after its preview appears. Keep the original if you may need the transparency or the animation you just gave up." },
     ],
-    faq: generic().faq,
+    faq: [
+      { q: "Why did a PNG not get smaller?", a: "This page is a format change, not a PNG quantizer. A PNG written from the canvas is often a similar size. Choose JPG or WebP when a smaller file matters more than an exact lossless copy." },
+      { q: "Will a transparent background survive as JPG?", a: "No. JPG has no alpha channel. The transparent pixels are filled when the picture is drawn. Keep PNG if the background has to stay clear." },
+      { q: "Does the quality slider affect every format?", a: "No. Only JPG and WebP. PNG, BMP, and ICO are not quality-based encodes here." },
+      { q: "Is the picture uploaded?", a: "No. The canvas encode runs in this browser." },
+    ],
     useCases: [
-      "Turning a PNG screenshot into a smaller JPG.",
-      "Exporting a WebP for a page that still needs a PNG fallback.",
-      "Rotating a phone photo before you attach it.",
+      "Turning a PNG screenshot into a JPG a form will accept.",
+      "Writing a WebP when a page still needs a PNG fallback from the same source.",
+      "Rotating a sideways phone photo in the same pass as the format change.",
+      "Making a small ICO from a square logo.",
     ],
     tips: [
-      "Resize with max width before you rely on the quality slider. Fewer pixels usually saves more than a small quality change.",
-      "Keep the original if you may need transparency. JPG has no alpha channel.",
+      "Cap the width before you chase the quality slider. Fewer pixels usually save more than a small quality change.",
+      "Convert from the original each time. A JPG saved again loses a little more.",
     ],
   },
   "pdf-toolkit": {
     intro:
-      "Merge several PDFs into one, split a PDF by page range, build a PDF from images, or export PDF pages as images and plain text. Pick the job from the tabs. Merge needs at least two PDFs and keeps their page order. Split accepts ranges such as 1-3, 5, 8-10, or a checkbox that writes every page as its own file.\n\nPNG or JPG images become one PDF, with an optional maximum width so a camera photo does not land at full sensor size. PDF to images renders each page as a PNG. PDF to text reads the text layer, which is empty on a scan that was never OCR'd. The files stay on your device.",
+      "This page is five PDF jobs, each on its own tab, because they start from different files and finish as different downloads. Merge joins PDFs in the order you select them. Split keeps a page range, or writes every page as its own PDF inside a zip. Images to PDF stacks JPG or PNG files into one document. PDF to images renders every page as a PNG in a zip. PDF to text reads the text layer and leaves the words on the page as well as in a .txt file.\n\nUse the tab that matches the file you have. A report that is already a PDF does not need Images to PDF. A scan with no text layer will not yield words from PDF to text. There is no PDF-to-Word conversion here, and this page does not unlock a password or rewrite sentences inside a page. The files stay in this browser. No account is required. If you select more than three PDFs, or more than three images, the button uses the first three. A higher batch is described on the pricing page, and purchase is not available yet.",
     howTo: [
-      { step: "Choose a tab", detail: "Merge, Split, Images to PDF, PDF to Images, or PDF to Text." },
-      { step: "Add the files", detail: "Merge wants two or more PDFs. The other tabs take one PDF, or a set of images." },
-      { step: "Set the options", detail: "Split uses a page range unless you split every page. Images to PDF can cap the width." },
-      { step: "Download the result", detail: "A merge, a page-range extract, or an image PDF downloads as one PDF. Splitting every page, and PDF to images, download as a zip. PDF to text also shows the text on the page." },
+      { step: "Open the tab for that job", detail: "Merge, Split, Images to PDF, PDF to Images, or PDF to Text. A link ending in #split opens Split directly." },
+      { step: "Add the files in the order you want", detail: "Merge needs at least two PDFs. Images to PDF takes JPG or PNG. The other tabs take one PDF." },
+      { step: "Set the option that job actually has", detail: "Split uses a range such as 1-3, 5, 8-10, unless you tick the box that writes every page as its own file. Images to PDF can cap the width in pixels; 0 keeps the original width. PDF to images has a scale from 1x to 3x." },
+      { step: "Download and open the result", detail: "A merge, a page-range extract, or an image PDF is one PDF. Splitting every page, and PDF to images, is a zip. PDF to text also fills the box on the page." },
     ],
-    faq: generic().faq,
+    faq: [
+      { q: "Does merge follow the order I selected?", a: "Yes. Pages are copied in that file order. Arrange the selection before you run it. The page does not offer a drag-and-drop reorder; Organize PDF is the page for moving pages inside one file." },
+      { q: "Why did PDF to text come back empty?", a: "It reads the text layer. A scan, or a page made only of pictures, has no characters to extract. This tab does not recognize text from the image. Export a page as PNG and use Image to Text if you need OCR." },
+      { q: "Can I add a WebP or a GIF to Images to PDF?", a: "No. The PDF embeds PNG and JPG. Other image types are not written into the file." },
+      { q: "What happens if I select ten files?", a: "The button uses the first three. That is the current batch. A larger batch cannot be purchased yet." },
+      { q: "Is the PDF uploaded?", a: "No. Merging, splitting, and building a PDF from images use pdf-lib in this browser. Rendering pages and reading text use PDF.js, also in this browser." },
+    ],
     useCases: [
-      "Combining scanned chapters into a single PDF.",
-      "Pulling three pages out of a long report.",
-      "Making a PDF from a set of photos.",
+      "Joining two exported chapters into one PDF before you send it.",
+      "Pulling pages 2 through 4 out of a longer file.",
+      "Making one PDF from a set of JPG scans, with the width capped so a camera photo does not land at full sensor size.",
+      "Saving each page as a PNG when the next step needs a picture rather than a document.",
     ],
     tips: [
-      "A scanned PDF has no text layer, so PDF to Text will come back empty. Use the image-to-text tool on an exported page if you need OCR.",
-      "Put files in the order you want before merging. The tool follows the order you selected.",
+      "Bookmark the hash you use: #merge, #split, #img2pdf, #pdf2img, or #pdf2text.",
+      "If PDF to text is empty, the file is probably a scan. Do not keep re-running the same tab.",
     ],
   },
   "compress-pdf": {
     intro:
-      "Compress PDF Online recompresses the images embedded in a PDF and, on the Strong setting, downsamples them. You see the original size, the new size, and the percentage saved before you rely on the download. The work happens in your browser. The file is not uploaded.\n\nThis is an honest limit, not a slogan. A text-only PDF often barely shrinks, because there are no pictures to recompress. Fax images, JPEG 2000, and some CMYK pictures are left as they are when the browser cannot decode them. A server-side compressor can sometimes go further by rewriting fonts and content streams. If the rewritten file is not smaller, the download is the file you started with.",
+      "Compress PDF is for a file that is large because of its pictures: a photo essay, a scan of ordinary JPEG pages, or a report you need to email. It recompresses the images embedded in the PDF. Regular keeps those pictures closer to the original. Strong uses a lower JPEG quality and a smaller maximum edge, so the pictures get softer. You see the original size, the new size, and the percentage saved before you rely on the download. The work happens in this browser. The file is not uploaded, and no account is required.\n\nA text-only PDF often barely shrinks, because there are no pictures to recompress. Fax images, JPEG 2000, and some CMYK pictures are left as they are when the browser cannot decode them. The tool does not subset fonts or rebuild content streams. If the rewritten file is not smaller, the download is the file you started with.",
     howTo: [
       { step: "Choose a PDF", detail: "Drop one PDF. The original size is shown next to the file name." },
       { step: "Pick Regular or Strong", detail: "Regular keeps pictures closer to the original. Strong uses a lower JPEG quality and a smaller maximum edge." },
@@ -2883,7 +2896,7 @@ const overrides: Record<string, ToolContent> = {
   },
   "rotate-pdf": {
     intro:
-      "Rotate PDF Online turns pages by 90, 180, or 270 degrees. You can rotate the whole document or only the pages you select. The turn is added to any rotation already stored in the file, then the new PDF downloads. Nothing is uploaded.",
+      "Rotate PDF is for a scan that came out sideways, or for the one landscape page inside a portrait document. It turns pages by 90, 180, or 270 degrees. Leave every page selected, or turn that off and pick page numbers. A long document can use a range such as 1-3, 5. The turn is added to any rotation already stored in the file, then the new PDF downloads. The page rotation flag changes. Text and images stay selectable when they were before. The file is not uploaded, and no account is required.",
     howTo: [
       { step: "Choose a PDF", detail: "The page count appears after the file loads." },
       { step: "Pick a turn", detail: "Choose 90, 180, or 270 degrees." },
@@ -2903,7 +2916,7 @@ const overrides: Record<string, ToolContent> = {
   },
   "organize-pdf": {
     intro:
-      "Organize PDF Online lets you reorder pages and delete the ones you do not want. Each page is a large card with Up, Down, and Remove buttons, so the same controls work with a thumb on a phone. Download builds a new PDF in the order you left on screen. The file stays in your browser.",
+      "Organize PDF is for a file whose pages are in the wrong order, or that still contains a blank or a cover you do not want. Each page is a large card with Up, Down, and Remove, so the same controls work with a thumb on a phone. Download builds a new PDF in the order left on screen. At least one page has to stay. The small line under a moved card is the page number it had in the original file. Thumbnails are small JPEG previews, so a very long PDF can still be heavy on a phone. The file stays in this browser, and no account is required.",
     howTo: [
       { step: "Choose a PDF", detail: "Thumbnails appear as each page is drawn. A long file can take a moment." },
       { step: "Move or remove pages", detail: "Up and Down change the order. Remove drops a page. At least one page has to stay." },
@@ -2922,7 +2935,7 @@ const overrides: Record<string, ToolContent> = {
   },
   "watermark-pdf": {
     intro:
-      "Watermark PDF Online stamps text, a PNG or JPG, or both, on every page. You set the position, the opacity, the rotation, the text size, and, for an image, how wide it is relative to the page. Those controls are written into the downloaded PDF. The file is not uploaded.",
+      "Watermark PDF stamps every page before you send a draft or add a small logo. The stamp can be text, a PNG or JPG, or both. You set the position, the opacity, the rotation, the text size, and, for an image, how wide it is relative to the page. Those values are written into the downloaded PDF, not only drawn in a preview. WebP is not an image stamp here. Open the result in a viewer, because a stamp in the margin can cover a footer that was already there. The file is not uploaded, and no account is required.",
     howTo: [
       { step: "Choose a PDF", detail: "One PDF per run." },
       { step: "Set the stamp", detail: "Type the text, add a PNG or JPG if you want one, then set position, opacity, and rotation." },
@@ -2941,7 +2954,7 @@ const overrides: Record<string, ToolContent> = {
   },
   "pdf-page-numbers": {
     intro:
-      "Add Page Numbers to PDF Online writes a number on every page. You choose the corner or the center of the top or bottom edge, the typeface, the font size, the number the first page starts at, and whether the label is the number alone, “Page 5”, or “5 of 12”. The file stays in your browser.",
+      "Page Numbers is for a packet that was merged from several files, or for a section that should not start at 1. It writes a number on every page. You choose a corner or the center of the top or bottom edge, Helvetica, Times, or Courier, a font size, the number the first page shows, and a label: the number alone, \"Page 5\", or \"5 of 12\". Later pages count up from the start value. The number sits in the margin you picked, so check a page that already has a footer. The file stays in this browser, and no account is required.",
     howTo: [
       { step: "Choose a PDF", detail: "One file is numbered in a single pass." },
       { step: "Set the style", detail: "Pick a position, Helvetica, Times, or Courier, a size, a starting number, and a format." },
@@ -2960,7 +2973,7 @@ const overrides: Record<string, ToolContent> = {
   },
   "protect-pdf": {
     intro:
-      "Protect PDF Online encrypts a PDF with a password you choose, using the standard PDF security handler. A normal viewer then asks for that password before it opens the file. This is not a claim that the file is unbreakable: the protection stops casual opening, and a determined attacker can still attack a password offline. The page cannot unlock a PDF, and it cannot recover a password you forget. The file is encrypted in your browser and is not uploaded.\n\nUse letters, numbers, and symbols. Only the first 32 characters are stored. Accented characters and emoji may not match what another PDF reader types back.",
+      "Protect PDF is for a file that should not open for someone who does not have the password. It encrypts the PDF in this browser with the standard security handler, revision 3, 128-bit RC4. The same password is both the open password and the owner password. A normal viewer then asks for it before showing the file. Permissions still allow printing and editing once the file is open. The password is what gates opening.\n\nThis is casual deterrence, not a claim that the file cannot be attacked offline. Only the first 32 characters are stored. Accented characters and emoji may not match what another reader types back, because the password is mapped one byte per character. The page cannot unlock a PDF, it will not replace a password that is already set, and it cannot recover a password you forget. The file and the password are not uploaded. No account is required. Write the password down before you close the tab.",
     howTo: [
       { step: "Choose a PDF", detail: "The file must not already be password-protected. This tool does not remove an existing password." },
       { step: "Enter the password twice", detail: "The two fields have to match. A short password still works, with a warning that it is easy to guess." },
@@ -3042,22 +3055,27 @@ const overrides: Record<string, ToolContent> = {
   },
   "image-to-text": {
     intro:
-      "Extract text from a photo or a screenshot with Tesseract OCR running in your browser. Choose a language, run Extract text, and edit the result before you copy it or download a .txt file. English is the default. Simplified and Traditional Chinese, Japanese, Korean, and several European languages are in the list, plus Arabic and Russian.\n\nThe image itself is not uploaded. The OCR engine and the language data are downloaded from a third-party CDN the first time you use a language, then cached by the browser, so the first run on a new language needs a connection. Handwriting and tiny type are less reliable than a clean screenshot.",
+      "Image to Text is for a picture you cannot select: a screenshot, a photo of a slide, or a printed page. Tesseract runs in this browser, you pick the language of the script in the image, and you can edit the result before you copy it or download extracted-text.txt. English is the default. Simplified and Traditional Chinese, Japanese, Korean, Spanish, French, German, Italian, Portuguese, Arabic, and Russian are in the list.\n\nThe picture is not uploaded. The OCR engine and the language data come from a third-party CDN the first time you use a language, then the browser caches them, so a new language needs a connection. This is recognition, not a guaranteed transcript. A clean screenshot of printed type is the case it handles. Handwriting, tiny type, and a photo taken at an angle are less reliable. It does not translate the text.",
     howTo: [
-      { step: "Choose an image", detail: "Upload a PNG, JPG, or other picture the browser can display. A preview appears beside the output." },
-      { step: "Pick the language", detail: "Match the script in the image. A Chinese screenshot will not read well with the English model." },
-      { step: "Extract", detail: "The first run for a language downloads the model. Progress stays on the page." },
-      { step: "Edit, copy, or download", detail: "The recognized text is editable. Copy it or save extracted-text.txt." },
+      { step: "Choose the picture", detail: "Use a PNG, JPG, or another image the browser can display. A preview sits beside the output so you can see what the engine is reading." },
+      { step: "Match the language to the script", detail: "A Chinese screenshot read with the English model will miss most of the characters. Change language before you extract." },
+      { step: "Wait for the model if this language is new", detail: "The first run downloads the language data and shows progress on the page. Later runs of the same language start from the cache." },
+      { step: "Correct the text, then copy or download", detail: "The result is editable on purpose. Fix a wrong character, then copy it or save extracted-text.txt." },
     ],
-    faq: generic().faq,
+    faq: [
+      { q: "Is the image uploaded?", a: "No. Tesseract.js runs in this browser. The download is the OCR engine and the language model, not your picture." },
+      { q: "Why is the text wrong?", a: "The usual causes are the wrong language, a blurry photo, handwriting, or type that is very small. Crop to the paragraph if the picture is mostly background, then run it again." },
+      { q: "Will it read a scanned PDF?", a: "Not directly. This page takes an image. PDF to Text reads a text layer and is empty on a scan. Export a page as PNG from the PDF toolkit, then open that PNG here." },
+      { q: "Does it translate?", a: "No. It copies the characters it recognizes. Translation is a separate job." },
+    ],
     useCases: [
-      "Copying text out of a screenshot that you cannot select.",
-      "Reading a photo of a slide or a printed page.",
-      "Pulling a paragraph out of an image before you translate it yourself.",
+      "Copying a paragraph out of a screenshot that will not let you select the text.",
+      "Reading a photo of a slide or a printed page into a file you can edit.",
+      "Getting the words off one exported PDF page when that PDF has no text layer.",
     ],
     tips: [
-      "Crop to the text if the photo is mostly background. Less clutter gives a cleaner read.",
-      "If the language model has not been used on this browser before, wait for the download to finish.",
+      "Crop to the text first. A busy background gives the engine more chances to invent characters.",
+      "If the language has not been used in this browser before, leave the tab open until the download finishes.",
     ],
   },
   "excel-converter": {

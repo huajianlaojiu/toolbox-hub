@@ -7,7 +7,7 @@ export const SITE_URL = "https://toolbox-hub.io";
 /** 英文首页（x-default）。H1 / 介绍同时是 i18n key，其他语言有译文就用译文。 */
 export const HOME_TITLE = "Merge a PDF, Convert an Image, or Trim a Video | Toolbox Hub";
 export const HOME_DESCRIPTION =
-  "Free browser tools for PDFs, images, and videos. Files stay on your device. No account needed.";
+  "PDF, image, and video tools that run in your browser. Files are not uploaded, and no account is required.";
 export const HOME_H1 = "Merge a PDF, convert an image, or trim a video";
 export const HOME_INTRO = HOME_DESCRIPTION;
 
@@ -99,7 +99,7 @@ export function siteJsonLd(lang: string) {
     {
       question: "Is my data uploaded to a server?",
       answer:
-        "Most tools process your input in the browser and do not upload it to a server. Some tools download a processing engine from a third-party CDN on first use, and the Site shows advertising subject to your consent. See the privacy policy for details.",
+        "Most tools process your input in the browser and do not upload it to a server. Some tools download a processing engine from a third-party CDN on first use. An AdSense account and ads.txt exist, but the visible ad slots are empty, so pages do not currently show an ad unit. Google Analytics is not configured. See the privacy policy for details.",
     },
     {
       question: "Can I use these tools on mobile?",

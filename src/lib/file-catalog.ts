@@ -41,9 +41,9 @@ export const PDF_ACTIONS: PdfAction[] = [
 export const PDF_BLURB =
   "Merge, split, compress, rotate, reorder, watermark, number, or password-protect a PDF. The file stays in your browser.";
 
-export const PDF_PAGE_TITLE = "PDF Tools Online: Merge, Compress, Rotate, Protect";
+export const PDF_PAGE_TITLE = "PDF Tools: Merge, Split, Compress, and Protect";
 export const PDF_PAGE_DESCRIPTION =
-  "Merge, split, compress, rotate, reorder, watermark, number, or password-protect a PDF. The file stays in your browser and is not uploaded.";
+  "Merge, split, compress, rotate, reorder, watermark, number, or password-protect a PDF in your browser. No Word conversion and no unlock. The file is not uploaded.";
 
 /** Standalone PDF jobs. Each one is a real tool with its own page. */
 export const PDF_STANDALONE: HomeLink[] = [

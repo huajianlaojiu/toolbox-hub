@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     lang,
     "/",
     "Merge a PDF, convert an image, or trim a video",
-    "Free browser tools for PDFs, images, and videos. Files stay on your device. No account needed."
+    "PDF, image, and video tools that run in your browser. Files are not uploaded, and no account is required."
   );
 }
 

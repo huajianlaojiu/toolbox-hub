@@ -7,7 +7,7 @@ import { pageTitle } from "@/lib/site-meta";
 export const metadata: Metadata = {
   title: pageTitle("Contact Toolbox Hub"),
   description:
-    "Report a bug, request a new tool, or send feedback about Toolbox Hub. We read every message.",
+    "Email hello@toolbox-hub.io to report a bug, request a tool, or send a correction. Include the tool name and your browser.",
   alternates: { canonical: "/contact/", languages: languageAlternates("/contact/") },
 };
 
@@ -18,7 +18,7 @@ export default function ContactPage() {
 
       <div className="mt-6 space-y-5 text-sm leading-7 text-muted-foreground">
         <p>
-          <I18nText id="Bug reports, tool requests, corrections and partnership enquiries are all welcome. Every message is read by a human, and we reply to most of them within a few days." />
+          <I18nText id="Bug reports, tool requests, and corrections can be sent to the address below. Include the tool name, your browser, and what you expected, so the report can be checked against the page." />
         </p>
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="Email" /></h2>
@@ -48,9 +48,9 @@ export default function ContactPage() {
           <I18nText id="Requests are prioritised by how often people search for the missing capability and by how many existing tools it would connect to. A short note on the job you are trying to do is more useful than just a tool name, because it often reveals a better way to solve it." />
         </p>
 
-        <h2 className="text-xl font-semibold text-foreground"><I18nText id="Advertising and partnerships" /></h2>
+        <h2 className="text-xl font-semibold text-foreground"><I18nText id="Other questions" /></h2>
         <p>
-          <I18nText id="For direct advertising enquiries, use the same address with the subject line prefixed &quot;Advertising&quot;. For API access, white-label licensing or embedding the tools in another product, prefix the subject with &quot;API&quot;." />
+          <I18nText id="There is no API, white-label, or embedding product. Use the same address for a question about the site. An AdSense account and ads.txt exist, the visible ad slots are empty, and Google Analytics is off." />
         </p>
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id={purchaseAvailable() ? "Pro" : "Plans"} /></h2>
@@ -62,7 +62,7 @@ export default function ContactPage() {
 
         <h2 className="text-xl font-semibold text-foreground"><I18nText id="Response time" /></h2>
         <p>
-          <I18nText id="Bug reports are usually investigated within a few working days. Tool requests are triaged weekly, and new tools ship in batches, so a request may take longer than a bug fix to appear." />
+          <I18nText id="There is no published response time. A report that names the tool, the browser, and the result you saw is the one that can be reproduced." />
         </p>
       </div>
     </div>

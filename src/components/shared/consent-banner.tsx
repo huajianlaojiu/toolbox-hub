@@ -85,7 +85,7 @@ export default function ConsentBanner() {
     "inline-flex min-h-11 items-center justify-center rounded-lg border px-2 py-2 text-center text-xs font-medium leading-tight text-foreground transition-colors hover:bg-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground sm:px-4 sm:text-sm sm:leading-5";
   const primary =
     "inline-flex min-h-11 items-center justify-center rounded-lg bg-foreground px-2 py-2 text-center text-xs font-medium leading-tight text-background transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground sm:px-4 sm:text-sm sm:leading-5";
-  const notice = t("We use Google AdSense to fund this site and Google Analytics 4 to see which tools are useful. Advertising and analytics scripts only load after you agree. You can change your choice at any time from the footer.");
+  const notice = t("Ad slots on this site are empty, and Google Analytics is off. Optional scripts still wait until you agree. You can change that from the footer.");
 
   return (
     <div
@@ -131,7 +131,7 @@ export default function ConsentBanner() {
       {customize && (
         <div className="mx-auto mt-4 grid max-w-6xl gap-3 border-t pt-4 sm:grid-cols-2">
           <p className="text-sm leading-6 text-muted-foreground sm:col-span-2">
-            {t("We use Google AdSense to fund this site and Google Analytics 4 to see which tools are useful. Advertising and analytics scripts only load after you agree. You can change your choice at any time from the footer.")}{" "}
+            {t("An AdSense account and ads.txt exist. The visible ad slots are empty, so agreeing does not place an ad unit. Google Analytics is not configured, so agreeing does not load a measurement tag. You can change this choice from the footer.")}{" "}
             <a href={localizePath("/privacy/", lang)} className="text-foreground underline underline-offset-4">
               {t("Privacy Policy")}
             </a>
@@ -147,7 +147,7 @@ export default function ConsentBanner() {
             <span>
               <span className="font-medium">{t("Advertising cookies")}</span>
               <span className="mt-0.5 block text-xs leading-5 text-muted-foreground">
-                {t("Allows Google AdSense to show ads, including personalised ads. Off by default.")}
+                {t("Allows the AdSense script after you agree. Ad slots are empty, so this does not place a visible ad. Off by default.")}
               </span>
             </span>
           </label>
@@ -162,7 +162,7 @@ export default function ConsentBanner() {
             <span>
               <span className="font-medium">{t("Analytics cookies")}</span>
               <span className="mt-0.5 block text-xs leading-5 text-muted-foreground">
-                {t("Lets us measure page views and which tools are used with Google Analytics 4. It never reads the text or files you enter into a tool. Off by default.")}
+                {t("Google Analytics is not configured, so this choice does not load a measurement tag. Off by default.")}
               </span>
             </span>
           </label>
