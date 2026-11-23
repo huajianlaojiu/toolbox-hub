@@ -563,9 +563,9 @@ const OVERRIDES: Record<string, Record<string, ToolSeoOverride>> = {
   },
   "youtube-thumbnail": {
     en: {
-      title: "YouTube Thumbnail Downloader — Full Resolution | Toolbox Hub",
+      title: "YouTube Thumbnail URLs — Image Links Only | Toolbox Hub",
       description:
-        "Paste a YouTube link and copy the direct image URLs for that video's thumbnails, including the highest-resolution still.",
+        "Paste a YouTube link and copy the image URLs for that video's thumbnails. This page does not download the video or the audio.",
     },
   },
   "open-graph-generator": {

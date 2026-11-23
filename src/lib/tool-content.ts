@@ -1294,7 +1294,7 @@ const overrides: Record<string, ToolContent> = {
   },
   "youtube-thumbnail": {
     intro:
-      "The YouTube Thumbnail Downloader takes any YouTube link and returns the direct image URLs for that video's thumbnails, including the full-resolution version. It works by extracting the eleven-character video ID from the URL, so watch pages, youtu.be short links and embed links are all accepted. The images themselves are served from YouTube's own image host, which means you get the same file the video page uses.",
+      "YouTube Thumbnail URLs turns a link to one video into the image addresses for its thumbnails, including the full-resolution still when YouTube has one. It reads the eleven-character video ID from a watch URL, a youtu.be short link, or an embed link, then builds the image URLs in this browser. It does not download the video or the audio. The pictures, if you open them, come from YouTube's image host.",
     howTo: [
       { step: "Paste the YouTube link", detail: "A watch URL, a youtu.be short link or an embed URL all work. The video ID is pulled out automatically." },
       { step: "Run it", detail: "Three URLs are produced: the maximum resolution image, the high quality image and the medium quality one." },
@@ -2806,7 +2806,12 @@ const overrides: Record<string, ToolContent> = {
       { step: "Convert", detail: "The result appears under the input. A parse error replaces the output until the source is valid." },
       { step: "Copy or download", detail: "Copy the text, or download it with the extension of the format you chose." },
     ],
-    faq: generic().faq,
+    faq: [
+      { q: "Does JSON to JSON change values?", a: "No. It parses the document and writes it back with two-space indentation. A trailing comma or a single-quoted string stops with the parser's error." },
+      { q: "Where does the CSV header come from?", a: "From the keys of the objects. An array of objects is the shape that becomes a table. Duplicate keys collide." },
+      { q: "Is the text uploaded?", a: "No. Parsing and formatting run in this page." },
+      { q: "Can it encode a query string?", a: "No. This page converts documents. Percent-encoding a URL is a different tool." },
+    ],
     useCases: [
       "Pretty-printing a one-line API response before you read it.",
       "Turning a JSON array into CSV for a spreadsheet.",
@@ -3003,7 +3008,11 @@ const overrides: Record<string, ToolContent> = {
       { step: "Run it", detail: "Create downloads the archive. Extract lists the entries inside." },
       { step: "Save what you need", detail: "Download individual extracted files, or the new archive, from the page." },
     ],
-    faq: generic().faq,
+    faq: [
+      { q: "Which archives open here?", a: "ZIP and uncompressed TAR. 7z and RAR do not. A .tar.gz still has to be gunzipped before this page can read the TAR inside." },
+      { q: "Is the archive uploaded?", a: "No. ZIP uses JSZip in this browser. TAR is read and written on the page." },
+      { q: "Can I save just one file from a ZIP?", a: "Yes. Extract lists the entries, and each one can be downloaded on its own." },
+    ],
     useCases: [
       "Bundling a few files into a ZIP without installing an archiver.",
       "Checking what is inside a TAR before you unpack it elsewhere.",
@@ -3023,7 +3032,11 @@ const overrides: Record<string, ToolContent> = {
       { step: "Read the preview", detail: "The combined file appears on the right, with a comment naming each template." },
       { step: "Copy or download", detail: "Copy it into a repo, or download a file named .gitignore." },
     ],
-    faq: generic().faq,
+    faq: [
+      { q: "Where do the rules come from?", a: "The templates follow the GitHub gitignore collection. The same selection always produces the same file, in catalog order, with a comment naming each template." },
+      { q: "Does building the file call the network?", a: "Not after the page has loaded. The catalog is already in the page." },
+      { q: "Will a template hide a secret that only my repo has?", a: "No. Templates are a starting point. A local path or a credential file that is unique to the repo still has to be added by hand." },
+    ],
     useCases: [
       "Starting a Node or Python repo without hand-writing ignore rules.",
       "Adding macOS and editor junk rules to a project that already ignores build output.",
@@ -3042,7 +3055,11 @@ const overrides: Record<string, ToolContent> = {
       { step: "Edit the source", detail: "The preview updates after you pause typing. A syntax error replaces the picture until the source parses." },
       { step: "Download SVG or PNG", detail: "SVG is the better default for docs. PNG is easier to drop into a slide that does not accept SVG." },
     ],
-    faq: generic().faq,
+    faq: [
+      { q: "What if the diagram is blank?", a: "Read the error in place of the picture. A missing arrow or an unclosed quote is the usual cause. The preview returns when the source parses." },
+      { q: "Is the source uploaded?", a: "No. The Mermaid library loads with the tool and renders in this browser." },
+      { q: "SVG or PNG?", a: "SVG stays sharp in a document. PNG is the easier file for a slide that does not accept SVG." },
+    ],
     useCases: [
       "Drafting a flowchart for a README without opening a drawing app.",
       "Checking a sequence diagram before you commit the Mermaid block.",
@@ -3087,7 +3104,12 @@ const overrides: Record<string, ToolContent> = {
       { step: "Export", detail: "JSON, CSV, or XLSX. The download keeps the original file name with the new extension." },
       { step: "Or go the other way", detail: "Paste tabular text or JSON when you need a fresh XLSX instead of converting an existing file." },
     ],
-    faq: generic().faq,
+    faq: [
+      { q: "Which sheet is exported?", a: "Only the sheet you select. Several sheets are not merged into one file." },
+      { q: "Why does the CSV start with a hidden mark?", a: "It is a UTF-8 BOM, so Excel on Windows keeps non-ASCII characters. That prefix is intentional." },
+      { q: "Is the workbook uploaded?", a: "No. SheetJS reads it in this browser." },
+      { q: "What becomes a JSON key?", a: "The header cell. Two columns with the same header collide, so rename one of them before you export." },
+    ],
     useCases: [
       "Turning an Excel export into JSON for a script.",
       "Saving one sheet of a workbook as CSV.",

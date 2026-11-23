@@ -3,6 +3,7 @@
 import type { ToolContent } from "@/lib/tool-content";
 import { contentOverrides, getToolContent } from "@/lib/tool-content";
 import { tools } from "@/lib/tools-data";
+import { toolTranslationIndexable } from "@/lib/locale-index";
 import { pickLocalizedToolContent } from "./pick-content";
 import { CONTENT } from "./content/index";
 
@@ -32,7 +33,7 @@ export interface ToolMetaI18n {
 export function getMeta(lang: string, slug: string): ToolMetaI18n {
   const base = toolMap.get(slug);
   if (!base) return { title: slug, description: "", keywords: [] };
-  if (lang === "en" || !CONTENT[lang]) {
+  if (lang === "en" || !CONTENT[lang] || !toolTranslationIndexable(lang, slug)) {
     return { title: base.title, description: base.description, keywords: base.keywords };
   }
   const m = CONTENT[lang]?.meta?.[slug];
@@ -52,7 +53,8 @@ export function getContent(lang: string, slug: string): ToolContent {
   const title = base?.title ?? slug;
   const desc = base?.description ?? "";
   const english = interpolateContent(getToolContent(slug), { title, desc });
-  if (lang === "en" || !CONTENT[lang]) return english;
+  // 译文缺段、过短，或步骤/问答对不上当前英文时，显示英文，不展示过时的机器译文。
+  if (lang === "en" || !CONTENT[lang] || !toolTranslationIndexable(lang, slug)) return english;
 
   const langContent = CONTENT[lang];
   const override = langContent.overrides?.[slug] as ToolContent | undefined;

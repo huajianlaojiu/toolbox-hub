@@ -58,10 +58,24 @@ test("spanish rotate, organize, and crop pages are not the paste template", () =
   }
 });
 
-test("an existing spanish override is kept", () => {
-  const content = localized("es", "image-compressor");
-  assert.match(content.intro, /navegador/i);
-  assert.doesNotMatch(content.howTo[0].step, /Choose an image/);
+test("an accurate spanish override is kept", () => {
+  const content = localized("es", "loan-calculator");
+  assert.match(content.intro, /préstamo|prestamo/i);
+  assert.doesNotMatch(content.howTo[0]?.step ?? "", /Enter the loan/);
+});
+
+test("a stale or short translation is not treated as indexable", async () => {
+  const { toolTranslationIndexable, localePathIndexable } = await import("../lib/locale-index.ts");
+  assert.equal(toolTranslationIndexable("es", "word-counter"), false);
+  assert.equal(toolTranslationIndexable("es", "image-compressor"), false);
+  assert.equal(toolTranslationIndexable("es", "compress-pdf"), false);
+  assert.equal(toolTranslationIndexable("zh", "word-counter"), false);
+  assert.equal(toolTranslationIndexable("es", "loan-calculator"), true);
+  assert.equal(localePathIndexable("es", "/about/"), false);
+  assert.equal(localePathIndexable("es", "/pdf/"), false);
+  assert.equal(localePathIndexable("es", "/privacy/"), false);
+  assert.equal(localePathIndexable("en", "/about/"), true);
+  assert.equal(localePathIndexable("de", "/tools/loan-calculator/"), true);
 });
 
 test("purchase and license activation stay off until urls exist", () => {

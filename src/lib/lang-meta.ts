@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { languageAlternates } from "./alternates";
 import { MESSAGES } from "@/i18n/messages";
+import { localePathIndexable } from "./locale-index";
 import { isPublished } from "./locales";
 import { OG_IMAGE, pageTitle } from "./site-meta";
 
@@ -74,16 +75,18 @@ export function langPageMeta(
   const d = stv(lang, description, vars);
   // 自指 canonical：每个语言版本的 canonical 指向自己（多语言 SEO 最佳实践），
   // 不能用英文版的——否则 /zh/ 会被当成 / 的重复页而不收录。
-  const selfPath = lang === "en" ? path : `/${lang}${path}`;
+  const indexable = localePathIndexable(lang, path);
+  // 没有完整译文的语言页指向英文，避免把英文重复页或中英混排页标成该语言的规范地址。
+  const selfPath = indexable ? (lang === "en" ? path : `/${lang}${path}`) : path;
   const meta: Metadata = {
     title: pageTitle(t),
     description: d,
     alternates: { canonical: selfPath, languages: languageAlternates(path) },
     openGraph: { title: t, description: d, url: selfPath, type: "website", images: [OG_IMAGE] },
   };
-  // 未发布语言（译文仍是英文壳）不当作独立语言版本被收录，避免近重复页稀释 SEO。
-  // 仍保留 follow + 自指 canonical，语言选择器可直达、内部链接不破。
-  if (!isPublished(lang)) {
+  // 未发布语言，以及译文对不上当前英文的页面，都不收录。
+  // 路由仍在，follow 保留，语言选择器可以打开。
+  if (!isPublished(lang) || !indexable) {
     meta.robots = { index: false, follow: true };
   }
   return meta;
