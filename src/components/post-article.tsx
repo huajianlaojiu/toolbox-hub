@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import type { Post } from "@/lib/posts";
 import { posts as allPosts } from "@/lib/posts";
 import { getPostI18n } from "@/i18n/posts";
+import Breadcrumb from "@/components/breadcrumb";
 import AdUnit from "@/components/shared/ad-unit";
 import { I18nText, ReadingTime } from "@/components/i18n-text";
 
@@ -126,17 +127,15 @@ export function PostArticle({ slug }: { slug: string }) {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
-      <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-        <a href={localizePath("/", lang)} className="hover:text-foreground transition-colors">
-          <I18nText id="Home" />
-        </a>
-        <span aria-hidden>/</span>
-        <a href={localizePath("/blog/", lang)} className="hover:text-foreground transition-colors">
-          <I18nText id="Blog" />
-        </a>
-        <span aria-hidden>/</span>
-        <span className="text-foreground truncate max-w-[50%]">{post.category}</span>
-      </nav>
+      <div className="mb-6">
+        <Breadcrumb
+          items={[
+            { label: "Home", href: "/" },
+            { label: "Blog", href: "/blog/" },
+            { label: post.title, href: `/blog/${slug}/`, translate: false },
+          ]}
+        />
+      </div>
 
       <article>
         <header className="mb-8">

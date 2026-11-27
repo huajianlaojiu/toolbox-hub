@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Breadcrumb from "@/components/breadcrumb";
 import I18nLink from "@/components/i18n-link";
 import AdUnit from "@/components/shared/ad-unit";
 import ToolCard from "@/components/tool-card";
@@ -51,15 +52,6 @@ const jsonLd = {
   },
 };
 
-const breadcrumbLd = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://toolbox-hub.io/" },
-    { "@type": "ListItem", position: 2, name: "All Tools", item: "https://toolbox-hub.io/tools/" },
-  ],
-};
-
 export default function ToolsIndex() {
   const groups = groupByCategory();
 
@@ -67,22 +59,17 @@ export default function ToolsIndex() {
     <div className={`${pageWrap} py-10`}>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
       />
 
       <header className="mb-8">
-        <p className="text-sm text-muted-foreground">
-          <a href="/" className="hover:text-foreground transition-colors">
-            <I18nText id="Home" />
-          </a>
-          <span aria-hidden> / </span>
-          <span><I18nText id="All Tools" /></span>
-        </p>
-          <h1 className="mt-3 text-3xl font-bold tracking-tight text-foreground">
+        <Breadcrumb
+          items={[
+            { label: "Home", href: "/" },
+            { label: "All Tools", href: "/tools/" },
+          ]}
+        />
+        <h1 className="mt-3 text-3xl font-bold tracking-tight text-foreground">
           <I18nText id="All {count} Tools" vars={{ count: String(visibleTools.length) }} />
         </h1>
         <p className="mt-4 max-w-3xl leading-7 text-muted-foreground">

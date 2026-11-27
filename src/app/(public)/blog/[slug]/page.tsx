@@ -72,19 +72,6 @@ export default async function BlogPost({
         publisher: { "@type": "Organization", name: "Toolbox Hub" },
         url: `https://toolbox-hub.io/blog/${post.slug}/`,
       },
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Home", item: "https://toolbox-hub.io/" },
-          { "@type": "ListItem", position: 2, name: "Blog", item: "https://toolbox-hub.io/blog/" },
-          {
-            "@type": "ListItem",
-            position: 3,
-            name: post.title,
-            item: `https://toolbox-hub.io/blog/${post.slug}/`,
-          },
-        ],
-      },
     ],
   };
 

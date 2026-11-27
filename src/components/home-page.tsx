@@ -3,6 +3,7 @@ import HeroTitle from "@/components/hero-title";
 import I18nLink from "@/components/i18n-link";
 import { I18nText } from "@/components/i18n-text";
 import { pageWrap } from "@/components/page-wrap";
+import SiteFaq from "@/components/site-faq";
 import ToolTile, { ToneWell } from "@/components/tool-tile";
 import {
   HOME_SHORTCUTS,
@@ -164,6 +165,8 @@ export default function HomePage() {
           />
         </div>
       </section>
+
+      <SiteFaq />
     </div>
   );
 }

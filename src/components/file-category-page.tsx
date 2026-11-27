@@ -1,5 +1,5 @@
+import Breadcrumb from "@/components/breadcrumb";
 import { CategoryGlyph, pdfGlyph, slugGlyph } from "@/components/category-glyph";
-import I18nLink from "@/components/i18n-link";
 import { I18nText } from "@/components/i18n-text";
 import { pageWrap } from "@/components/page-wrap";
 import ToolTile from "@/components/tool-tile";
@@ -121,15 +121,12 @@ export default function FileCategoryPage({ category }: { category: FileCategory 
 
   return (
     <div className={`${pageWrap} py-10`}>
-      <p className="text-sm text-muted-foreground">
-        <I18nLink href="/" className="hover:text-foreground">
-          <I18nText id="Home" />
-        </I18nLink>
-        <span aria-hidden> / </span>
-        <span>
-          <I18nText id={copy.title} />
-        </span>
-      </p>
+      <Breadcrumb
+        items={[
+          { label: "Home", href: "/" },
+          { label: copy.title, href: `/${category}/` },
+        ]}
+      />
       <h1 className="mt-4 text-[32px] font-extrabold tracking-[-0.04em] text-foreground">
         <I18nText id={copy.title} />
       </h1>
