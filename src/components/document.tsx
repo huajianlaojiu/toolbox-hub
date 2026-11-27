@@ -80,7 +80,7 @@ export default function Document({
   dir: "ltr" | "rtl";
   children: React.ReactNode;
 }) {
-  const { siteSchema, siteFaq } = siteJsonLd(lang);
+  const siteSchema = siteJsonLd(lang);
   return (
     <html lang={lang} dir={dir} className={`${jakarta.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
@@ -109,17 +109,7 @@ export default function Document({
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteSchema) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "FAQPage",
-              mainEntity: siteFaq,
-            }),
-          }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteSchema).replace(/</g, "\\u003c") }}
         />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans">

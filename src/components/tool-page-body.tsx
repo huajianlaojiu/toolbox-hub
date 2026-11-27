@@ -13,6 +13,7 @@ import ToolWidget from "@/components/tools/tool-widget";
 import { OG_IMAGE } from "@/lib/site-meta";
 
 import AdUnit from "@/components/shared/ad-unit";
+import Breadcrumb from "@/components/breadcrumb";
 import ToolCard from "@/components/tool-card";
 import { I18nText } from "@/components/i18n-text";
 import { pageWrap } from "@/components/page-wrap";
@@ -126,10 +127,16 @@ export default async function ToolPageBody({ lang, slug }: { lang: string; slug:
 
   return (
     <div className={`${pageWrap} py-4 sm:py-8`}>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <a href={lang === "en" ? "/tools/" : `/${lang}/tools/`} className="mb-1 inline-flex min-h-11 items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground sm:mb-6">
-        <span aria-hidden>‹</span> <I18nText id="All Tools" />
-      </a>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
+      <div className="mb-1 sm:mb-6">
+        <Breadcrumb
+          items={[
+            { label: "Home", href: "/" },
+            { label: "All Tools", href: "/tools/" },
+            { label: meta.title, href: url, translate: false },
+          ]}
+        />
+      </div>
       {/* 传译文 meta（getMeta），不是英文 tool：否则 15 语言版 H1/副标题恒为英文，与 <title> 语言相反 */}
       <ToolPageContent meta={meta} content={content}>
         <div className="mt-3 rounded-[18px] border bg-card p-4 shadow-[0_1px_2px_rgba(16,18,28,0.04),0_8px_24px_rgba(16,18,28,0.04)] sm:mt-6 sm:p-6">

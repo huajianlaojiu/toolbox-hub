@@ -1,6 +1,7 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { localePathIndexable } from "../src/lib/locale-index.ts";
+import { visibleTools } from "../src/lib/tools-data.ts";
 
 const ROOT = process.cwd();
 const SITE = "https://toolbox-hub.io";
@@ -35,11 +36,8 @@ const PUBLISHED = new Set([
 const LANGS_PUB = LANGS.filter((l) => PUBLISHED.has(l.code));
 const prefix = (code) => (code === "en" ? "" : `/${code}`);
 
-const data = readFileSync(join(ROOT, "src/lib/tools-data.ts"), "utf8");
-// 跳过已被收编（redirect）的旧工具，避免 noindex 页进 sitemap 造成冲突
-const slugs = [...data.matchAll(/\{ slug: "([^"]+)"([^}]*)\}/g)]
-  .filter((m) => !/redirect:\s*"/.test(m[2]))
-  .map((m) => m[1]);
+// redirect 旧地址是 noindex 中转页，visibleTools 已经排除，避免它们进 sitemap。
+const slugs = visibleTools.map((tool) => tool.slug);
 
 const postsData = readFileSync(join(ROOT, "src/lib/posts.ts"), "utf8");
 const postSlugs = [...postsData.matchAll(/^\s{4}slug: "([^"]+)"/gm)].map((m) => m[1]);
